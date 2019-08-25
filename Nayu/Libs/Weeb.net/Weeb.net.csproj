@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Weeb.net</PackageId>
+    <Title>Weeb.net</Title>
+    <PackageVersion>1.0.7</PackageVersion>
+    <Authors>Serenity</Authors>
+    <Description>Fast and easy to use .net core wrapper for weeb.sh API by Wolke</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/Daniele122898/Weeb.net</PackageProjectUrl>
+    <Copyright>Copyright 2018 (c) by Serenity. All rights reserved.</Copyright>
+    <PackageTags>Weeb Wrapper weeb.net weeb.sh</PackageTags>
+    <PackageReleaseNotes>Added default and settable User-Agent</PackageReleaseNotes>    
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+  </ItemGroup>
+</Project>
