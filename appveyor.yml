@@ -1,8 +1,8 @@
-dotnet_csproj:
-  patch: true
-  file: '**\*.csproj'
-  version: '{version}'
-  package_version: '{version}'
-  assembly_version: '{version}'
-  file_version: '{version}'
-  informational_version: '{version}'
+version: 1.0.0-{build}
+configuration: Release
+cache: 
+    - packages -> **\packages.config
+before_build: nuget restore
+build: 
+    publish_wap: true
+    
