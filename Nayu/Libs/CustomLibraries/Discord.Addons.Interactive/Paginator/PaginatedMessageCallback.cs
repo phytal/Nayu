@@ -57,17 +57,7 @@ namespace Discord.Addons.Interactive
                 var manageMessages = (Context.Channel is IGuildChannel guildChannel)
                     ? (Context.User as IGuildUser).GetPermissions(guildChannel).ManageMessages
                     : false;
-
-                if (options.JumpDisplayOptions == JumpDisplayOptions.Always
-                    || (options.JumpDisplayOptions == JumpDisplayOptions.WithManageMessages && manageMessages))
-                    await message.AddReactionAsync(options.Jump);
-
-                await message.AddReactionAsync(options.Stop);
-
-                if (options.DisplayInformationIcon)
-                    await message.AddReactionAsync(options.Info);
             });
-            // TODO: (Next major version) timeouts need to be handled at the service-level!
             if (Timeout.HasValue && Timeout.Value != null)
             {
                 _ = Task.Delay(Timeout.Value).ContinueWith(_ =>
@@ -101,37 +91,6 @@ namespace Discord.Addons.Interactive
             }
             else if (emote.Equals(options.Last))
                 page = pages;
-            else if (emote.Equals(options.Stop))
-            {
-                await Message.DeleteAsync().ConfigureAwait(false);
-                return true;
-            }
-            else if (emote.Equals(options.Jump))
-            {
-                _ = Task.Run(async () =>
-                {
-                    var criteria = new Criteria<SocketMessage>()
-                        .AddCriterion(new EnsureSourceChannelCriterion())
-                        .AddCriterion(new EnsureFromUserCriterion(reaction.UserId))
-                        .AddCriterion(new EnsureIsIntegerCriterion());
-                    var response = await Interactive.NextMessageAsync(Context, criteria, TimeSpan.FromSeconds(15));
-                    var request = int.Parse(response.Content);
-                    if (request < 1 || request > pages)
-                    {
-                        _ = response.DeleteAsync().ConfigureAwait(false);
-                        await Interactive.ReplyAndDeleteAsync(Context, options.Stop.Name);
-                        return;
-                    }
-                    page = request;
-                    _ = response.DeleteAsync().ConfigureAwait(false);
-                    await RenderAsync().ConfigureAwait(false);
-                });
-            }
-            else if (emote.Equals(options.Info))
-            {
-                await Interactive.ReplyAndDeleteAsync(Context, options.InformationText, timeout: options.InfoTimeout);
-                return false;
-            }
             _ = Message.RemoveReactionAsync(reaction.Emote, reaction.User.Value);
             await RenderAsync().ConfigureAwait(false);
             return false;

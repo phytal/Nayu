@@ -66,7 +66,6 @@ namespace Nayu
             _client.UserUpdated += UserUpdated;
             _client.UserVoiceStateUpdated += UserVoiceStateUpdated;
         }
-        private int _shardsReady = 0;
         private async Task _client_ShardReady(DiscordSocketClient arg)
         {
             _chomusukeTimer.StartTimer();

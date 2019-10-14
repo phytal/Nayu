@@ -12,7 +12,7 @@ namespace Nayu.Entities
         public string Name { get; set; }
         public string Zodiac { get; set; }
         public bool Shiny { get; set; }
-        public uint Hunger { get; set; }
+        public byte Hunger { get; set; }
         public uint XP { get; set; }
         public uint LevelNumber
         {
@@ -21,8 +21,8 @@ namespace Nayu.Entities
                 return (uint)Math.Sqrt(XP / 200);
             }
         }
-        public uint Trust { get; set; }
-        public uint Waste { get; set; }
+        public byte Trust { get; set; }
+        public byte Waste { get; set; }
         public bool Sick { get; set; }
         public string Attack1 { get; set; }
         public string Attack2 { get; set; }
@@ -38,13 +38,13 @@ namespace Nayu.Entities
         public uint HealthCapacity { get; set; } //CP * 1.5
         public uint ShieldCapacity { get; set; }
         public uint ManaCapacity { get; set; }
-        public int Control { get; set; } //-100 to 100
+        public sbyte Control { get; set; } //-100 to 100
         public uint Wins { get; set; }
         public uint Losses { get; set; }
 
-        public Chomusuke(bool have, string name, string zodiac, bool shiny, uint hunger, uint xp, uint trust, uint waste, bool sick, string attack1, string attack2, string attack3, 
+        public Chomusuke(bool have, string name, string zodiac, bool shiny, byte hunger, uint xp, byte trust, byte waste, bool sick, string attack1, string attack2, string attack3, 
             string attack4, string type, uint cp, string trait1, string trait2, uint health, uint shield, uint mana, uint healthcapacity, uint shieldcapacity, uint manacapacity, 
-            int control, uint wins, uint losses)
+            sbyte control, uint wins, uint losses)
         {
             Have = have;
             Name = name;
@@ -52,7 +52,7 @@ namespace Nayu.Entities
             Shiny = shiny;
             Hunger = hunger;
             XP = xp;
-            Trust = trust;
+            Trust = trust; //gained by feeding in time, lost by starving and not cleaning up
             Waste = waste;
             Sick = sick;
             Attack1 = attack1;
@@ -74,64 +74,104 @@ namespace Nayu.Entities
             Losses = losses;
         }
     }
+
+    public class Message
+    {
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public DateTime Time { get; set; }
+        public bool Read { get; set; }
+        public ulong ID { get; set; }
+
+        public Message(string title, string content, DateTime time, bool read, ulong id)
+        {
+            Title = title;
+            Content = content;
+            Time = time;
+            Read = read;
+            ID = id;
+        }
+    }
+
     public class GlobalUserAccount : IGlobalAccount
     {
-        public uint ConstatineMedallion { get; set; }
-        public uint BookOfExodus { get; set; }
-        public uint FireThread { get; set; }
-        public uint SkyPowder { get; set; }
-        public uint TearsOfHera { get; set; }
-        public uint HornOfVeles { get; set; }
-        public uint BranchOfYggdrasil { get; set; }
-        public uint VolcanicRune { get; set; }
-        public uint FlaskOfIchor { get; set; }
-        public uint FlaskOfElixir { get; set; }
-        public uint FlaskOfMana { get; set; }
-        public uint ShardsOfImmortality { get; set; }
-        public uint ChainsOfTartatus { get; set; }
-        public uint ReviveCrystal { get; set; }
-        public uint FreyasBlessing { get; set; }
-        public Chomusuke Chomusuke1 { get; set; } //= new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, null, 0, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        public Chomusuke Chomusuke2 { get; set; } //= new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, null, 0, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        public Chomusuke Chomusuke3 { get; set; } //= new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, null, 0, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        public Chomusuke ActiveChomusuke { get; set; }
-        public uint NormalCapsule { get; set; }
-        public uint ShinyCapsule { get; set; }
-        public uint MythicalCapsule { get; set; }
+        public ushort ConstatineMedallion { get; set; }
+        public ushort BookOfExodus { get; set; }
+        public ushort FireThread { get; set; }
+        public ushort SkyPowder { get; set; }
+        public ushort TearsOfHera { get; set; }
+        public ushort HornOfVeles { get; set; }
+        public ushort BranchOfYggdrasil { get; set; }
+        public ushort VolcanicRune { get; set; }
+        public ushort FlaskOfIchor { get; set; }
+        public ushort FlaskOfElixir { get; set; }
+        public ushort FlaskOfMana { get; set; }
+        public ushort ShardsOfImmortality { get; set; }
+        public ushort ChainsOfTartatus { get; set; }
+        public ushort ReviveCrystal { get; set; }
+        public ushort FreyasBlessing { get; set; }
+
+        public Chomusuke
+            Chomusuke1
+        {
+            get;
+            set;
+        } //= new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, null, 0, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+        public Chomusuke
+            Chomusuke2
+        {
+            get;
+            set;
+        } //= new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, null, 0, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+        public Chomusuke
+            Chomusuke3
+        {
+            get;
+            set;
+        } //= new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, null, 0, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+        public byte ActiveChomusuke { get; set; }
+        public ushort NormalCapsule { get; set; }
+        public ushort ShinyCapsule { get; set; }
+        public ushort MythicalCapsule { get; set; }
         public string WhosTurn { get; set; }
         public string WhoWaits { get; set; }
         public string PlaceHolder { get; set; }
         public bool Fighting { get; set; }
         public ulong OpponentId { get; set; }
         public string OpponentName { get; set; }
-        public uint Wins { get; set; }
-        public uint Losses { get; set; }
-        public uint Draws { get; set; }
-        public uint WinStreak { get; set; }
+        public ushort Wins { get; set; }
+        public ushort Losses { get; set; }
+        public ushort Draws { get; set; }
+        public ushort WinStreak { get; set; }
         public string Title { get; set; }
-        public uint LootBoxCommon { get; set; }
-        public uint LootBoxRare { get; set; }
-        public uint LootBoxUncommon { get; set; }
-        public uint LootBoxEpic { get; set; }
-        public uint LootBoxLegendary { get; set; }
+        public ushort LootBoxCommon { get; set; }
+        public ushort LootBoxRare { get; set; }
+        public ushort LootBoxUncommon { get; set; }
+        public ushort LootBoxEpic { get; set; }
+        public ushort LootBoxLegendary { get; set; }
         public uint XP { get; set; }
         public DateTime LastXPMessage { get; set; } = DateTime.UtcNow;
+
         public uint LevelNumber
         {
-            get
-            {
-                return (uint)Math.Sqrt(XP / 50);
-            }
+            get { return (uint) Math.Sqrt(XP / 50); }
         }
+
         public ulong Id { get; set; }
         public string OverwatchID { get; set; }
         public string OverwatchRegion { get; set; }
         public string OverwatchPlatform { get; set; }
         public ulong Taiyaki { get; set; }
-        public ulong TaiyakiFromMessages { get; set; }
-        public ulong TaiyakiFromGambling { get; set; }
+        public uint TaiyakiFromMessages { get; set; }
+        public uint TaiyakiFromGambling { get; set; }
+        public ulong InboxIDTracker { get; set; }
+        public ulong InboxIDLastRead { get; set; }
         public DateTime LastDaily { get; set; } = DateTime.UtcNow.AddDays(-2);
         public DateTime LastMessage { get; set; } = DateTime.UtcNow;
+        public List<Message> Inbox { get; set; } = new List<Message>();
         public Dictionary<string, string> Tags { get; set; } = new Dictionary<string, string>();
     }
 }

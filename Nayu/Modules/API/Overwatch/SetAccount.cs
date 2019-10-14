@@ -47,9 +47,11 @@ namespace Nayu.Modules.API.Overwatch
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             if (config.OverwatchPlatform == null && config.OverwatchRegion == null && config.OverwatchID == null)
             {
-                await Context.Channel.SendMessageAsync("**Make sure you set your account information first!**\n n!owaccount <username> <platform> <region> Ex: n!owaccount Username#1234 pc us ");
+                await Context.Channel.SendMessageAsync(
+                    "**Make sure you set your account information first!**\n n!owaccount <username> <platform> <region> Ex: n!owaccount Username#1234 pc us ");
                 return;
             }
+
             var embed = new EmbedBuilder();
             embed.WithColor(37, 152, 255);
             embed.WithTitle("Here are your Overwatch credentials");

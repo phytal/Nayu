@@ -13,8 +13,8 @@ namespace Nayu.Entities
 
         public DateTime LastRep { get; set; } = DateTime.UtcNow.AddDays(-2);
 
-        public uint NumberOfWarnings { get; set; }
+        public ushort NumberOfWarnings { get; set; }
 
-        public List<string> Warnings { get; private set; } = new List<string>();
+        public List<string> Warnings { get;  set; } = new List<string>();
     }
 }

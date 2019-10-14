@@ -2,27 +2,25 @@
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using Discord.Net;
 using System;
-using System.Collections.Generic;
-using System.Threading;
 using Nayu.Helpers;
-using Nayu.Core.Modules;
-using Nayu;
 using Nayu.Features.GlobalAccounts;
 using System.Net;
 using System.IO;
 using Nayu.Handlers;
 using System.Diagnostics;
+using Nayu.Modules.Inbox;
 
 namespace Nayu.Core.Modules.Management
 {
     public class Owner : NayuModule
     {
 
-        public void KillProgram() => Kill(); // DO. NOT. USE. THIS. This is only for deliberately causing a StackOverflowException to stop the program.
+        public void KillProgram() =>
+            Kill(); // DO. NOT. USE. THIS. This is only for deliberately causing a StackOverflowException to stop the program.
 
-        public void Kill() => KillProgram(); // DO. NOT. USE. THIS. This is only for deliberately causing a StackOverflowException to stop the program.
+        public void Kill() =>
+            KillProgram(); // DO. NOT. USE. THIS. This is only for deliberately causing a StackOverflowException to stop the program.
 
         [Command("Shutdown")]
         [Summary("Shuts down Nayu :((")]
@@ -40,10 +38,12 @@ namespace Nayu.Core.Modules.Management
         [Command("Stream")]
         [Summary("Sets what Nayu is streaming")]
         [RequireOwner]
-        public async Task SetBotStream(string streamer, [Remainder]string streamName)
+        public async Task SetBotStream(string streamer, [Remainder] string streamName)
         {
             await Program._client.SetGameAsync(streamName, $"https://twitch.tv/{streamer}", ActivityType.Streaming);
-            var embed = MiscHelpers.CreateEmbed(Context, "Set Bot Streaming", $"Set the stream name to **{streamName}**, and set the streamer to <https://twitch.tv/{streamer}>!").WithColor(37, 152, 255);
+            var embed = MiscHelpers.CreateEmbed(Context, "Set Bot Streaming",
+                    $"Set the stream name to **{streamName}**, and set the streamer to <https://twitch.tv/{streamer}>!")
+                .WithColor(37, 152, 255);
             await MiscHelpers.SendMessage(Context, embed);
         }
 
@@ -127,7 +127,8 @@ namespace Nayu.Core.Modules.Management
             embed.WithDescription($"Done. In {guilds}");
             embed.WithColor(37, 152, 255);
             await ReplyAsync("", embed: embed.Build());
-            await client.SetGameAsync($"n!help | in {guilds} servers!", $"https://twitch.tv/{Config.bot.TwitchStreamer}", ActivityType.Streaming);
+            await client.SetGameAsync($"n!help | in {guilds} servers!",
+                $"https://twitch.tv/{Config.bot.TwitchStreamer}", ActivityType.Streaming);
 
         }
 
@@ -135,8 +136,6 @@ namespace Nayu.Core.Modules.Management
         [RequireOwner]
         public async Task SetAvatar(string link)
         {
-            var s = Context.Message.DeleteAsync();
-
             try
             {
                 var webClient = new WebClient();
@@ -149,7 +148,8 @@ namespace Nayu.Core.Modules.Management
             }
             catch (Exception)
             {
-                var embed = EmbedHandler.CreateEmbed("Avatar", "Could not set the avatar!", EmbedHandler.EmbedMessageType.Exception, Context.User);
+                var embed = EmbedHandler.CreateEmbed("Avatar", "Could not set the avatar!",
+                    EmbedHandler.EmbedMessageType.Exception, Context.User);
                 await Context.Channel.SendMessageAsync("", false, embed);
             }
         }
@@ -171,15 +171,28 @@ namespace Nayu.Core.Modules.Management
 
             var embed = new EmbedBuilder();
             embed.WithColor(37, 152, 255);
-            embed.AddField("Bot Statistics:", $"Your ping: {(int)sw.Elapsed.TotalMilliseconds}ms\n" +
+            embed.AddField("Bot Statistics:", $"Your ping: {(int) sw.Elapsed.TotalMilliseconds}ms\n" +
                                               $"Runtime: {time.Hours}h:{time.Minutes}m\n" +
                                               //$"CPU usage: {cpu:n0}\n" +
                                               $"Memory: {mem:n0}Mb\n" +
                                               $"Threads using: {threads.Count}\n");
-                                              //$"Servers in: {Global.Client.Guilds.Count}\n");
+            //$"Servers in: {Global.Client.Guilds.Count}\n");
             await ReplyAsync("", embed: embed.Build());
+        }
 
+        [Command("announceToEveryone"), Remarks("Sets the bots Avatar")]
+        [RequireOwner]
+        public async Task Announce([Remainder]string content)
+        {
+            var config = GlobalUserAccounts.GetAllAccounts();
+            foreach (var userAcc in config)
+            {
+                SocketUser user = Global.Client.GetUser(userAcc.Id);
+                await CreateMessage.CreateAndSendMessageAsync("Nayu Announcement!", content, DateTime.Now, user);
+                GlobalUserAccounts.SaveAccounts();
+            }
 
+            await ReplyAsync($"Sent \n`{content}`\n to everyone");
         }
     }
 }

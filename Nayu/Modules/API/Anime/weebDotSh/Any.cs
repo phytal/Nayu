@@ -34,7 +34,7 @@ namespace Nayu.Modules.API.Anime.weebDotSh
 
                 await Context.Channel.SendMessageAsync("", embed: embed.Build());
             }
-            catch (Exception e)
+            catch
             {
                 await Context.Channel.SendMessageAsync(
                     "Did you enter a valid type? \nView all types with the `n!ceebtypes` command" +

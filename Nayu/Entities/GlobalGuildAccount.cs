@@ -22,8 +22,6 @@ namespace Nayu.Entities
 
         public ulong Id { get; set; }
 
-        public ulong AnnouncementChannelId { get; set; }
-
         public bool Filter { get; set; }
 
         public bool Antilink { get; set; }
@@ -31,18 +29,6 @@ namespace Nayu.Entities
         public bool Unflip { get; set; }
 
         public string LevelingMsgs { get; set; }
-
-        public string HelperRoleName { get; set; }
-
-        public ulong HelperRole { get; set; }
-
-        public ulong ModRole { get; set; }
-
-        public ulong AdminRole { get; set; }
-
-        public string ModRoleName { get; set; }
-
-        public string AdminRoleName { get; set; }
 
         public string CommandPrefix { get; set; }
 
@@ -76,6 +62,5 @@ namespace Nayu.Entities
 
         public Dictionary<string, string> Tags { get; set; } = new Dictionary<string, string>();
 
-        public Dictionary<string, string> OW { get; set; } = new Dictionary<string, string>();
     }
 }

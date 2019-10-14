@@ -23,7 +23,7 @@ namespace Nayu.Core.LevelingSystem
             }
 
             // Generate a randomized reward in the configured boundries
-            ulong moneyGained = (ulong)Global.Rng.Next(Constants.MessagRewardMinMax.Item1, Constants.MessagRewardMinMax.Item2 + 1);
+            uint moneyGained = (uint)Global.Rng.Next(Constants.MessagRewardMinMax.Item1, Constants.MessagRewardMinMax.Item2 + 1);
             userAccount.Taiyaki += moneyGained;
             userAccount.TaiyakiFromMessages += moneyGained;
             userAccount.LastMessage = now;

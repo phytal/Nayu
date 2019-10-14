@@ -36,7 +36,7 @@ namespace Nayu
             var dmChannel = await s.Owner.GetOrCreateDMChannelAsync();
             var embed = new EmbedBuilder();
             embed.WithTitle($"Thanks for adding me to your server, {s.Owner.Username}!");
-            embed.WithDescription("For quick information, use the `n!help` command! \nNeed quick help? Visit the our server and ask away https://discord.gg/NuUdx4h!");
+            embed.WithDescription("For quick information, use the `n!help` command! \nNeed quick help? Visit the my support server! https://discord.gg/z8TgwT!");
             embed.WithThumbnailUrl(s.IconUrl);
             embed.WithFooter("Found an issue in a command? Report it in the server linked above!");
             embed.WithColor(37, 152, 255);
@@ -97,7 +97,10 @@ namespace Nayu
         "I think you touched the stove on accident!",
         "You're starting to bug me..",
         "You're under-arrest by the Good Boy Cops",
-        "Woah man, too far"
+        "Woah man, too far",
+        "Do I really have to tape your mouth shut?",
+        "Ok buddy you might get yourself into a problem..",
+        "Now I know why you have no friends",
 };
             Random rand = new Random();
             List<string> bannedWords = new List<string>

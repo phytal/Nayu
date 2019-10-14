@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
-using Discord.WebSocket;
-using Nayu.Features;
+using Nayu.Entities;
 using Nayu.Features.GlobalAccounts;
+using Nayu.Modules.Inbox;
 
 namespace Nayu
 {
@@ -23,7 +22,7 @@ namespace Nayu
             };
             loopingtimer.Elapsed += OnTimerTicked;
 
-            Console.WriteLine("Initialized Mission - Cripple Chomusuke"); //lmao such cringe
+            Console.WriteLine("Initialized Mission - Cripple Chomusuke");
             return Task.CompletedTask;
         }
         //try to get something so that all pets will experience soemthing
@@ -31,42 +30,44 @@ namespace Nayu
         {
             var config = GlobalUserAccounts.GetAllAccounts();
             foreach (var userAcc in config)
-            {/*
-                if (userAcc.Have == true)
+            {
+                Chomusuke activeChomusuke = Global.NewChomusuke;
+                if (userAcc.ActiveChomusuke == 1)
+                    activeChomusuke = userAcc.Chomusuke1;
+                if (userAcc.ActiveChomusuke == 2)
+                    activeChomusuke = userAcc.Chomusuke2;
+                if (userAcc.ActiveChomusuke == 3)
+                    activeChomusuke = userAcc.Chomusuke3;
+                if (userAcc.Chomusuke1.Have)
                 {
-                    if (userAcc.Hunger > 0)
-                        userAcc.Hunger = userAcc.Hunger - 1;
-                    else userAcc.Hunger = 0;
-                    if (userAcc.Waste < 20)
-                        userAcc.Waste = userAcc.Waste + 1;
-                    else userAcc.Waste = 20;
-                    if (userAcc.Attention > 0)
-                        userAcc.Attention = userAcc.Attention - 1;
-                    else userAcc.Attention = 0;
+                    if (activeChomusuke.Hunger > 0)
+                        activeChomusuke.Hunger -= 1;
+                    else activeChomusuke.Hunger = 0;
+                    if (activeChomusuke.Waste < 20)
+                        activeChomusuke.Waste += 1;
+                    else activeChomusuke.Waste = 20;
                     GlobalUserAccounts.SaveAccounts();
 
                     var user = Global.Client.GetUser(userAcc.Id);
-                    Console.WriteLine($"{userAcc.Id}");
-                    var message = await user.GetOrCreateDMChannelAsync();
-                    if (userAcc.Waste >= 15)
+                    if (activeChomusuke.Waste >= 15)
                     {
-                        userAcc.Sick = true;
-                        GlobalUserAccounts.SaveAccounts();
-                        await message.SendMessageAsync($":exclamation:  | {user.Mention}, **{userAcc.Name}** is sick! Treat her right with medicine with n!buy! ");
+                        activeChomusuke.Sick = true;
+                        await CreateMessage.CreateAndSendMessageAsync("Chomusuke Alert",$":exclamation:  | {user.Mention}, **{activeChomusuke.Name}** is sick! Treat it right with medicine with n!buy!", DateTime.Now, user);
                     }
-                    if ((userAcc.Waste == 20) && (userAcc.Hunger <= 5) && (userAcc.Attention <= 5))
+                    if ((activeChomusuke.Waste == 20) && (activeChomusuke.Hunger <= 5))
                     {
-                        userAcc.XP = 0;
-                        userAcc.Name = null;
-                        userAcc.Have = false;
-                        userAcc.pfp = null;
-                        userAcc.RanAway = true;
-                        await message.SendMessageAsync($":exclamation:  | {user.Mention}, **{userAcc.Name}** ran away! The living conditions you provided were too low... Maybe try to pay more attention to your Chomusuke next time! ");
-                        GlobalUserAccounts.SaveAccounts();
+                        activeChomusuke.Trust -= 1;
+                        await CreateMessage.CreateAndSendMessageAsync("Chomusuke Alert",$":exclamation:  | {user.Mention}, **{activeChomusuke.Name}** is losing trust in you! The living conditions you provided were too low... Maybe try to pay more attention to your Chomusuke!", DateTime.Now, user);
                     }
+                    if (userAcc.ActiveChomusuke == 1)
+                        userAcc.Chomusuke1 = activeChomusuke;
+                    if (userAcc.ActiveChomusuke == 2)
+                        userAcc.Chomusuke2 = activeChomusuke;
+                    if (userAcc.ActiveChomusuke == 3)
+                        userAcc.Chomusuke3 = activeChomusuke;
                     GlobalUserAccounts.SaveAccounts();
                 }
-                else return;*/
+                else return;
             }
             Console.WriteLine("Successfully executed pet crippling effects.");
         }

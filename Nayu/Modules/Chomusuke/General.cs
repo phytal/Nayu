@@ -68,7 +68,7 @@ namespace Nayu.Modules.Chomusuke
                 {
                     Author = auth
                 };
-                if (config.ActiveChomusuke == config.Chomusuke1)
+                if (config.ActiveChomusuke == 1)
                 {
                     string sick = Helpers.ConvertBool.ConvertBooleanYN(config.Chomusuke1.Sick);
                     if (config.Chomusuke1.Shiny == true)
@@ -92,7 +92,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.AddField("Hunger", config.Chomusuke1.Hunger, true);
                     embed.AddField("Sick", sick, true);
                 }
-                if (config.ActiveChomusuke == config.Chomusuke2)
+                if (config.ActiveChomusuke == 2)
                 {
                     string sick = Helpers.ConvertBool.ConvertBooleanYN(config.Chomusuke2.Sick);
                     if (config.Chomusuke2.Shiny == true)
@@ -116,7 +116,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.AddField("Hunger", config.Chomusuke2.Hunger, true);
                     embed.AddField("Sick", sick, true);
                 }
-                if (config.ActiveChomusuke == config.Chomusuke3)
+                if (config.ActiveChomusuke == 3)
                 {
                     string sick = Helpers.ConvertBool.ConvertBooleanYN(config.Chomusuke3.Sick);
                     if (config.Chomusuke3.Shiny == true)
@@ -223,7 +223,7 @@ namespace Nayu.Modules.Chomusuke
                 {
                     int cost = Global.Rng.Next(34, 87);
                     int hungerGain = Global.Rng.Next(4, 9);
-                    config.Chomusuke1.Hunger += (uint)hungerGain;
+                    config.Chomusuke1.Hunger += (byte)hungerGain;
                     if (config.Chomusuke1.Hunger > 20)
                     {
                         config.Chomusuke1.Hunger = 20;
@@ -265,7 +265,7 @@ namespace Nayu.Modules.Chomusuke
                     int randomIndex = Global.Rng.Next(cleanTexts.Length);
                     string text = cleanTexts[randomIndex];
                     int cleanedAmount = Global.Rng.Next(4, 8);
-                    config.Chomusuke1.Waste -= (uint)cleanedAmount;
+                    config.Chomusuke1.Waste -= (byte)cleanedAmount;
                     if (config.Chomusuke1.Waste > 20)
                     {
                         config.Chomusuke1.Waste = 0;
@@ -298,14 +298,14 @@ namespace Nayu.Modules.Chomusuke
             {
                 if (config.Chomusuke1.Trust == 20)
                 {
-                    await Context.Channel.SendMessageAsync($":soccer:  |  **{Context.User.Username}, your {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke is bored of playing right non!**");
+                    await Context.Channel.SendMessageAsync($":soccer:  |  **{Context.User.Username}, your {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke is bored of playing right now!**");
                     return;
                 }
                 {
                     int randomIndex = Global.Rng.Next(playTexts.Length);
                     string text = playTexts[randomIndex];
                     int trustGain = Global.Rng.Next(4, 9);
-                    config.Chomusuke1.Trust += (uint)trustGain;
+                    config.Chomusuke1.Trust += (byte)trustGain;
                     if (config.Chomusuke1.Trust > 20)
                     {
                         config.Chomusuke1.Trust = 20;
