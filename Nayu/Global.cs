@@ -17,7 +17,7 @@ namespace Nayu
         internal static Dictionary<ulong, string> MessagesIdToTrack { get; set; }
         internal static readonly Chomusuke NewChomusuke = new Chomusuke(
             false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, null, 0, null, null, 0, 0, 0, 0, 0, 0,
-            0, 0, 0);
+            0, 0, 0, 0, false, false, false, null);
         internal static Slot slot = new Slot();
 
         public static string ReplacePlacehoderStrings(this string messageString, IGuildUser user = null)

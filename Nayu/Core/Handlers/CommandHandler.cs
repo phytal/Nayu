@@ -127,7 +127,7 @@ namespace Nayu
         }
 
 
-        /*public async Task OnReactionAddedDuelRequest(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
+        public async Task OnReactionAddedDuelRequest(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
         {
             if (!reaction.User.Value.IsBot)
             {
@@ -157,6 +157,6 @@ namespace Nayu
                     return;
                 }
             }
-        }*/
+        }
     }
 }

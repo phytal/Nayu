@@ -5,6 +5,7 @@ using Discord.Commands;
 using Nayu.Core.Modules;
 using Nayu.Features.GlobalAccounts;
 using Discord.WebSocket;
+using Nayu.Modules.Chomusuke.Dueling;
 
 
 namespace Nayu.Modules.Chomusuke
@@ -19,6 +20,7 @@ namespace Nayu.Modules.Chomusuke
             var user = Context.User as SocketGuildUser;
             var config = GlobalUserAccounts.GetUserAccount(user);
             var configg = GlobalUserAccounts.GetUserAccount(user);
+            var activeChomusuke = ActiveChomusuke.GetOneActiveChomusuke(user.Id);
             string shoptext = ":department_store:  **|  Chomusuke Shop** \n ```xl\nPlease select the purchase you would like to make.\n\n[1] Capsules\n[2] Room Upgrades\n[3] Room Downgrade\n[4] Boosts + Items\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
             var shop = await Context.Channel.SendMessageAsync(shoptext);
             var response = await NextMessageAsync();
@@ -33,14 +35,13 @@ namespace Nayu.Modules.Chomusuke
                 var newresponse = await NextMessageAsync();
                 if (newresponse.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                 {
-                    if (configg.Taiyaki < config.RoomCost)
+                    if (configg.Taiyaki < 900)
                     {
                         await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{900 - configg.Taiyaki}** more Taiyakis!"; });
                         return;
                     }
-                    config.Have = true;
-                    configg.Taiyaki -= config.RoomCost;
-                    config.BoughtSince = DateTime.UtcNow;
+                    config.NormalCapsule += 1;
+                    configg.Taiyaki -= 900;
                     GlobalUserAccounts.SaveAccounts(user.Id);
                     await Context.Channel.SendMessageAsync($"You have successfully bought a {Emote.Parse("<:chomusuke:601183653657182280>")} Normal Chomusuke Capsule!");
                     return;
@@ -141,15 +142,13 @@ namespace Nayu.Modules.Chomusuke
             }
             if (response.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
             {
-                await shop.ModifyAsync(m => { m.Content = $"```xl\n[1] Medicine - cures your Chomusuke's sickness [200 {Emote.Parse("<:taiyaki:599774631984889857>")}]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```"; });
+                await shop.ModifyAsync(m => { m.Content = $"```xl\n[1] Medicine - cures your Chomusuke's sickness [400 {Emote.Parse("<:taiyaki:599774631984889857>")}]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```"; });
                 var newresponse = await NextMessageAsync();
                 if (newresponse.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                 {
-                    var chooseChomusuke = await NextMessageAsync();
-
-                    config.Sick = false;
-                    config.Waste = 0;
-                    GlobalUserAccounts.SaveAccounts(user.Id);
+                    activeChomusuke.Sick = false;
+                    activeChomusuke.Waste = 0;
+                    await ActiveChomusuke.ConvertOneActiveVariable(user.Id, activeChomusuke);
                     await shop.ModifyAsync(m => { m.Content = $":pill:  |  **{Context.User.Username}**, your {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke has been cured of it's sickness! Make sure to keep looking after it!"; });
                     return;
                 }

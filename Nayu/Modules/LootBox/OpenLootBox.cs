@@ -2,6 +2,8 @@
 using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
+using System.Xml;
+using Discord.Commands;
 using Nayu.Core.Modules;
 using Nayu.Features.GlobalAccounts;
 
@@ -19,13 +21,13 @@ namespace Nayu.Modules.LootBox
                 .WithImageUrl("https://i.imgur.com/fH8wya5.png");
             embed.Title = "Common Lootbox";
             embed.Description = $"**{user.Username}** opened a **COMMON** Lootbox!";
-            config.LootBoxCommon = config.LootBoxCommon - 1;
-            uint taiyakies = (uint)Global.Rng.Next(70, 120);
+            config.LootBoxCommon -= 1;
+            uint taiyakies = (uint) Global.Rng.Next(50, 100);
             config.Taiyaki += taiyakies;
             embed.AddField("Taiyakis", taiyakies);
 
             configg.NormalCapsule += 1;
-            embed.AddField("Chomusuke Item", "Common Chomusuke Capsule (Open it with `n!openCapsule`!)");
+            embed.AddField("Chomusuke Item", "Normal Chomusuke Capsule (Open it with `n!openCapsule`!)");
             GlobalUserAccounts.SaveAccounts();
             await channel.SendMessageAsync("", embed: embed.Build());
         }
@@ -33,132 +35,106 @@ namespace Nayu.Modules.LootBox
         public static async Task OpenUncommonBox(SocketUser user, ITextChannel channel)
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
-            var configg = GlobalUserAccounts.GetUserAccount(user);
 
             var embed = new EmbedBuilder()
                 .WithColor(26, 252, 10)
                 .WithImageUrl("https://i.imgur.com/MHpJetn.png");
             embed.Title = "Uncommon Lootbox";
             embed.Description = $"**{user.Username}** opened an **UNCOMMON** Lootbox!";
-            config.LootBoxCommon = config.LootBoxUncommon - 1;
-            int taiyakies = Global.Rng.Next(150, 300);
-            config.Taiyaki += (ulong)taiyakies;
+            config.LootBoxUncommon -= 1;
+            ulong taiyakies = (ulong) Global.Rng.Next(150, 301);
+            config.Taiyaki += taiyakies;
             embed.AddField("Taiyakis", taiyakies);
 
-            int chomusukeBool = Global.Rng.Next(1, 3);
+            byte chomusukeBool = (byte) Global.Rng.Next(1, 4);
             if (chomusukeBool == 1 || chomusukeBool == 2)
             {
-                if (configg.Have != true)
-                {
-                    int chomusukeValue = Global.Rng.Next(1, 64);
-                    Tuple<string, string> chomusuke = ChomusukeInteractive.GetChomusukeRarity(chomusukeValue);
-                    embed.AddField("Chomusuke", chomusuke.Item2);
-                    configg.Have = true;
-                    configg.Breed = chomusuke.Item1;
-                    GlobalUserAccounts.SaveAccounts();
-                }
-                else
-                {
-                    configg.CommonCapsule += 1;
-                    embed.AddField("Chomusuke Item", "Common Chomusuke Capsule (Open it with `n!openCapsule`!)");
-                }
-                GlobalUserAccounts.SaveAccounts();
+                config.NormalCapsule += 1;
+                embed.AddField("Chomusuke Item", "Normal Chomusuke Capsule (Open it with `n!openCapsule`!)");
             }
-            int duelBool = Global.Rng.Next(1, 3);
+            
+            int duelBool = Global.Rng.Next(1, 4);
             if (duelBool == 1 || duelBool == 2)
             {
-                int duelValue = Global.Rng.Next(29, 56);
+                int duelValue = Global.Rng.Next(29, 57);
                 string item = GetDuelItem(user, duelValue);
                 embed.AddField("Duels Item", $"{item} (x1)");
             }
+            GlobalUserAccounts.SaveAccounts();
+            
             await channel.SendMessageAsync("", embed: embed.Build());
         }
+
 
         public static async Task OpenRareBox(SocketUser user, ITextChannel channel)
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
-            var configg = GlobalUserAccounts.GetUserAccount(user);
 
             var embed = new EmbedBuilder()
                 .WithColor(10, 50, 252)
                 .WithImageUrl("https://i.imgur.com/cpK5Aa8.png");
             embed.Title = "Rare Lootbox";
             embed.Description = $"**{user.Username}** opened a **RARE** Lootbox!";
-            config.LootBoxCommon = config.LootBoxRare - 1;
+            config.LootBoxRare -= 1;
             int taiyakies = Global.Rng.Next(320, 500);
-            config.Taiyaki += (ulong)taiyakies;
+            config.Taiyaki += (ulong) taiyakies;
             embed.AddField("Taiyakis", taiyakies);
 
-            int chomusukeBool = Global.Rng.Next(1, 3);
-            if (chomusukeBool == 1 || chomusukeBool == 2)
-            {
-                if (configg.Have != true)
-                {
-                    int chomusukeValue = Global.Rng.Next(29, 64);
-                    Tuple<string, string> chomusuke = ChomusukeInteractive.GetChomusukeRarity(chomusukeValue);
-                    embed.AddField("Chomusuke", chomusuke.Item2);
-                    configg.Have = true;
-                    configg.Breed = chomusuke.Item1;
-                    GlobalUserAccounts.SaveAccounts();
-                }
-                else
-                {
-                    configg.RareCapsule += 1;
-                    embed.AddField("Chomusuke Item", "Rare Chomusuke Capsule (Open it with `n!openCapsule`!)");
-                }
-                GlobalUserAccounts.SaveAccounts();
-            }
-            int duelBool = Global.Rng.Next(1, 3);
+            config.NormalCapsule += 1;
+            embed.AddField("Chomusuke Item", "Normal Chomusuke Capsule (Open it with `n!openCapsule`!)");
+
+            int duelBool = Global.Rng.Next(1, 4);
             if (duelBool == 1 || duelBool == 2)
             {
-                int duelValue = Global.Rng.Next(26, 56);
+                int duelValue = Global.Rng.Next(26, 57);
                 string item = GetDuelItem(user, duelValue);
                 embed.AddField("Duels Item", $"{item} (x1)");
             }
+
+            GlobalUserAccounts.SaveAccounts();
             await channel.SendMessageAsync("", embed: embed.Build());
         }
 
         public static async Task OpenEpicBox(SocketUser user, ITextChannel channel)
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
-            var configg = GlobalUserAccounts.GetUserAccount(user);
 
             var embed = new EmbedBuilder()
                 .WithColor(131, 10, 252)
                 .WithImageUrl("https://i.imgur.com/h3F7zeF.png");
             embed.Title = "Epic Lootbox";
             embed.Description = $"**{user.Username}** opened an **EPIC** Lootbox!";
-            config.LootBoxCommon = config.LootBoxEpic - 1;
+            config.LootBoxEpic -= 1;
             int taiyakies = Global.Rng.Next(550, 750);
             config.Taiyaki += (ulong)taiyakies;
             embed.AddField("Taiyakis", taiyakies);
 
-            int chomusukeBool = Global.Rng.Next(1, 3);
-            if (chomusukeBool == 1 || chomusukeBool == 2)
+            int chomusukeBool = Global.Rng.Next(1, 4);
+            if (chomusukeBool == 1)
             {
-                if (configg.Have != true)
-                {
-                    int chomusukeValue = Global.Rng.Next(48, 64);
-                    Tuple<string, string> chomusuke = ChomusukeInteractive.GetChomusukeRarity(chomusukeValue);
-                    embed.AddField("Chomusuke", chomusuke.Item2);
-                    configg.Have = true;
-                    configg.Breed = chomusuke.Item1;
-                    GlobalUserAccounts.SaveAccounts();
+                config.ShinyCapsule += 1;
+                    embed.AddField("Chomusuke Item", "Shiny Chomusuke Capsule (Open it with `n!openCapsule`!)");
                 }
-                else
-                {
-                    configg.EpicCapsule += 1;
-                    embed.AddField("Chomusuke Item", "Epic Chomusuke Capsule (Open it with `n!openCapsule`!)");
-                }
-                GlobalUserAccounts.SaveAccounts();
+            else if (chomusukeBool == 2)
+            {
+                config.NormalCapsule += 1;
+                embed.AddField("Chomusuke Item", "Normal Chomusuke Capsule (Open it with `n!openCapsule`!)");
             }
+            else if (chomusukeBool == 3)
+            {
+                config.MythicalCapsule += 1;
+                embed.AddField("Chomusuke Item", "Mythical Chomusuke Capsule (Open it with `n!openCapsule`!)");
+            }
+
+
             int duelBool = Global.Rng.Next(1, 3);
             if (duelBool == 1 || duelBool == 2)
             {
-                int duelValue = Global.Rng.Next(44, 56);
+                int duelValue = Global.Rng.Next(44, 57);
                 string item = GetDuelItem(user, duelValue);
                 embed.AddField("Duels Item", $"{item} (x1)");
             }
+            GlobalUserAccounts.SaveAccounts();
             await channel.SendMessageAsync("", embed: embed.Build());
         }
 
@@ -172,7 +148,7 @@ namespace Nayu.Modules.LootBox
                 .WithImageUrl("https://i.imgur.com/qi4sqoH.png");
             embed.Title = "Legendary Lootbox";
             embed.Description = $"**{user.Username}** opened a **LEGENDARY** Lootbox!";
-            config.LootBoxCommon = config.LootBoxLegendary - 1;
+            config.LootBoxLegendary -=  1;
             int taiyakies = Global.Rng.Next(800, 1200);
             config.Taiyaki += (ulong)taiyakies;
             embed.AddField("Taiyakis", taiyakies);
@@ -180,26 +156,15 @@ namespace Nayu.Modules.LootBox
             int chomusukeBool = Global.Rng.Next(1, 3);
             if (chomusukeBool == 1 || chomusukeBool == 2)
             {
-                if (configg.Have != true)
-                {
-                    int chomusukeValue = Global.Rng.Next(63, 64);
-                    Tuple<string, string> chomusuke = ChomusukeInteractive.GetChomusukeRarity(chomusukeValue);
-                    embed.AddField("Chomusuke", chomusuke.Item2);
-                    configg.Have = true;
-                    configg.Breed = chomusuke.Item1;
-                    GlobalUserAccounts.SaveAccounts();
-                }
-                else
-                {
-                    configg.LegendaryCapsule += 1;
-                    embed.AddField("Chomusuke Item", "Legendary Chomusuke Capsule (Open it with `n!openCapsule`!)");
-                }
+                configg.MythicalCapsule += 1;
+                    embed.AddField("Chomusuke Item", "Mythical Chomusuke Capsule (Open it with `n!openCapsule`!)");
+                
                 GlobalUserAccounts.SaveAccounts();
             }
             int duelBool = Global.Rng.Next(1, 3);
             if (duelBool == 1 || duelBool == 2)
             {
-                int duelValue = Global.Rng.Next(53, 56);
+                int duelValue = Global.Rng.Next(53, 57);
                 string item = GetDuelItem(user, duelValue);
                 embed.AddField("Duels Item", $"{item} (x1)");
             }
@@ -210,7 +175,6 @@ namespace Nayu.Modules.LootBox
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
             string item = string.Empty;
-            var chomusuke = ChomusukeInteractive.GetChomusuke(value);
             switch (value)
             {
                 case 1:

@@ -10,6 +10,7 @@ using Nayu.Core.Modules;
 using Discord.Rest;
 using System.Collections.Generic;
 using System.Linq;
+using Nayu.Modules.Chomusuke.Dueling;
 
 namespace Nayu.Modules
 {
@@ -176,7 +177,10 @@ namespace Nayu.Modules
                 configg.WhoWaits = req.Mention;
             }
             GlobalUserAccounts.SaveAccounts();
-            await channel.SendMessageAsync($":crossed_swords:  | {req.Mention} challenged {user.Mention} to a duel!\n\n**{configg.OpponentName}** has **{config.Health}** health!\n**{config.OpponentName}** has **{configg.Health}** health!\n\n{text}, you go first!");
+            var choms = ActiveChomusuke.GetActiveChomusuke(user.Id, config.OpponentId);
+            var chom1 = choms.Item1;
+            var chom2 = choms.Item2;
+            await channel.SendMessageAsync($":crossed_swords:  | {req.Mention} challenged {user.Mention} to a duel!\n\n**{configg.OpponentName}** has **{chom1.Health}** health!\n**{config.OpponentName}** has **{chom2.Health}** health!\n\n{text}, you go first!");
         }
 
         [Command("duelsLeaderboard"), Alias("dlb")]
@@ -272,29 +276,31 @@ namespace Nayu.Modules
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             var configg = GlobalUserAccounts.GetUserAccount(config.OpponentId);
-            await ReplyAsync(":flag_white:  | " + Context.User.Mention + " ended the fight.");
+            await ReplyAsync(":flag_white:  | " + Context.User.Mention + " ended the fight."); 
+            var choms = ActiveChomusuke.GetActiveChomusuke(Context.User.Id, config.OpponentId);
+            var chom1 = choms.Item1;
+            var chom2 = choms.Item2;
+            
             config.Fighting = false;
             configg.Fighting = false;
-            config.Health = 100;
-            configg.Health = 100;
+            chom1.Health = chom1.HealthCapacity;
+            chom2.Health = chom2.HealthCapacity;
             config.OpponentId = 0;
             configg.OpponentId = 0;
             config.OpponentName = null;
             configg.OpponentName = null;
             config.WhosTurn = null;
             config.WhoWaits = null;
-            config.placeHolder = null;
+            config.PlaceHolder = null;
             configg.WhosTurn = null;
             configg.WhoWaits = null;
-            configg.placeHolder = null;
-            config.Meds = 6;
-            configg.Meds = 6;
-            config.Blocking = false;
-            configg.Blocking = false;
-            configg.Deflecting = false;
-            config.Deflecting = false;
-            config.Wins += 1;
-            configg.Losses += 1;
+            chom1.Blocking = false;
+            chom2.Blocking = false;
+            chom1.Deflecting = false;
+            chom2.Deflecting = false;
+            chom1.PotionEffects.Clear();
+            chom2.PotionEffects.Clear();
+
             GlobalUserAccounts.SaveAccounts();
         }
     }

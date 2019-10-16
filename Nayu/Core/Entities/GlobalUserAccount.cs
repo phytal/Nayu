@@ -41,10 +41,15 @@ namespace Nayu.Entities
         public sbyte Control { get; set; } //-100 to 100
         public uint Wins { get; set; }
         public uint Losses { get; set; }
+        public uint Draws { get; set; }
+        public bool Blocking { get; set; }
+        public bool Deflecting { get; set; }
+        public bool Meditating { get; set; }
+        public Dictionary<string, byte> PotionEffects { get; set; } = new Dictionary<string, byte>();
 
         public Chomusuke(bool have, string name, string zodiac, bool shiny, byte hunger, uint xp, byte trust, byte waste, bool sick, string attack1, string attack2, string attack3, 
             string attack4, string type, uint cp, string trait1, string trait2, uint health, uint shield, uint mana, uint healthcapacity, uint shieldcapacity, uint manacapacity, 
-            sbyte control, uint wins, uint losses)
+            sbyte control, uint wins, uint losses, uint draws, bool blocking, bool deflecting, bool meditating, Dictionary<string,byte> potionEffects)
         {
             Have = have;
             Name = name;
@@ -72,6 +77,11 @@ namespace Nayu.Entities
             Control = control;
             Wins = wins;
             Losses = losses;
+            Draws = draws;
+            Blocking = blocking;
+            Deflecting = deflecting;
+            Meditating = meditating;
+            PotionEffects = potionEffects;
         }
     }
 
@@ -95,21 +105,6 @@ namespace Nayu.Entities
 
     public class GlobalUserAccount : IGlobalAccount
     {
-        public ushort ConstatineMedallion { get; set; }
-        public ushort BookOfExodus { get; set; }
-        public ushort FireThread { get; set; }
-        public ushort SkyPowder { get; set; }
-        public ushort TearsOfHera { get; set; }
-        public ushort HornOfVeles { get; set; }
-        public ushort BranchOfYggdrasil { get; set; }
-        public ushort VolcanicRune { get; set; }
-        public ushort FlaskOfIchor { get; set; }
-        public ushort FlaskOfElixir { get; set; }
-        public ushort FlaskOfMana { get; set; }
-        public ushort ShardsOfImmortality { get; set; }
-        public ushort ChainsOfTartatus { get; set; }
-        public ushort ReviveCrystal { get; set; }
-        public ushort FreyasBlessing { get; set; }
 
         public Chomusuke
             Chomusuke1
@@ -173,5 +168,24 @@ namespace Nayu.Entities
         public DateTime LastMessage { get; set; } = DateTime.UtcNow;
         public List<Message> Inbox { get; set; } = new List<Message>();
         public Dictionary<string, string> Tags { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, ushort> Items { get; set; } = new Dictionary<string, ushort>();
+        /*
+        public ushort ConstatineMedallion { get; set; } //decreases control (chaos)
+        public ushort BookOfExodus { get; set; } //increases control (nature)
+        public ushort FireThread { get; set; }//fire type
+        public ushort SkyPowder { get; set; }//wind type
+        public ushort TearsOfHera { get; set; }//water type
+        public ushort HornOfVeles { get; set; }//chaos type
+        public ushort BranchOfYggdrasil { get; set; }//nature type
+        public ushort VolcanicRune { get; set; }//special fire type attack that can be given to any type
+        public ushort FlaskOfIchor { get; set; }//boosts cp drastically
+        public ushort FlaskOfElixir { get; set; }//boosts hp
+        public ushort FlaskOfMana { get; set; }//boosts mana capacity
+        public ushort ShardsOfImmortality { get; set; }//used to craft items
+        public ushort ChainsOfTartatus { get; set; }//locks control
+        public ushort ReviveCrystal { get; set; }//revives a chomusuke
+        public ushort FreyasBlessing { get; set; }//boosts xp gain
+        //dice of god - use on chomusuke, boosts stats but 1% death chance
+         */
     }
 }
