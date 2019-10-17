@@ -170,22 +170,23 @@ namespace Nayu.Entities
         public Dictionary<string, string> Tags { get; set; } = new Dictionary<string, string>();
         public Dictionary<string, ushort> Items { get; set; } = new Dictionary<string, ushort>();
         /*
-        public ushort ConstatineMedallion { get; set; } //decreases control (chaos)
-        public ushort BookOfExodus { get; set; } //increases control (nature)
-        public ushort FireThread { get; set; }//fire type
-        public ushort SkyPowder { get; set; }//wind type
-        public ushort TearsOfHera { get; set; }//water type
-        public ushort HornOfVeles { get; set; }//chaos type
-        public ushort BranchOfYggdrasil { get; set; }//nature type
-        public ushort VolcanicRune { get; set; }//special fire type attack that can be given to any type
-        public ushort FlaskOfIchor { get; set; }//boosts cp drastically
-        public ushort FlaskOfElixir { get; set; }//boosts hp
-        public ushort FlaskOfMana { get; set; }//boosts mana capacity
-        public ushort ShardsOfImmortality { get; set; }//used to craft items
-        public ushort ChainsOfTartatus { get; set; }//locks control
-        public ushort ReviveCrystal { get; set; }//revives a chomusuke
-        public ushort FreyasBlessing { get; set; }//boosts xp gain
-        //dice of god - use on chomusuke, boosts stats but 1% death chance
+        public ushort ConstantineMedallion { get; set; } //decreases control (chaos) e
+        public ushort BookOfExodus { get; set; } //increases control (nature) e
+        public ushort FireThread { get; set; }//fire type r
+        public ushort SkyPowder { get; set; }//wind type r
+        public ushort TearsOfHera { get; set; }//water type r
+        public ushort HornOfVeles { get; set; }//chaos type r 
+        public ushort BranchOfYggdrasil { get; set; }//nature type r
+        public ushort VolcanicRune { get; set; }//special fire type attack that can be given to any type e
+        public ushort FlaskOfIchor { get; set; }//boosts cp drastically e
+        public ushort FlaskOfElixir { get; set; }//boosts hp e
+        public ushort FlaskOfMana { get; set; }//boosts mana capacity e
+        public ushort ShardsOfImmortality { get; set; }//used to craft items c
+        public ushort ChainsOfTartarus { get; set; }//locks control l
+        public ushort ReviveCrystal { get; set; }//revives a chomusuke c
+        public ushort FreyasBlessing { get; set; }//boosts xp gain l
+        //dice of god - use on chomusuke, boosts stats but 1% death chance l
+        //mead of poetry- very efficient mana usage l
          */
     }
 }
