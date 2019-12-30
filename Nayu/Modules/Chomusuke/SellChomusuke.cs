@@ -1,5 +1,4 @@
 ﻿using Discord.Commands;
-using Nayu.Core.Modules;
 using System;
 using System.Collections.Generic;
 using System.Text;

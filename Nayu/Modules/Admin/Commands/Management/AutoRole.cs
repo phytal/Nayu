@@ -1,29 +1,28 @@
-﻿using Discord;
-using Discord.Commands;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
 
-namespace Nayu.Modules.Management.Commands
+namespace Nayu.Modules.Admin.Commands.Management
 {
     public class AutoRole : NayuModule
     {
         [Command("AutoRole")]
-        [Summary("Adds a role that new members will recieve automatically")]
+        [Summary("Adds a role that new members will receive automatically")]
         [Remarks("n!autorole <role name> Ex: n!autorole Member")]
         [Cooldown(5)]
         public async Task AutoRoleRoleAdd(string arg = "")
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 if (arg == null) await ReplyAndDeleteAsync("Please include the name of the role you want to autorole");
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 config.Autorole = arg;
-                GlobalGuildAccounts.SaveAccounts();
+                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
                 var embed = new EmbedBuilder();
                 embed.WithDescription($"Added the **{arg}** role to Autorole!");
@@ -36,7 +35,7 @@ namespace Nayu.Modules.Management.Commands
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
+                embed.Title = $":x:  | You need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
         }

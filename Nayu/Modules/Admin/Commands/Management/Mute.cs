@@ -1,13 +1,12 @@
-﻿using Discord;
-using Discord.Commands;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
 using Nayu.Preconditions;
 
-namespace Nayu.Modules.Management.Commands
+namespace Nayu.Modules.Admin.Commands.Management
 {
     public class Mute : NayuModule
     {

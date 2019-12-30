@@ -1,14 +1,12 @@
-﻿using Nayu.Configuration;
-using System;
-using Nayu.Entities;
-using Discord;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Discord.WebSocket;
+using Nayu.Core.Entities;
 
-namespace Nayu.Features.GlobalAccounts
+namespace Nayu.Core.Features.GlobalAccounts
 {
     internal static class GlobalGuildUserAccounts
     {

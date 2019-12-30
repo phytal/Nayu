@@ -8,7 +8,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Nayu.Preconditions;
-using Nayu.Core.Modules;
 
 namespace Nayu.Modules.API
 {

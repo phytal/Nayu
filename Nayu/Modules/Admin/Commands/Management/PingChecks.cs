@@ -1,14 +1,13 @@
-﻿using Discord;
-using Discord.Commands;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
-using Nayu.Preconditions;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Helpers;
+using Nayu.Preconditions;
 
-namespace Nayu.Modules.Management.Commands
+namespace Nayu.Modules.Admin.Commands.Management
 {
     public class PingChecks : NayuModule
     {
@@ -16,7 +15,7 @@ namespace Nayu.Modules.Management.Commands
         [Summary("Turns on or off mass ping checks.")]
         [Remarks("n!pc <on/off> Ex: n!pc on")]
         [Cooldown(5)]
-        public async Task SetBoolToJson(string arg)
+        public async Task PingCheck(string arg)
         {
             var guser = Context.User as SocketGuildUser;
             if (guser.GuildPermissions.Administrator)
@@ -32,7 +31,7 @@ namespace Nayu.Modules.Management.Commands
                         ? "Enabled mass ping checks for this server."
                         : "Disabled mass ping checks for this server.");
                     config.MassPingChecks = argg;
-                    GlobalGuildAccounts.SaveAccounts();
+                    GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                     await ReplyAsync("", embed: embed.Build());
                 }
                 if (result.Item1 == false)
@@ -45,7 +44,7 @@ namespace Nayu.Modules.Management.Commands
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
+                embed.Title = $":x:  | You need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
         }

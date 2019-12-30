@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Nayu.Libs.CustomLibraries.Discord.Addons.Interactive.Callbacks;
+using Nayu.Libs.CustomLibraries.Discord.Addons.Interactive.Criteria;
 
-namespace Discord.Addons.Interactive
+namespace Nayu.Libs.CustomLibraries.Discord.Addons.Interactive.Paginator
 {
     public class PaginatedMessageCallback : IReactionCallback
     {

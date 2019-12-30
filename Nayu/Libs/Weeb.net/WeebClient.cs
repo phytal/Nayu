@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Weeb.net.Data;
+using Nayu.Libs.Weeb.net.Data;
 
-namespace Weeb.net
+namespace Nayu.Libs.Weeb.net
 {   
     public class WeebClient
     {

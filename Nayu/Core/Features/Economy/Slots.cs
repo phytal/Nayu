@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nayu.Features.Economy
+namespace Nayu.Core.Features.Economy
 {
     /// <summary>
     /// Slots looks something similar like this:

@@ -1,14 +1,12 @@
-﻿using Discord;
-using Discord.Commands;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
-using Nayu.Helpers;
 
-namespace Nayu.Modules.Management.Commands
+namespace Nayu.Modules.Admin.Commands.Fun
 {
     public class CustomCurrency : NayuModule
     {
@@ -26,14 +24,14 @@ namespace Nayu.Modules.Management.Commands
                     embed.WithColor(37, 152, 255);
                     embed.WithDescription($"The server's currency is now set to the **{arg}**!");
                     config.Currency = arg;
-                    GlobalGuildAccounts.SaveAccounts();
+                    GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
                     await Context.Channel.SendMessageAsync("", embed: embed.Build());
                 if (arg == string.Empty)
                 {
                     await Context.Channel.SendMessageAsync($"The server currency is now set to the default **Taiyaki** To change this, you can use `n!cc <name of your custom currency>`");
                     config.Currency = "Taiyakis";
-                    GlobalGuildAccounts.SaveAccounts();
+                    GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 }
             }
             else

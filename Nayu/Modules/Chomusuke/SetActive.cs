@@ -1,9 +1,8 @@
 ﻿using Discord;
 using Discord.Commands;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
 using System;
 using System.Threading.Tasks;
+using Nayu.Core.Features.GlobalAccounts;
 
 namespace Nayu.Modules.Chomusuke
 {

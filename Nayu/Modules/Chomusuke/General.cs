@@ -4,10 +4,9 @@ using Discord.WebSocket;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Libs.CustomLibraries.Discord.Addons.Interactive.Paginator;
 using Nayu.Preconditions;
-using Discord.Addons.Interactive;
 
 namespace Nayu.Modules.Chomusuke
 {
@@ -27,7 +26,6 @@ namespace Nayu.Modules.Chomusuke
             {
                 await Context.Channel.SendMessageAsync(
                     $":no:  |  **{Context.User.Username}**, you don't own a {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke! \n\nPurchase one with n!chomusuke buy!");
-                return;
             }
             else //show their Chomusuke status
             {

@@ -2,10 +2,10 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Nayu.Libs.Weeb.net.Data;
 using Newtonsoft.Json;
-using Weeb.net.Data;
 
-namespace Weeb.net
+namespace Nayu.Libs.Weeb.net
 {
     
     public enum FileType

@@ -1,19 +1,18 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using Weeb.net;
-using Weeb.net.Data;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
-using Nayu.Preconditions;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Helpers;
-using System;
-using System.Net;
-using System.Threading;
+using Nayu.Libs.Weeb.net;
+using Nayu.Libs.Weeb.net.Data;
+using Nayu.Preconditions;
 using Newtonsoft.Json;
 
-namespace Nayu.Modules.API.Anime.weebDotSh.NSFW
+namespace Nayu.Modules.API.Anime.Both
 {
     public class AutoLewd : NayuModule
     {
@@ -30,17 +29,17 @@ namespace Nayu.Modules.API.Anime.weebDotSh.NSFW
                 await Context.Channel.SendMessageAsync($"Please say `n!autolewd <on/off>`");
                 return;
             }
-            if (result.Item2 == true)
+            if (result.Item2)
             {
                 await Context.Channel.SendMessageAsync($"Started the AutoLewd loop :3");
                 await LewdLoop(Context.Message);
                 guildAcc.AutoLewdStatus = true;
-                GlobalGuildAccounts.SaveAccounts();
+                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
             }
-            if (result.Item2 == false)
+            if (!result.Item2)
             {
                 guildAcc.AutoLewdStatus = false;
-                GlobalGuildAccounts.SaveAccounts();
+                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 await Context.Channel.SendMessageAsync($"Stopped the AutoLewd loop :/");
 
             }
@@ -53,8 +52,8 @@ namespace Nayu.Modules.API.Anime.weebDotSh.NSFW
         [Cooldown(5)]
         public async Task LewdIMGChannel(ITextChannel channel)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var guildAcc = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 guildAcc.AutoLewdChannel = channel.Id;
@@ -100,7 +99,7 @@ namespace Nayu.Modules.API.Anime.weebDotSh.NSFW
                 if (rand == 2)
                 {
                     string[] tags = new[] {""};
-                    Helpers.WebRequest webReq = new Helpers.WebRequest();
+                    weebDotSh.Helpers.WebRequest webReq = new weebDotSh.Helpers.WebRequest();
                     RandomData result = await webReq.GetTypesAsync("neko", tags, FileType.Any, NsfwSearch.Only, false);
                     string url = result.Url;
                     string id = result.Id;

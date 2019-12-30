@@ -4,10 +4,9 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 
-namespace Nayu.Modules
+namespace Nayu.Modules.Chomusuke.Dueling
 {
     public class DuelsShop : NayuModule
     {
@@ -23,7 +22,7 @@ namespace Nayu.Modules
                 await Context.Channel.SendMessageAsync("You can't go to the duels shop in the middle of a duel!");
                 return;
             }
-            string shoptext = ":crossed_swords:   **|  Duels Armoury** \n ```xl\nPlease select the purchase you would like to make.\n\n[1] Potions\n[2] Books\n[3] Weapons\n[4] Armour\n[5] Items\n[6] Blessings\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
+            string shoptext = ":crossed_swords:   **|  Duels Armoury** \n ```xl\nPlease select the purchase you would like to make.\n\n[1] Potions\n[2] Runes\n[3] Materials\n[4] Items\n[5] Blessings\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
             var shop = await Context.Channel.SendMessageAsync(shoptext);
             var response = await NextMessageAsync();
 
@@ -112,7 +111,7 @@ namespace Nayu.Modules
                 return;
             }
             if (response.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
-            {
+            {/*
                 await shop.ModifyAsync(m => { m.Content = $"```xl\n[1] Weapon Mastery - 10% more damage dealt [500 Taiyakis]\n[2] Efficient Brewing - 5% increased potion effectiveness [500 Taiyakis]\n[3] Mage Mastery - 5% more spell damage delt [500 Taiyakis]\n[4] Durable Armour - 5% less damage received [500 Taiyakis]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.\n```"; });
                 var newresponse = await NextMessageAsync();
                 if (newresponse.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -194,7 +193,7 @@ namespace Nayu.Modules
                 {
                     await shop.ModifyAsync(m => { m.Content = "<:no:453716729525174273>  | That is an invalid response. Please try again."; });
                     return;
-                }
+                }*/
             }
             if (response.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
             {
@@ -211,7 +210,7 @@ namespace Nayu.Modules
                             await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{150 - config.Taiyaki}** more Taiyakis!"; });
                             return;
                         }
-                        config.weapon = "bronze";
+                        config.Weapon = "bronze";
                         config.Taiyaki -= 150;
                         GlobalUserAccounts.SaveAccounts(user.Id);
                         await Context.Channel.SendMessageAsync("You have successfully bought a Bronze Sword!");
@@ -239,7 +238,7 @@ namespace Nayu.Modules
                             await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{300 - config.Taiyaki}** more Taiyakis!"; });
                             return;
                         }
-                        config.weapon = "steel";
+                        config.Weapon = "steel";
                         config.Taiyaki -= 300;
                         GlobalUserAccounts.SaveAccounts(user.Id);
                         await Context.Channel.SendMessageAsync("You have successfully bought a Steel Sword!");
@@ -267,7 +266,7 @@ namespace Nayu.Modules
                             await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!"; });
                             return;
                         }
-                        config.weapon = "gold";
+                        config.Weapon = "gold";
                         config.Taiyaki -= 500;
                         GlobalUserAccounts.SaveAccounts(user.Id);
                         await Context.Channel.SendMessageAsync("You have successfully bought a Gold Sword!");
@@ -316,7 +315,7 @@ namespace Nayu.Modules
                                 await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{150 - config.Taiyaki}** more Taiyakis!"; });
                                 return;
                             }
-                            config.armour = "bronze";
+                            config.Armour = "bronze";
                             config.Taiyaki -= 150;
                             GlobalUserAccounts.SaveAccounts(user.Id);
                             await Context.Channel.SendMessageAsync("You have successfully bought a Bronze Armour Set!");
@@ -344,7 +343,7 @@ namespace Nayu.Modules
                                 await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{300 - config.Taiyaki}** more Taiyakis!"; });
                                 return;
                             }
-                            config.armour = "steel";
+                            config.Armour = "steel";
                             config.Taiyaki -= 300;
                             GlobalUserAccounts.SaveAccounts(user.Id);
                             await Context.Channel.SendMessageAsync("You have successfully bought a Steel Armour Set!");
@@ -372,7 +371,7 @@ namespace Nayu.Modules
                                 await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!"; });
                                 return;
                             }
-                            config.armour = "gold";
+                            config.Armour = "gold";
                             config.Taiyaki -= 500;
                             GlobalUserAccounts.SaveAccounts(user.Id);
                             await Context.Channel.SendMessageAsync("You have successfully bought a Gold Armour Set!");
@@ -400,7 +399,7 @@ namespace Nayu.Modules
                                 await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{1000 - config.Taiyaki}** more Taiyakis!"; });
                                 return;
                             }
-                            config.armour = "platinum";
+                            config.Armour = "platinum";
                             config.Taiyaki -= 1000;
                             GlobalUserAccounts.SaveAccounts(user.Id);
                             await Context.Channel.SendMessageAsync("You have successfully bought a Platinum Armour Set!");
@@ -428,7 +427,7 @@ namespace Nayu.Modules
                                 await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{1000 - config.Taiyaki}** more Taiyakis!"; });
                                 return;
                             }
-                            config.armour = "reinforced";
+                            config.Armour = "reinforced";
                             config.Taiyaki -= 1000;
                             GlobalUserAccounts.SaveAccounts(user.Id);
                             await Context.Channel.SendMessageAsync("You have successfully bought a Reinforced Armour Set!");
@@ -553,7 +552,7 @@ namespace Nayu.Modules
                 }
             }
             if (response.Content.Equals("6", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
-            {
+            {/*
                 await shop.ModifyAsync(m => { m.Content = $"```xl\n[1] Blessing of Protection - Grants a free **Basic Treatment** at the beginning of each duel [7500 Taiyakis]\n[2] Blessing of Swiftness - Small chance to attack twice each turn [7500 Taiyakis]\n[3] Blessing of War - 10% more damage dealt [7500 Taiyakis]\n[4] Blessing of Strength - Start off with 25 more health [7500 Taiyakis]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.\n```"; });
                 var newresponse = await NextMessageAsync();
                 if (newresponse.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -630,7 +629,7 @@ namespace Nayu.Modules
                 {
                     await shop.ModifyAsync(m => { m.Content = "<:no:453716729525174273>  | That is an invalid response. Please try again."; });
                     return;
-                }
+                }*/
             }
             if (response == null)
             {
@@ -655,12 +654,33 @@ namespace Nayu.Modules
             var account = GlobalUserAccounts.GetUserAccount(target);
             var embed = new EmbedBuilder();
             embed.WithTitle($"{target.Username}'s Inventory");
+            string potions = "None";
+            string books = "None";
+            string armour = "None";
+            string weapon = "None";
+            string items = "None";
+            string blessings = "None";
+            string activeBlessing = "None";
+            if (account.Items.ContainsKey("Strength Potion") || account.Items.ContainsKey("Speed Potion") || account.Items.ContainsKey("Debuff Potion") || account.Items.ContainsKey("Equalizer Potion")) potions = $"";
+            if (account.Weapon != null) weapon = $"";
+            if (account.Items.ContainsKey("Metallic Acid") || account.Items.ContainsKey("Weapon Liquifier") || account.Items.ContainsKey("Basic Treatment") || account.Items.ContainsKey("Divine Shield") || account.Items.ContainsKey("Vile Of Poison")) items = $"";
+            if (account.Items.ContainsKey("Strength Potion")) potions += $"\nStrength Potion **x {account.Items["Strength Potion"]}**";
+            if (account.Items.ContainsKey("Speed Potion")) potions += $"\nSpeed Potion **x {account.Items["Speed Potion"]}**";
+            if (account.Items.ContainsKey("Debuff Potion")) potions += $"\nDebuff Potion **x {account.Items["Debuff Potion"]}**";
+            if (account.Items.ContainsKey("Equalizer Potion")) potions += $"\nEqualizer Potion **x {account.Items["Equalizer Potion"]}**";
+            if (account.Armour != null) armour += account.Armour;
+            if (account.Weapon != null) weapon += account.Weapon;
+            if (account.Items.ContainsKey("Metallic Acid")) items += $"\nMetallic Acid **x {account.Items["Metallic Acid"]}**";
+            if (account.Items.ContainsKey("Weapon Liquifier")) items += $"\nWeapon Liquifier **x {account.Items["Weapon Liquifier"]}**";
+            if (account.Items.ContainsKey("Basic Treatment")) items += $"\nBasic Treatment **x {account.Items["Basic Treatment"]}**";
+            if (account.Items.ContainsKey("Divine Shield")) items += $"\nDivine Shield **x {account.Items["Divine Shield"]}**";
+            if (account.Items.ContainsKey("Vile Of Poison")) items += $"\nVile Of Poison **x {account.Items["Vile Of Poison"]}**";
+            
             embed.AddField("Potions", potions);
             embed.AddField("Books", books);
             embed.AddField("Items", items);
             embed.AddField("Armour", armour);
             embed.AddField("Weapon", weapon);
-            embed.AddField("Blessings", blessings);
             embed.AddField("Active Blessings", activeBlessing);
             await Context.Channel.SendMessageAsync("", embed: embed.Build());
         }
@@ -673,31 +693,31 @@ namespace Nayu.Modules
             SocketUser target = null;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
             target = mentionedUser ?? Context.User;
-            var account = GlobalUserAccounts.GetUserAccount(target);
+            var chom = ActiveChomusuke.GetOneActiveChomusuke(target.Id);
             var embed = new EmbedBuilder();
             embed.WithTitle($"{target.Username}'s Learned Attacks");
             string attacklist = string.Empty;
-            if (account.Attacks?.Any() != true)
+            if (chom.Attacks?.Any() != true)
             {
-                account.Attacks.Add("Slash");
-                account.Attacks.Add("Absorb");
-                account.Attacks.Add("Block");
-                account.Attacks.Add("Deflect");
-                account.Attack1 = "Slash";
-                account.Attack2 = "Absorb";
-                account.Attack3 = "Block";
-                account.Attack4 = "Deflect";
+                chom.Attacks.Add("Slash");
+                chom.Attacks.Add("Absorb");
+                chom.Attacks.Add("Block");
+                chom.Attacks.Add("Deflect");
+                chom.Attack1 = "Slash";
+                chom.Attack2 = "Absorb";
+                chom.Attack3 = "Block";
+                chom.Attack4 = "Deflect";
             }
             GlobalUserAccounts.SaveAccounts();
-            foreach (var attack in account.Attacks)
+            foreach (var attack in chom.Attacks)
             {
                 attacklist += $"\n**{attack}**";
             }
             embed.AddField("Learned Attacks", attacklist);
-            embed.AddField("Current Attack 1", account.Attack1);
-            embed.AddField("Current Attack 2", account.Attack2);
-            embed.AddField("Current Attack 3", account.Attack3);
-            embed.AddField("Current Attack 4", account.Attack4);
+            embed.AddField("Current Attack 1", chom.Attack1);
+            embed.AddField("Current Attack 2", chom.Attack2);
+            embed.AddField("Current Attack 3", chom.Attack3);
+            embed.AddField("Current Attack 4", chom.Attack4);
             await Context.Channel.SendMessageAsync("", embed: embed.Build());
         }
 
@@ -706,41 +726,41 @@ namespace Nayu.Modules
         [Remarks("Usage: n!replaceattack <attack # (can be checked with n!attacks)> <attack you want to replace with (must have learned it)> Ex: n!replaceattack 1 Slash")]
         public async Task ReplaceAttack(int attackNum, [Remainder]string attackName = "")
         {
-            var config = GlobalUserAccounts.GetUserAccount(Context.User);
-            if (config.Attacks.Contains(attackName))
+            var chom = ActiveChomusuke.GetOneActiveChomusuke(Context.User.Id);
+            if (chom.Attacks.Contains(attackName))
             {
                 if (attackNum == 1)
                 {
-                    string oldAttack = config.Attack1;
-                    config.Attack1 = attackName;
+                    string oldAttack = chom.Attack1;
+                    chom.Attack1 = attackName;
                     GlobalUserAccounts.SaveAccounts();
                     await Context.Channel.SendMessageAsync($":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 2)
                 {
-                    string oldAttack = config.Attack2;
-                    config.Attack2 = attackName;
+                    string oldAttack = chom.Attack2;
+                    chom.Attack2 = attackName;
                     GlobalUserAccounts.SaveAccounts();
                     await Context.Channel.SendMessageAsync($":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 3)
                 {
-                    string oldAttack = config.Attack3;
-                    config.Attack3 = attackName;
+                    string oldAttack = chom.Attack3;
+                    chom.Attack3 = attackName;
                     GlobalUserAccounts.SaveAccounts(); GlobalUserAccounts.SaveAccounts();
                     await Context.Channel.SendMessageAsync($":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 4)
                 {
-                    string oldAttack = config.Attack4;
-                    config.Attack4 = attackName;
+                    string oldAttack = chom.Attack4;
+                    chom.Attack4 = attackName;
                     GlobalUserAccounts.SaveAccounts();
                     await Context.Channel.SendMessageAsync($":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
                 }
             }
             else
             {
-                await Context.Channel.SendMessageAsync($"You haven't learned {attackName} yet! \n*Make sure you typed your desired attack's name correctly (psst, It's case-sensitive!).*");
+                await Context.Channel.SendMessageAsync($"{chom.Name} hasn't learned {attackName} yet! \n*Make sure you typed your desired attack's name correctly (psst, It's case-sensitive!).*");
             }
         }
     }

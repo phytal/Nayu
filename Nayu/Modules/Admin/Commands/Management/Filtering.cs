@@ -1,14 +1,13 @@
-﻿using Discord;
-using Discord.Commands;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
-using Nayu.Preconditions;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Helpers;
+using Nayu.Preconditions;
 
-namespace Nayu.Modules.Management.Commands
+namespace Nayu.Modules.Admin.Commands.Management
 {
     public class Filtering : NayuModule
     {
@@ -18,11 +17,11 @@ namespace Nayu.Modules.Management.Commands
         [Cooldown(5)]
         public async Task SetBoolIntoConfigFilter(string setting)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var result = ConvertBool.ConvertStringToBoolean(setting);
-                if (result.Item1 == true)
+                if (result.Item1)
                 {
                     var argg = result.Item2;
                     var embed = new EmbedBuilder();
@@ -31,12 +30,11 @@ namespace Nayu.Modules.Management.Commands
                     await ReplyAsync("", embed: embed.Build());
                     var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                     config.Filter = argg;
-                    GlobalGuildAccounts.SaveAccounts();
+                    GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 }
-                if (result.Item1 == false)
+                else
                 {
                     await Context.Channel.SendMessageAsync($"Please say `n!filter <on/off>`");
-                    return;
                 }
             }
             else
@@ -54,8 +52,8 @@ namespace Nayu.Modules.Management.Commands
         [Cooldown(5)]
         public async Task SetChannelToBeIgnoredByFilter(string type, SocketGuildChannel chnl = null)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.ManageMessages)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.ManageMessages)
             {
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 var embed = new EmbedBuilder();
@@ -65,26 +63,23 @@ namespace Nayu.Modules.Management.Commands
                     case "add":
                     case "Add":
                         config.NoFilterChannels.Add(chnl.Id);
-                        GlobalGuildAccounts.SaveAccounts();
                         embed.WithDescription($"Added <#{chnl.Id}> to the list of ignored channels for Filter.");
                         break;
                     case "rem":
                     case "Rem":
                         config.NoFilterChannels.Remove(chnl.Id);
-                        GlobalGuildAccounts.SaveAccounts();
                         embed.WithDescription($"Removed <#{chnl.Id}> from the list of ignored channels for Filter.");
                         break;
                     case "clear":
                     case "Clear":
                         config.NoFilterChannels.Clear();
-                        GlobalGuildAccounts.SaveAccounts();
                         embed.WithDescription("List of channels to be ignored by Filter has been cleared.");
                         break;
                     default:
                         embed.WithDescription($"Valid types are `add`, `rem`, and `clear`. Syntax: `n!fi {{add/rem/clear}} [channelMention]`");
                         break;
                 }
-
+                GlobalUserAccounts.SaveAccounts(Context.Guild.Id);
                 await Context.Channel.SendMessageAsync("", embed: embed.Build());
             }
             else
@@ -103,14 +98,14 @@ namespace Nayu.Modules.Management.Commands
         [Cooldown(5)]
         public async Task AddStringToBl([Remainder]string word)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 await Context.Channel.SendMessageAsync($":white_check_mark:  | Added **{word}** to the Blacklist.");
 
                 config.CustomFilter.Add(word);
-                GlobalGuildAccounts.SaveAccounts();
+                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
             }
             else
             {
@@ -128,8 +123,8 @@ namespace Nayu.Modules.Management.Commands
         [Cooldown(5)]
         public async Task RemoveStringFromBl([Remainder] string bl)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 var embed = new EmbedBuilder();
@@ -142,7 +137,7 @@ namespace Nayu.Modules.Management.Commands
                 {
                     embed.WithDescription($"Removed {bl} from the Blacklist.");
                     config.CustomFilter.Remove(bl);
-                    GlobalGuildAccounts.SaveAccounts();
+                    GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 }
                 await Context.Channel.SendMessageAsync("", embed: embed.Build());
             }
@@ -162,12 +157,12 @@ namespace Nayu.Modules.Management.Commands
         [Cooldown(5)]
         public async Task ClearBlacklist()
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 config.CustomFilter.Clear();
-                GlobalGuildAccounts.SaveAccounts();
+                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 var embed = new EmbedBuilder();
                 embed.WithDescription("Cleared the Blacklist for this server.");
                 embed.WithColor(37, 152, 255);
@@ -190,8 +185,8 @@ namespace Nayu.Modules.Management.Commands
         [Cooldown(5)]
         public async Task ListBlacklist()
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 string list = string.Empty;

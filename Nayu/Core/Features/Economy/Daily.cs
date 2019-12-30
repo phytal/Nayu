@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Discord.WebSocket;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 
-namespace Nayu.Economy
+namespace Nayu.Core.Features.Economy
 {
     public static class Daily
     {

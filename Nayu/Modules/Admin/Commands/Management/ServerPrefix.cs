@@ -1,13 +1,12 @@
-﻿using Discord;
-using Discord.Commands;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
 
-namespace Nayu.Modules.Management.Commands
+namespace Nayu.Modules.Admin.Commands.Management
 {
     public class ServerPrefix : NayuModule
     {
@@ -18,8 +17,8 @@ namespace Nayu.Modules.Management.Commands
         [Cooldown(5)]
         public async Task SetGuildPrefix([Remainder]string prefix = null)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 var embed = new EmbedBuilder();
@@ -27,18 +26,14 @@ namespace Nayu.Modules.Management.Commands
                 if (prefix == null)
                 {
                     config.CommandPrefix = "n!";
-                    GlobalGuildAccounts.SaveAccounts();
-
                     embed.WithDescription($"Set server prefix to the default prefix **(n!)**");
                 }
                 else
                 {
                     config.CommandPrefix = prefix;
-                    GlobalGuildAccounts.SaveAccounts();
-
                     embed.WithDescription($"Set server prefix to {prefix}");
                 }
-
+                GlobalUserAccounts.SaveAccounts(Context.Guild.Id);
                 await Context.Channel.SendMessageAsync("", embed: embed.Build());
             }
             else

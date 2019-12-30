@@ -1,17 +1,12 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
+using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Discord.WebSocket;
 using Nayu.Preconditions;
-using Nayu.Core.Modules;
-using System;
+using Newtonsoft.Json;
 
-namespace Nayu.Modules.API.Nekos.life.NSFW_Neko
+namespace Nayu.Modules.API.Anime.Nekos.life.NSFW_Neko
 {
     public class NSFW_Neko_Gif : NayuModule
     {

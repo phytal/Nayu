@@ -1,60 +1,57 @@
-﻿using Discord;
+﻿using System;
+using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 
-namespace Nayu.Modules
+namespace Nayu.Modules.WelcomeAndLeave
 {
     public class LeaveMessages : NayuModule
     {
         [Command("leave channel"), Alias("lc")]
         [Summary("Set where you want leave messages to be displayed")]
         [Remarks("n!leave channel <channel where welcome messages are> Ex: n!leave channel #general")]
-        public async Task SetIdIntoConfig(SocketGuildChannel chnl)
+        public async Task SetIdIntoConfig(SocketGuildChannel channel)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
-                embed.WithDescription($"Set this guild's leave channel to #{chnl}.");
-                config.LeaveChannel = chnl.Id;
-                GlobalGuildAccounts.SaveAccounts();
+                embed.WithDescription($"Set this guild's leave channel to #{channel}.");
+                config.LeaveChannel = channel.Id;
+                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 await Context.Channel.SendMessageAsync("", embed: embed.Build());
             }
             else
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
+                embed.Title = $":x:  | You need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
         }
 
-        [Command("leave add")]
+        [Command("leave add"), Alias("la")]
         [Summary("Announce a leaving user in the set announcement channel" +
              "with a random message out of the ones defined.")]
-        [Remarks("n!leave add <leave message> Ex: `leave add Oh noo! <usermention>, left <guildname>...`\n" +
+        [Remarks("n!la <leave message> Ex: `la Oh noo! <usermention>, left <guildname>...`\n" +
                  "Possible placeholders are: `<usermention>`, `<username>`, `<guildname>`, " +
                  "`<botname>`, `<botdiscriminator>`, `<botmention>`")]
         public async Task AddLeaveMessage([Remainder] string message)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var guildAcc = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                var response = $"Failed to add this Leave Message...";
+                var response = $"Failed to add this leave message...";
                 if (guildAcc.LeaveMessages.Contains(message) == false)
                 {
                     guildAcc.LeaveMessages.Add(message);
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-                    response = $"Successfully added `{message}` as Leave Message!";
+                    response = $"Successfully added `{message}` as a leave message!";
                 }
 
                 await ReplyAsync(response);
@@ -63,20 +60,21 @@ namespace Nayu.Modules
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
+                embed.Title = $":x:  | You need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
         }
 
-        [Command("leave remove"), Summary("Removes a Leave Message from the ones available")]
-        [Remarks("n!leave remove <leave message number (shown in n!leave list)> Ex: n!leave remove 1")]
+        [Command("leave remove"), Alias("lr")]
+        [Summary("Removes a leave message from the ones available")]
+        [Remarks("n!lr <leave message number (shown in n!leave list)> Ex: n!lr 1")]
         public async Task RemoveLeaveMessage(int messageIndex)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var messages = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id).LeaveMessages;
-                var response = $"Failed to remove this Leave Message... Use the number shown in `leave list` next to the `#` sign!";
+                var response = $"Failed to remove this leave message... Use the number shown in `leave list` next to the `#` sign!";
                 if (messages.Count > messageIndex - 1)
                 {
                     messages.RemoveAt(messageIndex - 1);
@@ -90,21 +88,22 @@ namespace Nayu.Modules
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
+                embed.Title = $":x:  | You need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
         }
 
-        [Command("leave list"), Summary("Shows all currently set Leave Messages")]
+        [Command("leave list"), Alias("ll")]
+        [Summary("Shows all currently set leave messages")]
         [Remarks("n!leave list")]
         public async Task ListLeaveMessages()
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var leaveMessages = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id).LeaveMessages;
-                var embB = new EmbedBuilder().WithTitle("No Leave Messages set yet... add some if you want a message to be shown if someone leaves.");
-                if (leaveMessages.Count > 0) embB.WithTitle("Possible Leave Messages:");
+                var embB = new EmbedBuilder().WithTitle("No leave messages set yet... add some if you want a message to be shown if someone leaves.");
+                if (leaveMessages.Count > 0) embB.WithTitle("Possible leave messages:");
 
                 for (var i = 0; i < leaveMessages.Count; i++)
                 {

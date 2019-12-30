@@ -1,14 +1,12 @@
-﻿using Discord;
-using Discord.Commands;
-using System;
-using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
 
-namespace Nayu.Modules.Management.Commands
+namespace Nayu.Modules.Admin.Commands.Management
 {
     public class SelfRole : NayuModule
     {
@@ -19,8 +17,8 @@ namespace Nayu.Modules.Management.Commands
         [Cooldown(5)]
         public async Task AddStringToList([Remainder]string role)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 var embed = new EmbedBuilder()
@@ -28,13 +26,13 @@ namespace Nayu.Modules.Management.Commands
                     .WithDescription($"Added the {role} to the Config.");
                 await Context.Channel.SendMessageAsync("", embed: embed.Build());
                 config.SelfRoles.Add(role);
-                GlobalGuildAccounts.SaveAccounts();
+                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
             }
             else
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
+                embed.Title = $":x:  | You need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
         }
@@ -45,8 +43,8 @@ namespace Nayu.Modules.Management.Commands
         [Cooldown(5)]
         public async Task RemoveStringFromList([Remainder]string role)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 var embed = new EmbedBuilder();
@@ -55,7 +53,7 @@ namespace Nayu.Modules.Management.Commands
                 {
                     config.SelfRoles.Remove(role);
                     embed.WithDescription($"Removed {role} from the Self Roles list.");
-                    GlobalGuildAccounts.SaveAccounts();
+                    GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 }
                 else
                 {
@@ -67,7 +65,7 @@ namespace Nayu.Modules.Management.Commands
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
+                embed.Title = $":x:  | You need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
         }
@@ -78,8 +76,8 @@ namespace Nayu.Modules.Management.Commands
         [Cooldown(5)]
         public async Task ClearListFromConfig()
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 var embed = new EmbedBuilder();
@@ -92,6 +90,7 @@ namespace Nayu.Modules.Management.Commands
                 {
                     embed.WithDescription($"Cleared {config.SelfRoles.Count} roles from the self role list.");
                     config.SelfRoles.Clear();
+                    GlobalUserAccounts.SaveAccounts(Context.Guild.Id);
                 }
 
                 await Context.Channel.SendMessageAsync("", embed: embed.Build());
@@ -100,7 +99,7 @@ namespace Nayu.Modules.Management.Commands
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
+                embed.Title = $":x:  | You need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
         }

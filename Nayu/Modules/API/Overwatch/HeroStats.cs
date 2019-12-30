@@ -1,10 +1,9 @@
 ﻿using Discord;
-using Discord.Addons.Interactive;
 using Discord.Commands;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Libs.CustomLibraries.Discord.Addons.Interactive.Paginator;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.API.Overwatch

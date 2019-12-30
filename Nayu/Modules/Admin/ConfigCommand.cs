@@ -1,17 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Discord.WebSocket;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Discord.WebSocket;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Helpers;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
 using Nayu.Preconditions;
-using System;
-using System.IO;
 
-namespace Nayu.Modules.Management
+namespace Nayu.Modules.Admin
 {
     public class MasterConfigCommand : NayuModule
     {
@@ -44,8 +42,8 @@ namespace Nayu.Modules.Management
         [Cooldown(10)]
         public async Task MasterConfig()
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 var embed = MiscHelpers.CreateEmbed(Context, Context.Guild.Name, $"Server ID: {config.Id}\n" +
@@ -68,19 +66,26 @@ namespace Nayu.Modules.Management
                     embed.AddField("Welcome/Leaving", "On:\n" +
                                               $"- Welcome Channel: <#{config.WelcomeChannel}>\n" +
                                               $"- Leave Channel: <#{config.LeaveChannel}>\n" +
-                                              $"- WelcomeMsg: {welcomemessages}\n" +
-                                              $"- LeavingMsg: {leavemessages}", true);
+                                              $"- Welcome Messages: {string.Join(", ", config.WelcomeMessages.ToArray())}\n" +
+                                              $"- Leaving Messges: {string.Join(", ", config.LeaveMessages.ToArray())}", true);
                 }
                 else
                 {
                     embed.AddField("Welcome/Leaving", "Off", true);
                 }
 
+                var antiLinkIgnoredChannels = "#" + string.Join(", #", config.AntilinkIgnoredChannels.ToArray());
                 embed.AddField("Other", $"Antilink: {ConvertBoolean(config.Antilink)}\n" +
-                                        $"Mass Ping Checks: {ConvertBoolean(config.MassPingChecks)}\n" +
-                                        $"Blacklist: {ConvertBoolean(config.Filter)}\n" +
+                                        
                                         $"Autorole: {config.Autorole}\n" +
+                                        $"Anti-link Ignored Channels: {antiLinkIgnoredChannels}\n" +
+                                        $"Blacklist: {ConvertBoolean(config.Filter)}\n" +
+                                        $"Custom Blacklist: {string.Join(", ", config.CustomFilter.ToArray())}\n" +
+                                        $"Custom Currency: {config.Currency}\n" +
+                                        $"Custom Prefix: {config.CommandPrefix}\n" +
+                                        $"Slow mode: {ConvertBoolean(config.IsSlowModeEnabled)}\n" +
                                         $"Leveling: {ConvertBoolean(config.Leveling)}\n" +
+                                        $"Mass Ping Checks: {ConvertBoolean(config.MassPingChecks)}\n" +
                                         $"Server Logging: {ConvertBoolean(config.IsServerLoggingEnabled)}\n" +
                                         $"Unflipping: {ConvertBoolean(config.Unflip)}\n");
 
@@ -105,10 +110,9 @@ namespace Nayu.Modules.Management
         [Cooldown(5)]
         public async Task SyncGuild()
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.Administrator)
             {
-                var info = System.IO.Directory.CreateDirectory(Path.Combine(Constants.ResourceFolder, Constants.ServerUserAccountsFolder));
                 ulong In = Context.Guild.Id;
                 string Out = Convert.ToString(In);
                 if (!Directory.Exists(Out))
@@ -116,7 +120,7 @@ namespace Nayu.Modules.Management
 
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 config.GuildOwnerId = Context.Guild.Owner.Id;
-                GlobalGuildAccounts.SaveAccounts();
+                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 await Context.Channel.SendMessageAsync($"Successfully synced the Guild's owner to <@{Context.Guild.OwnerId}>!");
             }
             else

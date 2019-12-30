@@ -1,14 +1,13 @@
-﻿using Discord;
-using Discord.Commands;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
 
-namespace Nayu.Modules.Management.Commands
+namespace Nayu.Modules.Admin.Commands.Management
 {
     public class CustomCommand : NayuModule
     {
@@ -24,7 +23,7 @@ namespace Nayu.Modules.Management.Commands
             {
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 config.CustomCommands.Add(commandName, commandValue);
-                GlobalGuildAccounts.SaveAccounts();
+                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 var embed = new EmbedBuilder()
                     .WithTitle("Custom Command Added!")
                     .AddField("Command Name", $"__{commandName}__")
@@ -58,7 +57,7 @@ namespace Nayu.Modules.Management.Commands
                 {
                     embed.WithDescription($"Removed **{commandName}** as a command!");
                     config.CustomCommands.Remove(commandName);
-                    GlobalGuildAccounts.SaveAccounts();
+                    GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 }
                 else
                 {

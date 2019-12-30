@@ -4,8 +4,7 @@ using System;
 using System.Threading.Tasks;
 using System.Xml;
 using Discord.Commands;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 
 namespace Nayu.Modules.LootBox
 {

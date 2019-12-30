@@ -1,6 +1,6 @@
-﻿using Discord.Addons.Interactive;
+﻿using Nayu.Libs.CustomLibraries.Discord.Addons.Interactive;
 
-namespace Nayu.Core.Modules
+namespace Nayu.Modules
 {
     public abstract class NayuModule : InteractiveBase
     {

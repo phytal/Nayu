@@ -1,14 +1,13 @@
-﻿using System.Threading.Tasks;
-using Discord.Commands;
-using System.Net;
-using Newtonsoft.Json;
+﻿using System.Net;
+using System.Threading.Tasks;
 using Discord;
-using Weeb.net;
-using Weeb.net.Data;
+using Discord.Commands;
+using Nayu.Libs.Weeb.net;
+using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
-using Nayu.Core.Modules;
+using Newtonsoft.Json;
 
-namespace Nayu.Modules.API.Anime
+namespace Nayu.Modules.API.Anime.Both
 {
     public class Tickle : NayuModule
     {

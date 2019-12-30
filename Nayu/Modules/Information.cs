@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Discord.Commands;
 using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
+using Nayu.Core.Configuration;
 using Nayu.Preconditions;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
-using Nayu.Helpers;
 
-namespace Nayu
+namespace Nayu.Modules
 {
     public class Information : NayuModule
     {

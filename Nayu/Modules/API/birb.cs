@@ -2,7 +2,6 @@
 using Discord.Commands;
 using System.Net;
 using Nayu.Preconditions;
-using Nayu.Core.Modules;
 
 namespace Nayu.Modules.API
 {

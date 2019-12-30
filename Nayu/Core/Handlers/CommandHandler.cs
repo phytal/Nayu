@@ -1,18 +1,21 @@
-﻿using Discord.Commands;
-using Discord.WebSocket;
-using System;
+﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Reflection;
-using Nayu.Core.LevelingSystem;
-using Nayu.Features.GlobalAccounts;
+using System.Threading.Tasks;
 using Discord;
+using Discord.Commands;
+using Discord.WebSocket;
+using Nayu.Core.Configuration;
+using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Libs.Weeb.net;
 using Nayu.Modules;
-using Weeb.net;
+using Nayu.Modules.Admin.Commands.Management.SlowMode;
+using Nayu.Modules.Chomusuke.Dueling;
+using TokenType = Nayu.Libs.Weeb.net.TokenType;
 
-namespace Nayu
+namespace Nayu.Core.Handlers
 {
-    public class CommandHandler
+    public class CommandHandler : NayuModule
     {
         private DiscordShardedClient _client;
         private CommandService _commands;
@@ -41,23 +44,26 @@ namespace Nayu
                 _services);
 
             //Will print current weeb.sh API version and Weeb.net wrapper version
-            await weebClient.Authenticate(Config.bot.wolkeToken, Weeb.net.TokenType.Wolke);
+            await weebClient.Authenticate(Config.bot.wolkeToken, TokenType.Wolke);
 
         }
-
-
+        
         public static WeebClient _weebClient;
 
         public async Task HandleCommandAsync(SocketMessage s)
         {
-            _ = Modules.Management.SlowMode.Slowmode(s);
+            _ = SlowMode.Slowmode(s);
 
             if (!(s is SocketUserMessage msg)) return;
             if (msg.Channel is SocketDMChannel) return;
 
             var context = new ShardedCommandContext(_client, msg);
             if (context.User.IsBot) return;
-
+            
+            var botConfig = BotAccounts.GetAccount();
+            var guildUser = context.User as SocketGuildUser;
+            if (botConfig.BlockedChannels.ContainsKey(msg.Channel.Id) && !guildUser.GuildPermissions.ManageChannels) return;
+            
             var config = GlobalGuildAccounts.GetGuildAccount(context.Guild.Id);
             var prefix = config.CommandPrefix ?? Config.bot.cmdPrefix;
 
@@ -85,7 +91,7 @@ namespace Nayu
                     .WithColor(37, 152, 255)
                     .WithTitle("Error!")
                     .WithDescription(errMessage)
-                    .WithFooter("Did you use the command correctly? If so, please report this to our discord server https://discord.gg/NuUdx4h");
+                    .WithFooter("Did you use the command correctly? If so, please report this to our discord server https://discord.gg/eyHg6hS");
                     context.Channel.SendMessageAsync("", embed: embed.Build());
                 });
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -151,10 +157,6 @@ namespace Nayu
                     await context.Message.DeleteAsync();
                     await channel.SendMessageAsync($"**{user.Username}** has accepted **{requester.Username}**'s duel request!");
                     await Duel.StartDuel(channel, user, requester);
-                }
-                else
-                {
-                    return;
                 }
             }
         }

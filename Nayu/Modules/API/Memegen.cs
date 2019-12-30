@@ -4,7 +4,6 @@ using Discord.WebSocket;
 using Newtonsoft.Json;
 using System.Net;
 using System.Threading.Tasks;
-using Nayu.Core.Modules;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.API

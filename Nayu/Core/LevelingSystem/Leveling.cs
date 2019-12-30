@@ -1,7 +1,7 @@
 ﻿using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 
 namespace Nayu.Core.LevelingSystem
 {
@@ -37,7 +37,7 @@ namespace Nayu.Core.LevelingSystem
 
             uint oldLevel = userAccount.LevelNumber;
             userAccount.XP += 7;
-            GlobalUserAccounts.SaveAccounts();
+            GlobalUserAccounts.SaveAccounts(userAccount.Id);
             uint newLevel = userAccount.LevelNumber;
             if (oldLevel != newLevel)
             {

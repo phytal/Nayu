@@ -18,9 +18,12 @@ using System;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
-using Discord.Addons.Interactive;
 using Microsoft.Extensions.DependencyInjection;
+using Nayu.Core.Configuration;
+using Nayu.Core.Handlers;
 using Nayu.Core.LevelingSystem;
+using Nayu.Libs.CustomLibraries.Discord.Addons.Interactive;
+using Nayu.Modules.Chomusuke;
 
 namespace Nayu
 {
@@ -28,7 +31,7 @@ namespace Nayu
     {
         public static DiscordShardedClient _client;
         private IServiceProvider _services;
-        private readonly int[] _shardIds = { 0, 1 };
+        private readonly int[] _shardIds = { 0 };
 
         private static void Main() => new Program().StartAsync().GetAwaiter().GetResult();
 
@@ -40,7 +43,7 @@ namespace Nayu
                 LogLevel = LogSeverity.Verbose,
                 DefaultRetryMode = RetryMode.AlwaysRetry,
                 MessageCacheSize = 100,
-                TotalShards = 2
+                TotalShards = 1
             });
 
             _client.Log += Logger.Log;

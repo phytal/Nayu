@@ -7,8 +7,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using System.Net;
-using Nayu.Features.GlobalAccounts;
-using Nayu.Core.Modules;
+using Nayu.Core.Features.GlobalAccounts;
 
 namespace Nayu.Modules
 {

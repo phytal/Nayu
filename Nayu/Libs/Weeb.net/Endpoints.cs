@@ -1,4 +1,4 @@
-﻿namespace Weeb.net
+﻿namespace Nayu.Libs.Weeb.net
 {
     internal class Endpoints
     {

@@ -1,11 +1,10 @@
-﻿using Discord;
+﻿using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
-using Nayu.Core.Modules;
 using Nayu.Preconditions;
+using Newtonsoft.Json;
 
-namespace Nayu.Modules.API.osu_
+namespace Nayu.Modules.API
 {
     public class UserStats : NayuModule
     {

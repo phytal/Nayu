@@ -1,15 +1,13 @@
-﻿using Discord;
-using Discord.Commands;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Weeb.net;
-using Weeb.net.Data;
-using Nayu.Core.Modules;
+using Discord;
+using Discord.Commands;
+using Nayu.Libs.Weeb.net;
+using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
+using Newtonsoft.Json;
 
-namespace Nayu.Modules.API.Anime.weebDotSh
+namespace Nayu.Modules.API.Anime.Both
 {
     public class Baka : NayuModule
     {
@@ -23,7 +21,7 @@ namespace Nayu.Modules.API.Anime.weebDotSh
             if (rand == 1)
             {
                 string[] tags = new[] {""};
-                Helpers.WebRequest webReq = new Helpers.WebRequest();
+                weebDotSh.Helpers.WebRequest webReq = new weebDotSh.Helpers.WebRequest();
                 RandomData result = await webReq.GetTypesAsync("baka", tags, FileType.Gif, NsfwSearch.False, false);
                 string url = result.Url;
                 string id = result.Id;

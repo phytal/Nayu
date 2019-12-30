@@ -1,18 +1,15 @@
-﻿using Discord;
-using Discord.Commands;
-using Discord.WebSocket;
-using System;
-using System.Threading.Tasks;
-using Nayu.Preconditions;
-using Nayu.Features.GlobalAccounts;
-using Nayu.Modules.Fun.Dueling;
-using Nayu.Core.Modules;
-using Discord.Rest;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nayu.Modules.Chomusuke.Dueling;
+using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
+using Discord.Rest;
+using Discord.WebSocket;
+using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Preconditions;
 
-namespace Nayu.Modules
+namespace Nayu.Modules.Chomusuke.Dueling
 {
     public struct PendingDuelBase
     {

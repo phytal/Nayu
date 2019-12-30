@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using Discord.WebSocket;
-using Nayu.Features.GlobalAccounts;
+﻿using Discord.WebSocket;
+using Nayu.Core.Features.GlobalAccounts;
 
 namespace Nayu.Modules.LootBox
 {
@@ -29,29 +28,29 @@ namespace Nayu.Modules.LootBox
                     item =  legendary[randomIndexProvider(legendary)];
                     break;
                 case 'e':
-                    byte erate = (byte)Global.Rng.Next(1, 15);
-                    if (erate <= 4) item =  legendary[randomIndexProvider(legendary)];
+                    byte eRate = (byte)Global.Rng.Next(1, 15);
+                    if (eRate <= 4) item =  legendary[randomIndexProvider(legendary)];
                     else item =  epic[randomIndexProvider(epic)];
                     break;
                 case 'r':
-                    byte rrate = (byte)Global.Rng.Next(1, 33);
-                    if (rrate <= 4) item =  legendary[randomIndexProvider(legendary)];
-                    else if (rrate <= 14) item =  epic[randomIndexProvider(epic)];
+                    byte rRate = (byte)Global.Rng.Next(1, 33);
+                    if (rRate <= 4) item =  legendary[randomIndexProvider(legendary)];
+                    else if (rRate <= 14) item =  epic[randomIndexProvider(epic)];
                     else item =  rare[randomIndexProvider(rare)];
                     break;
                 case 'u':
-                    byte urate = (byte)Global.Rng.Next(1, 63);
-                    if (urate <= 4) item =  legendary[randomIndexProvider(legendary)];
-                    else if (urate <= 14) item =  epic[randomIndexProvider(epic)];
-                    else if (urate <= 32) item =  rare[randomIndexProvider(rare)];
+                    byte uRate = (byte)Global.Rng.Next(1, 63);
+                    if (uRate <= 4) item =  legendary[randomIndexProvider(legendary)];
+                    else if (uRate <= 14) item =  epic[randomIndexProvider(epic)];
+                    else if (uRate <= 32) item =  rare[randomIndexProvider(rare)];
                     else item =  uncommon[randomIndexProvider(uncommon)];
                     break;
                 case 'c':
-                    byte crate = (byte)Global.Rng.Next(1, 101);
-                    if (crate <= 4) item =  legendary[randomIndexProvider(legendary)];
-                    else if (crate <= 14) item =  epic[randomIndexProvider(epic)];
-                    else if (crate <= 32) item =  rare[randomIndexProvider(rare)];
-                    else if (crate <= 62) item =  uncommon[randomIndexProvider(uncommon)];
+                    byte cRate = (byte)Global.Rng.Next(1, 101);
+                    if (cRate <= 4) item =  legendary[randomIndexProvider(legendary)];
+                    else if (cRate <= 14) item =  epic[randomIndexProvider(epic)];
+                    else if (cRate <= 32) item =  rare[randomIndexProvider(rare)];
+                    else if (cRate <= 62) item =  uncommon[randomIndexProvider(uncommon)];
                     else item =  common[randomIndexProvider(common)];
                     break;
             }

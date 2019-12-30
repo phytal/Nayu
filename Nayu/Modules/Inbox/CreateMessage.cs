@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
-using Nayu.Entities;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Entities;
+using Nayu.Core.Features.GlobalAccounts;
 
 namespace Nayu.Modules.Inbox
 {

@@ -1,12 +1,12 @@
 ﻿using System;
 using Discord.WebSocket;
-using Nayu.Features.Economy;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Discord;
-using Nayu.Entities;
+using Nayu.Core.Entities;
+using Nayu.Core.Features.Economy;
 
 namespace Nayu
 {

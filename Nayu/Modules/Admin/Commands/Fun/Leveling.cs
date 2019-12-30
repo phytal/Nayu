@@ -1,15 +1,13 @@
-﻿using Discord;
-using Discord.Commands;
-using System;
-using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
-using Nayu.Preconditions;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Helpers;
+using Nayu.Preconditions;
 
-namespace Nayu.Modules.Management.Commands
+namespace Nayu.Modules.Admin.Commands.Fun
 {
     public class Leveling : NayuModule
     {
@@ -24,7 +22,7 @@ namespace Nayu.Modules.Management.Commands
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             if (guser.GuildPermissions.Administrator)
             {
-                if (config.Leveling == false)
+                if (!config.Leveling)
                 {
                     await Context.Channel.SendMessageAsync("You need to enable leveling on this server first!");
                     return;
@@ -36,13 +34,12 @@ namespace Nayu.Modules.Management.Commands
                     embed.WithDescription($"Set leveling messages to {preset}");
 
                     config.LevelingMsgs = preset;
-                    GlobalGuildAccounts.SaveAccounts();
+                    GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                     await Context.Channel.SendMessageAsync("", embed: embed.Build());
                 }
                 else
                 {
                     await Context.Channel.SendMessageAsync("Make sure you set it to either `dm` or `server`! Ex:n!lvlmsg dm");
-                    return;
                 }
             }
             else
@@ -64,7 +61,7 @@ namespace Nayu.Modules.Management.Commands
             if (user.GuildPermissions.Administrator)
             {
                 var result = ConvertBool.ConvertStringToBoolean(arg);
-                if (result.Item1 == true)
+                if (result.Item1)
                 {
                     bool argg = result.Item2;
                     var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -72,14 +69,13 @@ namespace Nayu.Modules.Management.Commands
                     embed.WithColor(37, 152, 255);
                     embed.WithDescription(argg ? "Enabled leveling for this server." : "Disabled leveling for this server.");
                     config.Leveling = argg;
-                    GlobalGuildAccounts.SaveAccounts();
+                    GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
                     await Context.Channel.SendMessageAsync("", embed: embed.Build());
                 }
-                if (result.Item1 == false)
+                if (!result.Item1)
                 {
                     await Context.Channel.SendMessageAsync($"Please say `n!leveling <on/off>`");
-                    return;
                 }
             }
             else

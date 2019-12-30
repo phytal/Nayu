@@ -1,10 +1,9 @@
 ﻿using Discord.Commands;
 using System.Threading.Tasks;
-using Nayu.Features.GlobalAccounts;
 using Discord;
-using Nayu.Entities;
+using Nayu.Core.Entities;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
-using Nayu.Core.Modules;
 
 namespace Nayu.Modules
 {

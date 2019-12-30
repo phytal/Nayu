@@ -3,8 +3,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using System.Linq;
 using System.Threading.Tasks;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.LootBox
@@ -84,7 +83,7 @@ namespace Nayu.Modules.LootBox
                     return;
                 }
             }
-            return;
+            GlobalUserAccounts.SaveAccounts(Context.User.Id);
         }
 
         [Command("lootBoxInventory"), Alias("lbi")]

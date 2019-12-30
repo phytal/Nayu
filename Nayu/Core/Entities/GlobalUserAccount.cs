@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Nayu.Entities
+namespace Nayu.Core.Entities
 {
     public class Chomusuke
     {
@@ -45,6 +42,7 @@ namespace Nayu.Entities
         public bool Blocking { get; set; }
         public bool Deflecting { get; set; }
         public bool Meditating { get; set; }
+        public List<string> Attacks { get; set; }
         public Dictionary<string, byte> PotionEffects { get; set; } = new Dictionary<string, byte>();
 
         public Chomusuke(bool have, string name, string zodiac, bool shiny, byte hunger, uint xp, byte trust, byte waste, bool sick, string attack1, string attack2, string attack3, 
@@ -162,6 +160,9 @@ namespace Nayu.Entities
         public ulong Taiyaki { get; set; }
         public uint TaiyakiFromMessages { get; set; }
         public uint TaiyakiFromGambling { get; set; }
+        public string Armour { get; set; }
+        public string Weapon { get; set; }
+        public string Blessing { get; set; }
         public ulong InboxIDTracker { get; set; }
         public ulong InboxIDLastRead { get; set; }
         public DateTime LastDaily { get; set; } = DateTime.UtcNow.AddDays(-2);

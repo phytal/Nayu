@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Weeb.net.Data
+namespace Nayu.Libs.Weeb.net.Data
 {
     public class TagsData
     {

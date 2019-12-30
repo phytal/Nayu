@@ -1,5 +1,4 @@
-﻿using Nayu.Core.Modules;
-using System;
+﻿using System;
 
 namespace Nayu.Modules.Chomusuke
 {

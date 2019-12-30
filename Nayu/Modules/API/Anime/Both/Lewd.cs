@@ -1,19 +1,14 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
+using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Discord.WebSocket;
+using Nayu.Libs.Weeb.net;
+using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
-using Nayu.Core.Modules;
-using System;
-using Weeb.net;
-using Weeb.net.Data;
+using Newtonsoft.Json;
 
-namespace Nayu.Modules.API.Anime
+namespace Nayu.Modules.API.Anime.Both
 {
     public class Lewd : NayuModule
     {

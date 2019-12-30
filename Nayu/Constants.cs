@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Discord;
 
 namespace Nayu
 {
@@ -18,6 +15,7 @@ namespace Nayu
         public const int MessageRewardCooldown = 30;
         public const int MessageXPCooldown = 6;
         public const int MessageRewardMinLenght = 20;
+        public static readonly Color DefaultColor = new Color(230,230,230);
         public static readonly Tuple<int, int> MessagRewardMinMax = Tuple.Create(1, 5);
     }
 }

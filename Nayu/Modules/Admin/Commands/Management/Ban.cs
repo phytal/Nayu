@@ -1,15 +1,14 @@
-﻿using Discord;
-using Discord.Commands;
-using Discord.WebSocket;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Discord;
+using Discord.Commands;
+using Discord.WebSocket;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Helpers;
 using Nayu.Preconditions;
 
-namespace Nayu.Modules.Management.Commands
+namespace Nayu.Modules.Admin.Commands.Management
 {
     public class Ban : NayuModule
     {

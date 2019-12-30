@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Modules;
 using Nayu.Preconditions;
 
 namespace Nayu.Core.LevelingSystem
@@ -42,7 +42,7 @@ namespace Nayu.Core.LevelingSystem
             };
 
             embed.WithColor(37, 152, 255);
-            embed.AddField("Lvl.", Level, true);
+            embed.AddField("Affection Lvl.", Level, true);
             embed.AddField("Exp.", $"{xp}/{requiredXp} (tot. {userAccount.XP})", true);
             embed.AddField("Reputation Points", userAccountt.Reputation, true);
             embed.AddField("Taiyaki", userAccount.Taiyaki, true);

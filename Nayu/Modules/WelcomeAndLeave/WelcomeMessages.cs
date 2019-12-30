@@ -1,18 +1,17 @@
-﻿using Discord;
+﻿using System;
+using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using System;
-using System.Threading.Tasks;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 
-namespace Nayu.Modules.Announcements
+namespace Nayu.Modules.WelcomeAndLeave
 {
     public class WelcomeMessages : NayuModule
     {
         [Command("welcome channel"), Alias("Wc")]
         [Summary("Set where you want welcome messages to be displayed")]
-        [Remarks("n!celcome channel <channel where welcome messages are> Ex: n!celcome channel #general")]
+        [Remarks("n!wc channel <channel where welcome messages are> Ex: n!wc channel #general")]
         public async Task SetIdIntoConfig(SocketGuildChannel chnl)
         {
             var guser = Context.User as SocketGuildUser;
@@ -23,7 +22,7 @@ namespace Nayu.Modules.Announcements
                 embed.WithColor(37, 152, 255);
                 embed.WithDescription($"Set this guild's welcome channel to #{chnl}.");
                 config.WelcomeChannel = chnl.Id;
-                GlobalGuildAccounts.SaveAccounts();
+                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 await Context.Channel.SendMessageAsync("", embed: embed.Build());
             }
             else
@@ -35,9 +34,9 @@ namespace Nayu.Modules.Announcements
             }
         }
 
-        [Command("welcome add")]
+        [Command("welcome add"), Alias("wa")]
         [Summary("Add a welcome message for people that join!")]
-        [Remarks("n!celcome add <welcome message> Ex: `welcome add <usermention>, welcome to **<guildname>**! " +
+        [Remarks("n!wa <welcome message> Ex: n!wa <usermention>, welcome to **<guildname>**! " +
                  "`\n" +
                  "Possible placeholders are: `<usermention>`, `<username>`, `<guildname>`, " +
                  "`<botname>`, `<botdiscriminator>`, `<botmention>` ")]
@@ -66,8 +65,9 @@ namespace Nayu.Modules.Announcements
             }
         }
 
-        [Command("welcome remove"), Summary("Removes a Welcome Message from the ones avaliable")]
-        [Remarks("n!celcome remove <welcome messag number (can be shown with n!celcome list) Ex: n!celcome remove 1")]
+        [Command("welcome remove"), Alias("wr")]
+        [Summary("Removes a Welcome Message from the ones avaliable")]
+        [Remarks("n!wr <welcome message number (can be shown with n!welcome list) Ex: n!wr 1")]
         public async Task RemoveWelcomeMessage(int messageIndex)
         {
             var guser = Context.User as SocketGuildUser;
@@ -93,8 +93,9 @@ namespace Nayu.Modules.Announcements
             }
         }
 
-        [Command("welcome list"), Summary("Shows all currently set Welcome Messages")]
-        [Remarks("n!celcome list")]
+        [Command("welcome list"), Alias("wl")]
+        [Summary("Shows all currently set Welcome Messages")]
+        [Remarks("n!wl")]
         public async Task ListWelcomeMessages()
         {
             var guser = Context.User as SocketGuildUser;

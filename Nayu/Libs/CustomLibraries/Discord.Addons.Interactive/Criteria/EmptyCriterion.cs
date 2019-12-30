@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Discord.Commands;
-using Discord.WebSocket;
 
-namespace Discord.Addons.Interactive
+namespace Nayu.Libs.CustomLibraries.Discord.Addons.Interactive.Criteria
 {
     public class EmptyCriterion<T> : ICriterion<T>
     {

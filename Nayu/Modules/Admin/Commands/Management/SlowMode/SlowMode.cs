@@ -1,13 +1,11 @@
-﻿using Discord;
+﻿using System;
+using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using System;
-using System.Collections.Concurrent;
-using System.Threading.Tasks;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 
-namespace Nayu.Modules.Management
+namespace Nayu.Modules.Admin.Commands.Management.SlowMode
 {
     public class SlowMode : NayuModule
     {

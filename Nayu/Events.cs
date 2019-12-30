@@ -10,12 +10,14 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Nayu.Core.Configuration;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Core.LevelingSystem;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Modules;
 
 namespace Nayu
 {
-    public class Events
+    public class Events : NayuModule
     {
         private static readonly DiscordShardedClient _client = Program._client;
 
@@ -44,7 +46,7 @@ namespace Nayu
             config.GuildOwnerId = s.Owner.Id;
 
             await dmChannel.SendMessageAsync("", embed: embed.Build());
-            GlobalGuildAccounts.SaveAccounts();
+            GlobalGuildAccounts.SaveAccounts(s.Id);
 
             var client = Program._client;
             var guilds = client.Guilds.Count;
@@ -55,7 +57,7 @@ namespace Nayu
         {
             var webclient = new HttpClient();
             var content = new StringContent($"{{ \"server_count\": {client.Guilds.Count} }}", Encoding.UTF8, "application/json");
-            webclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxNzE2MDk1NzAxMDExNjYwOCIsImJvdCI6dHJ1ZSwiaWF0IjoxNTQ1NDU0NTY3fQ.YZmPvuEtQCu4ZYTcmikCEKSCOY0h0-KB_fYfhXRmFDk");
+            webclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Config.bot.dblToken);
             var resp = await webclient.PostAsync($"https://discordbots.org/api/bots/417160957010116608/stats", content);
             return resp.Content.ReadAsStringAsync().ToString();
         }
@@ -71,7 +73,7 @@ namespace Nayu
 
             try
             {
-                if (config.Antilink == true)
+                if (config.Antilink)
                 {
                     if ((msg.Content.Contains("https://discord.gg") || msg.Content.Contains("https://discord.io")) && !config.AntilinkIgnoredChannels.Contains(context.Channel.Id))
                     {
@@ -79,9 +81,7 @@ namespace Nayu
                         var embed = new EmbedBuilder();
                         embed.WithColor(37, 152, 255);
                         embed.WithDescription($":warning:  | {context.User.Mention}, Don't post your filthy links here! (No links)");
-                        var mssg = await context.Channel.SendMessageAsync("", embed: embed.Build());
-                        await Task.Delay(5000);
-                        await mssg.DeleteAsync();
+                        await ReplyAndDeleteAsync("", embed: embed.Build());
                     }
                 }
             }
@@ -101,6 +101,8 @@ namespace Nayu
         "Do I really have to tape your mouth shut?",
         "Ok buddy you might get yourself into a problem..",
         "Now I know why you have no friends",
+        "If you like to eat soap I have some right here..",
+        "Honestly I can't stand you"
 };
             Random rand = new Random();
             List<string> bannedWords = new List<string>
@@ -109,7 +111,7 @@ namespace Nayu
                 };
             try
             {
-                if (config.Filter == true)
+                if (config.Filter)
                 {
                     if (bannedWords.Any(msg.Content.ToLower().Contains) 
                         || config.CustomFilter.Any(msg.Content.ToLower().Contains) && !config.NoFilterChannels.Contains(context.Channel.Id))
@@ -120,10 +122,7 @@ namespace Nayu
                         var embed = new EmbedBuilder();
                         embed.WithDescription($":warning:  |  {text} (Inappropriate language)");
                         embed.WithColor(37, 152, 255);
-                        //await context.Channel.SendMessageAsync("", embed: embed.Build());
-                        var mssg = await context.Channel.SendMessageAsync("", embed: embed.Build());
-                        await Task.Delay(4000);
-                        await mssg.DeleteAsync();
+                        await ReplyAndDeleteAsync("", embed: embed.Build());
                     }
                 }
             }
@@ -132,14 +131,12 @@ namespace Nayu
                 return;
             }
 
-            if (config.MassPingChecks == true)
+            if (config.MassPingChecks)
             {
                 if (msg.Content.Contains("@everyone") || msg.Content.Contains("@here"))
                 {
                     await msg.DeleteAsync();
-                    var msgg = await context.Channel.SendMessageAsync($":warning:  | {msg.Author.Mention}, try not to mass ping.");
-                    await Task.Delay(4000);
-                    await msgg.DeleteAsync();
+                    await ReplyAndDeleteAsync($":warning:  | {msg.Author.Mention}, try not to mass ping.");
                 }
             }
         }

@@ -1,13 +1,12 @@
-﻿using Discord;
-using Discord.Commands;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
-using Nayu.Features.GlobalAccounts;
 
-namespace Nayu.Modules.Management.Commands
+namespace Nayu.Modules.Admin.Commands.Management
 {
     public class Kick : NayuModule
     {

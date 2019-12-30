@@ -1,9 +1,9 @@
-﻿using Discord;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.IO;
-using Nayu.Entities;
+using Discord;
+using Nayu.Core.Entities;
 
-namespace Nayu.Features.GlobalAccounts
+namespace Nayu.Core.Features.GlobalAccounts
 {
     internal static class GlobalGuildAccounts
     {
@@ -11,7 +11,7 @@ namespace Nayu.Features.GlobalAccounts
 
         static GlobalGuildAccounts()
         {
-            var info = System.IO.Directory.CreateDirectory(Path.Combine(Constants.ResourceFolder, Constants.ServerAccountsFolder));
+            var info = Directory.CreateDirectory(Path.Combine(Constants.ResourceFolder, Constants.ServerAccountsFolder));
             var files = info.GetFiles("*.json");
             if (files.Length > 0)
             {
@@ -26,7 +26,7 @@ namespace Nayu.Features.GlobalAccounts
                 serverAccounts = new ConcurrentDictionary<ulong, GlobalGuildAccount>();
             }
         }
-
+        //TODO: change all instances of currency to custom currency name
         internal static GlobalGuildAccount GetGuildAccount(ulong id)
         {
             return serverAccounts.GetOrAdd(id, (key) =>
@@ -45,7 +45,7 @@ namespace Nayu.Features.GlobalAccounts
         /// <summary>
         /// This rewrites ALL ServerAccounts to the harddrive... Strongly recommend to use SaveAccounts(id1, id2, id3...) where possible instead
         /// </summary>
-        internal static void SaveAccounts()
+        internal static void SaveAllAccounts()
         {
             foreach (var id in serverAccounts.Keys)
             {

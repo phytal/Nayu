@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Discord.Commands;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Inbox

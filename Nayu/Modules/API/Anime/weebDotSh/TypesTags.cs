@@ -1,14 +1,15 @@
-﻿using Discord;
-using Discord.Commands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Weeb.net;
-using Weeb.net.Data;
-using Nayu.Core.Modules;
+using Discord;
+using Discord.Commands;
+using Nayu.Core.Configuration;
+using Nayu.Libs.Weeb.net;
+using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
+using TokenType = Nayu.Libs.Weeb.net.TokenType;
 
-namespace Nayu.Modules.API.weebDotSh
+namespace Nayu.Modules.API.Anime.weebDotSh
 {
     public class TypesTags : NayuModule
     {
@@ -29,7 +30,7 @@ namespace Nayu.Modules.API.weebDotSh
         [Cooldown(5)]
         public async Task WeebTags(IGuildUser user = null)
         {
-            await weebClient.Authenticate(Config.bot.wolkeToken, Weeb.net.TokenType.Wolke);
+            await weebClient.Authenticate(Config.bot.wolkeToken, TokenType.Wolke);
             var tags = await GetTagsAsync(false);
             List<string> tagList = tags.Tags;
             await Context.Channel.SendMessageAsync(String.Join(", ", tagList));
@@ -42,7 +43,7 @@ namespace Nayu.Modules.API.weebDotSh
         [Cooldown(5)]
         public async Task WeebTypes(IGuildUser user = null)
         {
-            await weebClient.Authenticate(Config.bot.wolkeToken, Weeb.net.TokenType.Wolke);
+            await weebClient.Authenticate(Config.bot.wolkeToken, TokenType.Wolke);
             var tags = await GetTypessAsync(false);
             List<string> tagList = tags.Types;
             await Context.Channel.SendMessageAsync(String.Join(", ", tagList));

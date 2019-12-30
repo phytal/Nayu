@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Nayu.Entities
+namespace Nayu.Core.Entities
 {
     public class GlobalGuildUserAccount
     {

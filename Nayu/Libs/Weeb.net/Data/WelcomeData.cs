@@ -1,4 +1,4 @@
-﻿namespace Weeb.net.Data
+﻿namespace Nayu.Libs.Weeb.net.Data
 {
     internal class WelcomeData
     {

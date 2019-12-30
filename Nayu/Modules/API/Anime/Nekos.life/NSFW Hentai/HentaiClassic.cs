@@ -1,13 +1,12 @@
-﻿using Discord.Commands;
-using Discord;
-using Newtonsoft.Json;
+﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
 using Nayu.Preconditions;
-using Nayu.Core.Modules;
-using System;
+using Newtonsoft.Json;
 
-namespace Nayu.Modules.API.Nekos.life.NSFW_Hentai
+namespace Nayu.Modules.API.Anime.Nekos.life.NSFW_Hentai
 {
     public class HentaiClassic : NayuModule
     {

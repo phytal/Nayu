@@ -1,11 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 using Discord.Commands;
-using System.Net;
-using Newtonsoft.Json;
 using Nayu.Preconditions;
-using Nayu.Core.Modules;
+using Newtonsoft.Json;
 
-namespace Nayu.Modules.API
+namespace Nayu.Modules.API.Anime.Nekos.life
 {
     public class CatEmoticon : NayuModule
     {

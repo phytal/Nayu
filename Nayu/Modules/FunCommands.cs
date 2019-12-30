@@ -8,11 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.IO;
-using Nayu.Handlers;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
-using Nayu.Features.GlobalAccounts;
 using Nayu.Helpers;
-using Nayu.Core.Modules;
 
 namespace Nayu.Modules
 {

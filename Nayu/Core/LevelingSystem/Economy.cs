@@ -3,11 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
-using Nayu.Economy;
 using Discord.WebSocket;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.Economy;
+using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Modules;
 using Nayu.Preconditions;
-using Nayu.Core.Modules;
 
 namespace Nayu.Core.LevelingSystem
 {
@@ -74,12 +74,12 @@ namespace Nayu.Core.LevelingSystem
         [Summary("Gifts/Pays Taiyakis to a selected user (of course taken from your balance) Ex: n!gift <amount of Taiyakis> @user")]
         [Remarks("n!gift <amount> <user you want to gift to> Ex: n!gift 500 @Phytal")]
         [Cooldown(10)]
-        public async Task Gift(uint Taiyaki, IGuildUser userB)
+        public async Task Gift(uint taiyaki, IGuildUser userB)
         {
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-            var giveaccount = GlobalUserAccounts.GetUserAccount(Context.User);
+            var giver = GlobalUserAccounts.GetUserAccount(Context.User);
 
-            if (giveaccount.Taiyaki < Taiyaki)
+            if (giver.Taiyaki < taiyaki)
             {
                 await ReplyAsync($":angry:  | Stop trying to gift an amount of {config.Currency} over your account balance! ");
             }
@@ -94,17 +94,13 @@ namespace Nayu.Core.LevelingSystem
                 }
                 else
                 {
-                    SocketUser target = null;
-                    var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-                    target = mentionedUser ?? Context.User;
+                    var recipient = GlobalUserAccounts.GetUserAccount((SocketUser)userB);
 
-                    var minusaccount = GlobalUserAccounts.GetUserAccount((SocketUser)userB);
+                    giver.Taiyaki -= taiyaki;
+                    recipient.Taiyaki += taiyaki;
+                    GlobalUserAccounts.SaveAccounts(giver.Id, recipient.Id);
 
-                    giveaccount.Taiyaki -= Taiyaki;
-                    minusaccount.Taiyaki += Taiyaki;
-                    GlobalUserAccounts.SaveAccounts();
-
-                    await Context.Channel.SendMessageAsync($":white_check_mark:  | {Context.User.Mention} has gifted {userB.Mention} {Taiyaki} {config.Currency}(s). How generous.");
+                    await Context.Channel.SendMessageAsync($":white_check_mark:  | {Context.User.Mention} has gifted {userB.Mention} {taiyaki} {config.Currency}(s). How generous.");
                 }
             }
         }

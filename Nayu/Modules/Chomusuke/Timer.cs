@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Timers;
-using Nayu.Entities;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Modules.Inbox;
 
-namespace Nayu
+namespace Nayu.Modules.Chomusuke
 {
     public class ChomusukeTimer
     {
@@ -31,7 +30,7 @@ namespace Nayu
             var config = GlobalUserAccounts.GetAllAccounts();
             foreach (var userAcc in config)
             {
-                Chomusuke activeChomusuke = Global.NewChomusuke;
+                Core.Entities.Chomusuke activeChomusuke = Global.NewChomusuke;
                 if (userAcc.ActiveChomusuke == 1)
                     activeChomusuke = userAcc.Chomusuke1;
                 if (userAcc.ActiveChomusuke == 2)

@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Discord.WebSocket;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 
 namespace Nayu.Modules.Chomusuke.Dueling
 {
     public class ActiveChomusuke
     {
-        public static Tuple<Entities.Chomusuke, Entities.Chomusuke> GetActiveChomusuke(ulong user1, ulong user2)
+        public static Tuple<Core.Entities.Chomusuke, Core.Entities.Chomusuke> GetActiveChomusuke(ulong user1, ulong user2)
         {
             var config = GlobalUserAccounts.GetUserAccount(user1);
             var configg = GlobalUserAccounts.GetUserAccount(user2);
-            Entities.Chomusuke activeChomusuke = Global.NewChomusuke;
-            Entities.Chomusuke activeChomusukee = Global.NewChomusuke;
+            Core.Entities.Chomusuke activeChomusuke = Global.NewChomusuke;
+            Core.Entities.Chomusuke activeChomusukee = Global.NewChomusuke;
             switch (config.ActiveChomusuke)
             {
                 case 1:
@@ -38,12 +38,12 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     activeChomusukee = configg.Chomusuke3;
                     break;
             }
-            return new Tuple<Entities.Chomusuke, Entities.Chomusuke>(activeChomusuke, activeChomusukee);
+            return new Tuple<Core.Entities.Chomusuke, Core.Entities.Chomusuke>(activeChomusuke, activeChomusukee);
         }
-        public static Entities.Chomusuke GetOneActiveChomusuke(ulong user)
+        public static Core.Entities.Chomusuke GetOneActiveChomusuke(ulong user)
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
-            Entities.Chomusuke activeChomusuke = Global.NewChomusuke;
+            Core.Entities.Chomusuke activeChomusuke = Global.NewChomusuke;
             switch (config.ActiveChomusuke)
             {
                 case 1:
@@ -58,7 +58,9 @@ namespace Nayu.Modules.Chomusuke.Dueling
             }
             return activeChomusuke;
         }
-        public static async Task ConvertActiveVariable(ulong user1, ulong user2, Entities.Chomusuke activeChomusuke, Entities.Chomusuke activeChomusukee)
+
+        public static Task ConvertActiveVariable(ulong user1, ulong user2, Core.Entities.Chomusuke activeChomusuke,
+            Core.Entities.Chomusuke activeChomusukee)
         {
             var config = GlobalUserAccounts.GetUserAccount(user1);
             var configg = GlobalUserAccounts.GetUserAccount(user2);
@@ -74,6 +76,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.Chomusuke3 = activeChomusuke;
                     break;
             }
+
             switch (configg.ActiveChomusuke)
             {
                 case 1:
@@ -86,8 +89,11 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     configg.Chomusuke3 = activeChomusukee;
                     break;
             }
+
+            return Task.CompletedTask;
         }
-        public static async Task ConvertOneActiveVariable(ulong user, Entities.Chomusuke activeChomusuke)
+
+        public static Task ConvertOneActiveVariable(ulong user, Core.Entities.Chomusuke activeChomusuke)
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
             switch (config.ActiveChomusuke)
@@ -103,6 +109,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     break;
             }
             GlobalUserAccounts.SaveAccounts(user);
+            return Task.CompletedTask;
         }
     }
 }

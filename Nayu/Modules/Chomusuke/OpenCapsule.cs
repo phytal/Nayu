@@ -2,8 +2,7 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Chomusuke
@@ -70,8 +69,8 @@ namespace Nayu.Modules.Chomusuke
                 uint cp = 20 * (config.LevelNumber / 10); //cp is boosted based off their user level *.1
                 if (config.Chomusuke1.Have != true)
                 {
-                    if (trait.Item1 == true) config.Chomusuke1.Trait1 = "Lucky";
-                    if (trait.Item2 == true) config.Chomusuke1.Shiny = true;
+                    if (trait.Item1) config.Chomusuke1.Trait1 = "Lucky";
+                    if (trait.Item2) config.Chomusuke1.Shiny = true;
                     config.Chomusuke1.Type = type;
                     config.Chomusuke1.Have = true;
                     config.Chomusuke1.Name = "Chomusuke";
@@ -83,8 +82,8 @@ namespace Nayu.Modules.Chomusuke
                 }
                 else if (config.Chomusuke2.Have != true)
                 {
-                    if (trait.Item1 == true) config.Chomusuke2.Trait1 = "Lucky";
-                    if (trait.Item2 == true) config.Chomusuke2.Shiny = true;
+                    if (trait.Item1) config.Chomusuke2.Trait1 = "Lucky";
+                    if (trait.Item2) config.Chomusuke2.Shiny = true;
                     config.Chomusuke2.Type = type;
                     config.Chomusuke2.Have = true;
                     config.Chomusuke2.Name = "Chomusuke";
@@ -96,8 +95,8 @@ namespace Nayu.Modules.Chomusuke
                 }
                 else if (config.Chomusuke3.Have != true)
                 {
-                    if (trait.Item1 == true) config.Chomusuke3.Trait1 = "Lucky";
-                    if (trait.Item2 == true) config.Chomusuke3.Shiny = true;
+                    if (trait.Item1) config.Chomusuke3.Trait1 = "Lucky";
+                    if (trait.Item2) config.Chomusuke3.Shiny = true;
                     config.Chomusuke3.Type = type;
                     config.Chomusuke3.Have = true;
                     config.Chomusuke3.Name = "Chomusuke";
@@ -118,9 +117,9 @@ namespace Nayu.Modules.Chomusuke
                     var responseee = await NextMessageAsync();
                     if (responseee.Author.Equals(Context.User))
                     {
-                        if (config.Chomusuke3.Have == true) config.Chomusuke3.Name = responseee.Content;
-                        else if (config.Chomusuke2.Have == true) config.Chomusuke2.Name = responseee.Content;
-                        else if (config.Chomusuke1.Have == true) config.Chomusuke1.Name = responseee.Content;
+                        if (config.Chomusuke3.Have) config.Chomusuke3.Name = responseee.Content;
+                        else if (config.Chomusuke2.Have) config.Chomusuke2.Name = responseee.Content;
+                        else if (config.Chomusuke1.Have) config.Chomusuke1.Name = responseee.Content;
                         await Context.Channel.SendMessageAsync($"{Emote.Parse("<:chomusuke:601183653657182280>")}  |  **{Context.User.Username}**, successfully named your new Chomusuke to **{responseee}**! You can use the command `n!chomusuke help` for more Chomusuke commands!");
                     }
                 }
@@ -130,7 +129,7 @@ namespace Nayu.Modules.Chomusuke
                     return;
                 }
             }
-            if (config.Chomusuke3.Have == true)
+            if (config.Chomusuke3.Have)
             {
                 await Context.Channel.SendMessageAsync($":warning:  |  **{Context.User.Username}**, you already own 3 {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusukes! Abandon one first or just stop trying to amass Chomusukes! (Megumin won't be happy if you take all her Chomusukes)");
             }

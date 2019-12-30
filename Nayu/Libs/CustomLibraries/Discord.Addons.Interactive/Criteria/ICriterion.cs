@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Discord.WebSocket;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Discord.Commands;
 
-namespace Discord.Addons.Interactive
+namespace Nayu.Libs.CustomLibraries.Discord.Addons.Interactive.Criteria
 {
     public interface ICriterion<in T>
     {

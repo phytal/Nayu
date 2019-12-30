@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using System.IO;
 using Newtonsoft.Json;
 
-namespace Nayu
+namespace Nayu.Core.Configuration
 {
     class Config
     {
@@ -41,8 +36,8 @@ namespace Nayu
         public string BotGameToSet;
         public string TwitchStreamer;
         public string Version;
-        public string fortniteToken;
         public string wolkeToken;
+        public string dblToken;
     }
 }
 

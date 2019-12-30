@@ -1,6 +1,7 @@
 ﻿using System;
+using Discord;
 
-namespace Discord.Addons.Interactive
+namespace Nayu.Libs.CustomLibraries.Discord.Addons.Interactive.Paginator
 {
     public class PaginatedAppearanceOptions
     {

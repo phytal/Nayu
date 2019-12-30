@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Nayu.Helpers;
+﻿using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 
-namespace Nayu.Handlers
+namespace Nayu.Core.Handlers
 {
     public static class EmbedHandler
     {

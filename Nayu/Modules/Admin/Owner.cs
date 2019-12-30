@@ -1,17 +1,18 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using System;
+using Nayu.Core.Configuration;
+using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Core.Handlers;
 using Nayu.Helpers;
-using Nayu.Features.GlobalAccounts;
-using System.Net;
-using System.IO;
-using Nayu.Handlers;
-using System.Diagnostics;
 using Nayu.Modules.Inbox;
 
-namespace Nayu.Core.Modules.Management
+namespace Nayu.Modules.Admin
 {
     public class Owner : NayuModule
     {

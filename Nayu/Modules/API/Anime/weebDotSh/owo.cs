@@ -1,9 +1,8 @@
-﻿using Discord;
+﻿using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
-using System.Threading.Tasks;
-using Weeb.net;
-using Weeb.net.Data;
-using Nayu.Core.Modules;
+using Nayu.Libs.Weeb.net;
+using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
 
 /*
@@ -15,7 +14,7 @@ using Nayu.Preconditions;
  
  */
 
-namespace Nayu.Modules.API.Anime.weebDotSh.NSFW
+namespace Nayu.Modules.API.Anime.weebDotSh
 {
     public class owo : NayuModule
     {

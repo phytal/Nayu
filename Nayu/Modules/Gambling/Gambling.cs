@@ -1,16 +1,11 @@
-﻿using Discord.Commands;
-using System;
-using Discord;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
-using System.Net;
+using Discord;
+using Discord.Commands;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
-using Nayu.Features.GlobalAccounts;
-using Nayu.Core.Modules;
 
-namespace Nayu.Modules
+namespace Nayu.Modules.Gambling
 {
     public class Gambling : NayuModule
     {

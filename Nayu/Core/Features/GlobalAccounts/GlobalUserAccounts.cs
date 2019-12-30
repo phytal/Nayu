@@ -1,13 +1,13 @@
-﻿using Nayu.Configuration;
-using System;
-using Nayu.Entities;
-using Discord;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Discord;
+using Nayu.Core.Configuration;
+using Nayu.Core.Entities;
 
-namespace Nayu.Features.GlobalAccounts
+namespace Nayu.Core.Features.GlobalAccounts
 {
     internal static class GlobalUserAccounts
     {
@@ -15,13 +15,13 @@ namespace Nayu.Features.GlobalAccounts
 
         static GlobalUserAccounts()
         {
-            var info = System.IO.Directory.CreateDirectory(Path.Combine(Constants.ResourceFolder, Constants.UserAccountsFolder));
+            var info = Directory.CreateDirectory(Path.Combine(Constants.ResourceFolder, Constants.UserAccountsFolder));
             var files = info.GetFiles("*.json");
             if (files.Length > 0)
             {
                 foreach (var file in files)
                 {
-                    var user = Configuration.DataStorage.RestoreObject<GlobalUserAccount>(Path.Combine(file.Directory.Name, file.Name));
+                    var user = DataStorage.RestoreObject<GlobalUserAccount>(Path.Combine(file.Directory.Name, file.Name));
                     userAccounts.TryAdd(user.Id, user);
                 }
             }
@@ -57,11 +57,12 @@ namespace Nayu.Features.GlobalAccounts
         {
             return userAccounts.Values.Where(filter).ToList();
         }
+        
 
         /// <summary>
         /// This rewrites ALL UserAccounts to the harddrive... Strongly recommend to use SaveAccounts(id1, id2, id3...) where possible instead
         /// </summary>
-        internal static void SaveAccounts()
+        internal static void SaveAllAccounts()
         {
             foreach (var id in userAccounts.Keys)
             {
@@ -76,7 +77,7 @@ namespace Nayu.Features.GlobalAccounts
         {
             foreach (var id in ids)
             {
-                Configuration.DataStorage.StoreObject(GetUserAccount(id), Path.Combine(Constants.UserAccountsFolder, $"{id}.json"), useIndentations: true);
+                DataStorage.StoreObject(GetUserAccount(id), Path.Combine(Constants.UserAccountsFolder, $"{id}.json"), useIndentations: true);
             }
         }
     }

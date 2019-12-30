@@ -2,8 +2,9 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
+using Nayu.Core.Handlers;
 using Nayu.Core.LevelingSystem;
-using Nayu.Handlers;
+using Nayu.Modules.Chomusuke;
 
 namespace Nayu
 {

@@ -8,7 +8,6 @@ using Discord.Commands;
 using Discord;
 using System.Net;
 using Nayu.Preconditions;
-using Nayu.Core.Modules;
 
 namespace Nayu.Modules.API
 {

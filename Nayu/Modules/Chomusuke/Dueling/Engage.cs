@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
-using Nayu.Modules.Chomusuke.Dueling;
-using Nayu.Modules.Fun.Dueling;
+using Nayu.Core.Features.GlobalAccounts;
 
-namespace Nayu.Modules
+namespace Nayu.Modules.Chomusuke.Dueling
 {
     public class Engage : NayuModule
-    {
+    {/*
         [Command("engage"), Alias("attack", "item", "giveup")]
         [Summary("Opens the duels engagment GUI")]
         [Remarks("Ex: n!engage")]
@@ -393,7 +389,7 @@ namespace Nayu.Modules
 
                         MethodInfo theMethod = GetType().GetMethod(name);
                         var result =
-                            (Tuple<bool, Entities.Chomusuke, Entities.Chomusuke, string>) theMethod.Invoke(this,
+                            (Tuple<bool, Core.Entities.Chomusuke, Core.Entities.Chomusuke, string>) theMethod.Invoke(this,
                                 new object[] {Context, activeChomusuke, activeChomusukee, target});
                         if (result.Item1)
                         {
@@ -480,8 +476,8 @@ namespace Nayu.Modules
             return config.Items[keyName];
         }
 
-        public static Tuple<bool, string> StrengthPotion(ShardedCommandContext context, Entities.Chomusuke chom1,
-            Entities.Chomusuke chom2, string target)
+        public static Tuple<bool, string> StrengthPotion(ShardedCommandContext context, Core.Entities.Chomusuke chom1,
+            Core.Entities.Chomusuke chom2, string target)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var player2 = context.Guild.GetUser(config.OpponentId);
@@ -517,8 +513,8 @@ namespace Nayu.Modules
             return new Tuple<bool, string>(false, response);
         }
 
-        public static Tuple<bool, string> DebuffPotion(ShardedCommandContext context, Entities.Chomusuke chom1,
-            Entities.Chomusuke chom2, string target)
+        public static Tuple<bool, string> DebuffPotion(ShardedCommandContext context, Core.Entities.Chomusuke chom1,
+            Core.Entities.Chomusuke chom2, string target)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var player2 = context.Guild.GetUser(config.OpponentId);
@@ -539,7 +535,7 @@ namespace Nayu.Modules
 
                 if (target == player2.Mention)
                 {
-                    chom1.PotionEffects.Add("Debufff", 0);
+                    chom1.PotionEffects.Add("Debuff", 0);
                     chom2.PotionEffects["Debuff"] += 5;
                     response = $"**{context.User.Mention}** used a **Debuff Potion** on {chom2.Name}!";
                     GlobalUserAccounts.SaveAccounts();
@@ -552,8 +548,8 @@ namespace Nayu.Modules
             return new Tuple<bool, string>(false, response);
         }
 
-        public static Tuple<bool, string> SpeedPotion(ShardedCommandContext context, Entities.Chomusuke chom1,
-            Entities.Chomusuke chom2, string target)
+        public static Tuple<bool, string> SpeedPotion(ShardedCommandContext context, Core.Entities.Chomusuke chom1,
+            Core.Entities.Chomusuke chom2, string target)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var player2 = context.Guild.GetUser(config.OpponentId);
@@ -572,7 +568,7 @@ namespace Nayu.Modules
 
                 if (target == player2.Mention)
                 {
-                    chom1.PotionEffects.Add("Speed", 0);
+                    chom2.PotionEffects.Add("Speed", 0);
                     response = $"**{context.User.Mention}** used a **Speed Potion** on {chom2.Name}!";
                     GlobalUserAccounts.SaveAccounts();
                     return new Tuple<bool, string>(true, response);
@@ -584,8 +580,8 @@ namespace Nayu.Modules
             return new Tuple<bool, string>(false, response);
         }
 
-        public static Tuple<bool, string> EqualizerPotion(ShardedCommandContext context, Entities.Chomusuke chom1,
-            Entities.Chomusuke chom2, string target)
+        public static Tuple<bool, string> EqualizerPotion(ShardedCommandContext context, Core.Entities.Chomusuke chom1,
+            Core.Entities.Chomusuke chom2, string target)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var player2 = context.Guild.GetUser(config.OpponentId);
@@ -631,8 +627,8 @@ namespace Nayu.Modules
             GlobalUserAccounts.SaveAccounts();
             return $"{config.WhosTurn}, your turn!";
         }
-        //add attacks
-        public static Tuple<bool, string, int> Block(ShardedCommandContext context)
+        //TODO: add attacks?
+        /*public static Tuple<bool, string, int> Block(ShardedCommandContext context)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             string response = string.Empty;
@@ -640,11 +636,11 @@ namespace Nayu.Modules
             int dmg = 0;
             if (config.Blocking == true)
             {
-                response = "You are already in blocking formation! Try Again!";
+                response = "You are already in blocking formation! Try again!";
             }
             if (config.Deflecting == true)
             {
-                response = "You cannot block while already in deflecting formation! Try Again!";
+                response = "You cannot block while already in deflecting formation! Try again!";
             }
             config.Blocking = true;
             GlobalUserAccounts.SaveAccounts();
@@ -653,7 +649,7 @@ namespace Nayu.Modules
             return new Tuple<bool, string, int>(success, response, dmg);
         }
 
-        public static async Task<Tuple<bool, string, int>> Slash(ShardedCommandContext context)
+        public static async Task<AttackCommand> Slash(ShardedCommandContext context)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var player2 = context.Guild.GetUser(config.OpponentId);
@@ -700,10 +696,10 @@ namespace Nayu.Modules
             }
             success = true;
 
-            return await Task.FromResult(new Tuple<bool, string, int>(success, response, dmg));
+            return await Task.FromResult(new AttackCommand{success, response, dmg});
         }
 
-        public static async Task<Tuple<bool, string, int>> Absorb(ShardedCommandContext context)
+        public static async Task<AttackCommand> Absorb(ShardedCommandContext context)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var player2 = context.Guild.GetUser(config.OpponentId);
@@ -766,7 +762,7 @@ namespace Nayu.Modules
 
         }
 
-        public static Tuple<bool, string, int> Deflect(ShardedCommandContext context)
+        public static AttackCommand Deflect(ShardedCommandContext context)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             string response = string.Empty;
@@ -791,7 +787,7 @@ namespace Nayu.Modules
             return new Tuple<bool, string, int>(success, response, dmg);
         }
 
-        public static async Task<Tuple<bool, string, int>> Fireball(ShardedCommandContext context)
+        public static async Task<AttackCommand> Fireball(ShardedCommandContext context)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var player2 = context.Guild.GetUser(config.OpponentId);
@@ -852,7 +848,7 @@ namespace Nayu.Modules
             await context.Channel.SendMessageAsync($"{context.User} took {dmg} from being burned!");
             return;
         }
-        public static async Task<Tuple<bool, string, int>> EarthShatter(ShardedCommandContext context)
+        public static async Task<AttackCommand> EarthShatter(ShardedCommandContext context)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var player2 = context.Guild.GetUser(config.OpponentId);
@@ -923,7 +919,7 @@ namespace Nayu.Modules
 
             return new Tuple<bool, string, int>(success, response, dmg);
         }
-        public static Tuple<bool, string, int> Meditate(ShardedCommandContext context, Entities.Chomusuke chom)
+        public static AttackCommand Meditate(ShardedCommandContext context, Core.Entities.Chomusuke chom)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             string response = string.Empty;
@@ -947,7 +943,7 @@ namespace Nayu.Modules
             success = true;
             return new Tuple<bool, string, int>(success, response, dmg);
         }
-        public static async Task<Tuple<bool, string>> CheckDeath(ShardedCommandContext context, Entities.Chomusuke chom1, Entities.Chomusuke chom2)
+        public static async Task<Tuple<bool, string>> CheckDeath(ShardedCommandContext context, Core.Entities.Chomusuke chom1, Core.Entities.Chomusuke chom2)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var player2 = context.Guild.GetUser(config.OpponentId);
@@ -988,7 +984,7 @@ namespace Nayu.Modules
             return new Tuple<bool, string>(success, response);
         }
 
-        public static async Task Reset(ShardedCommandContext context, Entities.Chomusuke chom1, Entities.Chomusuke chom2)
+        public static async Task Reset(ShardedCommandContext context, Core.Entities.Chomusuke chom1, Core.Entities.Chomusuke chom2)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var player2 = context.Guild.GetUser(config.OpponentId);
@@ -1016,7 +1012,7 @@ namespace Nayu.Modules
             await ActiveChomusuke.ConvertActiveVariable(context.User.Id, config.OpponentId, chom1, chom2);
 
             GlobalUserAccounts.SaveAccounts();
-        }
+        }*/
     }
 }
 

@@ -1,15 +1,12 @@
-﻿using Discord;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Nayu.Core.Modules;
 using Nayu.Preconditions;
 
-namespace Nayu.Modules.ServerManagement
+namespace Nayu.Modules.Admin
 {
     public class Reports_Channel : NayuModule
     {

@@ -7,9 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Nayu.Core.Modules;
-using Nayu.Entities;
-using Nayu.Features.GlobalAccounts;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.API.Overwatch

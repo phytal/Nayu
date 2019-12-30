@@ -1,14 +1,13 @@
-﻿using Discord;
-using Discord.Commands;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
-using Nayu.Core.Modules;
-using Nayu.Features.GlobalAccounts;
-using Nayu.Preconditions;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Helpers;
+using Nayu.Preconditions;
 
-namespace Nayu.Modules.Management.Commands
+namespace Nayu.Modules.Admin.Commands.Fun
 {
     public class Unflip : NayuModule
     {
@@ -30,7 +29,7 @@ namespace Nayu.Modules.Management.Commands
                     embed.WithColor(37, 152, 255);
                     embed.WithDescription(argg ? "I'll maintain your anger! **(Enabled unflipping for this server)**" : "You may freely rampage at your own will. **(Disabled unflipping for this server)**");
                     config.Unflip = argg;
-                    GlobalGuildAccounts.SaveAccounts();
+                    GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
                     await Context.Channel.SendMessageAsync("", embed: embed.Build());
                 }

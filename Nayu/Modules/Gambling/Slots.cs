@@ -1,13 +1,12 @@
-﻿using Discord.Commands;
+﻿using System;
 using System.Threading.Tasks;
 using Discord;
-using Nayu.Features.Economy;
-using System;
-using Nayu.Features.GlobalAccounts;
+using Discord.Commands;
+using Nayu.Core.Features.Economy;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
-using Nayu.Core.Modules;
 
-namespace Nayu.Modules
+namespace Nayu.Modules.Gambling
 {
     public class Slots : NayuModule
     {
