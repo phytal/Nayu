@@ -1,6 +1,6 @@
 language: csharp
 mono: none
-dotnet: 2.1.402
+dotnet: 2.2.207
 script:
   - dotnet restore
-  - dotnet build ./Wsashi/
+  - dotnet build ./Nayu/
