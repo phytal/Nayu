@@ -10,4 +10,5 @@ build:
     verbosity: minimal
     publish_wap: true
     
-    
+install:
+  - cmd: choco install dotnetcore-sdk --pre
