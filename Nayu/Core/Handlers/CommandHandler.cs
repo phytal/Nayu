@@ -11,6 +11,7 @@ using Nayu.Libs.Weeb.net;
 using Nayu.Modules;
 using Nayu.Modules.Admin.Commands.Management.SlowMode;
 using Nayu.Modules.Chomusuke.Dueling;
+using Victoria;
 using TokenType = Nayu.Libs.Weeb.net.TokenType;
 
 namespace Nayu.Core.Handlers
@@ -47,8 +48,6 @@ namespace Nayu.Core.Handlers
             await weebClient.Authenticate(Config.bot.wolkeToken, TokenType.Wolke);
 
         }
-        
-        public static WeebClient _weebClient;
 
         public async Task HandleCommandAsync(SocketMessage s)
         {

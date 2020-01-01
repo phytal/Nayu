@@ -5,6 +5,7 @@ using Discord.WebSocket;
 using Nayu.Core.Handlers;
 using Nayu.Core.LevelingSystem;
 using Nayu.Modules.Chomusuke;
+using Victoria;
 
 namespace Nayu
 {
@@ -18,15 +19,17 @@ namespace Nayu
         private readonly ChomusukeTimer _chomusukeTimer;
         private readonly Events _events;
         private readonly Leveling _leveling;
-
+        private readonly LavaNode _lavaNode;
+        
         public DiscordEventHandler(DiscordShardedClient client, CommandHandler commandHandler
-            , ChomusukeTimer chomusukeTimer, Events events, Leveling leveling)
+            , ChomusukeTimer chomusukeTimer, Events events, Leveling leveling, LavaNode lavaNode)
         {
             _client = client;
             _commandHandler = commandHandler;
             _chomusukeTimer = chomusukeTimer;
             _events = events;
             _leveling = leveling;
+            _lavaNode = lavaNode;
         }
 
         public void InitDiscordEvents()
@@ -69,6 +72,7 @@ namespace Nayu
         }
         private async Task _client_ShardReady(DiscordSocketClient arg)
         {
+            _lavaNode.ConnectAsync();
             _chomusukeTimer.StartTimer();
         }
 

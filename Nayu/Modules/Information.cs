@@ -36,7 +36,7 @@ namespace Nayu.Modules
         }
 
         [Command("help")]
-        [Summary("Shows all possible Standard Commands for this bot")]
+        [Summary("Shows all possible standard commands for this bot")]
         [Remarks("Ex: n!help")]
         [Cooldown(30)]
         public async Task HelpMessage()
@@ -73,7 +73,7 @@ namespace Nayu.Modules
         }
 
         [Command("helpmod")]
-        [Summary("Shows all possible Moderator Commands for this bot")]
+        [Summary("Shows all possible moderator commands for this bot")]
         [Remarks("Ex: n!helpmod")]
         [Cooldown(30)]
         public async Task HelpMessageMod()
@@ -154,7 +154,7 @@ namespace Nayu.Modules
         }
 
         [Command("command")]
-        [Summary("Shows what a specific command does and the usage.")]
+        [Summary("Shows what a specific command does and the usage")]
         [Remarks("n!command <command you want to search up> Ex: n!command stats")]
         [Cooldown(5)]
         public async Task CommandAsync(string command)

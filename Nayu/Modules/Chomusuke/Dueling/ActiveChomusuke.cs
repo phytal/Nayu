@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
 
 namespace Nayu.Modules.Chomusuke.Dueling

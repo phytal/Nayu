@@ -15,6 +15,9 @@
 
 using Discord.WebSocket;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -24,8 +27,10 @@ using Nayu.Core.Handlers;
 using Nayu.Core.LevelingSystem;
 using Nayu.Libs.CustomLibraries.Discord.Addons.Interactive;
 using Nayu.Modules.Chomusuke;
-
-namespace Nayu
+using Nayu.Modules.Music;
+using Victoria;
+      
+      namespace Nayu
 {
     class Program
     {
@@ -33,7 +38,18 @@ namespace Nayu
         private IServiceProvider _services;
         private readonly int[] _shardIds = { 0 };
 
-        private static void Main() => new Program().StartAsync().GetAwaiter().GetResult();
+        private static void Main()
+        {
+            // All required tasks that need to run simultaneously
+            var botLaunchers = new List<Task>
+            {
+                Task.Run(() => { LaunchLavalink(); }), // Lavalink launcher
+                Task.Run(() => { LaunchBotSetup(); })  // Bot launcher
+            };
+
+            // Run all required tasks
+            Task.WaitAll(botLaunchers.ToArray());
+        }
 
         private async Task StartAsync()
         {
@@ -56,6 +72,8 @@ namespace Nayu
 
             await _client.SetGameAsync(Config.bot.BotGameToSet, $"https://twitch.tv/{Config.bot.TwitchStreamer}", ActivityType.Streaming);
             await _client.SetStatusAsync(UserStatus.Online);
+            
+            //LaunchLavalink();
 
             await Task.Delay(-1);
         }
@@ -71,7 +89,22 @@ namespace Nayu
                 .AddSingleton<ChomusukeTimer>()
                 .AddSingleton<Events>()
                 .AddSingleton<Leveling>()
+                .AddSingleton<LavaConfig>()
+                .AddSingleton<LavaNode>()
+                .AddSingleton<MusicManager>()
                 .BuildServiceProvider();
+        }
+        private static void LaunchBotSetup()
+            => new Program().StartAsync().GetAwaiter().GetResult();
+        private static void LaunchLavalink()
+        {
+            var directory = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())))) + @"\Lavalink";
+            var psi = new ProcessStartInfo("cmd.exe", $"/c java -jar {directory}" + @"\Lavalink.jar");
+            psi.WorkingDirectory = directory;
+            //psi.CreateNoWindow = true;
+            //psi.UseShellExecute = false;
+            //psi.RedirectStandardOutput = true;
+            Process.Start(psi);
         }
     }
 }

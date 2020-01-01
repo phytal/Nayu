@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Nayu
 {
-    internal class Logger
+    public class Logger
     {
         internal static Task Log(LogMessage logMessage)
         {

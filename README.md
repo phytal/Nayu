@@ -1,7 +1,7 @@
 <img src="https://i.imgur.com/1tT1Wkk.png" alt="Phytal" style="box-shadow: 25px 25px 50px 0 white inset, -25px -25px 50px 0 white inset;"/>
 
-[![Build Status](https://api.travis-ci.org/Phytal/Wsashi.svg?branch=master)](https://travis-ci.org/Phytal/Wsashi)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Phytal/Wsashi/blob/master/LICENSE)
+[![Build Status](https://api.travis-ci.org/Phytal/Nayu.svg?branch=master)](https://travis-ci.org/Phytal/Nayu)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Phytal/Nayu/blob/master/LICENSE)
 
 
 # Nayu
@@ -27,11 +27,20 @@ ____
 
 * [.NET Core 2.2](https://docs.microsoft.com/en-us/dotnet/core/) - Platform used
 * [Discord .NET](https://github.com/RogueException/Discord.Net) - Discord API wrapper library
-* Sweaty hands and brain-frying <3
+* Cold fingers and much caffeine <3
 
 ___
 ### Commands: 
-
+| Command  | Category | Aliases          | Usage                                                         | Description                                        |
+|----------|----------|------------------|---------------------------------------------------------------|----------------------------------------------------|
+| help     | Utility  | n/a              | Ex: `n!help`                                                    | Shows all possible standard commands for this bot  |
+| info     | Utility  | n/a              | Ex: `n!info`                                                    | Shows Nayu's information                           |
+| helpMod  | Utility  | n/a              | Ex: `n!helpmod`                                                 | Shows all possible moderator commands for this bot |
+| helpNsfw | Utility  | n/a              | Ex: `n!helpnsfw`                                                | Shows all possible NSFW Commands for this bot      |
+| command  | Utility  | n/a              | `n!command <command you want to search up>` Ex: `n!command stats` | Shows what a specific command does and the usage   |
+| nayuLink | Utility  | serverinvitelink | Ex: `n!Nayulink`                                                | Provides Nayu's server invite link                 |
+|          |          |                  |                                                               |                                                    |
+|          |          |                  |                                                               |   
 ___
 ## **FAQ**
 

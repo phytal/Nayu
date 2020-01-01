@@ -18,7 +18,6 @@ namespace Nayu.Modules.Chomusuke
         {
             var user = Context.User as SocketGuildUser;
             var config = GlobalUserAccounts.GetUserAccount(user);
-            var configg = GlobalUserAccounts.GetUserAccount(user);
             var activeChomusuke = ActiveChomusuke.GetOneActiveChomusuke(user.Id);
             string shoptext = ":department_store:  **|  Chomusuke Shop** \n ```xl\nPlease select the purchase you would like to make.\n\n[1] Capsules\n[2] Boosts\n[3] Items\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
             var shop = await Context.Channel.SendMessageAsync(shoptext);
@@ -34,13 +33,13 @@ namespace Nayu.Modules.Chomusuke
                 var newresponse = await NextMessageAsync();
                 if (newresponse.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                 {
-                    if (configg.Taiyaki < 900)
+                    if (config.Taiyaki < 900)
                     {
-                        await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{900 - configg.Taiyaki}** more Taiyakis!"; });
+                        await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{900 - config.Taiyaki}** more Taiyakis!"; });
                         return;
                     }
                     config.NormalCapsule += 1;
-                    configg.Taiyaki -= 900;
+                    config.Taiyaki -= 900;
                     GlobalUserAccounts.SaveAccounts(user.Id);
                     await Context.Channel.SendMessageAsync($"You have successfully bought a {Emote.Parse("<:chomusuke:601183653657182280>")} Normal Chomusuke Capsule!");
                     return;

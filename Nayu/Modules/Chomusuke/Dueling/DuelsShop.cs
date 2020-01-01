@@ -659,7 +659,6 @@ namespace Nayu.Modules.Chomusuke.Dueling
             string armour = "None";
             string weapon = "None";
             string items = "None";
-            string blessings = "None";
             string activeBlessing = "None";
             if (account.Items.ContainsKey("Strength Potion") || account.Items.ContainsKey("Speed Potion") || account.Items.ContainsKey("Debuff Potion") || account.Items.ContainsKey("Equalizer Potion")) potions = $"";
             if (account.Weapon != null) weapon = $"";

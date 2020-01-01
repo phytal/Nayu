@@ -18,8 +18,8 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Cooldown(5)]
         public async Task MuteAsync(SocketGuildUser user)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.ManageRoles)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.ManageRoles)
             {
                 var muteRole = await GetMuteRole(user.Guild);
                 if (!user.Roles.Any(r => r.Id == muteRole.Id))
@@ -48,8 +48,8 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Cooldown(5)]
         public async Task UnmuteAsync(SocketGuildUser user = null)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.ManageRoles)
+            var guildUser = Context.User as SocketGuildUser;
+            if (guildUser.GuildPermissions.ManageRoles)
             {
                 try
                 {
@@ -84,11 +84,11 @@ namespace Nayu.Modules.Admin.Commands.Management
             {
                 try
                 {
-                    muteRole = await guild.CreateRoleAsync(muteRoleName, GuildPermissions.None).ConfigureAwait(false);
+                    muteRole = await guild.CreateRoleAsync(muteRoleName, GuildPermissions.None, Color.Magenta, false, null).ConfigureAwait(false);
                 }
                 catch
                 {
-                    muteRole = guild.Roles.FirstOrDefault(r => r.Name == muteRoleName) ?? await guild.CreateRoleAsync(defaultMuteRoleName, GuildPermissions.None).ConfigureAwait(false);
+                    muteRole = guild.Roles.FirstOrDefault(r => r.Name == muteRoleName) ?? await guild.CreateRoleAsync(defaultMuteRoleName, GuildPermissions.None, Color.Magenta, false, null).ConfigureAwait(false);
                 }
             }
 
