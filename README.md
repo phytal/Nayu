@@ -2,7 +2,8 @@
 
 [![Build Status](https://api.travis-ci.org/Phytal/Nayu.svg?branch=master)](https://travis-ci.org/Phytal/Nayu)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Phytal/Nayu/blob/master/LICENSE)
-
+[![Actions Status](https://github.com/Phytal/Nayu/workflows/.NET%20Core/badge.svg)](https://github.com/Phytal/Nayu/actions)
+[![Build status](https://ci.appveyor.com/api/projects/status/x9ckwganoya5ap5h?svg=true)](https://ci.appveyor.com/project/Phytal/nayu)
 
 # Nayu
 A fun and interactive ~~weeb~~ Discord bot
@@ -54,7 +55,18 @@ Use the command `c!command <comamnd you need help with>` to learn more about a c
 Just simply join our Discord Server and ping me with the issue (Phytal#8213).
 
 <a href="https://discord.gg/eyHg6hS" >
-  <img src="https://i.imgur.com/wtcAscz.png" alt="https://discord.gg/eyHg6hS" />
-</a>
+  <iframe src="https://discordapp.com/widget?id=601118427909718076&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
+</a> 
 
-###### *click here :3 ^^*
+___ 
+
+<a href="https://www.patreon.com/bePatron?u=11916521">
+  <img src = "https://c5.patreon.com/external/logo/become_a_patron_button.png" style = "border-radius: 8px;">
+</a> 
+
+
+<a href="https://discord.gg/eyHg6hS" >
+  <img src="https://i.imgur.com/wtcAscz.png" alt="https://discord.gg/eyHg6hS" style = "width:20%; height: 51px; border-radius: 8px;" >
+</a> 
+
+###### *click the buttons! :3*
