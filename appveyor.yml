@@ -1,8 +1,13 @@
+version: 1.0.0-{build}
 configuration: Release
 
 before_build: 
     - nuget restore
+
+image: Visual Studio 2017 RC
+
 build: 
     verbosity: minimal
     publish_wap: true
+    
     
