@@ -4,9 +4,9 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Phytal/Nayu/blob/master/LICENSE)
 [![Actions Status](https://github.com/Phytal/Nayu/workflows/.NET%20Core/badge.svg)](https://github.com/Phytal/Nayu/actions)
 [![Build status](https://ci.appveyor.com/api/projects/status/x9ckwganoya5ap5h?svg=true)](https://ci.appveyor.com/project/Phytal/nayu)
-
+[![Discord Shield](https://discordapp.com/api/guilds/601118427909718076/widget.png?style=shield)](https://discord.gg/eyHg6hS)
 # Nayu
-A fun and interactive ~~weeb~~ Discord bot
+A fun and interactive ~~weeb~~ Discord bot including moderation, music, pets, and NSFW!
 ### **Want to invite me to your servers?**  
 <a href="https://discordbots.org/bot/417160957010116608" >
   <img src="https://discordbots.org/api/widget/417160957010116608.svg" alt="Nayu" />
@@ -18,7 +18,7 @@ A fun and interactive ~~weeb~~ Discord bot
 
 ___
 ## **Created by Phytal**   
-<a href="https://discordbots.org/user/264897146837270529">
+<a href="https://top.gg/user/264897146837270529">
   <img src="https://images.discordapp.net/avatars/264897146837270529/1f7cc60c2191e10e5a595a2e1fedcbf4.png?size=" alt="Phytal" style="width: 100px; height: 100px;  border-radius: 50%; scale(1);margin-left:2px; border: 4px solid Gainsboro;"/>
 </a>
 
@@ -26,8 +26,8 @@ ____
 
 ### Built With:
 
-* [.NET Core 2.2](https://docs.microsoft.com/en-us/dotnet/core/) - Platform used
-* [Discord .NET](https://github.com/RogueException/Discord.Net) - Discord API wrapper library
+* [.NET Core 3.1](https://docs.microsoft.com/en-us/dotnet/core/) - Platform used
+* [Discord.NET](https://github.com/RogueException/Discord.Net) - Discord API wrapper library
 * Cold fingers and much caffeine <3
 
 ___
@@ -49,24 +49,17 @@ ___
 Taiyakis are gained by sending messages, gambling, daily rewards, and lootboxes. 
 
 ### **How do I see how to use a command?**
-Use the command `c!command <comamnd you need help with>` to learn more about a command. If problems persist, join our Discord server for further assistance.
+Use the command `n!command <comamnd you need help with>` to learn more about a command. If problems persist, join our Discord server for further assistance.
 
 ### **Where can I report issues with the bot?**
 Just simply join our Discord Server and ping me with the issue (Phytal#8213).
 
-<a href="https://discord.gg/eyHg6hS" >
-  <iframe src="https://discordapp.com/widget?id=601118427909718076&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
-</a> 
+[![Discord Banner 1](https://discordapp.com/api/guilds/601118427909718076/widget.png?style=banner1)](https://discord.gg/eyHg6hS)
 
 ___ 
 
-<a href="https://www.patreon.com/bePatron?u=11916521">
-  <img src = "https://c5.patreon.com/external/logo/become_a_patron_button.png" style = "border-radius: 8px;">
-</a> 
+[![Patreon](https://i.imgur.com/2MUFxtl.png)](https://www.patreon.com/bePatron?u=11916521)
+[![Discord](https://i.imgur.com/K0APYms.png)](https://discord.gg/eyHg6hS)
 
-
-<a href="https://discord.gg/eyHg6hS" >
-  <img src="https://i.imgur.com/wtcAscz.png" alt="https://discord.gg/eyHg6hS" style = "width:20%; height: 51px; border-radius: 8px;" >
-</a> 
 
 ###### *click the buttons! :3*
