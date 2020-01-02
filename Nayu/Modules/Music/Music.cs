@@ -276,8 +276,9 @@ namespace Nayu.Modules.Music
             try
             {
                 var oldTrack = player.Track;
-                var currenTrack = await player.SkipAsync();
-                await ReplyAsync($"Skipped: {oldTrack.Title}\nNow Playing: {currenTrack.Title}");
+                var currentTrack = await player.SkipAsync();
+                await ReplyAsync($"Skipped: {oldTrack.Title}\nNow Playing: {currentTrack.Title}");
+                _musicManager.VoteQueue.Clear();
             }
             catch (Exception exception)
             {

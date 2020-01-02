@@ -58,8 +58,7 @@ namespace Victoria {
         public ITextChannel TextChannel { get; internal set; }
 
         private readonly LavaSocket _lavaSocket;
-        private readonly MusicManager _musicManager;
-        
+
         /// <summary>
         ///     Represents a <see cref="IGuild" /> voice connection.
         /// </summary>
