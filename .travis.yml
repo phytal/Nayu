@@ -2,5 +2,12 @@ language: csharp
 mono: none
 dotnet: 3.1.100
 script:
-  - dotnet restore
-  - dotnet build ./Nayu/
+- dotnet restore
+- dotnet build ./Nayu/
+deploy:
+  provider: heroku
+  api_key:
+    secure: HMAeYxrzvqkJ+sqPpV4HhC3nJwOzXQ1kIr6Xvy+xmsXHTUJ5FGqstexheUZb4Cl5eVyuVxVjyn+q5ePnAna0e48IiV+2Uxn65xyXSYSvTAjp8xaaRwHrK2BuUlZhnzGkR9bjzQ8CuLsflO9sMrwmkjavN7Cc+QOCeatrYxGoH0cno+EeQIawWJf6bl1KkJIlkcl+tpFNTjDDpIID4V5F5/fkvv9DY6834ELx4ZsnI7XHneRRNhMo0y/L9TxoIJYvSspJFd22vvyAJYL4nlGfuzbug4RzPdqo1BjAEaky/CjwPmCpJeOId7rfqe0K2WEZtEqmYA14cKrnKB0mm0VSytjMoEic+yOIi+vzKTX2pLLU4RjPnlE+kcNANjWkjbl/kb+SJWiMQTve7TheKDyTgaAcueqFNJxDXZQIRWczrqPmuApWOuwDKJUh65SrJiCWnN2k6pvHb0sELX1CdtbNdNaQHkR+3G7EwIkN7Csil/D6OXs1JsGjBb300ZinfLXNiaM+Av3Tj38Zgy7qXcehKpSAIoMNlzHRYJL8VndRmp5Cafywwpgt6zsESnzm1dUwr977ydZzgjJMiGtggYlmQRk4QolSVg/ruTfk93zlpzSmxyLC65BtlH999K8YlqdA4isJjlGMKBOcwt/v4CCDRsNG3xkBAkK1AEa55qc0y5o=
+  app: Nayu
+  on:
+    repo: Phytal/Nayu
