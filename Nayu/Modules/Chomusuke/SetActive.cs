@@ -43,9 +43,11 @@ namespace Nayu.Modules.Chomusuke
                     $"Name: **{config.Chomusuke3.Name}**\nZodiac: **{config.Chomusuke3.Zodiac}**\nType: **{config.Chomusuke3.Name}**\nLevel: **{config.Chomusuke3.LevelNumber}**\nCombat Power: **{config.Chomusuke3.CP}**\nHealth: **{config.Chomusuke3.HealthCapacity}**\nShield: **{config.Chomusuke3.ShieldCapacity}**\nControl: **{config.Chomusuke3.Control}**\nTrait 1: **{config.Chomusuke3.Trait1}**\nTrait2: **{config.Chomusuke3.Trait2}**");
             await Context.Channel.SendMessageAsync("", embed: embed.Build());
             var response = await NextMessageAsync();
-            if (response.Content.Equals("1") && response.Author.Equals(Context.User) && config.Chomusuke1.Have) config.ActiveChomusuke = 1;
+            if (response.Content.Equals("1") && response.Author.Equals(Context.User) && config.Chomusuke1.Have)
+                config.ActiveChomusuke = 1;
 
-            else if (response.Content.Equals("2") && response.Author.Equals(Context.User) && config.Chomusuke2.Have) config.ActiveChomusuke = 2;
+            else if (response.Content.Equals("2") && response.Author.Equals(Context.User) && config.Chomusuke2.Have)
+                config.ActiveChomusuke = 2;
 
             else if (response.Content.Equals("3") && response.Author.Equals(Context.User) && config.Chomusuke3.Have)
                 config.ActiveChomusuke = 3;

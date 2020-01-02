@@ -13,8 +13,9 @@ namespace Nayu.Modules.Music {
         private readonly Logger _logger;
         public readonly HashSet<ulong> VoteQueue;
 
-        public MusicManager(LavaNode lavaNode)
+        public MusicManager(LavaNode lavaNode, Logger logger)
         {
+            _logger = logger;
             _lavaNode = lavaNode;
             _lavaNode.OnLog += OnLog;
             _lavaNode.OnPlayerUpdated += OnPlayerUpdated;

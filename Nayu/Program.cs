@@ -92,6 +92,7 @@ using Victoria;
                 .AddSingleton<LavaConfig>()
                 .AddSingleton<LavaNode>()
                 .AddSingleton<MusicManager>()
+                .AddSingleton<Logger>()
                 .BuildServiceProvider();
         }
         private static void LaunchBotSetup()
@@ -101,9 +102,9 @@ using Victoria;
             var directory = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())))) + @"\Lavalink";
             var psi = new ProcessStartInfo("cmd.exe", $"/c java -jar {directory}" + @"\Lavalink.jar");
             psi.WorkingDirectory = directory;
-            //psi.CreateNoWindow = true;
-            //psi.UseShellExecute = false;
-            //psi.RedirectStandardOutput = true;
+            psi.CreateNoWindow = true;
+            psi.UseShellExecute = false;
+            psi.RedirectStandardOutput = true;
             Process.Start(psi);
         }
     }

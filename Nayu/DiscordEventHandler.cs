@@ -72,7 +72,8 @@ namespace Nayu
         }
         private async Task _client_ShardReady(DiscordSocketClient arg)
         {
-            _lavaNode.ConnectAsync();
+            if(!_lavaNode.IsConnected)
+                _lavaNode.ConnectAsync();
             _chomusukeTimer.StartTimer();
         }
 
