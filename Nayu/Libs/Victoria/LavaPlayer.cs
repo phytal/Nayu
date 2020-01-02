@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
+using Nayu.Modules.Music;
 using Victoria.Enums;
 using Victoria.Interfaces;
 using Victoria.Payloads;
@@ -57,7 +58,8 @@ namespace Victoria {
         public ITextChannel TextChannel { get; internal set; }
 
         private readonly LavaSocket _lavaSocket;
-
+        private readonly MusicManager _musicManager;
+        
         /// <summary>
         ///     Represents a <see cref="IGuild" /> voice connection.
         /// </summary>
@@ -182,6 +184,8 @@ namespace Victoria {
             if (!(queueable is LavaTrack track))
                 throw new InvalidCastException($"Couldn't cast {queueable.GetType()} to {typeof(LavaTrack)}.");
 
+            //VoteQueue.Clear();
+            
             await await Task.Delay(delay ?? TimeSpan.Zero)
                 .ContinueWith(_ => PlayAsync(track))
                 .ConfigureAwait(false);

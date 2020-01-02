@@ -21,9 +21,13 @@ namespace Victoria.Resolvers {
                 throw new ArgumentNullException(nameof(lavaTrack));
 
             var (author, title) = lavaTrack.GetAuthorAndTitle();
+            //Phytal - added regex to improve lyric finding
+            Regex x = new Regex(@"\[\D+\]");
+            title = x.Replace(title, "").Trim();
+            author = author.Trim();
+            //
             author = author.Replace(' ', '-');
             title = title.Replace(' ', '-');
-
             var url = $"https://genius.com/{author}-{title}-lyrics";
             var bytes = await GetBytesAsync(url)
                 .ConfigureAwait(false);

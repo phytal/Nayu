@@ -57,6 +57,8 @@ namespace Nayu.Modules.Music {
                 return;
             }
 
+            VoteQueue.Clear();
+            
             await args.Player.PlayAsync(track);
             await args.Player.TextChannel.SendMessageAsync(
                 $"{args.Reason}: {args.Track.Title}\nNow playing: {track.Title}");
