@@ -63,7 +63,8 @@ using Victoria;
                 MessageCacheSize = 100,
                 TotalShards = 1
             });
-
+            string hostName = System.Net.Dns.GetHostName();
+            Console.WriteLine(hostName);
             _client.Log += Logger.Log;
             _services = ConfigureServices();
             _services.GetRequiredService<DiscordEventHandler>().InitDiscordEvents();
