@@ -21,7 +21,9 @@ using System.IO;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Nayu.Core.Configuration;
 using Nayu.Core.Handlers;
 using Nayu.Core.LevelingSystem;
@@ -70,14 +72,11 @@ using Victoria;
             await _client.LoginAsync(TokenType.Bot, Config.bot.token);
             await _client.StartAsync();
 
-            await _client.SetGameAsync(Config.bot.BotGameToSet, $"https://twitch.tv/{Config.bot.TwitchStreamer}", ActivityType.Streaming);
+            await _client.SetGameAsync(Config.bot.botGameToSet, $"https://twitch.tv/{Config.bot.twitchStreamer}", ActivityType.Streaming);
             await _client.SetStatusAsync(UserStatus.Online);
-            
-            //LaunchLavalink();
 
             await Task.Delay(-1);
         }
-
         private IServiceProvider ConfigureServices()
         {
             return new ServiceCollection()

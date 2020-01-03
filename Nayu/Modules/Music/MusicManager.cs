@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Discord;
-using Discord.WebSocket;
-using Microsoft.Extensions.Logging;
 using Victoria;
 using Victoria.EventArgs;
 

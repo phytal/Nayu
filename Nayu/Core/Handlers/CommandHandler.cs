@@ -29,7 +29,7 @@ namespace Nayu.Core.Handlers
             _client = client;
 
         }
-        WeebClient weebClient = new WeebClient("Nayu", Config.bot.Version);
+        WeebClient weebClient = new WeebClient("Nayu", Config.bot.version);
 
         public async Task InitializeAsync()
         {

@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Globalization;
+using System.IO;
 using Newtonsoft.Json;
 
 namespace Nayu.Core.Configuration
@@ -17,7 +19,8 @@ namespace Nayu.Core.Configuration
 
             if (!File.Exists(configFolder + "/" + configFile))
             {
-                bot = new BotConfig();
+                bot = new BotConfig{token = Environment.GetEnvironmentVariable("Token"), wolkeToken = Environment.GetEnvironmentVariable("WolkeToken"), cmdPrefix = "n!", twitchStreamer = "phytal"};
+                bot.token = "";
                 string json = JsonConvert.SerializeObject(bot, Formatting.Indented);
                 File.WriteAllText(configFolder + "/" + configFile, json);
             }
@@ -33,9 +36,9 @@ namespace Nayu.Core.Configuration
     {
         public string token;
         public string cmdPrefix;
-        public string BotGameToSet;
-        public string TwitchStreamer;
-        public string Version;
+        public string botGameToSet;
+        public string twitchStreamer;
+        public string version;
         public string wolkeToken;
         public string dblToken;
     }

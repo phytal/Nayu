@@ -68,7 +68,7 @@ namespace Nayu.Modules.Admin
         [RequireOwner]
         public async Task SetBotVersion([Remainder] string version)
         {
-            Config.bot.Version = version;
+            Config.bot.version = version;
             var embed = new EmbedBuilder();
             embed.WithDescription($"Set the bot's version to {version}");
             embed.WithColor(37, 152, 255);
@@ -129,7 +129,7 @@ namespace Nayu.Modules.Admin
             embed.WithColor(37, 152, 255);
             await ReplyAsync("", embed: embed.Build());
             await client.SetGameAsync($"n!help | in {guilds} servers!",
-                $"https://twitch.tv/{Config.bot.TwitchStreamer}", ActivityType.Streaming);
+                $"https://twitch.tv/{Config.bot.twitchStreamer}", ActivityType.Streaming);
 
         }
 

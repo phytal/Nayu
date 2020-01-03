@@ -24,7 +24,7 @@ namespace Nayu.Modules
         [Cooldown(10)]
         public async Task Info()
         {
-            string version = Config.bot.Version;
+            string version = Config.bot.version;
             var embed = new EmbedBuilder();
             embed.WithColor(37, 152, 255);
             embed.AddField("Creator", "Phytal#8213", true);
@@ -244,7 +244,7 @@ namespace Nayu.Modules
         [Cooldown(15)]
         public async Task Update()
         {
-            string version = Config.bot.Version;
+            string version = Config.bot.version;
             var embed = new EmbedBuilder();
             embed.WithColor(37, 152, 255);
             embed.WithTitle("Update Notes");

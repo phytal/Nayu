@@ -12,7 +12,7 @@ namespace Nayu.Modules.API.Anime.weebDotSh.Helpers
 {
     public class WebRequest
     {
-        WeebClient weebClient = new WeebClient("Nayu", Config.bot.Version);
+        WeebClient weebClient = new WeebClient("Nayu", Config.bot.version);
 
         public async Task<RandomData> GetTypesAsync(string type, IEnumerable<string> tags, FileType fileType,
             NsfwSearch nsfw, bool hidden)

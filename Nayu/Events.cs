@@ -50,7 +50,7 @@ namespace Nayu
 
             var client = Program._client;
             var guilds = client.Guilds.Count;
-            await client.SetGameAsync($"n!help | in {guilds} servers!", $"https://twitch.tv/{Config.bot.TwitchStreamer}", ActivityType.Streaming);
+            await client.SetGameAsync($"n!help | in {guilds} servers!", $"https://twitch.tv/{Config.bot.twitchStreamer}", ActivityType.Streaming);
         }
 
         public async Task<string> UpdateServerCount(DiscordShardedClient client)

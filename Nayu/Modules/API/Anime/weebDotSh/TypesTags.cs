@@ -13,7 +13,7 @@ namespace Nayu.Modules.API.Anime.weebDotSh
 {
     public class TypesTags : NayuModule
     {
-        WeebClient weebClient = new WeebClient("Nayu", Config.bot.Version);
+        WeebClient weebClient = new WeebClient("Nayu", Config.bot.version);
         public async Task<TagsData> GetTagsAsync(bool hidden)
         {
             return await weebClient.GetTagsAsync(hidden); //hidden is always defaulted to false
