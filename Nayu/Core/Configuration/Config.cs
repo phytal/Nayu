@@ -19,7 +19,7 @@ namespace Nayu.Core.Configuration
 
             if (!File.Exists(configFolder + "/" + configFile))
             {
-                bot = new BotConfig{token = Environment.GetEnvironmentVariable("Token"), wolkeToken = Environment.GetEnvironmentVariable("WolkeToken"), cmdPrefix = "n!", twitchStreamer = "phytal"};
+                bot = new BotConfig{token = Environment.GetEnvironmentVariable("Token"), wolkeToken = Environment.GetEnvironmentVariable("WolkeToken"), cmdPrefix = "n!", twitchStreamer = "phytal", version = "0.0.01", botGameToSet = "idek"};
                 bot.token = "";
                 string json = JsonConvert.SerializeObject(bot, Formatting.Indented);
                 File.WriteAllText(configFolder + "/" + configFile, json);
