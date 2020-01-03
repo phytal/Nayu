@@ -20,7 +20,7 @@ namespace Victoria {
         /// <summary>
         ///     Port to connect to.
         /// </summary>
-        public ushort Port { get; set; } = 2333;
+        public ushort Port { get; set; } = 8080;
 
         /// <summary>
         ///     Server's IP/Hostname.
