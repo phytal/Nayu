@@ -45,7 +45,7 @@ using Victoria;
             // All required tasks that need to run simultaneously
             var botLaunchers = new List<Task>
             {
-                Task.Run(() => { LaunchLavalink(); }), // Lavalink launcher
+                //Task.Run(() => { LaunchLavalink(); }), // Lavalink launcher
                 Task.Run(() => { LaunchBotSetup(); })  // Bot launcher
             };
 
