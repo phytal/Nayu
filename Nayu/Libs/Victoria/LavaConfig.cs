@@ -25,7 +25,7 @@ namespace Victoria {
         /// <summary>
         ///     Server's IP/Hostname.
         /// </summary>
-        public string Hostname { get; set; } = "http://nayuu.herokuapp.com/";
+        public string Hostname { get; set; } = "localhost";
 
         /// <summary>
         ///     Server's password/authentication.
