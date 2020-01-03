@@ -55,7 +55,7 @@ using Victoria;
 
         private async Task StartAsync()
         {
-            if (string.IsNullOrEmpty(Config.bot.token)) return;
+            //if (string.IsNullOrEmpty(Config.bot.token)) return;
             _client = new DiscordShardedClient(_shardIds, new DiscordSocketConfig
             {
                 LogLevel = LogSeverity.Verbose,
@@ -69,7 +69,15 @@ using Victoria;
             _services.GetRequiredService<DiscordEventHandler>().InitDiscordEvents();
             await _services.GetRequiredService<CommandHandler>().InitializeAsync();
 
-            await _client.LoginAsync(TokenType.Bot, Config.bot.token);
+            try
+            {
+                await _client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("Token"));
+            }
+            catch (Exception e)
+            {
+                return;
+            }
+
             await _client.StartAsync();
 
             await _client.SetGameAsync(Config.bot.botGameToSet, $"https://twitch.tv/{Config.bot.twitchStreamer}", ActivityType.Streaming);
