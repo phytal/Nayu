@@ -77,6 +77,7 @@ using Victoria;
 
             await Task.Delay(-1);
         }
+        
         private IServiceProvider ConfigureServices()
         {
             return new ServiceCollection()
@@ -94,8 +95,10 @@ using Victoria;
                 .AddSingleton<Logger>()
                 .BuildServiceProvider();
         }
+        
         private static void LaunchBotSetup()
             => new Program().StartAsync().GetAwaiter().GetResult();
+        
         private static void LaunchLavalink()
         {
             var directory = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())))) + @"\Lavalink";
