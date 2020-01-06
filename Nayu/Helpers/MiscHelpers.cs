@@ -11,6 +11,7 @@ namespace Nayu.Helpers
 {
     class MiscHelpers
     {
+        //TODO: USE THIS METHOD ITS AMEIZING
         public static async Task SendMessage(ShardedCommandContext ctx, EmbedBuilder embed = null, string msg = "")
         {
             if (embed == null)

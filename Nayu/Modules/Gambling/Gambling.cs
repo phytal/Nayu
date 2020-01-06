@@ -23,7 +23,6 @@ namespace Nayu.Modules.Gambling
                 return;
             }
             config.Taiyaki = config.Taiyaki - amount;
-            GlobalUserAccounts.SaveAccounts();
             Random rand = new Random();
             string sid = side.ToLower();
             var embed = new EmbedBuilder();
@@ -35,7 +34,6 @@ namespace Nayu.Modules.Gambling
                 if (randomNumber == 1)//win
                 {
                     config.Taiyaki = config.Taiyaki + ((ulong)amount * 2);
-                    GlobalUserAccounts.SaveAccounts();
                     embed.WithDescription($"I guess heads. And the coin landed on tails! Alright, you beat me, for *now*. Here's **{amount * 2}** Taiyakis!");
                 }
                 else
@@ -49,7 +47,6 @@ namespace Nayu.Modules.Gambling
                 if (randomNumber == 1)//win
                 {
                     config.Taiyaki = config.Taiyaki + ((ulong)amount * 2);
-                    GlobalUserAccounts.SaveAccounts();
                     embed.WithDescription($"I guess tails. And the coin landed on heads! Alright, you beat me, for *now*. Here's **{amount * 2}** Taiyakis!");
                 }
                 else
@@ -57,6 +54,7 @@ namespace Nayu.Modules.Gambling
                     embed.WithDescription($"I guess tails. And the coin landed on tails! Sorry **{Context.User.Username}**, but your **{amount}** Taiyakis are mine non!");
                 }
             }
+            GlobalUserAccounts.SaveAccounts(config.Id);
             await Context.Channel.SendMessageAsync("", embed: embed.Build());
         }
 
@@ -97,8 +95,8 @@ namespace Nayu.Modules.Gambling
                 embed.WithTitle($":game_die:  | You Rolled **{randomNumber1}** and **{randomNumber2}** ({product}). You know what, I'll be nice and give back your Taiyakis");
             }
 
-            bool isNegative = amountGained > 0 ? true: false;
-            _ = isNegative == true ? config.Taiyaki += (ulong)amountGained : config.Taiyaki -= (ulong)amountGained;
+            bool isNegative = amountGained > 0;
+            _ = isNegative ? config.Taiyaki += (ulong)amountGained : config.Taiyaki -= (ulong)amountGained;
             await Context.Channel.SendMessageAsync("", embed: embed.Build());
         }
     }

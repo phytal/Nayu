@@ -41,7 +41,7 @@ namespace Nayu.Modules.Gambling
             }
 
             account.Taiyaki -= amount;
-            GlobalUserAccounts.SaveAccounts();
+            GlobalUserAccounts.SaveAccounts(account.Id);
 
             string slotEmojis = Global.slot.Spin();
             var payoutAndFlavour = Global.slot.GetPayoutAndFlavourText(amount);
@@ -49,7 +49,7 @@ namespace Nayu.Modules.Gambling
             if (payoutAndFlavour.Item1 > 0)
             {
                 account.Taiyaki += payoutAndFlavour.Item1;
-                GlobalUserAccounts.SaveAccounts();
+                GlobalUserAccounts.SaveAccounts(account.Id);
             }
 
             IUserMessage msg = await ReplyAsync(slotEmojis);

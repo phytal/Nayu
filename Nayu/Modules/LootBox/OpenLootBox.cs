@@ -13,7 +13,6 @@ namespace Nayu.Modules.LootBox
         public static async Task OpenCommonBox(SocketUser user, ITextChannel channel)
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
-            var configg = GlobalUserAccounts.GetUserAccount(user);
 
             var embed = new EmbedBuilder()
                 .WithColor(176, 176, 160)
@@ -25,7 +24,7 @@ namespace Nayu.Modules.LootBox
             config.Taiyaki += taiyakies;
             embed.AddField("Taiyakis", taiyakies);
 
-            configg.NormalCapsule += 1;
+            config.NormalCapsule += 1;
             embed.AddField("Chomusuke Item", "Normal Chomusuke Capsule (Open it with `n!openCapsule`!)");
             int duelBool = Global.Rng.Next(1, 4);//2/3 chance
             if (duelBool == 1 || duelBool == 2)
@@ -34,7 +33,7 @@ namespace Nayu.Modules.LootBox
                 embed.AddField("Duels Item", $"{item} (x1)");
             }
 
-            GlobalUserAccounts.SaveAccounts(); 
+            GlobalUserAccounts.SaveAccounts(config.Id); 
             await channel.SendMessageAsync("", embed: embed.Build());
         }
 
@@ -63,7 +62,7 @@ namespace Nayu.Modules.LootBox
             string item = ItemProbability.DuelsItemProbabiliy(user, 'u');
             embed.AddField("Duels Item", $"{item} (x1)");
 
-            GlobalUserAccounts.SaveAccounts();
+            GlobalUserAccounts.SaveAccounts(config.Id);
 
             await channel.SendMessageAsync("", embed: embed.Build());
         }
@@ -90,7 +89,7 @@ namespace Nayu.Modules.LootBox
             embed.AddField("Duels Item", $"{item} (x1)");
 
 
-            GlobalUserAccounts.SaveAccounts();
+            GlobalUserAccounts.SaveAccounts(config.Id);
             await channel.SendMessageAsync("", embed: embed.Build());
         }
 
@@ -130,7 +129,7 @@ namespace Nayu.Modules.LootBox
             string item = ItemProbability.DuelsItemProbabiliy(user, 'e');
             embed.AddField("Duels Item", $"{item} (x1)");
 
-            GlobalUserAccounts.SaveAccounts();
+            GlobalUserAccounts.SaveAccounts(config.Id);
             await channel.SendMessageAsync("", embed: embed.Build());
         }
 
@@ -155,7 +154,7 @@ namespace Nayu.Modules.LootBox
                 configg.MythicalCapsule += 1;
                 embed.AddField("Chomusuke Item", "Mythical Chomusuke Capsule (Open it with `n!openCapsule`!)");
 
-                GlobalUserAccounts.SaveAccounts();
+                GlobalUserAccounts.SaveAccounts(config.Id);
 
                 string item = ItemProbability.DuelsItemProbabiliy(user, 'l');
                 embed.AddField("Duels Item", $"{item} (x1)");

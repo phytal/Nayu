@@ -17,7 +17,9 @@ namespace Nayu.Modules.Chomusuke
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             var activeChom = ActiveChomusuke.GetOneActiveChomusuke(Context.User.Id);
-            string shoptext = $":department_store:  **| Are you sure you want to sell your Chomusuke, {activeChom.Name}? [y/n]";
+            if ((DateTime.Now - activeChom.BoughtDay).Days < 1)
+                throw new Exception("You cannot sell a Chomusuke that's under a day old!");
+            string shoptext = $":department_store:  **| Are you sure you want to sell your active Chomusuke, {activeChom.Name}? [y/n]";
             var shop = await Context.Channel.SendMessageAsync(shoptext);
             var response = await NextMessageAsync();
             if (response == null)
@@ -32,19 +34,16 @@ namespace Nayu.Modules.Chomusuke
                 var newresponse = await NextMessageAsync();
                 if (newresponse.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                 {
-                    if (config.Taiyaki < 900)
-                    {
-
-                    }
-                    config.NormalCapsule += 1;
+                    //remove chomusuke
                     config.Taiyaki += value;
                     GlobalUserAccounts.SaveAccounts(Context.User.Id);
-                    await Context.Channel.SendMessageAsync($"You have successfully bought a {Emote.Parse("<:chomusuke:601183653657182280>")} Normal Chomusuke Capsule!");
+                    await Context.Channel.SendMessageAsync($"You have successfully sold your Chomusuke {activeChom.Name}");
+                    
                     return;
                 }
                 if (newresponse.Content.Equals("n", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                 {
-                    await shop.ModifyAsync(m => { m.Content = $":feet:  |  **{Context.User.Username}**, purchase cancelled."; });
+                    await shop.ModifyAsync(m => { m.Content = $":feet:  |  **{Context.User.Username}**, action cancelled."; });
                     return;
                 }
                 if (response == null)
@@ -62,8 +61,11 @@ namespace Nayu.Modules.Chomusuke
 
         public static ulong GetChomusukeValue(Core.Entities.Chomusuke chom)
         {
-            ulong value = 0;
-            return value;
+            double value = 400;
+            value *= chom.CP * .04;
+            if (chom.Shiny) value += 1000;
+            if (chom.Trait1 == Trait.Lucky) value += 1000;
+            return (ulong)Math.Round(value);
         }
     }
 }

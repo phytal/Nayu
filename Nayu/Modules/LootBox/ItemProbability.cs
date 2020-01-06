@@ -56,7 +56,7 @@ namespace Nayu.Modules.LootBox
             }
             if (!config.Items.ContainsKey(item)) config.Items.Add(item, 1);
             else config.Items[item] += 1;
-            GlobalUserAccounts.SaveAccounts();
+            GlobalUserAccounts.SaveAccounts(config.Id);
             return item;
         }
 

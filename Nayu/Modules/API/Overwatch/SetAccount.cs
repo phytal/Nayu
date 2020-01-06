@@ -31,7 +31,7 @@ namespace Nayu.Modules.API.Overwatch
             config.OverwatchID = user;
             config.OverwatchPlatform = platform;
             config.OverwatchRegion = region;
-            GlobalUserAccounts.SaveAccounts();
+            GlobalUserAccounts.SaveAccounts(config.Id);
 
 
             await Context.Channel.SendMessageAsync("", embed: embed.Build());

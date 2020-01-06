@@ -8,7 +8,7 @@ using Nayu.Core.Features.GlobalAccounts;
 
 namespace Nayu.Modules.Chomusuke.Dueling
 {
-    public class DuelsShop : NayuModule
+    public class Shop : NayuModule
     {
         [Command("duelsBuy"), Alias("duels shop", "duel buy", "duel shop")]
         [Summary("Opens the duels shop menu!")]
@@ -685,7 +685,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
         }
 
         [Command("attacks")]
-        [Summary("View your learned attacks for duels")]
+        [Summary("View one's learned attacks for duels")]
         [Remarks("Usage: n!attacks @user (or leave @user blank to see your own) Ex: n!attacks @Phytal")]
         public async Task LearnedAttacks([Remainder]string arg = "")
         {
@@ -707,7 +707,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 chom.Attack3 = "Block";
                 chom.Attack4 = "Deflect";
             }
-            GlobalUserAccounts.SaveAccounts();
+            GlobalUserAccounts.SaveAccounts(target.Id);
             foreach (var attack in chom.Attacks)
             {
                 attacklist += $"\n**{attack}**";
@@ -732,30 +732,27 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 {
                     string oldAttack = chom.Attack1;
                     chom.Attack1 = attackName;
-                    GlobalUserAccounts.SaveAccounts();
                     await Context.Channel.SendMessageAsync($":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 2)
                 {
                     string oldAttack = chom.Attack2;
                     chom.Attack2 = attackName;
-                    GlobalUserAccounts.SaveAccounts();
                     await Context.Channel.SendMessageAsync($":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 3)
                 {
                     string oldAttack = chom.Attack3;
                     chom.Attack3 = attackName;
-                    GlobalUserAccounts.SaveAccounts(); GlobalUserAccounts.SaveAccounts();
                     await Context.Channel.SendMessageAsync($":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 4)
                 {
                     string oldAttack = chom.Attack4;
                     chom.Attack4 = attackName;
-                    GlobalUserAccounts.SaveAccounts();
                     await Context.Channel.SendMessageAsync($":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
                 }
+                GlobalUserAccounts.SaveAccounts(Context.User.Id);
             }
             else
             {

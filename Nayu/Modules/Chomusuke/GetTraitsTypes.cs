@@ -1,4 +1,5 @@
 ﻿using System;
+using Type = Nayu.Modules.Chomusuke.Dueling.Enums.Type;
 
 namespace Nayu.Modules.Chomusuke
 {
@@ -13,14 +14,14 @@ namespace Nayu.Modules.Chomusuke
             else return new Tuple<bool, bool>(true, true); //both
         }
 
-        public static string GetTypeAsync(int value)
+        public static Type GetTypeAsync(int value)
         {
-            if (value > 96) return "Nature"; //4%
-            else if (value > 92) return "Chaos"; //4%
-            else if (value > 69) return "Water"; //23%
-            else if (value > 46) return "Fire"; //23%
-            else if (value > 23) return "Wind"; //23%
-            else return "Earth"; //23%
+            if (value > 96) return Type.Nature; //4%
+            else if (value > 92) return Type.Chaos; //4%
+            else if (value > 69) return Type.Water; //23%
+            else if (value > 46) return Type.Fire; //23%
+            else if (value > 23) return Type.Wind; //23%
+            else return Type.Earth; //23%
         }
     }
 }

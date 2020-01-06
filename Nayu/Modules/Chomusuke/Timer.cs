@@ -45,7 +45,6 @@ namespace Nayu.Modules.Chomusuke
                     if (activeChomusuke.Waste < 20)
                         activeChomusuke.Waste += 1;
                     else activeChomusuke.Waste = 20;
-                    GlobalUserAccounts.SaveAccounts();
 
                     var user = Global.Client.GetUser(userAcc.Id);
                     if (activeChomusuke.Waste >= 15)
@@ -64,7 +63,7 @@ namespace Nayu.Modules.Chomusuke
                         userAcc.Chomusuke2 = activeChomusuke;
                     if (userAcc.ActiveChomusuke == 3)
                         userAcc.Chomusuke3 = activeChomusuke;
-                    GlobalUserAccounts.SaveAccounts();
+                    GlobalUserAccounts.SaveAccounts(userAcc.Id);
                 }
                 else return;
             }

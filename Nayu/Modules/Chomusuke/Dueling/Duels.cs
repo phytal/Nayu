@@ -173,7 +173,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 config.WhoWaits = req.Mention;
                 configg.WhoWaits = req.Mention;
             }
-            GlobalUserAccounts.SaveAccounts();
+            GlobalUserAccounts.SaveAccounts(config.Id, configg.Id);
             var choms = ActiveChomusuke.GetActiveChomusuke(user.Id, config.OpponentId);
             var chom1 = choms.Item1;
             var chom2 = choms.Item2;
@@ -291,14 +291,12 @@ namespace Nayu.Modules.Chomusuke.Dueling
             config.PlaceHolder = null;
             configg.WhosTurn = null;
             configg.WhoWaits = null;
-            chom1.Blocking = false;
-            chom2.Blocking = false;
-            chom1.Deflecting = false;
-            chom2.Deflecting = false;
+            chom1.Effects.Clear();
+            chom2.Effects.Clear();
             chom1.PotionEffects.Clear();
             chom2.PotionEffects.Clear();
 
-            GlobalUserAccounts.SaveAccounts();
+            GlobalUserAccounts.SaveAccounts(config.Id, configg.Id);
         }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Nayu.Modules.Chomusuke;
+using Nayu.Modules.Chomusuke.Dueling.Enums;
+using Type = Nayu.Modules.Chomusuke.Dueling.Enums.Type;
 
 namespace Nayu.Core.Entities
 {
@@ -25,10 +28,10 @@ namespace Nayu.Core.Entities
         public string Attack2 { get; set; }
         public string Attack3 { get; set; }
         public string Attack4 { get; set; }
-        public string Type { get; set; }
+        public Type Type { get; set; }
         public uint CP { get; set; } //combat power
-        public string Trait1 { get; set; }
-        public string Trait2 { get; set; }
+        public Trait Trait1 { get; set; }
+        public Trait Trait2 { get; set; }
         public uint Health { get; set; } //CP * 1.5
         public uint Shield { get; set; }
         public uint Mana { get; set; }
@@ -39,15 +42,14 @@ namespace Nayu.Core.Entities
         public uint Wins { get; set; }
         public uint Losses { get; set; }
         public uint Draws { get; set; }
-        public bool Blocking { get; set; }
-        public bool Deflecting { get; set; }
-        public bool Meditating { get; set; }
+        public DateTime BoughtDay { get; set; }
         public List<string> Attacks { get; set; }
+        public List<Effect> Effects { get; set; }
         public Dictionary<string, byte> PotionEffects { get; set; } = new Dictionary<string, byte>();
 
         public Chomusuke(bool have, string name, string zodiac, bool shiny, byte hunger, uint xp, byte trust, byte waste, bool sick, string attack1, string attack2, string attack3, 
-            string attack4, string type, uint cp, string trait1, string trait2, uint health, uint shield, uint mana, uint healthcapacity, uint shieldcapacity, uint manacapacity, 
-            sbyte control, uint wins, uint losses, uint draws, bool blocking, bool deflecting, bool meditating, Dictionary<string,byte> potionEffects)
+            string attack4, Type type, uint cp, Trait trait1, Trait trait2, uint health, uint shield, uint mana, uint healthcapacity, uint shieldcapacity, uint manacapacity, 
+            sbyte control, uint wins, uint losses, uint draws, DateTime boughtDay, List<string> attacks, List<Effect> effects, Dictionary<string,byte> potionEffects)
         {
             Have = have;
             Name = name;
@@ -76,9 +78,9 @@ namespace Nayu.Core.Entities
             Wins = wins;
             Losses = losses;
             Draws = draws;
-            Blocking = blocking;
-            Deflecting = deflecting;
-            Meditating = meditating;
+            BoughtDay = boughtDay;
+            Attacks = attacks;
+            Effects = effects;
             PotionEffects = potionEffects;
         }
     }

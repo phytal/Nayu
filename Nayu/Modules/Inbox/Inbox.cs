@@ -67,7 +67,7 @@ namespace Nayu.Modules.Inbox
             }
 
             config.InboxIDLastRead = config.InboxIDTracker;
-            GlobalUserAccounts.SaveAccounts();
+            GlobalUserAccounts.SaveAccounts(config.Id);
             await ReplyAsync("", false, embB.Build());
         }
     }

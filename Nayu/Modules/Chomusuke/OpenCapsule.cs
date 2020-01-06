@@ -4,11 +4,13 @@ using Discord;
 using Discord.Commands;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Preconditions;
+using Type = Nayu.Modules.Chomusuke.Dueling.Enums.Type;
 
 namespace Nayu.Modules.Chomusuke
 {
     public class OpenCapsule : NayuModule
     {
+        //TODO: update this
         [Command("opencapsule"), Alias("opencapsule")]
         [Summary("Opens one of the Chomusuke capsules you have! Note: You must have the capsule you want to open.")]
         [Remarks("n!opencapsule <type (normal, shiny, mythical)> Ex: n!opencapsule normal")]
@@ -17,7 +19,7 @@ namespace Nayu.Modules.Chomusuke
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
 
-            if (config.Chomusuke3.Have == false) //if they own a Chomusuke or not
+            if (!config.Chomusuke3.Have) //if they own a Chomusuke or not
             {
                 int value = 0;//will be used to determine type 
                 if (arg == "normal")
@@ -25,7 +27,6 @@ namespace Nayu.Modules.Chomusuke
                     if (config.NormalCapsule > 0)
                     {
                         config.NormalCapsule -= 1;
-                        GlobalUserAccounts.SaveAccounts();
                         value = Global.Rng.Next(1, 101);//1-100
                     }
                     else
@@ -39,7 +40,6 @@ namespace Nayu.Modules.Chomusuke
                     if (config.ShinyCapsule > 0)
                     {
                         config.ShinyCapsule -= 1;
-                        GlobalUserAccounts.SaveAccounts();
                         value = Global.Rng.Next(1, 101);
                     }
                     else
@@ -53,7 +53,6 @@ namespace Nayu.Modules.Chomusuke
                     if (config.MythicalCapsule > 0)
                     {
                         config.MythicalCapsule -= 1;
-                        GlobalUserAccounts.SaveAccounts();
                         value = Global.Rng.Next(90, 101);
                     }
                     else
@@ -63,13 +62,13 @@ namespace Nayu.Modules.Chomusuke
                     }
                 }
                 Tuple<bool, bool> trait = GetTraitsTypes.GetTraitsAsync();
-                string type = GetTraitsTypes.GetTypeAsync(value);
+                Type type = GetTraitsTypes.GetTypeAsync(value);
                 int randomIndex = Global.Rng.Next(Zodiac.Length);
                 string zodiac = Zodiac[randomIndex];
                 uint cp = 20 * (config.LevelNumber / 10); //cp is boosted based off their user level *.1
                 if (config.Chomusuke1.Have != true)
                 {
-                    if (trait.Item1) config.Chomusuke1.Trait1 = "Lucky";
+                    if (trait.Item1) config.Chomusuke1.Trait1 = Trait.Lucky;
                     if (trait.Item2) config.Chomusuke1.Shiny = true;
                     config.Chomusuke1.Type = type;
                     config.Chomusuke1.Have = true;
@@ -79,10 +78,11 @@ namespace Nayu.Modules.Chomusuke
                     config.Chomusuke1.HealthCapacity = 20;
                     config.Chomusuke1.ManaCapacity = 20;
                     config.Chomusuke1.ShieldCapacity = 5;
+                    config.Chomusuke1.BoughtDay = DateTime.Now;
                 }
                 else if (config.Chomusuke2.Have != true)
                 {
-                    if (trait.Item1) config.Chomusuke2.Trait1 = "Lucky";
+                    if (trait.Item1) config.Chomusuke2.Trait1 = Trait.Lucky;
                     if (trait.Item2) config.Chomusuke2.Shiny = true;
                     config.Chomusuke2.Type = type;
                     config.Chomusuke2.Have = true;
@@ -92,10 +92,11 @@ namespace Nayu.Modules.Chomusuke
                     config.Chomusuke2.HealthCapacity = 20;
                     config.Chomusuke2.ManaCapacity = 20;
                     config.Chomusuke2.ShieldCapacity = 5;
+                    config.Chomusuke2.BoughtDay = DateTime.Now;
                 }
                 else if (config.Chomusuke3.Have != true)
                 {
-                    if (trait.Item1) config.Chomusuke3.Trait1 = "Lucky";
+                    if (trait.Item1) config.Chomusuke3.Trait1 = Trait.Lucky;
                     if (trait.Item2) config.Chomusuke3.Shiny = true;
                     config.Chomusuke3.Type = type;
                     config.Chomusuke3.Have = true;
@@ -105,8 +106,9 @@ namespace Nayu.Modules.Chomusuke
                     config.Chomusuke3.HealthCapacity = 20;
                     config.Chomusuke3.ManaCapacity = 20;
                     config.Chomusuke3.ShieldCapacity = 5;
+                    config.Chomusuke3.BoughtDay = DateTime.Now;
                 }
-                GlobalUserAccounts.SaveAccounts();
+                GlobalUserAccounts.SaveAccounts(config.Id);
                 await Context.Channel.SendMessageAsync($":pill:  |  **{Context.User.Username}**, you got a **{type}-Type Chomusuke**! Would you like to name it? `yes/no` (If not, the name will remain Chomusuke)");
 
                 var responsee = await NextMessageAsync();
@@ -120,6 +122,7 @@ namespace Nayu.Modules.Chomusuke
                         if (config.Chomusuke3.Have) config.Chomusuke3.Name = responseee.Content;
                         else if (config.Chomusuke2.Have) config.Chomusuke2.Name = responseee.Content;
                         else if (config.Chomusuke1.Have) config.Chomusuke1.Name = responseee.Content;
+                        GlobalUserAccounts.SaveAccounts(config.Id);
                         await Context.Channel.SendMessageAsync($"{Emote.Parse("<:chomusuke:601183653657182280>")}  |  **{Context.User.Username}**, successfully named your new Chomusuke to **{responseee}**! You can use the command `n!chomusuke help` for more Chomusuke commands!");
                     }
                 }
@@ -137,7 +140,7 @@ namespace Nayu.Modules.Chomusuke
 
         string[] Zodiac = new string[]
         {
-            "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittatius", "Capricorn", "Aquarius", "Pisces"
+            "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
         };
     }
 }

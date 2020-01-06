@@ -190,7 +190,7 @@ namespace Nayu.Modules.Admin
             {
                 SocketUser user = Global.Client.GetUser(userAcc.Id);
                 await CreateMessage.CreateAndSendMessageAsync("Nayu Announcement!", content, DateTime.Now, user);
-                GlobalUserAccounts.SaveAccounts();
+                GlobalUserAccounts.SaveAccounts(userAcc.Id);
             }
 
             await ReplyAsync($"Sent \n`{content}`\n to everyone");

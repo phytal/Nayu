@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Discord;
 using Nayu.Core.Entities;
 using Nayu.Core.Features.Economy;
+using Nayu.Modules.Chomusuke;
+using Type = Nayu.Modules.Chomusuke.Dueling.Enums.Type;
 
 namespace Nayu
 {
@@ -14,10 +16,16 @@ namespace Nayu
     {
         internal static DiscordShardedClient Client { get; set; }
         internal static Random Rng { get; set; } = new Random();
-        internal static Dictionary<ulong, string> MessagesIdToTrack { get; set; }
+
+        internal static Dictionary<ulong, string> MessagesIdToTrack
+        {
+            get; set; 
+            
+        }
         internal static readonly Chomusuke NewChomusuke = new Chomusuke(
-            false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, null, 0, null, null, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, false, false, false, null);
+            false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, Type.None, 0, Trait.None, Trait.None, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, DateTime.MinValue, null, null, null);
+        
         internal static Slot slot = new Slot();
 
         public static string ReplacePlacehoderStrings(this string messageString, IGuildUser user = null)

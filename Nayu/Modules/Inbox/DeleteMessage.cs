@@ -26,7 +26,7 @@ namespace Nayu.Modules.Inbox
             foreach (var msg in validMessages)
             {
                 config.Inbox.Remove(msg);
-                GlobalUserAccounts.SaveAccounts();
+                GlobalUserAccounts.SaveAccounts(id);
                 await ReplyAsync($"Deleted message **({msg.Title})**.");
                 break;
             }

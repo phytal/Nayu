@@ -109,16 +109,16 @@ namespace Nayu.Core.LevelingSystem
         [Summary("Grants Taiyakis to selected user")]
         [Alias("giveptaiyakis")]
         [RequireOwner]
-        public async Task AddTaiyakis(uint Taiyaki, IGuildUser user, [Remainder]string arg = "")
+        public async Task AddTaiyakis(uint Taiyaki, IGuildUser user)
         {
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-            SocketUser target = null;
+            SocketUser target;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
             target = mentionedUser ?? Context.User;
             var userAccount = GlobalUserAccounts.GetUserAccount((SocketUser)user);
 
             userAccount.Taiyaki += Taiyaki;
-            GlobalUserAccounts.SaveAccounts();
+            GlobalUserAccounts.SaveAccounts(userAccount.Id);
 
             var embed = new EmbedBuilder();
             embed.WithColor(37, 152, 255);

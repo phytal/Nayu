@@ -74,7 +74,7 @@ namespace Nayu.Modules.Chomusuke
                 {
                     await ChooseChomusuke.ChooseActionAsync(user, "cure");
                     config.Taiyaki -= 400;
-                    GlobalUserAccounts.SaveAccounts();
+                    GlobalUserAccounts.SaveAccounts(config.Id);
                     await shop.ModifyAsync(m => { m.Content = $":pill:  |  **{Context.User.Username}**, your {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke has been cured of it's sickness! Make sure to keep looking after it!"; });
                     return;
                 }
@@ -102,7 +102,7 @@ namespace Nayu.Modules.Chomusuke
                 {
                     await ChooseChomusuke.ChooseActionAsync(user, "cure");
                     config.Taiyaki -= 400;
-                    GlobalUserAccounts.SaveAccounts();
+                    GlobalUserAccounts.SaveAccounts(config.Id);
                     await shop.ModifyAsync(m => { m.Content = $":pill:  |  **{Context.User.Username}**, your {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke has been cured of it's sickness! Make sure to keep looking after it!"; });
                     return;
                 }

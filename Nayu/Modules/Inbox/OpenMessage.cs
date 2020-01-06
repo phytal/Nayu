@@ -33,7 +33,7 @@ namespace Nayu.Modules.Inbox
                     .WithDescription(msg.Content)
                     .WithFooter($"Accessed {DateTime.Now:f}");
                 msg.Read = true; 
-                GlobalUserAccounts.SaveAccounts();
+                GlobalUserAccounts.SaveAccounts(Context.User.Id);
                 await ReplyAsync("", false, embB.Build());
                 break;
             }

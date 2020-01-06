@@ -18,6 +18,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -55,7 +57,7 @@ using Victoria;
 
         private async Task StartAsync()
         {
-            //if (string.IsNullOrEmpty(Config.bot.token)) return;
+            if (string.IsNullOrEmpty(Config.bot.token)) return;
             _client = new DiscordShardedClient(_shardIds, new DiscordSocketConfig
             {
                 LogLevel = LogSeverity.Verbose,
@@ -63,8 +65,6 @@ using Victoria;
                 MessageCacheSize = 100,
                 TotalShards = 1
             });
-            string hostName = System.Net.Dns.GetHostName();
-            Console.WriteLine(hostName);
             _client.Log += Logger.Log;
             _services = ConfigureServices();
             _services.GetRequiredService<DiscordEventHandler>().InitDiscordEvents();
@@ -72,7 +72,7 @@ using Victoria;
 
             try
             {
-                await _client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("Token"));
+                await _client.LoginAsync(TokenType.Bot, Config.bot.token);
             }
             catch (Exception e)
             {

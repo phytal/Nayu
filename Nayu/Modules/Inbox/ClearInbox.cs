@@ -27,7 +27,7 @@ namespace Nayu.Modules.Inbox
                 (response.Author.Equals(Context.User)))
             {
                 config.Inbox.Clear();
-                GlobalUserAccounts.SaveAccounts();
+                GlobalUserAccounts.SaveAccounts(Context.User.Id);
                 await ReplyAsync($":white_check_mark:  | Cleared your inbox!");
             }
 

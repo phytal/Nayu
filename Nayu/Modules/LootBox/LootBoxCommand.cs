@@ -121,7 +121,7 @@ namespace Nayu.Modules.LootBox
             account.LootBoxRare += 1;
             account.LootBoxEpic += 1;
             account.LootBoxLegendary += 1;
-            GlobalUserAccounts.SaveAccounts();
+            GlobalUserAccounts.SaveAccounts(account.Id);
 
             await Context.Channel.SendMessageAsync($"Successfully added one of every loot box to {target}");
         }
@@ -158,10 +158,6 @@ namespace Nayu.Modules.LootBox
                 }
                 else
                 {
-                    SocketUser target = null;
-                    var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-                    target = mentionedUser ?? Context.User;
-
                     var receiver = GlobalUserAccounts.GetUserAccount((SocketUser)userB);
 
                     if (Rarity == "COMMON") { giveaccount.LootBoxCommon--; receiver.LootBoxCommon++; }
@@ -170,7 +166,7 @@ namespace Nayu.Modules.LootBox
                     if (Rarity == "EPIC") { giveaccount.LootBoxEpic--; receiver.LootBoxEpic++; }
                     if (Rarity == "LEGENDARY") { giveaccount.LootBoxLegendary--; receiver.LootBoxLegendary++; }
 
-                    GlobalUserAccounts.SaveAccounts();
+                    GlobalUserAccounts.SaveAccounts(giveaccount.Id, receiver.Id);
 
                     await Context.Channel.SendMessageAsync($":gift:  | {Context.User.Mention} has gifted {userB.Mention} a **{Rarity}** Lootbox! How generous.");
                 }
