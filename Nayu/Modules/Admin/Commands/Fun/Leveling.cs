@@ -24,7 +24,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
             {
                 if (!config.Leveling)
                 {
-                    await Context.Channel.SendMessageAsync("You need to enable leveling on this server first!");
+                    await SendMessage(Context, null, "You need to enable leveling on this server first!");
                     return;
                 }
                 if (preset == "dm" || preset == "server")
@@ -35,11 +35,11 @@ namespace Nayu.Modules.Admin.Commands.Fun
 
                     config.LevelingMsgs = preset;
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-                    await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                    await SendMessage(Context, embed);
                 }
                 else
                 {
-                    await Context.Channel.SendMessageAsync("Make sure you set it to either `dm` or `server`! Ex:n!lvlmsg dm");
+                    await SendMessage(Context, null, "Make sure you set it to either `dm` or `server`! Ex:n!lvlmsg dm");
                 }
             }
             else
@@ -71,11 +71,11 @@ namespace Nayu.Modules.Admin.Commands.Fun
                     config.Leveling = argg;
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
-                    await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                    await SendMessage(Context, embed);
                 }
                 if (!result.Item1)
                 {
-                    await Context.Channel.SendMessageAsync($"Please say `n!leveling <on/off>`");
+                    await SendMessage(Context, null, $"Please say `n!leveling <on/off>`");
                 }
             }
             else

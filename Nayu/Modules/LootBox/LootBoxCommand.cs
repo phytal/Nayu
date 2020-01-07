@@ -27,7 +27,7 @@ namespace Nayu.Modules.LootBox
                 }
                 else
                 {
-                    await Context.Channel.SendMessageAsync($":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Common Loot Boxes!");
+                    await SendMessage(Context, null, $":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Common Loot Boxes!");
                     return;
                 }
             }
@@ -40,7 +40,7 @@ namespace Nayu.Modules.LootBox
                 }
                 else
                 {
-                    await Context.Channel.SendMessageAsync($":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Uncommon Loot Boxes!");
+                    await SendMessage(Context, null, $":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Uncommon Loot Boxes!");
                     return;
                 }
             }
@@ -53,7 +53,7 @@ namespace Nayu.Modules.LootBox
                 }
                 else
                 {
-                    await Context.Channel.SendMessageAsync($":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Rare Loot Boxes!");
+                    await SendMessage(Context, null, $":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Rare Loot Boxes!");
                     return;
                 }
             }
@@ -66,7 +66,7 @@ namespace Nayu.Modules.LootBox
                 }
                 else
                 {
-                    await Context.Channel.SendMessageAsync($":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Epic Loot Boxes!");
+                    await SendMessage(Context, null, $":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Epic Loot Boxes!");
                     return;
                 }
             }
@@ -79,7 +79,7 @@ namespace Nayu.Modules.LootBox
                 }
                 else
                 {
-                    await Context.Channel.SendMessageAsync($":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Legendary Loot Boxes!");
+                    await SendMessage(Context, null, $":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Legendary Loot Boxes!");
                     return;
                 }
             }
@@ -102,7 +102,7 @@ namespace Nayu.Modules.LootBox
             embed.AddField("Legendary Loot Boxes", $"**x{account.LootBoxLegendary}**");
             embed.WithFooter("You can get Loot Boxes from increasing your Nayu Level (not server level) and winning duels!");
 
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
 
         [Command("addLootBox"), Alias("alb")]
@@ -123,7 +123,7 @@ namespace Nayu.Modules.LootBox
             account.LootBoxLegendary += 1;
             GlobalUserAccounts.SaveAccounts(account.Id);
 
-            await Context.Channel.SendMessageAsync($"Successfully added one of every loot box to {target}");
+            await SendMessage(Context, null, $"Successfully added one of every loot box to {target}");
         }
 
         [Command("giftLootbox")]
@@ -154,7 +154,7 @@ namespace Nayu.Modules.LootBox
                     var embed = new EmbedBuilder();
                     embed.WithColor(37, 152, 255);
                     embed.WithTitle(":hand_splayed:  | Please say who you want to gift lootboxes to. Ex: n!gift <rarity of lootbox> @user");
-                    await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                    await SendMessage(Context, embed);
                 }
                 else
                 {
@@ -168,7 +168,7 @@ namespace Nayu.Modules.LootBox
 
                     GlobalUserAccounts.SaveAccounts(giveaccount.Id, receiver.Id);
 
-                    await Context.Channel.SendMessageAsync($":gift:  | {Context.User.Mention} has gifted {userB.Mention} a **{Rarity}** Lootbox! How generous.");
+                    await SendMessage(Context, null, $":gift:  | {Context.User.Mention} has gifted {userB.Mention} a **{Rarity}** Lootbox! How generous.");
                 }
             }
         }

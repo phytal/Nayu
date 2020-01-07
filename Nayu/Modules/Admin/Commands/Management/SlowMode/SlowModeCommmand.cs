@@ -24,7 +24,7 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
                 config.SlowModeCooldown = length;
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
-                await Context.Channel.SendMessageAsync($":snail:  | Successfully turned on slow mode for **{length}** seconds.");
+                await SendMessage(Context, null, $":snail:  | Successfully turned on slow mode for **{length}** seconds.");
             }
             else
             {
@@ -49,7 +49,7 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
                 config.SlowModeCooldown = 0;
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
-                await Context.Channel.SendMessageAsync($":snail:  | Successfully turned off slow mode.");
+                await SendMessage(Context, null, $":snail:  | Successfully turned off slow mode.");
             }
             else
             {

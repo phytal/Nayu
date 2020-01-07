@@ -50,6 +50,8 @@ namespace Nayu
 
             var client = Program._client;
             var guilds = client.Guilds.Count;
+            var sclient = client.Shards;
+            //var shard = sclient.
             await client.SetGameAsync($"n!help | in {guilds} servers!", $"https://twitch.tv/{Config.bot.twitchStreamer}", ActivityType.Streaming);
         }
 
@@ -153,7 +155,7 @@ namespace Nayu
             {
                 if (msg.Content.Contains("(╯°□°）╯︵ ┻━┻"))
                 {
-                    await context.Channel.SendMessageAsync("┬─┬ ノ( ゜-゜ノ)");
+                    await SendMessage(Context, null, "┬─┬ ノ( ゜-゜ノ)");
                 }
             }
         }

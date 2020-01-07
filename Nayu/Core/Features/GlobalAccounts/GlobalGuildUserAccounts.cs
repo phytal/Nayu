@@ -24,8 +24,7 @@ namespace Nayu.Core.Features.GlobalAccounts
                     userAccounts.TryAdd(user.UniqueId, user);
                 }
             }
-            else
-            {
+            else {
                 userAccounts = new ConcurrentDictionary<string, GlobalGuildUserAccount>();
             }
         }

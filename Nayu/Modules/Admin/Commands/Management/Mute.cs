@@ -31,7 +31,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 embed.Title = $"**{user.Username}** was muted";
                 embed.Description = $"**Username: **{user.Username}\n**Muted by: **{Context.User.Username}";
                 await user.AddRoleAsync(muted);
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             else
             {

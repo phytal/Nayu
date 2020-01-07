@@ -34,7 +34,7 @@ namespace Nayu.Modules.API.Overwatch
             GlobalUserAccounts.SaveAccounts(config.Id);
 
 
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
 
         [Command("owaccount")]
@@ -46,7 +46,7 @@ namespace Nayu.Modules.API.Overwatch
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             if (config.OverwatchPlatform == null && config.OverwatchRegion == null && config.OverwatchID == null)
             {
-                await Context.Channel.SendMessageAsync(
+                await SendMessage(Context, null, 
                     "**Make sure you set your account information first!**\n n!owaccount <username> <platform> <region> Ex: n!owaccount Username#1234 pc us ");
                 return;
             }
@@ -58,7 +58,7 @@ namespace Nayu.Modules.API.Overwatch
             embed.AddField("Region", config.OverwatchRegion);
             embed.AddField("Platform", config.OverwatchPlatform);
 
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
     }
 }

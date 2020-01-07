@@ -197,11 +197,11 @@ namespace Nayu.Modules.API.Overwatch
                 embed.AddField("Competitive Awards", $"Total Medals: **{compmedal}**\n:first_place: Gold Medals: **{compmedalGold}**\n:second_place: Silver Medals: **{compmedalSilver}**\n:third_place: Bronze Medals: **{compmedalBronze}**\nCards: **{compcards}**", true);
                 embed.AddField("Overall", $"Level: **{level}**\nPrestige: **{prestige}**\nSR: **{sr}**\nEndorsement Level: **{endorsement}**", true);
 
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             catch
             {
-                await Context.Channel.SendMessageAsync("Oops! Are you sure that your Overwatch career profile is set to public and you already set your account information?\n**n!myows**\nNote that you must have completed your placement matches in competetive for this to show up, otherwise use n!owsqp");
+                await SendMessage(Context, null, "Oops! Are you sure that your Overwatch career profile is set to public and you already set your account information?\n**n!myows**\nNote that you must have completed your placement matches in competetive for this to show up, otherwise use n!owsqp");
             }
         }
 
@@ -320,11 +320,11 @@ namespace Nayu.Modules.API.Overwatch
                 embed.AddField("Quickplay Awards", $"Total Medals: **{qpmedal}**\n:first_place: Gold Medals: **{qpmedalGold}**\n:second_place: Silver Medals: **{qpmedalSilver}**\n:third_place: Bronze Medals: **{qpmedalBronze}**\nCards: **{Qpcards}**", true);
                 embed.AddField("Overall", $"Level: **{level}**\nPrestige: **{prestige}**\nEndorsement Level: **{endorsement}**", true);
 
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             catch
             {
-                await Context.Channel.SendMessageAsync("Oops! Are you sure that your Overwatch career profile is set to public and you already set your account information?\n**n!myowsqp**");
+                await SendMessage(Context, null, "Oops! Are you sure that your Overwatch career profile is set to public and you already set your account information?\n**n!myowsqp**");
             }
         }
 
@@ -443,11 +443,11 @@ namespace Nayu.Modules.API.Overwatch
                 embed.AddField("Competitive Awards", $"Total Medals: **{compmedal}**\n:first_place: Gold Medals: **{compmedalGold}**\n:second_place: Silver Medals: **{compmedalSilver}**\n:third_place: Bronze Medals: **{compmedalBronze}**\nCards: **{compcards}**", true);
                 embed.AddField("Overall", $"Level: **{level}**\nPrestige: **{prestige}**\nSR: **{sr}**\nEndorsement Level: **{endorsement}**", true);
 
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             catch
             {
-                await Context.Channel.SendMessageAsync("Oops! Are you sure that your Overwatch career profile is set to public and you already set your account information?\n**n!myowscomp**");
+                await SendMessage(Context, null, "Oops! Are you sure that your Overwatch career profile is set to public and you already set your account information?\n**n!myowscomp**");
             }
         }
     }

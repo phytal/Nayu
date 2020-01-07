@@ -32,7 +32,7 @@ namespace Nayu.Modules
             embed.AddField("Bot version", $"Beta {version}", true);
             embed.WithImageUrl(Global.Client.CurrentUser.GetAvatarUrl());
 
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
 
         [Command("help")]
@@ -194,7 +194,7 @@ namespace Nayu.Modules
                     x.IsInline = false;
                 });
             }
-            await Context.Channel.SendMessageAsync("", false, builder.Build());
+            await SendMessage(Context, builder);
         }
 
         [Command("nayuLink")]

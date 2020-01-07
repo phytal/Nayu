@@ -37,9 +37,11 @@ namespace Nayu.Core.Features.GlobalAccounts
          {
              return userAccounts.GetOrAdd(id, (key) =>
              {
-                 var newAccount = new GlobalUserAccount { Id = id, Title = "Adventurer", Chomusuke1 = new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, Type.None, 0, Trait.None, Trait.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, DateTime.MinValue,null, null, null), Chomusuke2 = new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, Type.None, 0, Trait.None, Trait.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, DateTime.MinValue,null, null, null), Chomusuke3 = new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, Type.None, 0, Trait.None, Trait.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, DateTime.MinValue, null, null, null)
+                 var newAccount = new GlobalUserAccount { Id = id, Title = "Adventurer", Chomusuke1 = new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, Type.None, 0, Trait.None, Trait.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, DateTime.MinValue,null, null, null), 
+                     Chomusuke2 = new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, Type.None, 0, Trait.None, Trait.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, DateTime.MinValue,null, null, null), 
+                     Chomusuke3 = new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, Type.None, 0, Trait.None, Trait.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, DateTime.MinValue, null, null, null)
              };
-                 Configuration.DataStorage.StoreObject(newAccount, Path.Combine(Constants.UserAccountsFolder, $"{id}.json"), useIndentations: true);
+                 DataStorage.StoreObject(newAccount, Path.Combine(Constants.UserAccountsFolder, $"{id}.json"), useIndentations: true);
                  return newAccount;
              });
          }

@@ -21,7 +21,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
             if (guser.GuildPermissions.Administrator)
             {
                 var result = ConvertBool.ConvertStringToBoolean(arg);
-                if (result.Item1 == true)
+                if (result.Item1)
                 {
                     bool argg = result.Item2;
                     var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -31,12 +31,11 @@ namespace Nayu.Modules.Admin.Commands.Fun
                     config.Unflip = argg;
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
-                    await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                    await SendMessage(Context, embed);
                 }
-                if (result.Item1 == false)
+                if (!result.Item1)
                 {
-                    await Context.Channel.SendMessageAsync($"Please say `n!uf <on/off>`");
-                    return;
+                    await SendMessage(Context, null,$"Please say `n!uf <on/off>`");
                 }
             }
             else

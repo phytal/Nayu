@@ -16,7 +16,7 @@ namespace Nayu.Modules.Chomusuke
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             if (config.Chomusuke1.Have == false)
             {
-                await Context.Channel.SendMessageAsync("You don't have a chomusuke! You can buy one with `n!shop`!");
+                await SendMessage(Context, null, "You don't have a chomusuke! You can buy one with `n!shop`!");
                 return;
             }
 
@@ -24,7 +24,7 @@ namespace Nayu.Modules.Chomusuke
             {
                 config.ActiveChomusuke = 1;
                 GlobalUserAccounts.SaveAccounts(config.Id);
-                await Context.Channel.SendMessageAsync(
+                await SendMessage(Context, null, 
                     $":white_check_mark:  | Successfully made your only Chomusuke your active Chomusuke.");
                 return;
             }
@@ -41,7 +41,7 @@ namespace Nayu.Modules.Chomusuke
             if (config.Chomusuke3.Have)
                 embed.AddField("3",
                     $"Name: **{config.Chomusuke3.Name}**\nZodiac: **{config.Chomusuke3.Zodiac}**\nType: **{config.Chomusuke3.Name}**\nLevel: **{config.Chomusuke3.LevelNumber}**\nCombat Power: **{config.Chomusuke3.CP}**\nHealth: **{config.Chomusuke3.HealthCapacity}**\nShield: **{config.Chomusuke3.ShieldCapacity}**\nControl: **{config.Chomusuke3.Control}**\nTrait 1: **{config.Chomusuke3.Trait1.ToString()}**\nTrait2: **{config.Chomusuke3.Trait2}**");
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
             var response = await NextMessageAsync();
             if (response.Content.Equals("1") && response.Author.Equals(Context.User) && config.Chomusuke1.Have)
                 config.ActiveChomusuke = 1;
@@ -57,7 +57,7 @@ namespace Nayu.Modules.Chomusuke
 
 
             GlobalUserAccounts.SaveAccounts(config.Id);
-            await Context.Channel.SendMessageAsync(
+            await SendMessage(Context, null, 
                 $":white_check_mark:  | Successfully made Chomusuke #{response} your active Chomusuke.");
         }
     }

@@ -31,11 +31,11 @@ namespace Nayu.Modules.API.Anime.weebDotSh
                 embed.WithImageUrl(url);
                 embed.WithFooter($"Powered by weeb.sh | ID: {id}");
 
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             catch
             {
-                await Context.Channel.SendMessageAsync(
+                await SendMessage(Context, null, 
                     "Did you enter a valid type? \nView all types with the `n!ceebtypes` command" +
                     "\nOtherwise did you use the command correctly?\nUsage: n!anyweeb <type> Ex: n!anyweeb lick");
             }

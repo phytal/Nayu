@@ -27,7 +27,7 @@ namespace Nayu.Core.LevelingSystem
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
                 embed.WithDescription($"{Emote.Parse("<:taiyaki:599774631984889857>")}  | Here's **{Constants.DailyTaiyakiGain}** Taiyakis, {Context.User.Mention}! Come back tomorrow for more!");
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             else
             {
@@ -35,7 +35,7 @@ namespace Nayu.Core.LevelingSystem
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
                 embed.WithDescription($"{Emote.Parse("<:taiyaki:599774631984889857>")}  | **You have already claimed your free daily Taiyakis, {Context.User.Mention}.\nCome back in {timeSpanString}.**");
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Nayu.Core.LevelingSystem
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
                 embed.WithDescription($":diamond_shape_with_a_dot_inside:   | {Context.User.Mention} gave {userB.Mention} a reputation point!");
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             else
             {
@@ -65,7 +65,7 @@ namespace Nayu.Core.LevelingSystem
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
                 embed.WithDescription($":diamond_shape_with_a_dot_inside::arrows_counterclockwise:  | **You already gave someone reputation points recently, {Context.User.Mention}.\nCome back in {timeSpanString}.**");
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
         }
 
@@ -90,7 +90,7 @@ namespace Nayu.Core.LevelingSystem
                     var embed = new EmbedBuilder();
                     embed.WithColor(37, 152, 255);
                     embed.WithTitle($":hand_splayed:  | Please say who you want to gift {config.Currency} to. Ex: n!gift <amount of Taiyakis> @user");
-                    await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                    await SendMessage(Context, embed);
                 }
                 else
                 {
@@ -100,7 +100,7 @@ namespace Nayu.Core.LevelingSystem
                     recipient.Taiyaki += taiyaki;
                     GlobalUserAccounts.SaveAccounts(giver.Id, recipient.Id);
 
-                    await Context.Channel.SendMessageAsync($":white_check_mark:  | {Context.User.Mention} has gifted {userB.Mention} {taiyaki} {config.Currency}(s). How generous.");
+                    await SendMessage(Context, null, $":white_check_mark:  | {Context.User.Mention} has gifted {userB.Mention} {taiyaki} {config.Currency}(s). How generous.");
                 }
             }
         }
@@ -123,7 +123,7 @@ namespace Nayu.Core.LevelingSystem
             var embed = new EmbedBuilder();
             embed.WithColor(37, 152, 255);
             embed.WithTitle($":white_check_mark:  | **{Taiyaki}** {config.Currency} were added to " + target.Username + "'s account.");
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
 
         [Command("levels")]
@@ -180,7 +180,7 @@ namespace Nayu.Core.LevelingSystem
             SocketUser target = null;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
             target = mentionedUser ?? Context.User;
-            var account = GlobalUserAccounts.GetUserAccount(target);
+            var account = GlobalUserAccounts.GetUserAccount(target.Id);
             await ReplyAsync(GetTaiyakisReport(account.Taiyaki, target.Username, target.Mention));
         }
 

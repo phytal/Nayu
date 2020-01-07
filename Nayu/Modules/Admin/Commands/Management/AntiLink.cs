@@ -34,7 +34,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 }
                 if (!result.Item1)
                 {
-                    await Context.Channel.SendMessageAsync($"Please say `n!al <on/off>`");
+                    await SendMessage(Context, null, $"Please say `n!al <on/off>`");
                 }
             }
             else
@@ -80,7 +80,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                         break;
                 }
                 GlobalUserAccounts.SaveAccounts(Context.Guild.Id);
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             else
             {

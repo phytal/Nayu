@@ -35,7 +35,7 @@ namespace Nayu.Modules.API.Anime.Both
                 embed.WithImageUrl(nekolink);
                 embed.WithFooter($"Powered by nekos.life");
 
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
 
             if (rand == 2)
@@ -54,7 +54,7 @@ namespace Nayu.Modules.API.Anime.Both
                 embed.WithImageUrl(url);
                 embed.WithFooter($"Powered by weeb.sh | ID: {id}");
 
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
         }
     }

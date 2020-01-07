@@ -312,7 +312,7 @@ namespace Nayu.Modules.Music
             }
         }
 
-        [Command("Volume")]
+        [Command("Volume"), Alias("vol")]
         public async Task VolumeAsync(ushort volume)
         {
             if (!_lavaNode.TryGetPlayer(Context.Guild, out var player))

@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.Nekos.life
 
             string nekolink = dataObject.cat.ToString();
 
-            await Context.Channel.SendMessageAsync(nekolink);
+            await SendMessage(Context, null, nekolink);
         }
     }
 }

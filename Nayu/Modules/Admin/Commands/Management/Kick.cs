@@ -29,7 +29,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                     embed.WithColor(37, 152, 255);
                     embed.Title = $" {user.Username} has been kicked from {user.Guild.Name}";
                     embed.Description = $"**Username: **{user.Username}\n**Guild Name: **{user.Guild.Name}\n**Kicked by: **{Context.User.Mention}\n**Reason: **{reason}";
-                    await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                    await SendMessage(Context, embed);
                     await kb.SendMessageAsync("", embed: embed.Build());
                 }
                 catch

@@ -58,6 +58,14 @@ namespace Nayu.Modules.Chomusuke.Dueling
             return activeChomusuke;
         }
 
+        /// <summary>
+        /// matches 2 active chomusukes with its respective number
+        /// </summary>
+        /// <param name="user1"></param>
+        /// <param name="user2"></param>
+        /// <param name="activeChomusuke"></param>
+        /// <param name="activeChomusukee"></param>
+        /// <returns></returns>
         public static Task ConvertActiveVariable(ulong user1, ulong user2, Core.Entities.Chomusuke activeChomusuke,
             Core.Entities.Chomusuke activeChomusukee)
         {
@@ -92,6 +100,14 @@ namespace Nayu.Modules.Chomusuke.Dueling
             return Task.CompletedTask;
         }
 
+        /// <summary>
+        /// matches 1 active chomusuke with its respective number
+        /// </summary>
+        /// <param name="user1"></param>
+        /// <param name="user2"></param>
+        /// <param name="activeChomusuke"></param>
+        /// <param name="activeChomusukee"></param>
+        /// <returns></returns>
         public static Task ConvertOneActiveVariable(ulong user, Core.Entities.Chomusuke activeChomusuke)
         {
             var config = GlobalUserAccounts.GetUserAccount(user);

@@ -121,7 +121,7 @@ namespace Nayu.Modules.Admin
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 config.GuildOwnerId = Context.Guild.Owner.Id;
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-                await Context.Channel.SendMessageAsync($"Successfully synced the Guild's owner to <@{Context.Guild.OwnerId}>!");
+                await SendMessage(Context, null, $"Successfully synced the Guild's owner to <@{Context.Guild.OwnerId}>!");
             }
             else
             {

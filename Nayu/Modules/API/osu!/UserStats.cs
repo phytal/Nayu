@@ -56,7 +56,7 @@ namespace Nayu.Modules.API
 
             embed.WithFooter("Powered by the osu.ppy.sh API");
 
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
 
         [Command("maniastats")]
@@ -107,7 +107,7 @@ namespace Nayu.Modules.API
 
             embed.WithFooter("Powered by the osu.ppy.sh API");
 
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
 
         [Command("taikostats")]
@@ -158,7 +158,7 @@ namespace Nayu.Modules.API
 
             embed.WithFooter("Powered by the osu.ppy.sh API");
 
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
 
         [Command("ctbstats")]
@@ -209,7 +209,7 @@ namespace Nayu.Modules.API
 
             embed.WithFooter("Powered by the osu.ppy.sh API");
 
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
     }
 }

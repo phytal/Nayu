@@ -2814,7 +2814,7 @@ namespace Nayu.Modules.API.Overwatch
             }
             catch
             {
-                await Context.Channel.SendMessageAsync(
+                await SendMessage(Context, null, 
                     "Make sure you have played Competitive and Quickplay with this hero, otherwise check your command.\n**n!owhs <hero> <Your Battle.net username and id> <platform (pc/xbl/psn)> <region> Ex: n!owhs dVa Phytal-1427 pc us**");
             }
         }
@@ -4261,7 +4261,7 @@ namespace Nayu.Modules.API.Overwatch
             }
             catch
             {
-                await Context.Channel.SendMessageAsync(
+                await SendMessage(Context, null, 
                     "Make sure you have played Quickplay with this hero, otherwise check your command.\n**n!owhsqp <hero> <Your Battle.net username and id> <platform (pc/xbl/psn)> <region> Ex: n!owhsqp dVa Phytal-1427 pc us**");
             }
         }
@@ -5719,7 +5719,7 @@ namespace Nayu.Modules.API.Overwatch
             }
             catch
             {
-                await Context.Channel.SendMessageAsync(
+                await SendMessage(Context, null, 
                     "Make sure you have played Competitive with this hero, otherwise check your command.\n**n!owhscomp <hero> <Your Battle.net username and id> <platform (pc/xbl/psn)> <region> Ex: n!owhscomp dVa Phytal-1427 pc us**");
             }
         }
@@ -8520,7 +8520,7 @@ namespace Nayu.Modules.API.Overwatch
             }
             catch
             {
-                await Context.Channel.SendMessageAsync(
+                await SendMessage(Context, null, 
                     "Make sure you have played Competitive and Quickplay with this hero, otherwise check your command.\n**n!myowhs <hero> Ex: n!myowhs dVa**");
             }
         }
@@ -9962,7 +9962,7 @@ namespace Nayu.Modules.API.Overwatch
             }
             catch
             {
-                await Context.Channel.SendMessageAsync(
+                await SendMessage(Context, null, 
                     "Have you already registered your Battle.Net account with `n!owaccount`?\nMake sure you have played Quickplay with this hero, otherwise check your command.\n**n!myowhsqp <hero>Ex: n!myowhsqp dVa Phytal-1427**");
             }
         }
@@ -11413,7 +11413,7 @@ namespace Nayu.Modules.API.Overwatch
             }
             catch
             {
-                await Context.Channel.SendMessageAsync(
+                await SendMessage(Context, null, 
                     "Have you already registered your Battle.Net account with `n!owaccount`?\nMake sure you have played Competitive with this hero, otherwise check your command.\n**n!myowhscomp <hero> Ex: n!myowhscomp dVa**");
             }
         }

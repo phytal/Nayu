@@ -39,7 +39,7 @@ namespace Nayu.Modules.API.Anime.Nekos.life.NSFW_Hentai
                     .WithFooter($"👍 {ups} | 💬 {comments} (If image is not shown you can click on the link)")
                     .WithUrl($"https://www.reddit.com{link}")
                     .WithColor(37, 152, 255);
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             else
             {

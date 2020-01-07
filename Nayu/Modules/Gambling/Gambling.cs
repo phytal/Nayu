@@ -19,7 +19,7 @@ namespace Nayu.Modules.Gambling
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             if (config.Taiyaki < amount)
             {
-                await Context.Channel.SendMessageAsync("Do you think you can trick me, you liar? (Not enough Taiyaki)");
+                await SendMessage(Context, null, "Do you think you can trick me, you liar? (Not enough Taiyaki)");
                 return;
             }
             config.Taiyaki = config.Taiyaki - amount;
@@ -55,7 +55,7 @@ namespace Nayu.Modules.Gambling
                 }
             }
             GlobalUserAccounts.SaveAccounts(config.Id);
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
 
         [Command("roll")]
@@ -69,7 +69,7 @@ namespace Nayu.Modules.Gambling
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             if (config.Taiyaki < amountBetted)
             {
-                await Context.Channel.SendMessageAsync("Do you think you can trick me, you liar? (Not enough Taiyaki)");
+                await SendMessage(Context, null, "Do you think you can trick me, you liar? (Not enough Taiyaki)");
                 return;
             }
             int randomNumber1 = Global.Rng.Next(1, 11);
@@ -97,7 +97,7 @@ namespace Nayu.Modules.Gambling
 
             bool isNegative = amountGained > 0;
             _ = isNegative ? config.Taiyaki += (ulong)amountGained : config.Taiyaki -= (ulong)amountGained;
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
     }
 }

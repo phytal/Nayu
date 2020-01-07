@@ -33,7 +33,7 @@ namespace Nayu.Modules.API.Anime.weebDotSh
             await weebClient.Authenticate(Config.bot.wolkeToken, TokenType.Wolke);
             var tags = await GetTagsAsync(false);
             List<string> tagList = tags.Tags;
-            await Context.Channel.SendMessageAsync(String.Join(", ", tagList));
+            await SendMessage(Context, null, String.Join(", ", tagList));
 
         }
 
@@ -46,7 +46,7 @@ namespace Nayu.Modules.API.Anime.weebDotSh
             await weebClient.Authenticate(Config.bot.wolkeToken, TokenType.Wolke);
             var tags = await GetTypessAsync(false);
             List<string> tagList = tags.Types;
-            await Context.Channel.SendMessageAsync(String.Join(", ", tagList));
+            await SendMessage(Context, null, String.Join(", ", tagList));
 
         }
     }

@@ -72,11 +72,11 @@ namespace Nayu.Core.Handlers
                 foreach (var command in config.CustomCommands)
                     if (msg.HasStringPrefix($"{config.CommandPrefix}{command.Key}", ref argPos))
                     {
-                        await context.Channel.SendMessageAsync(command.Value);
+                        await SendMessage(Context, null, command.Value);
                     }
 
                 var cmdSearchResult = _commands.Search(context, argPos);
-                if (cmdSearchResult.Commands.Count == 0) await context.Channel.SendMessageAsync($"{context.User.Mention}, that is not a valid command");
+                if (cmdSearchResult.Commands.Count == 0) await SendMessage(Context, null, $"{context.User.Mention}, that is not a valid command");
 
                 var executionTask = _commands.ExecuteAsync(context, argPos, _services);
 
@@ -109,7 +109,7 @@ namespace Nayu.Core.Handlers
             if (!(_client.GetChannel(guildAcc.WelcomeChannel) is SocketTextChannel channel)) return;
             var possibleMessages = guildAcc.WelcomeMessages;
             var messageString = possibleMessages[Global.Rng.Next(possibleMessages.Count)];
-            messageString = messageString.ReplacePlacehoderStrings(user);
+            messageString = messageString.ReplacePlaceholderStrings(user);
             if (string.IsNullOrEmpty(messageString)) return;
             await channel.SendMessageAsync(messageString);
         }
@@ -126,7 +126,7 @@ namespace Nayu.Core.Handlers
             if (!(_client.GetChannel(guildAcc.LeaveChannel) is SocketTextChannel channel)) return;
             var possibleMessages = guildAcc.LeaveMessages;
             var messageString = possibleMessages[Global.Rng.Next(possibleMessages.Count)];
-            messageString = messageString.ReplacePlacehoderStrings(user);
+            messageString = messageString.ReplacePlaceholderStrings(user);
             if (string.IsNullOrEmpty(messageString)) return;
             await channel.SendMessageAsync(messageString);
         }

@@ -37,9 +37,9 @@ namespace Nayu.Modules.Admin.Commands.Management
                         }
                         catch
                         {
-                            await Context.Channel.SendMessageAsync($":exclamation:  **{user.Mention} has been banned from** ***{Context.Guild}*** ** from having too many warnings.** \n*This message was shown in a server text channel because you had DMs turned off.*");
+                            await SendMessage(Context, null, $":exclamation:  **{user.Mention} has been banned from** ***{Context.Guild}*** ** from having too many warnings.** \n*This message was shown in a server text channel because you had DMs turned off.*");
                         }
-                        await Context.Channel.SendMessageAsync($"Successfully warned and banned**{user.Username}** for **{reason}**. **({userAccount.NumberOfWarnings}/5)**");
+                        await SendMessage(Context, null, $"Successfully warned and banned**{user.Username}** for **{reason}**. **({userAccount.NumberOfWarnings}/5)**");
                     }
                     else if (userAccount.NumberOfWarnings == 3 || userAccount.NumberOfWarnings == 4)
                     {
@@ -50,9 +50,9 @@ namespace Nayu.Modules.Admin.Commands.Management
                         }
                         catch
                         {
-                            await Context.Channel.SendMessageAsync($":exclamation:  **{user.Mention} has been kicked from** ***{Context.Guild}*** **. Think over your actions and you may rejoin the server once you are ready. (5 Warnings = Ban)** \n*This message was shown in a server text channel because you had DMs turned off.*");
+                            await SendMessage(Context, null, $":exclamation:  **{user.Mention} has been kicked from** ***{Context.Guild}*** **. Think over your actions and you may rejoin the server once you are ready. (5 Warnings = Ban)** \n*This message was shown in a server text channel because you had DMs turned off.*");
                         }
-                        await Context.Channel.SendMessageAsync($"Successfully warned and kicked **{user.Username}** for **{reason}**. **({userAccount.NumberOfWarnings}/5)**");
+                        await SendMessage(Context, null, $"Successfully warned and kicked **{user.Username}** for **{reason}**. **({userAccount.NumberOfWarnings}/5)**");
                     }
                     else if (userAccount.NumberOfWarnings == 1 || userAccount.NumberOfWarnings == 2)
                     {
@@ -62,9 +62,9 @@ namespace Nayu.Modules.Admin.Commands.Management
                         }
                         catch
                         {
-                            await Context.Channel.SendMessageAsync($":exclamation:  **{user.Mention} has been warned in** ***{Context.Guild}*** **. (5 Warnings = Ban)**\n*This message was shown in a server text channel because you had DMs turned off.*");
+                            await SendMessage(Context, null, $":exclamation:  **{user.Mention} has been warned in** ***{Context.Guild}*** **. (5 Warnings = Ban)**\n*This message was shown in a server text channel because you had DMs turned off.*");
                         }
-                        await Context.Channel.SendMessageAsync($"Successfully warned **{user.Username}** for **{reason}**. **({userAccount.NumberOfWarnings}/5)**");
+                        await SendMessage(Context, null, $"Successfully warned **{user.Username}** for **{reason}**. **({userAccount.NumberOfWarnings}/5)**");
                     }
                 }
                 catch
@@ -106,7 +106,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 {
                     embed.AddField($"Warning #{i + 1}: ", warnings[i], true);
                 }
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             else
             {
@@ -133,7 +133,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 userAccount.Warnings.Clear();
                 GlobalGuildUserAccounts.SaveAccounts();
 
-                await Context.Channel.SendMessageAsync($":white_check_mark:  Succesfully cleared all of **{user.Username}'s** warnings.");
+                await SendMessage(Context, null, $":white_check_mark:  Succesfully cleared all of **{user.Username}'s** warnings.");
             }
             else
             {

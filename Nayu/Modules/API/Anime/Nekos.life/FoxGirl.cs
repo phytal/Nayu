@@ -28,7 +28,7 @@ namespace Nayu.Modules.API.Anime.Nekos.life
             var embed = new EmbedBuilder();
             embed.WithTitle("Randomly generated fox girl just for you <3!");
             embed.WithImageUrl(nekolink);
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
     }
 }

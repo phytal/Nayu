@@ -32,7 +32,7 @@ namespace Nayu.Modules.API.Anime.Nekos.life.NSFW_Neko
                 var embed = new EmbedBuilder();
                 embed.WithTitle("Randomly generated nsfw neko just for you <3!");
                 embed.WithImageUrl(nekolink);
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             else
             {

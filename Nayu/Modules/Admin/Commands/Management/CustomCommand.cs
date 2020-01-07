@@ -30,7 +30,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                     .AddField("Bot Response", $"**{commandValue}**")
                     .WithColor(37, 152, 255);
 
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             else
             {
@@ -64,7 +64,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                     embed.WithDescription($"**{commandName}** isn't a command on this server.");
                 }
 
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             else
             {
@@ -91,7 +91,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 embed.AddField(cmd.Key, cmd.Value, true);
             }
 
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
     }
 }

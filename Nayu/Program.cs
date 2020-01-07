@@ -27,6 +27,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Nayu.Core.Configuration;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Core.Handlers;
 using Nayu.Core.LevelingSystem;
 using Nayu.Libs.CustomLibraries.Discord.Addons.Interactive;

@@ -36,7 +36,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 }
                 if (result.Item1 == false)
                 {
-                    await Context.Channel.SendMessageAsync($"Please say `n!pc <on/off>`");
+                    await SendMessage(Context, null, $"Please say `n!pc <on/off>`");
                     return;
                 }
             }

@@ -45,7 +45,7 @@ namespace Nayu.Modules.API
             embed.WithFooter("Provided by the Urban Dictionary API");
             embed.WithUrl(permalink);
 
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
     }
 }

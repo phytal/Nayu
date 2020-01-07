@@ -290,11 +290,11 @@ namespace Nayu.Modules.API.Overwatch
                     $"Level: **{level}**\nPrestige: **{prestige}**\nSR: **{sr}**\nEndorsement Level: **{endorsement}**",
                     true);
 
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             catch
             {
-                await Context.Channel.SendMessageAsync(
+                await SendMessage(Context, null, 
                     "Oops! Are you sure that your Overwatch career profile is set to public and you typed in your username correctly?\n**n!ows <Your Battle.net username and id> <platform (pc/xbl/psn)> <region> Ex: n!owstats Phytal-1427 pc us**\nNote that you must have completed your placement matches in competetive for this to show up, otherwise use n!owsqp");
             }
         }
@@ -459,11 +459,11 @@ namespace Nayu.Modules.API.Overwatch
                 embed.AddField("Overall",
                     $"Level: **{level}**\nPrestige: **{prestige}**\nEndorsement Level: **{endorsement}**", true);
 
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             catch
             {
-                await Context.Channel.SendMessageAsync(
+                await SendMessage(Context, null, 
                     "Oops! Are you sure that your Overwatch career profile is set to public and you typed in your username correctly?\n**n!owstatsqp <Your Battle.net username and id> <platform (pc/xbl/psn)> <region> Ex: n!owsqp Phytal-1427 pc us**");
             }
         }
@@ -629,11 +629,11 @@ namespace Nayu.Modules.API.Overwatch
                     $"Level: **{level}**\nPrestige: **{prestige}**\nSR: **{sr}**\nEndorsement Level: **{endorsement}**",
                     true);
 
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             catch
             {
-                await Context.Channel.SendMessageAsync(
+                await SendMessage(Context, null, 
                     "Oops! Are you sure that your Overwatch career profile is set to public and you typed in your username correctly?\n**n!owsc <Your Battle.net username and id> <platform (pc/xbl/psn)> <region> Ex: n!owstatscomp Phytal-1427 pc us**");
             }
         }

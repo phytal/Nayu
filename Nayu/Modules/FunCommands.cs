@@ -25,7 +25,7 @@ namespace Nayu.Modules
             var embed = new EmbedBuilder();
             embed.WithColor(37, 152, 255);
             embed.WithTitle($":ping_pong:  | Pong! {(Context.Client as DiscordShardedClient).Latency}ms");
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
 
         string[] predictionsTexts = new string[]
@@ -65,7 +65,7 @@ namespace Nayu.Modules
             var embed = new EmbedBuilder();
             embed.WithColor(37, 152, 255);
             embed.WithTitle(text + ", " + Context.User.Username);
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
 
 
@@ -84,7 +84,7 @@ namespace Nayu.Modules
             embed.WithFooter(LocalTime + " Message from " + Sender);
             embed.WithColor(37, 152, 255);
 
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
             if (config.MassPingChecks == true)
             {
                 if (message.Contains("@everyone") || message.Contains("@here")) return;
@@ -110,7 +110,7 @@ namespace Nayu.Modules
         [Cooldown(5)]
         public async Task Lenny()
         {
-            await Context.Channel.SendMessageAsync("( ͡° ͜ʖ ͡°)");
+            await SendMessage(Context, null, "( ͡° ͜ʖ ͡°)");
         }
 
         [Command("Prefix")]
@@ -131,7 +131,7 @@ namespace Nayu.Modules
                     break;
             }
 
-            await Context.Channel.SendMessageAsync($"The prefix for this server is {prefix}.");
+            await SendMessage(Context, null, $"The prefix for this server is {prefix}.");
         }
 
         [Command("ratewaifu")]
@@ -142,7 +142,7 @@ namespace Nayu.Modules
         {
             Random rnd = new Random();
             int rating = rnd.Next(101);
-            await Context.Channel.SendMessageAsync($"I'd rate {input} a **{rating} / 100**");
+            await SendMessage(Context, null, $"I'd rate {input} a **{rating} / 100**");
         }
 
         [Command("bigletter")]
@@ -189,15 +189,15 @@ namespace Nayu.Modules
             {
                 if (choice == 1)
                 {
-                    await Context.Channel.SendMessageAsync("I choose **Rock**! :punch: It's a tie!");
+                    await SendMessage(Context, null, "I choose **Rock**! :punch: It's a tie!");
                 }
                 if (choice == 2)
                 {
-                    await Context.Channel.SendMessageAsync("I choose **Paper**! :hand_splayed: **PAPER** wins!");
+                    await SendMessage(Context, null, "I choose **Paper**! :hand_splayed: **PAPER** wins!");
                 }
                 if (choice == 3)
                 {
-                    await Context.Channel.SendMessageAsync("I choose **Scissors**! :hand_splayed: **ROCK** wins!");
+                    await SendMessage(Context, null, "I choose **Scissors**! :hand_splayed: **ROCK** wins!");
                 }
                 return;
             }
@@ -205,15 +205,15 @@ namespace Nayu.Modules
             {
                 if (choice == 1)
                 {
-                    await Context.Channel.SendMessageAsync("I choose **Rock**! :punch:  **PAPER** wins!");
+                    await SendMessage(Context, null, "I choose **Rock**! :punch:  **PAPER** wins!");
                 }
                 if (choice == 2)
                 {
-                    await Context.Channel.SendMessageAsync("I choose **Paper**! :hand_splayed: It's a tie!");
+                    await SendMessage(Context, null, "I choose **Paper**! :hand_splayed: It's a tie!");
                 }
                 if (choice == 3)
                 {
-                    await Context.Channel.SendMessageAsync("I choose **Scissors**! :hand_splayed: **SCISSORS** wins!");
+                    await SendMessage(Context, null, "I choose **Scissors**! :hand_splayed: **SCISSORS** wins!");
                 }
                 return;
             }
@@ -221,21 +221,21 @@ namespace Nayu.Modules
             {
                 if (choice == 1)
                 {
-                    await Context.Channel.SendMessageAsync("I choose **Rock**! :punch: **ROCK** wins!");
+                    await SendMessage(Context, null, "I choose **Rock**! :punch: **ROCK** wins!");
                 }
                 if (choice == 2)
                 {
-                    await Context.Channel.SendMessageAsync("I choose **Paper**! :hand_splayed: **SCISSORS** wins!");
+                    await SendMessage(Context, null, "I choose **Paper**! :hand_splayed: **SCISSORS** wins!");
                 }
                 if (choice == 3)
                 {
-                    await Context.Channel.SendMessageAsync("I choose **Scissors**! :hand_splayed: It's a tie!");
+                    await SendMessage(Context, null, "I choose **Scissors**! :hand_splayed: It's a tie!");
                 }
                 return;
             }
             else
             {
-                await Context.Channel.SendMessageAsync("Your response was invalid, use `n!rps <rock, paper, or scissors>`");
+                await SendMessage(Context, null, "Your response was invalid, use `n!rps <rock, paper, or scissors>`");
                 return;
             }
         }

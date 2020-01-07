@@ -45,7 +45,7 @@ namespace Nayu.Core.Entities
         public DateTime BoughtDay { get; set; }
         public List<string> Attacks { get; set; }
         public List<Effect> Effects { get; set; }
-        public Dictionary<string, byte> PotionEffects { get; set; } = new Dictionary<string, byte>();
+        public Dictionary<string, byte> PotionEffects { get; set; }
 
         public Chomusuke(bool have, string name, string zodiac, bool shiny, byte hunger, uint xp, byte trust, byte waste, bool sick, string attack1, string attack2, string attack3, 
             string attack4, Type type, uint cp, Trait trait1, Trait trait2, uint health, uint shield, uint mana, uint healthcapacity, uint shieldcapacity, uint manacapacity, 
@@ -105,27 +105,11 @@ namespace Nayu.Core.Entities
 
     public class GlobalUserAccount : IGlobalAccount
     {
+        public Chomusuke Chomusuke1 { get; set; } 
 
-        public Chomusuke
-            Chomusuke1
-        {
-            get;
-            set;
-        } //= new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, null, 0, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        public Chomusuke Chomusuke2 { get; set; }
 
-        public Chomusuke
-            Chomusuke2
-        {
-            get;
-            set;
-        } //= new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, null, 0, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-
-        public Chomusuke
-            Chomusuke3
-        {
-            get;
-            set;
-        } //= new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, null, 0, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        public Chomusuke Chomusuke3 { get; set; } 
 
         public byte ActiveChomusuke { get; set; }
         public ushort NormalCapsule { get; set; }
@@ -150,10 +134,8 @@ namespace Nayu.Core.Entities
         public uint XP { get; set; }
         public DateTime LastXPMessage { get; set; } = DateTime.UtcNow;
 
-        public uint LevelNumber
-        {
-            get { return (uint) Math.Sqrt(XP / 50); }
-        }
+        public uint LevelNumber =>
+            (uint) Math.Sqrt(XP / 50);
 
         public ulong Id { get; set; }
         public string OverwatchID { get; set; }
@@ -171,6 +153,7 @@ namespace Nayu.Core.Entities
         public DateTime LastMessage { get; set; } = DateTime.UtcNow;
         public List<Message> Inbox { get; set; } = new List<Message>();
         public Dictionary<string, string> Tags { get; set; } = new Dictionary<string, string>();
+
         public Dictionary<string, ushort> Items { get; set; } = new Dictionary<string, ushort>();
         /*
         public ushort ConstantineMedallion { get; set; } //decreases control (chaos) e

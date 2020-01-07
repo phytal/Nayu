@@ -35,9 +35,10 @@ namespace Nayu.Modules.Chomusuke
                 if (newresponse.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                 {
                     //remove chomusuke
+                    config.ActiveChomusuke = 0;
                     config.Taiyaki += value;
                     GlobalUserAccounts.SaveAccounts(Context.User.Id);
-                    await Context.Channel.SendMessageAsync($"You have successfully sold your Chomusuke {activeChom.Name}");
+                    await SendMessage(Context, null, $"You have successfully sold your Chomusuke {activeChom.Name}");
                     
                     return;
                 }

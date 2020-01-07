@@ -28,7 +28,11 @@ namespace Nayu
         
         internal static Slot slot = new Slot();
 
-        public static string ReplacePlacehoderStrings(this string messageString, IGuildUser user = null)
+        internal static Emote ENo = Emote.Parse("<:no:453716729525174273>");
+
+        internal static Emote EChomusuke = Emote.Parse("<:chomusuke:601183653657182280>");
+        internal static Emote ETaiyaki = Emote.Parse("<:taiyaki:599774631984889857>");
+        public static string ReplacePlaceholderStrings(this string messageString, IGuildUser user = null)
         {
             var result = messageString;
             if (user != null)

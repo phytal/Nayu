@@ -26,10 +26,10 @@ namespace Nayu.Modules.Admin.Commands.Fun
                     config.Currency = arg;
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
-                    await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                    await SendMessage(Context, embed);
                 if (arg == string.Empty)
                 {
-                    await Context.Channel.SendMessageAsync($"The server currency is now set to the default **Taiyaki** To change this, you can use `n!cc <name of your custom currency>`");
+                    await SendMessage(Context, null, $"The server currency is now set to the default **Taiyaki** To change this, you can use `n!cc <name of your custom currency>`");
                     config.Currency = "Taiyakis";
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 }

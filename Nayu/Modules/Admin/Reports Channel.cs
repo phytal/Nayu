@@ -71,7 +71,7 @@ namespace Nayu.Modules.Admin
                 embed.WithColor(37, 152, 255);
                 embed.Title = $"{Context.User}'s report of {user.Username}";
                 embed.Description = $"**Username: **{user.Username}\n**Reported by: **{Context.User.Mention}\n**Reason: **{reason}";
-                await channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
                 await ReplyAsync(":white_check_mark:  | *Your report has been furthered to staff.*");
             }
         }

@@ -14,7 +14,7 @@ namespace Nayu.Core.Handlers
         /// <param name="type">Type of the Embed (Error, Info, Exception, Success) -> Sets the color</param>
         /// <param name="withTimeStamp">Adds the current Timestamp to the embed</param>
         /// <returns></returns>
-        public static Embed CreateEmbed(string title, string body, EmbedMessageType type, SocketUser target)
+        public static EmbedBuilder CreateEmbed(string title, string body, EmbedMessageType type, SocketUser target)
         {
             var embed = new EmbedBuilder();
             var thumbnailUrl = target.GetAvatarUrl();
@@ -46,9 +46,9 @@ namespace Nayu.Core.Handlers
                     break;
             }
 
-                embed.WithCurrentTimestamp();
+            embed.WithCurrentTimestamp();
 
-            return embed.Build();
+            return embed;
         }
 
 

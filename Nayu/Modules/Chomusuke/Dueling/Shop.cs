@@ -19,7 +19,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             var config = GlobalUserAccounts.GetUserAccount(user);
             if (config.Fighting == true)
             {
-                await Context.Channel.SendMessageAsync("You can't go to the duels shop in the middle of a duel!");
+                await SendMessage(Context, null, "You can't go to the duels shop in the middle of a duel!");
                 return;
             }
             string shoptext = ":crossed_swords:   **|  Duels Armoury** \n ```xl\nPlease select the purchase you would like to make.\n\n[1] Potions\n[2] Runes\n[3] Materials\n[4] Items\n[5] Blessings\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
@@ -42,7 +42,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.Taiyaki -= 50;
 
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought a Strength Potion!");
+                    await SendMessage(Context, null, "You have successfully bought a Strength Potion!");
                     return;
                 }
                 if (newresponse.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -56,7 +56,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     else config.Items.Add("Speed Potion", 1);
                     config.Taiyaki -= 25;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought a Speed Potion!");
+                    await SendMessage(Context, null, "You have successfully bought a Speed Potion!");
                     return;
                 }
                 if (newresponse.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -71,7 +71,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     else config.Items.Add("Debuff Potion", 1);
 
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought a Debuff Potion!");
+                    await SendMessage(Context, null, "You have successfully bought a Debuff Potion!");
                     return;
                 }
                 if (newresponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -86,7 +86,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     else config.Items.Add("Equalizer Potion", 1);
 
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought an Equalizer Potion!");
+                    await SendMessage(Context, null, "You have successfully bought an Equalizer Potion!");
                     return;
                 }
                 if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -124,7 +124,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.bookWM = true;
                     config.Taiyaki -= 500;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought the book, Weapon Mastery!");
+                    await SendMessage(Context, null, "You have successfully bought the book, Weapon Mastery!");
                     return;
                 }
                 if (newresponse.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -137,7 +137,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.bookPE = true;
                     config.Taiyaki -= 500;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought the book, Efficient Brewing!");
+                    await SendMessage(Context, null, "You have successfully bought the book, Efficient Brewing!");
                     return;
                 }
                 if (newresponse.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -150,7 +150,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.bookSD = true;
                     config.Taiyaki -= 500;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought the book, Mage Mastery!");
+                    await SendMessage(Context, null, "You have successfully bought the book, Mage Mastery!");
                     return;
                 }
                 if (newresponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -163,7 +163,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.bookDR = true;
                     config.Taiyaki -= 500;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought the book, Durable Armour!");
+                    await SendMessage(Context, null, "You have successfully bought the book, Durable Armour!");
                     return;
                 }
                 if (newresponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -176,7 +176,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.bookDR = true;
                     config.Taiyaki -= 500;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought the book, Blessing of Protection!");
+                    await SendMessage(Context, null, "You have successfully bought the book, Blessing of Protection!");
                     return;
                 }
                 if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -213,7 +213,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         config.Weapon = "bronze";
                         config.Taiyaki -= 150;
                         GlobalUserAccounts.SaveAccounts(user.Id);
-                        await Context.Channel.SendMessageAsync("You have successfully bought a Bronze Sword!");
+                        await SendMessage(Context, null, "You have successfully bought a Bronze Sword!");
                         return;
                     }
                     if (newresponsee == null)
@@ -241,7 +241,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         config.Weapon = "steel";
                         config.Taiyaki -= 300;
                         GlobalUserAccounts.SaveAccounts(user.Id);
-                        await Context.Channel.SendMessageAsync("You have successfully bought a Steel Sword!");
+                        await SendMessage(Context, null, "You have successfully bought a Steel Sword!");
                         return;
                     }
                     if (newresponsee == null)
@@ -269,7 +269,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         config.Weapon = "gold";
                         config.Taiyaki -= 500;
                         GlobalUserAccounts.SaveAccounts(user.Id);
-                        await Context.Channel.SendMessageAsync("You have successfully bought a Gold Sword!");
+                        await SendMessage(Context, null, "You have successfully bought a Gold Sword!");
                         return;
                     }
                     if (newresponsee == null)
@@ -318,7 +318,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                             config.Armour = "bronze";
                             config.Taiyaki -= 150;
                             GlobalUserAccounts.SaveAccounts(user.Id);
-                            await Context.Channel.SendMessageAsync("You have successfully bought a Bronze Armour Set!");
+                            await SendMessage(Context, null, "You have successfully bought a Bronze Armour Set!");
                             return;
                         }
                         if (newresponsee == null)
@@ -346,7 +346,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                             config.Armour = "steel";
                             config.Taiyaki -= 300;
                             GlobalUserAccounts.SaveAccounts(user.Id);
-                            await Context.Channel.SendMessageAsync("You have successfully bought a Steel Armour Set!");
+                            await SendMessage(Context, null, "You have successfully bought a Steel Armour Set!");
                             return;
                         }
                         if (newresponsee == null)
@@ -374,7 +374,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                             config.Armour = "gold";
                             config.Taiyaki -= 500;
                             GlobalUserAccounts.SaveAccounts(user.Id);
-                            await Context.Channel.SendMessageAsync("You have successfully bought a Gold Armour Set!");
+                            await SendMessage(Context, null, "You have successfully bought a Gold Armour Set!");
                             return;
                         }
                         if (newresponsee == null)
@@ -402,7 +402,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                             config.Armour = "platinum";
                             config.Taiyaki -= 1000;
                             GlobalUserAccounts.SaveAccounts(user.Id);
-                            await Context.Channel.SendMessageAsync("You have successfully bought a Platinum Armour Set!");
+                            await SendMessage(Context, null, "You have successfully bought a Platinum Armour Set!");
                             return;
                         }
                         if (newresponsee == null)
@@ -430,7 +430,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                             config.Armour = "reinforced";
                             config.Taiyaki -= 1000;
                             GlobalUserAccounts.SaveAccounts(user.Id);
-                            await Context.Channel.SendMessageAsync("You have successfully bought a Reinforced Armour Set!");
+                            await SendMessage(Context, null, "You have successfully bought a Reinforced Armour Set!");
                             return;
                         }
                         if (newresponsee == null)
@@ -476,7 +476,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     else config.Items.Add("Metallic Acid", 1);
                     config.Taiyaki -= 500;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought **Metallic Acid x1**!");
+                    await SendMessage(Context, null, "You have successfully bought **Metallic Acid x1**!");
                     return;
                 }
                 if (newresponse.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -490,7 +490,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     else config.Items.Add("Weapon Liquifier", 1);
                     config.Taiyaki -= 500;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought **Weapon Liquifier x1**!");
+                    await SendMessage(Context, null, "You have successfully bought **Weapon Liquifier x1**!");
                     return;
                 }
                 if (newresponse.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -504,7 +504,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     else config.Items.Add("Basic Treatment", 1);
                     config.Taiyaki -= 600;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought **Basic Treatment x1**!");
+                    await SendMessage(Context, null, "You have successfully bought **Basic Treatment x1**!");
                     return;
                 }
                 if (newresponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -518,7 +518,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     else config.Items.Add("Divine Shield", 1);
                     config.Taiyaki -= 800;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought **Divine Shield x1**!");
+                    await SendMessage(Context, null, "You have successfully bought **Divine Shield x1**!");
                     return;
                 }
                 if (newresponse.Content.Equals("5", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -532,7 +532,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     else config.Items.Add("Vile Of Poison", 1);
                     config.Taiyaki -= 200;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought **Vile Of Poison x1**!");
+                    await SendMessage(Context, null, "You have successfully bought **Vile Of Poison x1**!");
                     return;
                 }
                 if (newresponse == null)
@@ -565,7 +565,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.blessingProtection = true;
                     config.Taiyaki -= 7500;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought the Blessing of Protection!");
+                    await SendMessage(Context, null, "You have successfully bought the Blessing of Protection!");
                     return;
                 }
                 if (newresponse.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -578,7 +578,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.blessingSwiftness = true;
                     config.Taiyaki -= 7500;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought the Blessing of Swiftness!");
+                    await SendMessage(Context, null, "You have successfully bought the Blessing of Swiftness!");
                     return;
                 }
                 if (newresponse.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -591,7 +591,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.blessingWar = true;
                     config.Taiyaki -= 7500;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought the Blessing of War!");
+                    await SendMessage(Context, null, "You have successfully bought the Blessing of War!");
                     return;
                 }
                 if (newresponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -604,7 +604,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.blessingStrength = true;
                     config.Taiyaki -= 7500;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought the Blessing of Strength!");
+                    await SendMessage(Context, null, "You have successfully bought the Blessing of Strength!");
                     return;
                 }
                 if (newresponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -617,7 +617,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.bookDR = true;
                     config.Taiyaki -= 7500;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync("You have successfully bought the book, Blessing of Protection!");
+                    await SendMessage(Context, null, "You have successfully bought the book, Blessing of Protection!");
                     return;
                 }
                 if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -681,7 +681,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             embed.AddField("Armour", armour);
             embed.AddField("Weapon", weapon);
             embed.AddField("Active Blessings", activeBlessing);
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
 
         [Command("attacks")]
@@ -717,7 +717,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             embed.AddField("Current Attack 2", chom.Attack2);
             embed.AddField("Current Attack 3", chom.Attack3);
             embed.AddField("Current Attack 4", chom.Attack4);
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
 
         [Command("replaceattack")]
@@ -732,31 +732,31 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 {
                     string oldAttack = chom.Attack1;
                     chom.Attack1 = attackName;
-                    await Context.Channel.SendMessageAsync($":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
+                    await SendMessage(Context, null, $":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 2)
                 {
                     string oldAttack = chom.Attack2;
                     chom.Attack2 = attackName;
-                    await Context.Channel.SendMessageAsync($":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
+                    await SendMessage(Context, null, $":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 3)
                 {
                     string oldAttack = chom.Attack3;
                     chom.Attack3 = attackName;
-                    await Context.Channel.SendMessageAsync($":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
+                    await SendMessage(Context, null, $":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 4)
                 {
                     string oldAttack = chom.Attack4;
                     chom.Attack4 = attackName;
-                    await Context.Channel.SendMessageAsync($":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
+                    await SendMessage(Context, null, $":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
                 }
                 GlobalUserAccounts.SaveAccounts(Context.User.Id);
             }
             else
             {
-                await Context.Channel.SendMessageAsync($"{chom.Name} hasn't learned {attackName} yet! \n*Make sure you typed your desired attack's name correctly (psst, It's case-sensitive!).*");
+                await SendMessage(Context, null, $"{chom.Name} hasn't learned {attackName} yet! \n*Make sure you typed your desired attack's name correctly (psst, It's case-sensitive!).*");
             }
         }
     }

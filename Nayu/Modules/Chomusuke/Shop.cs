@@ -6,12 +6,11 @@ using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Modules.Chomusuke.Dueling;
 
-
 namespace Nayu.Modules.Chomusuke
 {
-    class Shop : NayuModule
+    public class Shop : NayuModule
     {
-        [Command("chomusuke buy"), Alias("w shop", "w buy")]
+        [Command("chomusukebuy"), Alias("cshop", "cbuy")]
         [Summary("Opens the Chomusuke shop menu!")]
         [Remarks("Ex: n!c shop")]
         public async Task ChomusukeBuy()
@@ -29,7 +28,7 @@ namespace Nayu.Modules.Chomusuke
             }
             if (response.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
             {
-                await shop.ModifyAsync(m => { m.Content = $":feet:  |  **Are you sure you want to purchase a {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke? (**900** {Emote.Parse("<:taiyaki:599774631984889857>")})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current Chomusuke!**"; });
+                await shop.ModifyAsync(m => { m.Content = $":feet:  |  **Are you sure you want to purchase a {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke? (**900** {Emote.Parse("<:taiyaki:599774631984889857>")})**\n\nType `confirm` to continue or `cancel` to cancel."; });
                 var newresponse = await NextMessageAsync();
                 if (newresponse.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                 {
@@ -41,7 +40,7 @@ namespace Nayu.Modules.Chomusuke
                     config.NormalCapsule += 1;
                     config.Taiyaki -= 900;
                     GlobalUserAccounts.SaveAccounts(user.Id);
-                    await Context.Channel.SendMessageAsync($"You have successfully bought a {Emote.Parse("<:chomusuke:601183653657182280>")} Normal Chomusuke Capsule!");
+                    await SendMessage(Context, null, $"You have successfully bought a {Emote.Parse("<:chomusuke:601183653657182280>")} Normal Chomusuke Capsule!");
                     return;
                 }
                 if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))

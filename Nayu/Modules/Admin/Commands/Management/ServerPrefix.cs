@@ -34,7 +34,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                     embed.WithDescription($"Set server prefix to {prefix}");
                 }
                 GlobalUserAccounts.SaveAccounts(Context.Guild.Id);
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             else
             {

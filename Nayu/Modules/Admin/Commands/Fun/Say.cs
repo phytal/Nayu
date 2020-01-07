@@ -28,7 +28,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
                 var messagesToDelete = await Context.Channel.GetMessagesAsync(1).FlattenAsync();
                 if (Context.Channel is ITextChannel text) await text.DeleteMessagesAsync(messagesToDelete);
                 //input.Replace("@everyone", "@\u200beveryone").Replace("@here", "@\u200bhere");
-                await Context.Channel.SendMessageAsync(input);
+                await SendMessage(Context, null, input);
             }
             else
             {

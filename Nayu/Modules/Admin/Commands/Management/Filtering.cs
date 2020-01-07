@@ -34,7 +34,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 }
                 else
                 {
-                    await Context.Channel.SendMessageAsync($"Please say `n!filter <on/off>`");
+                    await SendMessage(Context, null, $"Please say `n!filter <on/off>`");
                 }
             }
             else
@@ -80,7 +80,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                         break;
                 }
                 GlobalUserAccounts.SaveAccounts(Context.Guild.Id);
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             else
             {
@@ -102,7 +102,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (guildUser.GuildPermissions.Administrator)
             {
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                await Context.Channel.SendMessageAsync($":white_check_mark:  | Added **{word}** to the Blacklist.");
+                await SendMessage(Context, null, $":white_check_mark:  | Added **{word}** to the Blacklist.");
 
                 config.CustomFilter.Add(word);
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
@@ -139,7 +139,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                     config.CustomFilter.Remove(bl);
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 }
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             else
             {
@@ -167,7 +167,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 embed.WithDescription("Cleared the Blacklist for this server.");
                 embed.WithColor(37, 152, 255);
 
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             else
             {
@@ -199,7 +199,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 embed.WithDescription(list);
                 embed.WithColor(37, 152, 255);
 
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
             else
             {

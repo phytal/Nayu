@@ -26,12 +26,12 @@ namespace Nayu.Modules.API.Anime.Both
             var result = ConvertBool.ConvertStringToBoolean(arg);
             if (result.Item1 == false)
             {
-                await Context.Channel.SendMessageAsync($"Please say `n!autolewd <on/off>`");
+                await SendMessage(Context, null, $"Please say `n!autolewd <on/off>`");
                 return;
             }
             if (result.Item2)
             {
-                await Context.Channel.SendMessageAsync($"Started the AutoLewd loop :3");
+                await SendMessage(Context, null, $"Started the AutoLewd loop :3");
                 await LewdLoop(Context.Message);
                 guildAcc.AutoLewdStatus = true;
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
@@ -40,7 +40,7 @@ namespace Nayu.Modules.API.Anime.Both
             {
                 guildAcc.AutoLewdStatus = false;
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-                await Context.Channel.SendMessageAsync($"Stopped the AutoLewd loop :/");
+                await SendMessage(Context, null, $"Stopped the AutoLewd loop :/");
 
             }
             

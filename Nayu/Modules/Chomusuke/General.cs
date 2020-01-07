@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Libs.CustomLibraries.Discord.Addons.Interactive.Paginator;
+using Nayu.Helpers;
+using Nayu.Modules.Chomusuke.Dueling;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Chomusuke
@@ -13,23 +15,23 @@ namespace Nayu.Modules.Chomusuke
     public class General : NayuModule
     {
 
-        [Command("chomusuke stats"), Alias("c stats")]
+        [Command("chomusukeStats"), Alias("cStats")]
         [Summary("Brings up the main stats/info of your or someone else's Chomusukes!")]
-        [Remarks("n!c stats <specified user (will be yours if left empty)> Ex: n!c stats @Phytal")]
+        [Remarks("n!cStats <specified user (will be yours if left empty)> Ex: n!cStats @Phytal")]
         [Cooldown(5)]
         public async Task ChomusukeUser([Remainder] string arg = "")
         {
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
             SocketUser user = mentionedUser ?? Context.User;
             var config = GlobalUserAccounts.GetUserAccount(user);
-            if (config.Chomusuke1.Have == false) //if they own a Chomusuke or not
+            if (!config.Chomusuke1.Have) //if they own a Chomusuke or not
             {
-                await Context.Channel.SendMessageAsync(
-                    $":no:  |  **{Context.User.Username}**, you don't own a {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke! \n\nPurchase one with n!chomusuke buy!");
+                await SendMessage(Context, null,
+                    $"{Global.ENo}  |  **{Context.User.Username}**, you don't own a {Global.EChomusuke} Chomusuke! \n\nPurchase one with n!chomusuke buy!");
             }
             else //show their Chomusuke status
             {
-                string sick = Helpers.ConvertBool.ConvertBooleanYN(config.Chomusuke1.Sick);
+                string sick = ConvertBool.ConvertBooleanYN(config.Chomusuke1.Sick);
                 string chomusuke1 =
                     $"Owner: **{user.Username}**\nName: **{config.Chomusuke1.Name}**\nZodiac: **{config.Chomusuke1.Zodiac}** :{config.Chomusuke1.Zodiac.ToLower()}:\nType: **{config.Chomusuke1.Type}**\nTrait 1: **{config.Chomusuke1.Trait1}**\nTrait 2: **{config.Chomusuke1.Trait2}**\nCombat Power: **{config.Chomusuke1.CP}**\nExp: **{config.Chomusuke1.XP}**\nLevel: **{config.Chomusuke1.LevelNumber}**\n Control: **{config.Chomusuke1.Control}**\n Health: **{config.Chomusuke1.HealthCapacity}**\nShield: **{config.Chomusuke1.ShieldCapacity}**\nMana: **{config.Chomusuke1.ManaCapacity}**";
                 string chomusuke2 = $"{user.Username} doesn't have this many chomusukes!";
@@ -51,19 +53,19 @@ namespace Nayu.Modules.Chomusuke
             }
         }
 
-        [Command("activechomusuke"), Alias("a stats")]
+        [Command("activeChomusuke"), Alias("aStats")]
         [Summary("Brings up the stats/info of your or someone else's Chomusuke!")]
-        [Remarks("n!c stats <specified user (will be yours if left empty)> Ex: n!c stats @Phytal")]
+        [Remarks("n!aStats <specified user (will be yours if left empty)> Ex: n!aStats @Phytal")]
         [Cooldown(5)]
-        public async Task Chomusuke([Remainder]string arg = "")
+        public async Task Chomusuke([Remainder] string arg = "")
         {
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
             SocketUser user = mentionedUser ?? Context.User;
             var config = GlobalUserAccounts.GetUserAccount(user);
-            if (config.Chomusuke1.Have == false) //if they own a Chomusuke or not
+            if (config.ActiveChomusuke == 0 && user == Context.User) //if they own a Chomusuke or not
             {
-                await Context.Channel.SendMessageAsync($":no:  |  **{Context.User.Username}**, you don't own a {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke! \n\nPurchase one with n!chomusuke buy!");
-                return;
+                await SendMessage(Context, null,
+                    $"{Global.ENo}  |  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
             }
             else //show their Chomusuke status
             {
@@ -79,15 +81,16 @@ namespace Nayu.Modules.Chomusuke
                 };
                 if (config.ActiveChomusuke == 1)
                 {
-                    string sick = Helpers.ConvertBool.ConvertBooleanYN(config.Chomusuke1.Sick);
-                    if (config.Chomusuke1.Shiny == true)
+                    string sick = ConvertBool.ConvertBooleanYN(config.Chomusuke1.Sick);
+                    if (config.Chomusuke1.Shiny)
                         embed.WithThumbnailUrl("https://i.imgur.com/oKGxPZ4.png");
                     else
                         embed.WithThumbnailUrl("https://i.imgur.com/7kpEWPb.png");
                     embed.WithColor(37, 152, 255);
                     embed.AddField("Owner", user, true);
                     embed.AddField("Name", config.Chomusuke1.Name, true);
-                    embed.AddField("Zodiac", config.Chomusuke1.Zodiac + $":{config.Chomusuke1.Zodiac.ToLower()}:", true);
+                    embed.AddField("Zodiac", config.Chomusuke1.Zodiac + $":{config.Chomusuke1.Zodiac.ToLower()}:",
+                        true);
                     embed.AddField("Type", config.Chomusuke1.Type, true);
                     embed.AddField("Combat Power", config.Chomusuke1.CP, true);
                     embed.AddField("Exp", config.Chomusuke1.XP, true);
@@ -101,17 +104,19 @@ namespace Nayu.Modules.Chomusuke
                     embed.AddField("Hunger", config.Chomusuke1.Hunger, true);
                     embed.AddField("Sick", sick, true);
                 }
+
                 if (config.ActiveChomusuke == 2)
                 {
-                    string sick = Helpers.ConvertBool.ConvertBooleanYN(config.Chomusuke2.Sick);
-                    if (config.Chomusuke2.Shiny == true)
+                    string sick = ConvertBool.ConvertBooleanYN(config.Chomusuke2.Sick);
+                    if (config.Chomusuke2.Shiny)
                         embed.WithThumbnailUrl("https://i.imgur.com/oKGxPZ4.png");
                     else
                         embed.WithThumbnailUrl("https://i.imgur.com/7kpEWPb.png");
                     embed.WithColor(37, 152, 255);
                     embed.AddField("Owner", user, true);
                     embed.AddField("Name", config.Chomusuke2.Name, true);
-                    embed.AddField("Zodiac", config.Chomusuke2.Zodiac + $":{config.Chomusuke2.Zodiac.ToLower()}:", true);
+                    embed.AddField("Zodiac", config.Chomusuke2.Zodiac + $":{config.Chomusuke2.Zodiac.ToLower()}:",
+                        true);
                     embed.AddField("Type", config.Chomusuke2.Type, true);
                     embed.AddField("Combat Power", config.Chomusuke2.CP, true);
                     embed.AddField("Exp", config.Chomusuke2.XP, true);
@@ -125,17 +130,19 @@ namespace Nayu.Modules.Chomusuke
                     embed.AddField("Hunger", config.Chomusuke2.Hunger, true);
                     embed.AddField("Sick", sick, true);
                 }
+
                 if (config.ActiveChomusuke == 3)
                 {
-                    string sick = Helpers.ConvertBool.ConvertBooleanYN(config.Chomusuke3.Sick);
-                    if (config.Chomusuke3.Shiny == true)
+                    string sick = ConvertBool.ConvertBooleanYN(config.Chomusuke3.Sick);
+                    if (config.Chomusuke3.Shiny)
                         embed.WithThumbnailUrl("https://i.imgur.com/oKGxPZ4.png");
                     else
                         embed.WithThumbnailUrl("https://i.imgur.com/7kpEWPb.png");
                     embed.WithColor(37, 152, 255);
                     embed.AddField("Owner", user, true);
                     embed.AddField("Name", config.Chomusuke3.Name, true);
-                    embed.AddField("Zodiac", config.Chomusuke3.Zodiac + $":{config.Chomusuke3.Zodiac.ToLower()}:", true);
+                    embed.AddField("Zodiac", config.Chomusuke3.Zodiac + $":{config.Chomusuke3.Zodiac.ToLower()}:",
+                        true);
                     embed.AddField("Type", config.Chomusuke3.Type, true);
                     embed.AddField("Combat Power", config.Chomusuke3.CP, true);
                     embed.AddField("Exp", config.Chomusuke3.XP, true);
@@ -150,217 +157,275 @@ namespace Nayu.Modules.Chomusuke
                     embed.AddField("Sick", sick, true);
                 }
 
-                await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                await SendMessage(Context, embed);
             }
         }
-        [Command("chomusuke help"), Alias("w help")]
+
+        [Command("chomusukeHelp"), Alias("cHelp")]
         [Summary("Displays all Chomusuke commands with a description of what they do")]
-        [Remarks("Ex: n!help")]
+        [Remarks("Ex: n!cHelp")]
         [Cooldown(8)]
         public async Task ChomusukeHelp()
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
-            string[] footers = new string[]
-{
+            string[] footers = 
+            {
                 "Every 4 hours all Chomusukes will have a time modifier, -1 hunger, -1 attention, and +1 waste. Make sure to check on your Chomusuke often!",
                 "If the living conditions you provide for your Chomusuke are too low - never clean, never play, etc - it will run away! (Your room will remain the same)",
                 "If your Chomusuke is sick, buy it some medicine with n!buy.",
                 "All Chomusuke commands have a 8 second cooldown.",
                 "To get a direct link to a picture right click and open image in new tab. Then there's the URL! :)"
-};
+            };
             Random rand = new Random();
             int randomIndex = rand.Next(footers.Length);
             string text = footers[randomIndex];
 
             var embed = new EmbedBuilder();
-            embed.WithTitle($"{Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke Command List");
-            embed.AddField("n!chomusuke help", "Brings up the help commmand (lol)", true);
+            embed.WithTitle($"{Global.EChomusuke} Chomusuke Command List");
+            embed.AddField("n!chomusuke help", "Brings up the help command", true);
             embed.AddField("n!chomusuke shop", "Opens the Chomusuke shop menu!", true);
             embed.AddField("n!chomusuke stats", "Brings up the stats/info of your or someone else's Chomusuke!", true);
             embed.AddField("n!chomusuke name", "Set the name of your Chomusuke!", true);
-            embed.AddField("n!chomusuke feed", "Feeds your Wasagtochi at the cost of Taiyakis! Otherwise it will starve!", true);
+            embed.AddField("n!chomusuke feed",
+                "Feeds your Chomusuke at the cost of Taiyakis! Otherwise it will starve!", true);
             embed.AddField("n!chomusuke clean", "Clean up your Chomusuke's waste, Otherwise it'll get sick!", true);
-            embed.AddField("n!chomusuke play", "Play with your chomusuke! Your Chomusuke must have high attention levels at all times!", true);
+            embed.AddField("n!chomusuke play",
+                "Play with your chomusuke! Your Chomusuke must have high attention levels at all times!", true);
             embed.AddField("n!chomusuke train", "Train your Chomusuke to earn Exp and level up!", true);
             embed.WithFooter(text);
-            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
 
-        [Command("chomusuke name"), Alias("w name")]
+        [Command("chomusukeName"), Alias("cName")]
         [Summary("Set the name of your Chomusuke!")]
-        [Remarks("n!c name <your desired name> Ex: n!c name Taiyaki")]
+        [Remarks("n!cName <your desired name> Ex: n!cName Taiyaki")]
         [Cooldown(8)]
         public async Task ChomusukeName([Remainder] string name)
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
-            if (config.Chomusuke1.Have == false) //if they own a Chomusuke or not
-            {
-                var no = Emote.Parse("<:no:453716729525174273>");
-                await Context.Channel.SendMessageAsync($"{no}  |  **{Context.User.Username}**, you don't own a {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke! \n\nPurchase one with n!chomusuke buy!");
-                GlobalUserAccounts.SaveAccounts(Context.User.Id);
-                return;
-            }
+            if (config.ActiveChomusuke == 0) //if they set an active chomusuke
+                await SendMessage(Context, null,
+                    $"{Global.ENo}  |  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
             else
             {
-                config.Chomusuke1.Name = name;
+                var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
+                chom.Name = name;
+                await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                 GlobalUserAccounts.SaveAccounts(Context.User.Id);
-                await Context.Channel.SendMessageAsync($":white_check_mark:   |  **{Context.User.Username}**, you successfully changed your {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke's name to **{name}**!");
+                await SendMessage(Context, null,
+                    $":white_check_mark:   |  **{Context.User.Username}**, you successfully changed {Global.EChomusuke} {chom.Name}'s name to **{name}**!");
             }
         }
 
-
-        [Command("chomusuke feed"), Alias("w feed")]
-        [Summary("Feeds your Wasagtochi at the cost of Taiyakis! Otherwise it will starve!")]
-        [Remarks("Ex: n!c feed")]
+//TODO: add embeds and chom names
+        [Command("chomusukeFeed"), Alias("cFeed")]
+        [Summary("Feeds your Chomusuke at the cost of Taiyakis! Otherwise it will starve!")]
+        [Remarks("Ex: n!cFeed")]
         [Cooldown(8)]
         public async Task ChomusukeFeed()
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
-            if (config.Chomusuke1.Have == false) //if they own a Chomusuke or not
-            {
-                await Context.Channel.SendMessageAsync($":no:  |  **{Context.User.Username}**, you don't own a {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke! \n\nPurchase one with n!chomusuke buy!");
-                GlobalUserAccounts.SaveAccounts(Context.User.Id);
-                return;
-            }
+            if (config.ActiveChomusuke == 0) //if they set an active chomusuke
+                await SendMessage(Context, null,
+                    $"{Global.ENo}  |  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
             else
             {
-                if (config.Chomusuke1.Hunger == 20)
+                var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
+                if (chom.Hunger == 20)
                 {
-                    await Context.Channel.SendMessageAsync($":poultry_leg:  |  **{Context.User.Username}**, your {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke is full!");
-                    return;
+                    var thumbnailurl = Context.User.GetAvatarUrl();
+                    var auth = new EmbedAuthorBuilder()
+                    {
+                        Name = "Chiiiii..",
+                        IconUrl = thumbnailurl,
+                    };
+                    var embed = new EmbedBuilder()
+                    {
+                        Author = auth
+                    };
+                    embed.WithColor(255, 128, 0);
+                    embed.WithThumbnailUrl("https://i.imgur.com/Sc4HGir.gif");
+                    embed.WithDescription(
+                        $":poultry_leg:  |  **{Context.User.Username}**, {Global.EChomusuke} {chom.Name} is full!");
+                    await SendMessage(Context, embed);
                 }
+                else
                 {
                     int cost = Global.Rng.Next(34, 87);
                     int hungerGain = Global.Rng.Next(4, 9);
-                    config.Chomusuke1.Hunger += (byte)hungerGain;
-                    if (config.Chomusuke1.Hunger > 20)
+                    chom.Hunger += (byte) hungerGain;
+                    if (chom.Hunger > 20)
                     {
-                        config.Chomusuke1.Hunger = 20;
+                        chom.Hunger = 20;
                     }
+                    await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                     GlobalUserAccounts.SaveAccounts(Context.User.Id);
-                    await Context.Channel.SendMessageAsync($":poultry_leg:  |  **{Context.User.Username}**, you fill your {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke's bowl with food. It looks happy! **(+{hungerGain} food [-{cost} {Emote.Parse("<:taiyaki:599774631984889857>")}])**");
+
+                    var thumbnailurl = Context.User.GetAvatarUrl();
+                    var auth = new EmbedAuthorBuilder()
+                    {
+                        Name = "Success!",
+                        IconUrl = thumbnailurl,
+                    };
+                    var embed = new EmbedBuilder()
+                    {
+                        Author = auth
+                    };
+                    embed.WithColor(0, 255, 0);
+                    embed.WithThumbnailUrl("https://i.imgur.com/Sc4HGir.gif");
+                    embed.WithDescription(
+                        $":poultry_leg:  |  **{Context.User.Username}**, you fill {Global.EChomusuke} {chom.Name}'s bowl with food. It looks happy! **(+{hungerGain} food [-{cost} {Global.ETaiyaki}])**");
+                    await SendMessage(Context, embed);
                 }
             }
         }
 
-
-        string[] cleanTexts = new string[]
-{
-                "you hold your nose and start cleaning up the mess. ",
-                "you cleaned up <:chomusuke:601183653657182280> Chomusuke's...business!",
-};
-
-        [Command("chomusuke clean"), Alias("w clean")]
-        [Summary("Clean up your Chomusuke's waste, Otherwise it'll get sick!")]
-        [Remarks("Ex: n!c clean")]
+        [Command("chomusukeClean"), Alias("cClean")]
+        [Summary("Clean up your Chomusuke's waste, otherwise it'll get sick!")]
+        [Remarks("Ex: n!cClean")]
         [Cooldown(8)]
         public async Task ChomusukeClean()
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User.Id);
-            if (config.Chomusuke1.Have == false) //if they own a Chomusuke or not
-            {
-                await Context.Channel.SendMessageAsync($":no:  |  **{Context.User.Username}**, you don't own a {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke! \n\nPurchase one with n!chomusuke buy!");
-                GlobalUserAccounts.SaveAccounts(Context.User.Id);
-                return;
-            }
+            if (config.ActiveChomusuke == 0) //if they set an active chomusuke
+                await SendMessage(Context, null,
+                    $"{Global.ENo}  |  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
             else
             {
-                if (config.Chomusuke1.Waste == 0)
+                var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
+                if (chom.Waste == 0)
                 {
-                    await Context.Channel.SendMessageAsync($":sparkles:  | **{Context.User.Username}, your {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke's room is squeaky clean!**");
-                    return;
+                    var thumbnailurl = Context.User.GetAvatarUrl();
+                    var auth = new EmbedAuthorBuilder()
+                    {
+                        Name = "Chiiiii..",
+                        IconUrl = thumbnailurl,
+                    };
+                    var embed = new EmbedBuilder()
+                    {
+                        Author = auth
+                    };
+                    embed.WithColor(255, 128, 0);
+                    embed.WithThumbnailUrl("https://i.imgur.com/OtVepvM.gif");
+                    embed.WithDescription(
+                        $":sparkles:  | **{Context.User.Username}, your {Global.EChomusuke} Chomusuke's room is squeaky clean!**");
+                    await SendMessage(Context, embed);
                 }
+                else
                 {
                     int randomIndex = Global.Rng.Next(cleanTexts.Length);
                     string text = cleanTexts[randomIndex];
                     int cleanedAmount = Global.Rng.Next(4, 8);
-                    config.Chomusuke1.Waste -= (byte)cleanedAmount;
-                    if (config.Chomusuke1.Waste > 20)
+                    chom.Waste -= (byte) cleanedAmount;
+                    if (chom.Waste > 20)
                     {
-                        config.Chomusuke1.Waste = 0;
+                        chom.Waste = 0;
                     }
+                    await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                     GlobalUserAccounts.SaveAccounts(Context.User.Id);
-                    await Context.Channel.SendMessageAsync($":sparkles:  |  **{Context.User.Username}**, {text} **(-{cleanedAmount} waste)**");
+
+                    var thumbnailurl = Context.User.GetAvatarUrl();
+                    var auth = new EmbedAuthorBuilder()
+                    {
+                        Name = "Success!",
+                        IconUrl = thumbnailurl,
+                    };
+                    var embed = new EmbedBuilder()
+                    {
+                        Author = auth
+                    };
+                    embed.WithColor(0, 255, 0);
+                    embed.WithThumbnailUrl("https://i.imgur.com/PI2z8rm.gif");
+                    embed.WithDescription(
+                        $":sparkles:  |  **{Context.User.Username}**, {text} **(-{cleanedAmount} waste)**");
+                    await SendMessage(Context, embed);
                 }
             }
         }
-        string[] playTexts = new string[]
-    {
-                "you entertain your <:chomusuke:601183653657182280> Chomusuke. It seems to like you!",
-                "you throw a ball and your <:chomusuke:601183653657182280> Chomusuke fetches it!",
-    };
 
-        [Command("chomusuke play"), Alias("w play")]
+        [Command("chomusukePlay"), Alias("cPlay")]
         [Summary("Play with your chomusuke! Your Chomusuke must have high trust at all times!")]
-        [Remarks("Ex: n!c play")]
+        [Remarks("Ex: n!cPlay")]
         [Cooldown(8)]
         public async Task ChomusukePlay()
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
-            if (config.Chomusuke1.Have == false) //if they own a Chomusuke or not
-            {
-                await Context.Channel.SendMessageAsync($":no:  |  **{Context.User.Username}**, you don't own a {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke! \n\nPurchase one with n!chomusuke buy!");
-                GlobalUserAccounts.SaveAccounts(Context.User.Id);
-                return;
-            }
+            if (config.ActiveChomusuke == 0) //if they set an active chomusuke
+                await SendMessage(Context, null,
+                    $"{Global.ENo}  |  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
             else
             {
-                if (config.Chomusuke1.Trust == 20)
+                var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
+                if (chom.Trust == 20)
                 {
-                    await Context.Channel.SendMessageAsync($":soccer:  |  **{Context.User.Username}, your {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke is bored of playing right now!**");
+                    var thumbnailurl = Context.User.GetAvatarUrl();
+                    var auth = new EmbedAuthorBuilder()
+                    {
+                        Name = "Chiiiii..",
+                        IconUrl = thumbnailurl,
+                    };
+                    var embed = new EmbedBuilder()
+                    {
+                        Author = auth
+                    };
+                    embed.WithColor(255, 128, 0);
+                    embed.WithThumbnailUrl(NoPlayLinks[Global.Rng.Next(NoPlayLinks.Length)]);
+                    embed.WithDescription(
+                        $":soccer:  |  **{Context.User.Username}, your {Global.EChomusuke} Chomusuke is bored of playing right now!**");
+                    await SendMessage(Context, embed);
                     return;
                 }
+
                 {
                     int randomIndex = Global.Rng.Next(playTexts.Length);
                     string text = playTexts[randomIndex];
                     int trustGain = Global.Rng.Next(4, 9);
-                    config.Chomusuke1.Trust += (byte)trustGain;
-                    if (config.Chomusuke1.Trust > 20)
+                    chom.Trust += (byte) trustGain;
+                    if (chom.Trust > 20)
                     {
-                        config.Chomusuke1.Trust = 20;
+                        chom.Trust = 20;
                     }
+                    await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                     GlobalUserAccounts.SaveAccounts(Context.User.Id);
-                    await Context.Channel.SendMessageAsync($":soccer:  |  **{Context.User.Username}**, {text} **(+{trustGain} trust)**");
+                    var thumbnailurl = Context.User.GetAvatarUrl();
+                    var auth = new EmbedAuthorBuilder()
+                    {
+                        Name = "Success!",
+                        IconUrl = thumbnailurl,
+                    };
+                    var embed = new EmbedBuilder()
+                    {
+                        Author = auth
+                    };
+                    embed.WithColor(0, 255, 0);
+                    embed.WithThumbnailUrl(YesPlayLinks[Global.Rng.Next(YesPlayLinks.Length)]);
+                    embed.WithDescription($":soccer:  |  **{Context.User.Username}**, {text} **(+{trustGain} trust)**");
+                    await SendMessage(Context, embed);
                 }
             }
         }
 
-        string[] yesTrainTexts = new string[]
-{
-                "Somehow, you managed to get <:chomusuke:601183653657182280> Chomusuke to listen! It is making progress.",
-                "Your <:chomusuke:601183653657182280> Chomusuke seems to respond well to the training! It looks happy.",
-};
-
-        string[] noTrainTexts = new string[]
-{
-                "Despite your best attempts, your <:chomusuke:601183653657182280> Chomusuke does not want to learn. Persistence is key!",
-                "You wonder why your <:chomusuke:601183653657182280> Chomusuke won't listen. Maybe you should give it a few more tries.",
-                "Your <:chomusuke:601183653657182280> Chomusuke sits down and looks excited, but doesn't do what you wanted.",
-                "Your <:chomusuke:601183653657182280> Chomusuke doesn't quite understand what you are trying to do. Try again!",
-};
-
-        [Command("chomusuke train"), Alias("w train")]
+        [Command("chomusukeTrain"), Alias("cTrain")]
         [Summary("Train your Chomusuke to earn Exp and level up!")]
-        [Remarks("Ex: n!c train")]
+        [Remarks("Ex: n!cTrain")]
         [Cooldown(8)]
         public async Task ChomusukeTrain()
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
-            if (config.Chomusuke1.Have == false) //if they own a Chomusuke or not
-            {
-                await Context.Channel.SendMessageAsync($":no:  |  **{Context.User.Username}**, you don't own a {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke! \n\nPurchase one with n!chomusuke buy!");
-                GlobalUserAccounts.SaveAccounts(Context.User.Id);
-                return;
-            }
+            if (config.ActiveChomusuke == 0) //if they set an active chomusuke
+                await SendMessage(Context, null,
+                    $"{Global.ENo}  |  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
             else
             {
+                var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
                 int choice = Global.Rng.Next(1, 3);
 
                 if (choice == 1)
                 {
-                    uint xpGain = (uint)Global.Rng.Next(20, 30);
-                    config.XP += xpGain;
-                    GlobalUserAccounts.SaveAccounts(Context.User.Id);
+                    uint xpGain = (uint) Global.Rng.Next(20, 30);
+                    chom.XP += xpGain;
+                    await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
+                    GlobalUserAccounts.SaveAccounts(config.Id);
                     int randomIndex = Global.Rng.Next(yesTrainTexts.Length);
                     string text = yesTrainTexts[randomIndex];
                     var thumbnailurl = Context.User.GetAvatarUrl();
@@ -374,10 +439,11 @@ namespace Nayu.Modules.Chomusuke
                         Author = auth
                     };
                     embed.WithColor(0, 255, 0);
-                    embed.WithThumbnailUrl("https://i.imgur.com/4j5wwiQ.gifv");
+                    embed.WithThumbnailUrl(yesTrainLinks[Global.Rng.Next(yesTrainLinks.Length)]);
                     embed.WithDescription($"{text} \n**(+{xpGain} exp)**");
-                    await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                    await SendMessage(Context, embed);
                 }
+
                 if (choice == 2)
                 {
                     int randomIndex = Global.Rng.Next(yesTrainTexts.Length);
@@ -393,13 +459,15 @@ namespace Nayu.Modules.Chomusuke
                         Author = auth
                     };
                     embed.WithColor(255, 0, 0);
-                    embed.WithThumbnailUrl("https://i.imgur.com/lw88wr4.gifv");
+                    embed.WithThumbnailUrl(noTrainLinks[Global.Rng.Next(noTrainLinks.Length)]);
                     embed.WithDescription($"{text}");
-                    await Context.Channel.SendMessageAsync("", embed: embed.Build());
+                    await SendMessage(Context, embed);
                 }
             }
         }
-        [Command("chomusuke add")]
+
+        [Command("chomusukeAdd")]
+        [RequireOwner]
         public async Task AddCapsules()
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
@@ -407,7 +475,58 @@ namespace Nayu.Modules.Chomusuke
             config.NormalCapsule = +3;
             config.ShinyCapsule = +3;
             GlobalUserAccounts.SaveAccounts(Context.User.Id);
-            await Context.Channel.SendMessageAsync("done now u can go die");
+            await SendMessage(Context, null, "done now u can go die");
         }
+        
+        string[] cleanTexts =
+        {
+            "you hold your nose and start cleaning up the mess.",
+            $"you cleaned up {Global.EChomusuke} Chomusuke's...business!",
+        };
+        
+        string[] playTexts =
+        {
+            $"you entertain your {Global.EChomusuke} Chomusuke. It seems to like you!",
+            $"you throw a ball and your {Global.EChomusuke} Chomusuke fetches it!",
+        };
+        
+        private readonly string[] YesPlayLinks =
+        {
+            "https://i.imgur.com/wFVe8Pr.gif",
+            "https://i.imgur.com/8DeW6ub.gif"
+        };
+
+        private readonly string[] NoPlayLinks =
+        {
+            "https://i.imgur.com/gmrBEiF.gif",
+            "https://i.imgur.com/lw88wr4.gif"
+        };
+
+        private readonly string[] yesTrainTexts =
+        {
+            $"Somehow, you managed to get {Global.EChomusuke} Chomusuke to listen! It is making progress.",
+            $"Your {Global.EChomusuke} Chomusuke seems to respond well to the training! It looks happy.",
+        };
+
+        private readonly string[] noTrainTexts =
+        {
+            $"Despite your best attempts, your {Global.EChomusuke} Chomusuke does not want to learn. Persistence is key!",
+            $"You wonder why your {Global.EChomusuke} Chomusuke won't listen. Maybe you should give it a few more tries.",
+            $"Your {Global.EChomusuke} Chomusuke sits down and looks excited, but doesn't do what you wanted.",
+            $"Your {Global.EChomusuke} Chomusuke doesn't quite understand what you are trying to do. Try again!",
+        };
+
+        private readonly string[] yesTrainLinks =
+        {
+            "https://i.imgur.com/dyB6bpn.gif",
+            "https://i.imgur.com/4j5wwiQ.gif",
+            "https://i.imgur.com/ok5KkQs.gif"
+        };
+
+        private readonly string[] noTrainLinks =
+        {
+            "https://i.imgur.com/lw88wr4.gif",
+            "https://i.imgur.com/gmrBEiF.gif"
+        };
     }
 }

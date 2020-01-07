@@ -54,7 +54,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             if (response == null)
             {
                 await gui.DeleteAsync();
-                await Context.Channel.SendMessageAsync(
+                await SendMessage(Context, null, 
                     $"{Context.User.Mention},The interface has closed due to inactivity");
                 return;
             }
@@ -77,7 +77,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 {
                     await gui.DeleteAsync();
                     await newGui.DeleteAsync();
-                    await Context.Channel.SendMessageAsync(
+                    await SendMessage(Context, null, 
                         $"{Context.User.Mention},The interface has closed due to inactivity");
                 }
 
@@ -92,7 +92,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         return;
                     }
 
-                    await Context.Channel.SendMessageAsync(result.Response);
+                    await SendMessage(Context, null, result.Response);
 
                     Tuple<bool, string> death = await CheckDeath(Context, activeChomusuke, activeChomusukee);
                     if (death.Item1)
@@ -102,7 +102,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     }
 
                     var turnmsg = await NextTurn(Context);
-                    await Context.Channel.SendMessageAsync(turnmsg);
+                    await SendMessage(Context, null, turnmsg);
                 }
 
                 else if (newresponse.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) &&
@@ -116,7 +116,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         return;
                     }
 
-                    await Context.Channel.SendMessageAsync(result.Response);
+                    await SendMessage(Context, null, result.Response);
 
                     Tuple<bool, string> death = await CheckDeath(Context, activeChomusuke, activeChomusukee);
                     if (death.Item1)
@@ -126,7 +126,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     }
 
                     var turnmsg = await NextTurn(Context);
-                    await Context.Channel.SendMessageAsync(turnmsg);
+                    await SendMessage(Context, null, turnmsg);
                 }
 
                 else if (newresponse.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) &&
@@ -140,7 +140,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         return;
                     }
 
-                    await Context.Channel.SendMessageAsync(result.Response);
+                    await SendMessage(Context, null, result.Response);
 
                     Tuple<bool, string> death = await CheckDeath(Context, activeChomusuke, activeChomusukee);
                     if (death.Item1)
@@ -150,7 +150,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     }
 
                     var turnmsg = await NextTurn(Context);
-                    await Context.Channel.SendMessageAsync(turnmsg);
+                    await SendMessage(Context, null, turnmsg);
                 }
 
                 else if (newresponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) &&
@@ -164,7 +164,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         return;
                     }
 
-                    await Context.Channel.SendMessageAsync(result.Response);
+                    await SendMessage(Context, null, result.Response);
 
                     Tuple<bool, string> death = await CheckDeath(Context, activeChomusuke, activeChomusukee);
                     if (death.Item1)
@@ -174,7 +174,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     }
 
                     var turnmsg = await NextTurn(Context);
-                    await Context.Channel.SendMessageAsync(turnmsg);
+                    await SendMessage(Context, null, turnmsg);
                 }
 
                 if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
@@ -225,7 +225,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 {
                     await gui.DeleteAsync();
                     await newGui.DeleteAsync();
-                    await Context.Channel.SendMessageAsync(
+                    await SendMessage(Context, null, 
                         $"{Context.User.Mention},The interface has closed due to inactivity");
                     return;
                 }
@@ -235,12 +235,12 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 {
                     await gui.DeleteAsync();
                     await newGui.DeleteAsync();
-                    await Context.Channel.SendMessageAsync(
+                    await SendMessage(Context, null, 
                         $":shield:   |  **{Context.User.Username}**, engagement cancelled.");
                     return;
                 }
 
-                await Context.Channel.SendMessageAsync("Who do you want to use this item on? (@mention them)");
+                await SendMessage(Context, null, "Who do you want to use this item on? (@mention them)");
                 var newresponseee = await NextMessageAsync();
                 if (!newresponseee.Content.Equals(Context.User.Username, StringComparison.CurrentCultureIgnoreCase) ||
                     !newresponseee.Content.Equals(config.OpponentName, StringComparison.CurrentCultureIgnoreCase) &&
@@ -290,14 +290,14 @@ namespace Nayu.Modules.Chomusuke.Dueling
 
                 if (result.Success)
                 {
-                    await Context.Channel.SendMessageAsync(result.Response);
+                    await SendMessage(Context, null, result.Response);
                     var turnmsg = await NextTurn(Context);
-                    await Context.Channel.SendMessageAsync(turnmsg);
+                    await SendMessage(Context, null, turnmsg);
                     return;
                 }
                 else
                 {
-                    await Context.Channel.SendMessageAsync(result.Response);
+                    await SendMessage(Context, null, result.Response);
                     return;
                 }
             }

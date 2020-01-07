@@ -6,7 +6,7 @@ using Nayu.Modules.Chomusuke.Dueling.Enums;
 
 namespace Nayu.Modules.Chomusuke.Dueling.Effects
 {
-    public class Burning
+    public class Burning : NayuModule
     {
         public static async Task Burned(ShardedCommandContext context)
         {
@@ -21,12 +21,12 @@ namespace Nayu.Modules.Chomusuke.Dueling.Effects
             {
                 chom.Effects.Remove(Effect.Burned);
                 GlobalUserAccounts.SaveAccounts(config.Id);
-                await context.Channel.SendMessageAsync($"{chom.Name} stopped burning!");
+                await SendMessage(context, null, $"{chom.Name} stopped burning!");
                 return;
             }
             chom.Health -= dmg;
             GlobalUserAccounts.SaveAccounts(config.Id);
-            await context.Channel.SendMessageAsync($"{chom.Name} took {dmg} from being burned!");
+            await SendMessage(context, null, $"{chom.Name} took {dmg} from being burned!");
         }
     }
 }
