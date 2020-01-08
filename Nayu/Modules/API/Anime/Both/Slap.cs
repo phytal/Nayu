@@ -40,7 +40,7 @@ namespace Nayu.Modules.API.Anime.Both
                     embed.WithImageUrl(nekolink);
                     embed.WithFooter($"Powered by nekos.life");
 
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
                 else
                 {
@@ -51,7 +51,7 @@ namespace Nayu.Modules.API.Anime.Both
                     embed.WithDescription($"{Context.User.Username} slapped {user.Mention}!");
                     embed.WithFooter($"Powered by nekos.life");
 
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
             }
 
@@ -72,7 +72,7 @@ namespace Nayu.Modules.API.Anime.Both
                     embed.WithImageUrl(url);
                     embed.WithFooter($"Powered by weeb.sh | ID: {id}");
 
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace Nayu.Modules.API.Anime.Both
                     embed.WithDescription($"{Context.User.Username} slapped {user.Mention}!");
                     embed.WithFooter($"Powered by weeb.sh | ID: {id}");
 
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
             }
         }

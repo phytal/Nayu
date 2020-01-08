@@ -30,7 +30,7 @@ namespace Nayu.Modules.API.Anime.weebDotSh.Interactive
                 embed.WithImageUrl(url);
                 embed.WithFooter($"Powered by weeb.sh | ID: {id}");
 
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             else
             {
@@ -41,7 +41,7 @@ namespace Nayu.Modules.API.Anime.weebDotSh.Interactive
                 embed.WithDescription($"{Context.User.Username} shrugged at {user.Mention}!");
                 embed.WithFooter($"Powered by weeb.sh | ID: {id}");
 
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
         }
     }

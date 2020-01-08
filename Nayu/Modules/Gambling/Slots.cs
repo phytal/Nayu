@@ -18,7 +18,7 @@ namespace Nayu.Modules.Gambling
         public async Task NewSlot(int amount = 0)
         {
             Global.slot = new Slot(amount);
-            await ReplyAsync(":white_check_mark:  | A new slotmachine got generated!");
+            await ReplyAsync("✅  | A new slotmachine got generated!");
         }
 
         [Command("slots")]

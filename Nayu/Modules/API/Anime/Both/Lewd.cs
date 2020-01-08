@@ -38,7 +38,7 @@ namespace Nayu.Modules.API.Anime.Both
                     embed.WithTitle("Randomly generated lewd neko just for you <3!");
                     embed.WithImageUrl(nekolink);
                     embed.WithFooter($"Powered by nekos.life");
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
 
                 if (rand == 2)
@@ -57,7 +57,7 @@ namespace Nayu.Modules.API.Anime.Both
                     embed.WithImageUrl(url);
                     embed.WithFooter($"Powered by weeb.sh | ID: {id}");
 
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
             }
             else

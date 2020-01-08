@@ -35,7 +35,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
 
                     config.LevelingMsgs = preset;
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
                     config.Leveling = argg;
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
                 if (!result.Item1)
                 {

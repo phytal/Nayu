@@ -149,8 +149,8 @@ namespace Nayu.Modules.Admin
             }
             catch (Exception)
             {
-                var embed = EmbedHandler.CreateEmbed("Avatar", "Could not set the avatar!",
-                    EmbedHandler.EmbedMessageType.Exception, Context.User);
+                var embed = EmbedHandler.CreateEmbed(Context,"Avatar", "Could not set the avatar!",
+                    EmbedHandler.EmbedMessageType.Exception);
                 await SendMessage(Context, embed);
             }
         }

@@ -25,7 +25,7 @@ namespace Nayu.Modules.Chomusuke
                 config.ActiveChomusuke = 1;
                 GlobalUserAccounts.SaveAccounts(config.Id);
                 await SendMessage(Context, null, 
-                    $":white_check_mark:  | Successfully made your only Chomusuke your active Chomusuke.");
+                    $"✅  | Successfully made your only Chomusuke your active Chomusuke.");
                 return;
             }
 
@@ -41,7 +41,7 @@ namespace Nayu.Modules.Chomusuke
             if (config.Chomusuke3.Have)
                 embed.AddField("3",
                     $"Name: **{config.Chomusuke3.Name}**\nZodiac: **{config.Chomusuke3.Zodiac}**\nType: **{config.Chomusuke3.Name}**\nLevel: **{config.Chomusuke3.LevelNumber}**\nCombat Power: **{config.Chomusuke3.CP}**\nHealth: **{config.Chomusuke3.HealthCapacity}**\nShield: **{config.Chomusuke3.ShieldCapacity}**\nControl: **{config.Chomusuke3.Control}**\nTrait 1: **{config.Chomusuke3.Trait1.ToString()}**\nTrait2: **{config.Chomusuke3.Trait2}**");
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
             var response = await NextMessageAsync();
             if (response.Content.Equals("1") && response.Author.Equals(Context.User) && config.Chomusuke1.Have)
                 config.ActiveChomusuke = 1;
@@ -58,7 +58,7 @@ namespace Nayu.Modules.Chomusuke
 
             GlobalUserAccounts.SaveAccounts(config.Id);
             await SendMessage(Context, null, 
-                $":white_check_mark:  | Successfully made Chomusuke #{response} your active Chomusuke.");
+                $"✅  | Successfully made Chomusuke #{response} your active Chomusuke.");
         }
     }
 }

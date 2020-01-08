@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Discord;
+using Discord.Commands;
+using Nayu.Core.Handlers;
 using Victoria;
+using Victoria.Enums;
 using Victoria.EventArgs;
 
 namespace Nayu.Modules.Music {
-    public class MusicManager 
+    public class MusicManager
     {
         private readonly LavaNode _lavaNode;
         private readonly Logger _logger;
@@ -76,6 +80,86 @@ namespace Nayu.Modules.Music {
         private Task OnWebSocketClosed(WebSocketClosedEventArgs arg) {
             _logger.ConsoleMusicLog($"Discord WebSocket connection closed with following reason: {arg.Reason}");
             return Task.CompletedTask;
+        }
+        
+        
+        public async Task<Embed> GetQueueAsync(ShardedCommandContext context)
+        {
+            if (!_lavaNode.TryGetPlayer(context.Guild, out var player))
+            {
+                return EmbedHandler.CreateEmbed(context, "Music Queue",
+                    $"{Global.ENo} | I'm not connected to a voice channel.", EmbedHandler.EmbedMessageType.Error);
+            }
+
+            if (player.PlayerState != PlayerState.Playing)
+            {
+                return EmbedHandler.CreateEmbed(context, "Music Queue",
+                    $"{Global.ENo} | There's nothing playing at the moment", EmbedHandler.EmbedMessageType.Error);
+            }
+
+            var currentTrack = player.Track;
+            var artwork = await currentTrack.FetchArtworkAsync();
+
+            var embed = new EmbedBuilder
+            {
+                Title = $"Queue",
+                ThumbnailUrl = artwork,
+            };
+
+            var descriptionBuilder = new StringBuilder();
+
+            if (player.Queue.Count < 1 && player.PlayerState != PlayerState.Playing)
+            {
+                string title = currentTrack.Title;
+                return EmbedHandler.CreateEmbed(context, $"Now Playing: {title}",
+                    "There are no other items in the queue.", EmbedHandler.EmbedMessageType.Success);
+            }
+
+            var trackNum = 2;
+            foreach (LavaTrack track in player.Queue.Items)
+            {
+                if (trackNum == 2)
+                {
+                    descriptionBuilder.Append($"Up Next: [{track.Title}]({track.Duration})\n");
+                    trackNum++;
+                }
+                else
+                {
+                    descriptionBuilder.Append($"#{trackNum}: [{track.Title}]({track.Duration})\n");
+                    trackNum++;
+                }
+            }
+
+            return EmbedHandler.CreateEmbed(context, "Music Playlist",
+                $"Now Playing: [{player.Track.Title}]({player.Track.Duration})\n{descriptionBuilder}", EmbedHandler.EmbedMessageType.Success);
+        }
+        
+        public async Task<Embed> NowPlayingAsync(ShardedCommandContext context)
+        {
+            if (!_lavaNode.TryGetPlayer(context.Guild, out var player))
+            {
+                return EmbedHandler.CreateEmbed(context, "Music",$"{Global.ENo} | I'm not connected to a voice channel.", EmbedHandler.EmbedMessageType.Error);
+            }
+
+            if (player.PlayerState != PlayerState.Playing)
+            {
+                return EmbedHandler.CreateEmbed(context, "Music",$"{Global.ENo} | There's nothing playing at the moment", EmbedHandler.EmbedMessageType.Error);
+            }
+
+            var track = player.Track;
+            var artwork = await track.FetchArtworkAsync();
+
+            var embed = new EmbedBuilder
+                {
+                    Title = $"{track.Author} - {track.Title}",
+                    ThumbnailUrl = artwork,
+                    Url = track.Url
+                }
+                .AddField("Id", track.Id)
+                .AddField("Duration", track.Duration)
+                .AddField("Position", track.Position);
+
+            return embed.Build();
         }
     }
 }

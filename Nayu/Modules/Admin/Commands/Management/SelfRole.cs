@@ -24,7 +24,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var embed = new EmbedBuilder()
                     .WithColor(37, 152, 255)
                     .WithDescription($"Added the {role} to the Config.");
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
                 config.SelfRoles.Add(role);
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
             }
@@ -59,7 +59,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 {
                     embed.WithDescription("That role doesn't exist in your Guild Config.");
                 }
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             else
             {
@@ -93,7 +93,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                     GlobalUserAccounts.SaveAccounts(Context.Guild.Id);
                 }
 
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             else
             {

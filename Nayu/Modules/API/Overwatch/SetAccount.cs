@@ -34,7 +34,7 @@ namespace Nayu.Modules.API.Overwatch
             GlobalUserAccounts.SaveAccounts(config.Id);
 
 
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("owaccount")]
@@ -58,7 +58,7 @@ namespace Nayu.Modules.API.Overwatch
             embed.AddField("Region", config.OverwatchRegion);
             embed.AddField("Platform", config.OverwatchPlatform);
 
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
     }
 }

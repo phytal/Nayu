@@ -681,7 +681,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             embed.AddField("Armour", armour);
             embed.AddField("Weapon", weapon);
             embed.AddField("Active Blessings", activeBlessing);
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("attacks")]
@@ -717,7 +717,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             embed.AddField("Current Attack 2", chom.Attack2);
             embed.AddField("Current Attack 3", chom.Attack3);
             embed.AddField("Current Attack 4", chom.Attack4);
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("replaceattack")]
@@ -732,25 +732,25 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 {
                     string oldAttack = chom.Attack1;
                     chom.Attack1 = attackName;
-                    await SendMessage(Context, null, $":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
+                    await SendMessage(Context, null, $"✅  | Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 2)
                 {
                     string oldAttack = chom.Attack2;
                     chom.Attack2 = attackName;
-                    await SendMessage(Context, null, $":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
+                    await SendMessage(Context, null, $"✅  | Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 3)
                 {
                     string oldAttack = chom.Attack3;
                     chom.Attack3 = attackName;
-                    await SendMessage(Context, null, $":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
+                    await SendMessage(Context, null, $"✅  | Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 4)
                 {
                     string oldAttack = chom.Attack4;
                     chom.Attack4 = attackName;
-                    await SendMessage(Context, null, $":white_check_mark:  | Successfully replaced {oldAttack} with {attackName}");
+                    await SendMessage(Context, null, $"✅  | Successfully replaced {oldAttack} with {attackName}");
                 }
                 GlobalUserAccounts.SaveAccounts(Context.User.Id);
             }

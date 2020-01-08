@@ -102,7 +102,7 @@ namespace Nayu.Modules.LootBox
             embed.AddField("Legendary Loot Boxes", $"**x{account.LootBoxLegendary}**");
             embed.WithFooter("You can get Loot Boxes from increasing your Nayu Level (not server level) and winning duels!");
 
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("addLootBox"), Alias("alb")]
@@ -154,7 +154,7 @@ namespace Nayu.Modules.LootBox
                     var embed = new EmbedBuilder();
                     embed.WithColor(37, 152, 255);
                     embed.WithTitle(":hand_splayed:  | Please say who you want to gift lootboxes to. Ex: n!gift <rarity of lootbox> @user");
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
                 else
                 {

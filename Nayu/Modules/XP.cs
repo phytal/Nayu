@@ -26,7 +26,7 @@ namespace Nayu.Modules
 
             userAccount.XP += xp;
             GlobalGuildUserAccounts.SaveAccounts();
-            await SendMessage(Context, null, $":white_check_mark:  | **{xp}** Exp were added to " + target.Username + "'s account.");
+            await SendMessage(Context, null, $"✅  | **{xp}** Exp were added to " + target.Username + "'s account.");
         }
 
         [Command("addrep")]
@@ -45,8 +45,8 @@ namespace Nayu.Modules
 
             var embed = new EmbedBuilder();
             embed.WithColor(37, 152, 255);
-            embed.WithTitle($":white_check_mark:  | **{Points}** reputation points were added to " + target.Username + "'s account.");
-            await SendMessage(Context, embed);
+            embed.WithTitle($"✅  | **{Points}** reputation points were added to " + target.Username + "'s account.");
+            await SendMessage(Context, embed.Build());
         }
     }
 }

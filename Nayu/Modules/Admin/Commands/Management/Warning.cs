@@ -106,7 +106,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 {
                     embed.AddField($"Warning #{i + 1}: ", warnings[i], true);
                 }
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             else
             {
@@ -133,7 +133,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 userAccount.Warnings.Clear();
                 GlobalGuildUserAccounts.SaveAccounts();
 
-                await SendMessage(Context, null, $":white_check_mark:  Succesfully cleared all of **{user.Username}'s** warnings.");
+                await SendMessage(Context, null, $"✅  Succesfully cleared all of **{user.Username}'s** warnings.");
             }
             else
             {

@@ -57,7 +57,7 @@ namespace Nayu.Modules.API
                 .WithFooter($"👍 {ups} | 💬 {comments}")
                 .WithUrl($"https://www.reddit.com{link}")
                 .WithColor(37, 152, 255);
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
     }
 }

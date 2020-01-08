@@ -31,7 +31,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
                     config.Unflip = argg;
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
                 if (!result.Item1)
                 {

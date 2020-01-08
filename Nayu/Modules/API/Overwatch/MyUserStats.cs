@@ -197,7 +197,7 @@ namespace Nayu.Modules.API.Overwatch
                 embed.AddField("Competitive Awards", $"Total Medals: **{compmedal}**\n:first_place: Gold Medals: **{compmedalGold}**\n:second_place: Silver Medals: **{compmedalSilver}**\n:third_place: Bronze Medals: **{compmedalBronze}**\nCards: **{compcards}**", true);
                 embed.AddField("Overall", $"Level: **{level}**\nPrestige: **{prestige}**\nSR: **{sr}**\nEndorsement Level: **{endorsement}**", true);
 
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             catch
             {
@@ -320,7 +320,7 @@ namespace Nayu.Modules.API.Overwatch
                 embed.AddField("Quickplay Awards", $"Total Medals: **{qpmedal}**\n:first_place: Gold Medals: **{qpmedalGold}**\n:second_place: Silver Medals: **{qpmedalSilver}**\n:third_place: Bronze Medals: **{qpmedalBronze}**\nCards: **{Qpcards}**", true);
                 embed.AddField("Overall", $"Level: **{level}**\nPrestige: **{prestige}**\nEndorsement Level: **{endorsement}**", true);
 
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             catch
             {
@@ -443,7 +443,7 @@ namespace Nayu.Modules.API.Overwatch
                 embed.AddField("Competitive Awards", $"Total Medals: **{compmedal}**\n:first_place: Gold Medals: **{compmedalGold}**\n:second_place: Silver Medals: **{compmedalSilver}**\n:third_place: Bronze Medals: **{compmedalBronze}**\nCards: **{compcards}**", true);
                 embed.AddField("Overall", $"Level: **{level}**\nPrestige: **{prestige}**\nSR: **{sr}**\nEndorsement Level: **{endorsement}**", true);
 
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             catch
             {

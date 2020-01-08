@@ -49,7 +49,7 @@ namespace Nayu.Core.LevelingSystem
             embed.AddField("Taiyaki From Messages", userAccount.TaiyakiFromMessages, true);
             embed.AddField("Taiyaki From Gambling", userAccount.TaiyakiFromGambling, true);
             embed.AddField("Active Chomusuke", userAccount.ActiveChomusuke);
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
     }
 }

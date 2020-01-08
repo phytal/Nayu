@@ -33,7 +33,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                     embed.Description = $"**Username: **{user.Username}\n**Guild Name: **{user.Guild.Name}\n**Banned by: **{Context.User.Mention}\n**Reason: **{reason}";
 
                     await gld.AddBanAsync(user);
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                     await kb.SendMessageAsync("", embed: embed.Build());
                 }
                 catch
@@ -65,7 +65,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var theUser = bans.FirstOrDefault(x => x.User.ToString().ToLowerInvariant() == user2.ToLowerInvariant());
 
                 await Context.Guild.RemoveBanAsync(theUser.User).ConfigureAwait(false);
-                await SendMessage(Context, null, $":white_check_mark:  | Unbanned {user2}.");
+                await SendMessage(Context, null, $"✅  | Unbanned {user2}.");
             }
             else
             {

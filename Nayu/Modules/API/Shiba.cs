@@ -35,7 +35,7 @@ namespace Nayu.Modules.API
                 Title = ":dog: | Here's a Shiba!",
                 ImageUrl = link
             };
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
 
 namespace Nayu.Core.Handlers
@@ -9,78 +11,61 @@ namespace Nayu.Core.Handlers
         /// <summary>
         /// Create a new embed
         /// </summary>
+        /// /// <param name="ctx">Command Context</param>
         /// <param name="title">Title of the embed</param>
-        /// <param name="body">Embed content</param>
+        /// <param name="desc">Embed content</param>
         /// <param name="type">Type of the Embed (Error, Info, Exception, Success) -> Sets the color</param>
-        /// <param name="withTimeStamp">Adds the current Timestamp to the embed</param>
+        /// <param name="withAuthorAndFooter">Adds an author and footer to the embed</param>
         /// <returns></returns>
-        public static EmbedBuilder CreateEmbed(string title, string body, EmbedMessageType type, SocketUser target)
+        public static Embed CreateEmbed(ShardedCommandContext ctx, string title, string desc, EmbedMessageType type, bool withAuthorAndFooter = true)
         {
-            var embed = new EmbedBuilder();
-            var thumbnailUrl = target.GetAvatarUrl();
+            var thumbnailurl = ctx.User.GetAvatarUrl();
+            var boturl = Global.Client.CurrentUser.GetAvatarUrl();
             var auth = new EmbedAuthorBuilder()
             {
-                Name = target.Username,
-                IconUrl = thumbnailUrl,
+                IconUrl = thumbnailurl,
+                Name = "Requested by " + ctx.User.Username
             };
-            embed.WithAuthor(auth);
-            embed.WithTitle(title);
-            embed.WithDescription(body);
 
+            var footer = new EmbedFooterBuilder()
+            {
+                IconUrl = boturl,
+                Text = "Nayu | n!help"
+            };
+
+            var embed = new EmbedBuilder()
+            {
+                Title = title,
+                Description = desc,
+            };
+
+            if (withAuthorAndFooter)
+            {
+                embed.Author = auth;
+                embed.Footer = footer;
+                embed.Timestamp = DateTimeOffset.Now;
+            }
+            
             switch (type)
             {
                 case EmbedMessageType.Info:
-                    embed.WithColor(new Color(52, 152, 219));
+                    embed.WithColor(new Color(252, 132, 255));
                     break;
                 case EmbedMessageType.Success:
-                    embed.WithColor(new Color(37, 152, 255));
+                    embed.WithColor(new Color(153, 255, 255));
                     break;
                 case EmbedMessageType.Error:
-                    embed.WithColor(new Color(192, 57, 43));
+                    embed.WithColor(new Color(255, 153, 153));
                     break;
                 case EmbedMessageType.Exception:
-                    embed.WithColor(new Color(230, 126, 34));
+                    embed.WithColor(new Color(255, 204, 153));
                     break;
                 default:
-                    embed.WithColor(new Color(149, 165, 166));
+                    embed.WithColor(new Color(224, 224, 224));
                     break;
             }
-
-            embed.WithCurrentTimestamp();
-
-            return embed;
-        }
-
-
-        public static async Task<Embed> CreateBasicEmbed(string title = null, string description = null, string footer = null)
-        {
-            var embed = await Task.Run(() => (new EmbedBuilder()
-                .WithTitle(title)
-                .WithDescription(description)
-                .WithFooter(footer)
-                .WithColor(252, 132, 255).Build())); //Pink
-            return embed;
-        }
-
-        public static async Task<Embed> CreateMusicEmbed(string title, string description, string footer = null)
-        {
-            var embed = await Task.Run(() => (new EmbedBuilder()
-                .WithTitle(title)
-                .WithDescription(description)
-                .WithFooter(footer)
-                .WithColor(37, 152, 255)
-                .WithCurrentTimestamp().Build()));
-            return embed;
-        }
-
-        public static async Task<Embed> CreateErrorEmbed(string source, string error, string footer = null)
-        {
-            var embed = await Task.Run(() => new EmbedBuilder()
-                .WithTitle($"Error Source: {source}")
-                .WithDescription($"**Error: {error}**")
-                .WithFooter(footer)
-                .WithColor(Color.Red).Build());
-            return embed;
+            
+            return embed.Build();
         }
 
         public enum EmbedMessageType

@@ -38,7 +38,7 @@ namespace Nayu.Modules.API.Anime.weebDotSh
             embed.WithImageUrl(url);
             embed.WithFooter($"Powered by weeb.sh | ID: {id} | owo");
 
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
 
         }
     }

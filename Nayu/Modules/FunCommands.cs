@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Core.Handlers;
 using Nayu.Preconditions;
 using Nayu.Helpers;
 
@@ -22,13 +23,12 @@ namespace Nayu.Modules
         [Cooldown(5)]
         public async Task Ping()
         {
-            var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
-            embed.WithTitle($":ping_pong:  | Pong! {(Context.Client as DiscordShardedClient).Latency}ms");
+
+            var embed = EmbedHandler.CreateEmbed(Context, "Ping", $":ping_pong:  | Pong! {(Context.Client).Latency}ms", EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
         }
 
-        string[] predictionsTexts = new string[]
+        string[] predictionsTexts = 
             {
                 ":8ball:  | It is certain",
                 ":8ball:  | It is decidedly so",
@@ -51,7 +51,6 @@ namespace Nayu.Modules
                 ":8ball:  | Outlook not so good",
                 ":8ball:  | Very doubtful"
             };
-        Random rand = new Random();
 
         [Command("8ball")]
         [Alias("eightball")]
@@ -60,12 +59,12 @@ namespace Nayu.Modules
         [Cooldown(5)]
         public async Task EightBall([Remainder] string input)
         {
-            int randomIndex = rand.Next(predictionsTexts.Length);
+            int randomIndex = Global.Rng.Next(predictionsTexts.Length);
             string text = predictionsTexts[randomIndex];
             var embed = new EmbedBuilder();
             embed.WithColor(37, 152, 255);
             embed.WithTitle(text + ", " + Context.User.Username);
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
 
 
@@ -84,7 +83,7 @@ namespace Nayu.Modules
             embed.WithFooter(LocalTime + " Message from " + Sender);
             embed.WithColor(37, 152, 255);
 
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
             if (config.MassPingChecks == true)
             {
                 if (message.Contains("@everyone") || message.Contains("@here")) return;

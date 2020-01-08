@@ -22,8 +22,7 @@ namespace Nayu
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"\nMusic Service:" +
-                              $"\n" +
-                              $"\nMessage: [\"{msg}\"]");
+                              $"\nMessage: [\"{msg}\"]\n");
         }
         private static ConsoleColor SeverityToConsoleColor(LogSeverity severity)
         {

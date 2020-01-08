@@ -31,7 +31,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 embed.Title = $"**{user.Username}** was muted";
                 embed.Description = $"**Username: **{user.Username}\n**Muted by: **{Context.User.Username}";
                 await user.AddRoleAsync(muted);
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             else
             {
@@ -56,7 +56,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                     try { await user.ModifyAsync(x => x.Mute = false).ConfigureAwait(false); } catch { }
                     try { await user.RemoveRoleAsync(await GetMuteRole(user.Guild)).ConfigureAwait(false); } catch { }
                     var muted = user.Guild.Roles.Where(input => input.Name.ToUpper() == "MUTED").FirstOrDefault() as SocketRole;
-                    await ReplyAsync(":white_check_mark:  | " + Context.User.Mention + " unmuted " + user.Username);
+                    await ReplyAsync("✅  | " + Context.User.Mention + " unmuted " + user.Username);
                 }
                 catch
                 {

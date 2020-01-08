@@ -86,7 +86,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             embed.AddField("n!activeblessing", "Set your active blessing.", true);
             embed.WithFooter(text);
             embed.WithColor(37, 152, 255);
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("duel")]
@@ -133,7 +133,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             embed.AddField("**Wins**", config.Wins);
             embed.AddField("**Losses**", config.Losses);
             embed.AddField("**Win Streak**", config.WinStreak);
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
 
         public static async Task StartDuel(ISocketMessageChannel channel, SocketGuildUser user, SocketUser req)

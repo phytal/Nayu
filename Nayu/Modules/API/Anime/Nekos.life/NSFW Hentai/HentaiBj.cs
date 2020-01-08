@@ -33,7 +33,7 @@ namespace Nayu.Modules.API.Anime.Nekos.life.NSFW_Hentai
                 var embed = new EmbedBuilder();
                 embed.WithTitle("Randomly generated hentai blowjob just for you <3!");
                 embed.WithImageUrl(nekolink);
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             else
             {

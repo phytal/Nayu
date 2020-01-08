@@ -11,7 +11,7 @@ namespace Nayu.Modules
         public bool Disabled = false;
         public int Zero = 0;
 
-        protected static async Task SendMessage(ShardedCommandContext ctx, EmbedBuilder embed = null, string msg = "")
+        protected static async Task SendMessage(ShardedCommandContext ctx, Embed embed = null, string msg = "")
         {
             if (embed == null)
             {
@@ -19,7 +19,7 @@ namespace Nayu.Modules
             }
             else
             {
-                await ctx.Channel.SendMessageAsync(msg, false, embed.Build());
+                await ctx.Channel.SendMessageAsync(msg, false, embed);
             }
         }
     }

@@ -23,7 +23,7 @@ namespace Nayu.Modules.WelcomeAndLeave
                 embed.WithDescription($"Set this guild's leave channel to #{channel}.");
                 config.LeaveChannel = channel.Id;
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             else
             {

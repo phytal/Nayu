@@ -8,6 +8,7 @@ using Nayu.Core.Features.Economy;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Modules;
 using Nayu.Preconditions;
+using Nayu.Helpers;
 
 namespace Nayu.Core.LevelingSystem
 {
@@ -27,7 +28,7 @@ namespace Nayu.Core.LevelingSystem
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
                 embed.WithDescription($"{Emote.Parse("<:taiyaki:599774631984889857>")}  | Here's **{Constants.DailyTaiyakiGain}** Taiyakis, {Context.User.Mention}! Come back tomorrow for more!");
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             else
             {
@@ -35,7 +36,7 @@ namespace Nayu.Core.LevelingSystem
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
                 embed.WithDescription($"{Emote.Parse("<:taiyaki:599774631984889857>")}  | **You have already claimed your free daily Taiyakis, {Context.User.Mention}.\nCome back in {timeSpanString}.**");
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
         }
 
@@ -57,7 +58,7 @@ namespace Nayu.Core.LevelingSystem
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
                 embed.WithDescription($":diamond_shape_with_a_dot_inside:   | {Context.User.Mention} gave {userB.Mention} a reputation point!");
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             else
             {
@@ -65,7 +66,7 @@ namespace Nayu.Core.LevelingSystem
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
                 embed.WithDescription($":diamond_shape_with_a_dot_inside::arrows_counterclockwise:  | **You already gave someone reputation points recently, {Context.User.Mention}.\nCome back in {timeSpanString}.**");
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
         }
 
@@ -90,7 +91,7 @@ namespace Nayu.Core.LevelingSystem
                     var embed = new EmbedBuilder();
                     embed.WithColor(37, 152, 255);
                     embed.WithTitle($":hand_splayed:  | Please say who you want to gift {config.Currency} to. Ex: n!gift <amount of Taiyakis> @user");
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
                 else
                 {
@@ -100,7 +101,7 @@ namespace Nayu.Core.LevelingSystem
                     recipient.Taiyaki += taiyaki;
                     GlobalUserAccounts.SaveAccounts(giver.Id, recipient.Id);
 
-                    await SendMessage(Context, null, $":white_check_mark:  | {Context.User.Mention} has gifted {userB.Mention} {taiyaki} {config.Currency}(s). How generous.");
+                    await SendMessage(Context, null, $"✅  | {Context.User.Mention} has gifted {userB.Mention} {taiyaki} {config.Currency}(s). How generous.");
                 }
             }
         }
@@ -122,8 +123,8 @@ namespace Nayu.Core.LevelingSystem
 
             var embed = new EmbedBuilder();
             embed.WithColor(37, 152, 255);
-            embed.WithTitle($":white_check_mark:  | **{Taiyaki}** {config.Currency} were added to " + target.Username + "'s account.");
-            await SendMessage(Context, embed);
+            embed.WithTitle($"✅  | **{Taiyaki}** {config.Currency} were added to " + target.Username + "'s account.");
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("levels")]
@@ -177,68 +178,13 @@ namespace Nayu.Core.LevelingSystem
         [Cooldown(10)]
         public async Task CheckTaiyakis([Remainder]string arg = "")
         {
-            SocketUser target = null;
+            SocketUser target;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
             target = mentionedUser ?? Context.User;
+            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var account = GlobalUserAccounts.GetUserAccount(target.Id);
-            await ReplyAsync(GetTaiyakisReport(account.Taiyaki, target.Username, target.Mention));
+            await SendMessage(Context, null,$"{Global.ETaiyaki}  | {target.Mention} has **{account.Taiyaki} {config.Currency}**!");
         }
 
-        public string GetTaiyakisReport(ulong Taiyakis, string mention, string mentionn)
-        {
-            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-            return $"{Emote.Parse("<:taiyaki:599774631984889857>")}  | {mention} has **{Taiyakis} {config.Currency}**! {GetTaiyakiCountReaction(Taiyakis, mention)}";
-        }
-
-        private string GetTaiyakiCountReaction(ulong value, string mention)
-        {
-            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-            if (value > 100000)
-            {
-                return $"Holy shit, **{mention}**! You're either cheating or you're really dedicated.";
-            }
-            else if (value > 50000)
-            {
-                return $"Damn, you must be here often, **{mention}**. Do you have a crush on me or something?";
-            }
-            else if (value > 20000)
-            {
-                return $"That's enough to buy a house... In Nayu land... \n\nIt's a real place, shut up, **{mention}**!";
-            }
-            else if (value > 10000)
-            {
-                return $"**{mention}** is kinda getting rich. Do we rob them or what?";
-            }
-            else if (value > 5000)
-            {
-                return $"Is it just me or is **{mention}** taking this economy a little too seriously?";
-            }
-            else if (value > 2500)
-            {
-                return $"Great, **{mention}!** Now you can give all those {config.Currency} to your superior mistress, ME.";
-            }
-            else if (value > 1100)
-            {
-                return $"**{mention}** is showing their wealth on the internet again.";
-            }
-            else if (value > 800)
-            {
-                return $"Alright, **{mention}**. Put the {config.Currency} in the bag and nobody gets hurt.";
-            }
-            else if (value > 550)
-            {
-                return $"I like how **{mention}** thinks that's impressive.";
-            }
-            else if (value > 200)
-            {
-                return $"Ouch, **{mention}**! If I knew that is all you've got, I would've just DM'd you the amount! Embarrassing!";
-            }
-            else if (value == 0)
-            {
-                return $"Yeah, **{mention}** is broke. What a surprise.";
-            }
-
-            return $"The whole concept of {config.Currency} is fake. I hope you know that";//should never hit this line
-        }
     }
 }

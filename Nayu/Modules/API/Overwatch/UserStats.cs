@@ -290,7 +290,7 @@ namespace Nayu.Modules.API.Overwatch
                     $"Level: **{level}**\nPrestige: **{prestige}**\nSR: **{sr}**\nEndorsement Level: **{endorsement}**",
                     true);
 
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             catch
             {
@@ -459,7 +459,7 @@ namespace Nayu.Modules.API.Overwatch
                 embed.AddField("Overall",
                     $"Level: **{level}**\nPrestige: **{prestige}**\nEndorsement Level: **{endorsement}**", true);
 
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             catch
             {
@@ -629,7 +629,7 @@ namespace Nayu.Modules.API.Overwatch
                     $"Level: **{level}**\nPrestige: **{prestige}**\nSR: **{sr}**\nEndorsement Level: **{endorsement}**",
                     true);
 
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             catch
             {

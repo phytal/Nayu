@@ -26,7 +26,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                     var argg = result.Item2;
                     var embed = new EmbedBuilder();
                     embed.WithColor(37, 152, 255);
-                    embed.WithDescription(argg ? ":white_check_mark:  | Filter successfully turned on. Stay safe!" : ":white_check_mark:  | Filter successfully turned off. Daredevil!");
+                    embed.WithDescription(argg ? "✅  | Filter successfully turned on. Stay safe!" : "✅  | Filter successfully turned off. Daredevil!");
                     await ReplyAsync("", embed: embed.Build());
                     var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                     config.Filter = argg;
@@ -80,7 +80,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                         break;
                 }
                 GlobalUserAccounts.SaveAccounts(Context.Guild.Id);
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             else
             {
@@ -102,7 +102,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (guildUser.GuildPermissions.Administrator)
             {
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                await SendMessage(Context, null, $":white_check_mark:  | Added **{word}** to the Blacklist.");
+                await SendMessage(Context, null, $"✅  | Added **{word}** to the Blacklist.");
 
                 config.CustomFilter.Add(word);
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
@@ -139,7 +139,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                     config.CustomFilter.Remove(bl);
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 }
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             else
             {
@@ -167,7 +167,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 embed.WithDescription("Cleared the Blacklist for this server.");
                 embed.WithColor(37, 152, 255);
 
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             else
             {
@@ -199,7 +199,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 embed.WithDescription(list);
                 embed.WithColor(37, 152, 255);
 
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             else
             {

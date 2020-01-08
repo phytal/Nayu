@@ -55,7 +55,7 @@ namespace Nayu.Modules.Gambling
                 }
             }
             GlobalUserAccounts.SaveAccounts(config.Id);
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("roll")]
@@ -97,7 +97,7 @@ namespace Nayu.Modules.Gambling
 
             bool isNegative = amountGained > 0;
             _ = isNegative ? config.Taiyaki += (ulong)amountGained : config.Taiyaki -= (ulong)amountGained;
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
     }
 }

@@ -58,6 +58,13 @@ using Victoria;
 
         private async Task StartAsync()
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("\n _|_|_|      _|_|_|  _|    _|  _|    _|\n"+  
+                              " _|    _|  _|    _|  _|    _|  _|    _|\n"+  
+                              " _|    _|  _|    _|  _|    _|  _|    _|\n"+  
+                              " _|    _|    _|_|_|    _|_|_|    _|_|_|\n"+
+                              "                           _|         \n"+
+                              "                         _|_|   \n");
             if (string.IsNullOrEmpty(Config.bot.token)) return;
             _client = new DiscordShardedClient(_shardIds, new DiscordSocketConfig
             {

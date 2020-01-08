@@ -26,7 +26,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
                     config.Currency = arg;
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 if (arg == string.Empty)
                 {
                     await SendMessage(Context, null, $"The server currency is now set to the default **Taiyaki** To change this, you can use `n!cc <name of your custom currency>`");

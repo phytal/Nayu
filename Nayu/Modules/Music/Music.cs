@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Core.Handlers;
 using Victoria;
 using Victoria.Enums;
 
@@ -24,11 +26,13 @@ namespace Nayu.Modules.Music
         }
 
         [Command("Join")]
+        [Summary("Nayu joins the current voice channel you are in")]
+        [Remarks("Ex: n!join")]
         public async Task JoinAsync()
         {
             if (_lavaNode.HasPlayer(Context.Guild))
             {
-                await ReplyAsync("I'm already connected to a voice channel!");
+                await ReplyAndDeleteAsync($"{Global.ENo} | I'm already connected to a voice channel!");
                 return;
             }
 
@@ -36,14 +40,14 @@ namespace Nayu.Modules.Music
 
             if (voiceState?.VoiceChannel == null)
             {
-                await ReplyAsync("You must be connected to a voice channel!");
+                await ReplyAndDeleteAsync($"{Global.ENo} | You must be connected to a voice channel!");
                 return;
             }
 
             try
             {
                 await _lavaNode.JoinAsync(voiceState.VoiceChannel, Context.Channel as ITextChannel);
-                await ReplyAsync($"Joined {voiceState.VoiceChannel.Name}!");
+                await ReplyAsync($"✅  | Joined {voiceState.VoiceChannel.Name}!");
             }
             catch (Exception exception)
             {
@@ -52,25 +56,27 @@ namespace Nayu.Modules.Music
         }
 
         [Command("Leave")]
+        [Summary("Nayu leaves from the current voice channel you are in")]
+        [Remarks("Ex: n!leave")]
         public async Task LeaveAsync()
         {
             if (!_lavaNode.TryGetPlayer(Context.Guild, out var player))
             {
-                await ReplyAsync("I'm not connected to any voice channels!");
+                await ReplyAndDeleteAsync($"{Global.ENo} | I'm not connected to any voice channels!");
                 return;
             }
 
             var voiceChannel = (Context.User as IVoiceState).VoiceChannel ?? player.VoiceChannel;
             if (voiceChannel == null)
             {
-                await ReplyAsync("Not sure which voice channel to disconnect from.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | I cannot disconnect from a voice channel you are not in!");
                 return;
             }
 
             try
             {
                 await _lavaNode.LeaveAsync(voiceChannel);
-                await ReplyAsync($"I've left {voiceChannel.Name}!");
+                await ReplyAsync($"✅  | I've left {voiceChannel.Name}!");
             }
             catch (Exception exception)
             {
@@ -79,11 +85,13 @@ namespace Nayu.Modules.Music
         }
 
         [Command("Play")]
+        [Summary("Searches and plays a song from Youtube")]
+        [Remarks("n!play <song name or link> Ex: n!play gangnam style")]
         public async Task PlayAsync([Remainder] string query)
         {
             if (string.IsNullOrWhiteSpace(query))
             {
-                await ReplyAsync("Please provide search terms.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | Please provide search terms.");
                 return;
             }
 
@@ -91,7 +99,7 @@ namespace Nayu.Modules.Music
 
             if (voiceState?.VoiceChannel == null)
             {
-                await ReplyAsync("You must be connected to a voice channel!");
+                await ReplyAndDeleteAsync($"{Global.ENo} | You must be connected to a voice channel!");
                 return;
             }
 
@@ -112,7 +120,7 @@ namespace Nayu.Modules.Music
             if (searchResponse.LoadStatus == LoadStatus.LoadFailed ||
                 searchResponse.LoadStatus == LoadStatus.NoMatches)
             {
-                await ReplyAsync($"I wasn't able to find anything for `{query}`.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | I wasn't able to find anything for `{query}`.");
                 return;
             }
 
@@ -127,13 +135,13 @@ namespace Nayu.Modules.Music
                         player.Queue.Enqueue(track);
                     }
 
-                    await ReplyAsync($"**Enqueued {searchResponse.Tracks.Count} tracks.**");
+                    await ReplyAsync($"✅  | **Enqueued {searchResponse.Tracks.Count} tracks.**");
                 }
                 else
                 {
                     var track = searchResponse.Tracks[0];
                     player.Queue.Enqueue(track);
-                    await ReplyAsync($"**Enqueued: {track.Title}**");
+                    await ReplyAsync($"✅  | **Enqueued: {track.Title}**");
                 }
             }
             else
@@ -155,7 +163,7 @@ namespace Nayu.Modules.Music
                         }
                     }
 
-                    await ReplyAsync($"**Enqueued {searchResponse.Tracks.Count} tracks.**");
+                    await ReplyAsync($"✅  | **Enqueued {searchResponse.Tracks.Count} tracks.**");
                 }
                 else
                 {
@@ -166,24 +174,26 @@ namespace Nayu.Modules.Music
         }
 
         [Command("Pause")]
+        [Summary("Pauses the current song")]
+        [Remarks("Ex: n!pause")]
         public async Task PauseAsync()
         {
             if (!_lavaNode.TryGetPlayer(Context.Guild, out var player))
             {
-                await ReplyAsync("I'm not connected to a voice channel.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | I'm not connected to a voice channel.");
                 return;
             }
 
             if (player.PlayerState != PlayerState.Playing)
             {
-                await ReplyAsync("I cannot pause when I'm not playing anything!");
+                await ReplyAndDeleteAsync($"{Global.ENo} | I cannot pause when I'm not playing anything!");
                 return;
             }
 
             try
             {
                 await player.PauseAsync();
-                await ReplyAsync($"Paused: {player.Track.Title}");
+                await ReplyAsync($"✅  | Paused: {player.Track.Title}");
             }
             catch (Exception exception)
             {
@@ -192,24 +202,26 @@ namespace Nayu.Modules.Music
         }
 
         [Command("Resume")]
+        [Summary("Resumes the song that is paused")]
+        [Remarks("Ex: n!resume")]
         public async Task ResumeAsync()
         {
             if (!_lavaNode.TryGetPlayer(Context.Guild, out var player))
             {
-                await ReplyAsync("I'm not connected to a voice channel.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | I'm not connected to a voice channel.");
                 return;
             }
 
             if (player.PlayerState != PlayerState.Paused)
             {
-                await ReplyAsync("I cannot resume when I'm not playing anything!");
+                await ReplyAndDeleteAsync($"{Global.ENo} | I cannot resume when I'm not playing anything!");
                 return;
             }
 
             try
             {
                 await player.ResumeAsync();
-                await ReplyAsync($"Resumed: {player.Track.Title}");
+                await ReplyAsync($"✅  | Resumed: {player.Track.Title}");
             }
             catch (Exception exception)
             {
@@ -218,50 +230,54 @@ namespace Nayu.Modules.Music
         }
 
         [Command("Stop")]
+        [Summary("Stops the current song")]
+        [Remarks("Ex: n!stop")]
         public async Task StopAsync()
         {
             if (!_lavaNode.TryGetPlayer(Context.Guild, out var player))
             {
-                await ReplyAsync("I'm not connected to a voice channel.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | I'm not connected to a voice channel.");
                 return;
             }
 
             if (player.PlayerState == PlayerState.Stopped)
             {
-                await ReplyAsync("Woaaah there, I can't stop the stopped forced.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | The track is already stopped!");
                 return;
             }
 
             try
             {
                 await player.StopAsync();
-                await ReplyAsync("No longer playing anything.");
+                await ReplyAsync("✅  | No longer playing anything.");
             }
-            catch (Exception exception)
+            catch (Exception e)
             {
-                await ReplyAsync(exception.Message);
+                throw e;
             }
         }
 
         [Command("Skip")]
+        [Summary("Skips the song that is currently playing")]
+        [Remarks("Ex: n!skip")]
         public async Task SkipAsync()
         {
             if (!_lavaNode.TryGetPlayer(Context.Guild, out var player))
             {
-                await ReplyAsync("I'm not connected to a voice channel.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | I'm not connected to a voice channel.");
                 return;
             }
 
             if (player.PlayerState != PlayerState.Playing)
             {
-                await ReplyAsync("Woaaah there, I can't skip when nothing is playing.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | There's nothing playing at the moment.");
                 return;
             }
 
             var voiceChannelUsers = (player.VoiceChannel as SocketVoiceChannel).Users.Where(x => !x.IsBot).ToArray();
             if (_musicManager.VoteQueue.Contains(Context.User.Id))
             {
-                await ReplyAsync("You can't vote again.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | You can't vote again.");
                 return;
             }
 
@@ -269,7 +285,7 @@ namespace Nayu.Modules.Music
             var percentage = _musicManager.VoteQueue.Count / voiceChannelUsers.Length * 100;
             if (percentage < 85 && !(Context.User as SocketGuildUser).GuildPermissions.ManageMessages)
             {
-                await ReplyAsync("You need more than 85% votes to skip this song.");
+                await ReplyAndDeleteAsync("You need more than 85% votes to skip this song.");
                 return;
             }
 
@@ -287,24 +303,26 @@ namespace Nayu.Modules.Music
         }
 
         [Command("Seek")]
+        [Summary("Seeks to a specific time point in the song/video")]
+        [Remarks("n!seek <time> Ex: n!seek 5:12")]
         public async Task SeekAsync(TimeSpan timeSpan)
         {
             if (!_lavaNode.TryGetPlayer(Context.Guild, out var player))
             {
-                await ReplyAsync("I'm not connected to a voice channel.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | I'm not connected to a voice channel.");
                 return;
             }
 
             if (player.PlayerState != PlayerState.Playing)
             {
-                await ReplyAsync("Woaaah there, I can't seek when nothing is playing.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | There's nothing playing at the moment.");
                 return;
             }
 
             try
             {
                 await player.SeekAsync(timeSpan);
-                await ReplyAsync($"I've seeked `{player.Track.Title}` to {timeSpan}.");
+                await ReplyAsync($"✅  | I've seeked `{player.Track.Title}` to {timeSpan}.");
             }
             catch (Exception exception)
             {
@@ -313,18 +331,23 @@ namespace Nayu.Modules.Music
         }
 
         [Command("Volume"), Alias("vol")]
+        [Summary("Changes the volume of the song per guild (100 is default)")]
+        [Remarks("n!vol <volume> Ex: n!vol 86")]
         public async Task VolumeAsync(ushort volume)
         {
             if (!_lavaNode.TryGetPlayer(Context.Guild, out var player))
             {
-                await ReplyAsync("I'm not connected to a voice channel.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | I'm not connected to a voice channel.");
                 return;
             }
-
+            if (volume >= 150 || volume <= 0)
+            {
+                await ReplyAndDeleteAsync($"{Global.ENo} | Volume must be between 1 and 149.");
+            }
             try
             {
                 await player.UpdateVolumeAsync(volume);
-                await ReplyAsync($"I've changed the player volume to {volume}.");
+                await ReplyAsync($"🔊  | I've changed the player volume to {volume}.");
             }
             catch (Exception exception)
             {
@@ -333,55 +356,40 @@ namespace Nayu.Modules.Music
         }
 
         [Command("NowPlaying"), Alias("Np")]
+        [Summary("Shows the song that is currently playing")]
+        [Remarks("Ex: n!np")]
         public async Task NowPlayingAsync()
-        {
-            if (!_lavaNode.TryGetPlayer(Context.Guild, out var player))
-            {
-                await ReplyAsync("I'm not connected to a voice channel.");
-                return;
-            }
+            => await ReplyAsync("", embed: await _musicManager.NowPlayingAsync(Context));
 
-            if (player.PlayerState != PlayerState.Playing)
-            {
-                await ReplyAsync("Woaaah there, I'm not playing any tracks.");
-                return;
-            }
+        [Command("Queue"), Alias("q")]
+        [Summary("Shows the current queue")]
+        [Remarks("Ex: n!queue")]
+        public async Task GetQueueAsync()
+            => await ReplyAsync("", embed: await _musicManager.GetQueueAsync(Context));
+        
 
-            var track = player.Track;
-            var artwork = await track.FetchArtworkAsync();
-
-            var embed = new EmbedBuilder
-                {
-                    Title = $"{track.Author} - {track.Title}",
-                    ThumbnailUrl = artwork,
-                    Url = track.Url
-                }
-                .AddField("Id", track.Id)
-                .AddField("Duration", track.Duration)
-                .AddField("Position", track.Position);
-
-            await ReplyAsync(embed: embed.Build());
-        }
 
         [Command("Lyrics")]
+        [Summary("Shows the lyrics for the current song playing")]
+        [Remarks("Ex: n!lyrics")]
         public async Task ShowGeniusLyrics()
         {
             if (!_lavaNode.TryGetPlayer(Context.Guild, out var player))
             {
-                await ReplyAsync("I'm not connected to a voice channel.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | I'm not connected to a voice channel.");
                 return;
             }
 
             if (player.PlayerState != PlayerState.Playing)
             {
-                await ReplyAsync("Woaaah there, I'm not playing any tracks.");
+                await ReplyAndDeleteAsync($"{Global.ENo} | A track must be playing for me to get its lyrics.");
                 return;
             }
 
             var lyrics = await player.Track.FetchLyricsFromGeniusAsync();
             if (string.IsNullOrWhiteSpace(lyrics))
             {
-                await ReplyAsync($"No lyrics found for {player.Track.Title}");
+                await ReplyAndDeleteAsync($"{Global.ENo} | No lyrics found for {player.Track.Title}");
                 return;
             }
 
@@ -405,45 +413,6 @@ namespace Nayu.Modules.Music
             var embed = Helpers.MiscHelpers.CreateEmbed(Context, "", stringBuilder.ToString());
             await ReplyAsync("", embed: embed.Build());
         }
-
-        [Command("OVH", RunMode = RunMode.Async)]
-        public async Task ShowOVHLyrics()
-        {
-            if (!_lavaNode.TryGetPlayer(Context.Guild, out var player))
-            {
-                await ReplyAsync("I'm not connected to a voice channel.");
-                return;
-            }
-
-            if (player.PlayerState != PlayerState.Playing)
-            {
-                await ReplyAsync("Woaaah there, I'm not playing any tracks.");
-                return;
-            }
-
-            var lyrics = await player.Track.FetchLyricsFromOVHAsync();
-            if (string.IsNullOrWhiteSpace(lyrics))
-            {
-                await ReplyAsync($"No lyrics found for {player.Track.Title}");
-                return;
-            }
-
-            var splitLyrics = lyrics.Split('\n');
-            var stringBuilder = new StringBuilder();
-            foreach (var line in splitLyrics)
-            {
-                if (Range.Contains(stringBuilder.Length))
-                {
-                    await ReplyAsync($"```{stringBuilder}```");
-                    stringBuilder.Clear();
-                }
-                else
-                {
-                    stringBuilder.AppendLine(line);
-                }
-            }
-
-            await ReplyAsync($"```{stringBuilder}```");
-        }
+        
     }
 }

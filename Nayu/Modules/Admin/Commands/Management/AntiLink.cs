@@ -80,7 +80,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                         break;
                 }
                 GlobalUserAccounts.SaveAccounts(Context.Guild.Id);
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             else
             {

@@ -157,7 +157,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.AddField("Sick", sick, true);
                 }
 
-                await SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
         }
 
@@ -193,7 +193,7 @@ namespace Nayu.Modules.Chomusuke
                 "Play with your chomusuke! Your Chomusuke must have high attention levels at all times!", true);
             embed.AddField("n!chomusuke train", "Train your Chomusuke to earn Exp and level up!", true);
             embed.WithFooter(text);
-            await SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("chomusukeName"), Alias("cName")]
@@ -213,7 +213,7 @@ namespace Nayu.Modules.Chomusuke
                 await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                 GlobalUserAccounts.SaveAccounts(Context.User.Id);
                 await SendMessage(Context, null,
-                    $":white_check_mark:   |  **{Context.User.Username}**, you successfully changed {Global.EChomusuke} {chom.Name}'s name to **{name}**!");
+                    $"✅   |  **{Context.User.Username}**, you successfully changed {Global.EChomusuke} {chom.Name}'s name to **{name}**!");
             }
         }
 
@@ -247,7 +247,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.WithThumbnailUrl("https://i.imgur.com/Sc4HGir.gif");
                     embed.WithDescription(
                         $":poultry_leg:  |  **{Context.User.Username}**, {Global.EChomusuke} {chom.Name} is full!");
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
                 else
                 {
@@ -275,7 +275,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.WithThumbnailUrl("https://i.imgur.com/Sc4HGir.gif");
                     embed.WithDescription(
                         $":poultry_leg:  |  **{Context.User.Username}**, you fill {Global.EChomusuke} {chom.Name}'s bowl with food. It looks happy! **(+{hungerGain} food [-{cost} {Global.ETaiyaki}])**");
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
             }
         }
@@ -309,7 +309,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.WithThumbnailUrl("https://i.imgur.com/OtVepvM.gif");
                     embed.WithDescription(
                         $":sparkles:  | **{Context.User.Username}, your {Global.EChomusuke} Chomusuke's room is squeaky clean!**");
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
                 else
                 {
@@ -338,7 +338,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.WithThumbnailUrl("https://i.imgur.com/PI2z8rm.gif");
                     embed.WithDescription(
                         $":sparkles:  |  **{Context.User.Username}**, {text} **(-{cleanedAmount} waste)**");
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
             }
         }
@@ -372,7 +372,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.WithThumbnailUrl(NoPlayLinks[Global.Rng.Next(NoPlayLinks.Length)]);
                     embed.WithDescription(
                         $":soccer:  |  **{Context.User.Username}, your {Global.EChomusuke} Chomusuke is bored of playing right now!**");
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                     return;
                 }
 
@@ -400,7 +400,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.WithColor(0, 255, 0);
                     embed.WithThumbnailUrl(YesPlayLinks[Global.Rng.Next(YesPlayLinks.Length)]);
                     embed.WithDescription($":soccer:  |  **{Context.User.Username}**, {text} **(+{trustGain} trust)**");
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
             }
         }
@@ -441,7 +441,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.WithColor(0, 255, 0);
                     embed.WithThumbnailUrl(yesTrainLinks[Global.Rng.Next(yesTrainLinks.Length)]);
                     embed.WithDescription($"{text} \n**(+{xpGain} exp)**");
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
 
                 if (choice == 2)
@@ -461,7 +461,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.WithColor(255, 0, 0);
                     embed.WithThumbnailUrl(noTrainLinks[Global.Rng.Next(noTrainLinks.Length)]);
                     embed.WithDescription($"{text}");
-                    await SendMessage(Context, embed);
+                    await SendMessage(Context, embed.Build());
                 }
             }
         }
