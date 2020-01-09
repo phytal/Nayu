@@ -4,6 +4,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Core.Handlers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Management.SlowMode
@@ -17,22 +18,21 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
         public async Task SlowMode(ulong length)
         {
             var guildUser = Context.User as SocketGuildUser;
-            if (guildUser.GuildPermissions.ManageChannels)
+            if (!guildUser.GuildPermissions.ManageChannels)
             {
-                var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                config.IsSlowModeEnabled = true;
-                config.SlowModeCooldown = length;
-                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
+                string description =
+                    $"{Global.ENo} | You Need the **Manage Channels** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+            }
 
-                await SendMessage(Context, null, $":snail:  | Successfully turned on slow mode for **{length}** seconds.");
-            }
-            else
-            {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Manage Channels Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
-            }
+            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
+            config.IsSlowModeEnabled = true;
+            config.SlowModeCooldown = length;
+            GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
+
+            await SendMessage(Context, null, $":snail:  | Successfully turned on slow mode for **{length}** seconds.");
         }
 
         [Command("SlowModeOff"), Alias("smo")]
@@ -42,22 +42,21 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
         public async Task SlowModeOff()
         {
             var guildUser = Context.User as SocketGuildUser;
-            if (guildUser.GuildPermissions.ManageChannels)
+            if (!guildUser.GuildPermissions.ManageChannels)
             {
-                var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                config.IsSlowModeEnabled = false;
-                config.SlowModeCooldown = 0;
-                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
+                string description =
+                    $"{Global.ENo} | You Need the **Manage Channels** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+            }
 
-                await SendMessage(Context, null, $":snail:  | Successfully turned off slow mode.");
-            }
-            else
-            {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Manage Channels Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
-            }
+            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
+            config.IsSlowModeEnabled = false;
+            config.SlowModeCooldown = 0;
+            GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
+
+            await SendMessage(Context, null, $":snail:  | Successfully turned off slow mode.");
         }
     }
 }

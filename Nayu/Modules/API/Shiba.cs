@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.API
@@ -30,12 +31,9 @@ namespace Nayu.Modules.API
 
             string link = dataObject[0].ToString();
 
-            var embed = new EmbedBuilder()
-            {
-                Title = ":dog: | Here's a Shiba!",
-                ImageUrl = link
-            };
-            await SendMessage(Context, embed.Build());
+            var title = "🐶 | Here's a Shiba!";
+            var embed = ImageEmbed.GetImageEmbed(link, Source.None, title);
+            await SendMessage(Context, embed);
         }
     }
 }

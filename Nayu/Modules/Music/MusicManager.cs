@@ -111,7 +111,7 @@ namespace Nayu.Modules.Music {
             if (player.Queue.Count < 1 && player.PlayerState != PlayerState.Playing)
             {
                 string title = currentTrack.Title;
-                return EmbedHandler.CreateEmbed(context, $"Now Playing: {title}",
+                return EmbedHandler.CreateEmbed(context, $"Now Playing: **{title}**",
                     "There are no other items in the queue.", EmbedHandler.EmbedMessageType.Success);
             }
 
@@ -120,12 +120,12 @@ namespace Nayu.Modules.Music {
             {
                 if (trackNum == 2)
                 {
-                    descriptionBuilder.Append($"Up Next: [{track.Title}]({track.Duration})\n");
+                    descriptionBuilder.Append($"Up Next: **[{track.Title}]**({track.Duration})\n\n");
                     trackNum++;
                 }
                 else
                 {
-                    descriptionBuilder.Append($"#{trackNum}: [{track.Title}]({track.Duration})\n");
+                    descriptionBuilder.Append($"#{trackNum}: **[{track.Title}]**({track.Duration})\n");
                     trackNum++;
                 }
             }

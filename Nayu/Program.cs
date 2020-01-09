@@ -31,6 +31,7 @@ using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Core.Handlers;
 using Nayu.Core.LevelingSystem;
 using Nayu.Libs.CustomLibraries.Discord.Addons.Interactive;
+using Nayu.Modules.API.Anime.Both;
 using Nayu.Modules.Chomusuke;
 using Nayu.Modules.Music;
 using Victoria;
@@ -104,6 +105,7 @@ using Victoria;
                 .AddSingleton<CommandService>()
                 .AddSingleton<InteractiveService>()
                 .AddSingleton<ChomusukeTimer>()
+                .AddSingleton<AutoLewdTimer>()
                 .AddSingleton<Events>()
                 .AddSingleton<Leveling>()
                 .AddSingleton<LavaConfig>()

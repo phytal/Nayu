@@ -20,7 +20,10 @@ namespace Nayu.Modules.API
         [Cooldown(10)]
         public async Task Define([Remainder] string link)
         {
-            string json = "";
+            if (Context.Guild.Id == 264445053596991498 && !(Context.Channel as ITextChannel).IsNsfw) //dbl server (dont kill me pls)
+                return;
+            
+            string json;
             using (WebClient client = new WebClient())
             {
                 json = client.DownloadString("http://api.urbandictionary.com/v0/define?term=" + link);

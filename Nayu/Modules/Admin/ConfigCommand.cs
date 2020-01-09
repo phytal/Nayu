@@ -6,6 +6,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Core.Handlers;
 using Nayu.Helpers;
 using Nayu.Preconditions;
 
@@ -43,65 +44,65 @@ namespace Nayu.Modules.Admin
         public async Task MasterConfig()
         {
             var guildUser = Context.User as SocketGuildUser;
-            if (guildUser.GuildPermissions.Administrator)
+            if (!guildUser.GuildPermissions.Administrator)
             {
-                var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                var embed = MiscHelpers.CreateEmbed(Context, Context.Guild.Name, $"Server ID: {config.Id}\n" +
-                                                         $"Owner: <@{config.GuildOwnerId}>");
-
-                var welcomemessages = "";
-                for (var i = 0; i < config.WelcomeMessages.Count; i++)
-                {
-                    welcomemessages = (config.WelcomeMessages[i]);
-                }
-
-                var leavemessages = "";
-                for (var i = 0; i < config.LeaveMessages.Count; i++)
-                {
-                    leavemessages = (config.LeaveMessages[i]);
-                }
-
-                if (config.WelcomeChannel != 0)
-                {
-                    embed.AddField("Welcome/Leaving", "On:\n" +
-                                              $"- Welcome Channel: <#{config.WelcomeChannel}>\n" +
-                                              $"- Leave Channel: <#{config.LeaveChannel}>\n" +
-                                              $"- Welcome Messages: {string.Join(", ", config.WelcomeMessages.ToArray())}\n" +
-                                              $"- Leaving Messges: {string.Join(", ", config.LeaveMessages.ToArray())}", true);
-                }
-                else
-                {
-                    embed.AddField("Welcome/Leaving", "Off", true);
-                }
-
-                var antiLinkIgnoredChannels = "#" + string.Join(", #", config.AntilinkIgnoredChannels.ToArray());
-                embed.AddField("Other", $"Antilink: {ConvertBoolean(config.Antilink)}\n" +
-                                        
-                                        $"Autorole: {config.Autorole}\n" +
-                                        $"Anti-link Ignored Channels: {antiLinkIgnoredChannels}\n" +
-                                        $"Blacklist: {ConvertBoolean(config.Filter)}\n" +
-                                        $"Custom Blacklist: {string.Join(", ", config.CustomFilter.ToArray())}\n" +
-                                        $"Custom Currency: {config.Currency}\n" +
-                                        $"Custom Prefix: {config.CommandPrefix}\n" +
-                                        $"Slow mode: {ConvertBoolean(config.IsSlowModeEnabled)}\n" +
-                                        $"Leveling: {ConvertBoolean(config.Leveling)}\n" +
-                                        $"Mass Ping Checks: {ConvertBoolean(config.MassPingChecks)}\n" +
-                                        $"Server Logging: {ConvertBoolean(config.IsServerLoggingEnabled)}\n" +
-                                        $"Unflipping: {ConvertBoolean(config.Unflip)}\n");
-
-                embed.WithThumbnailUrl(Context.Guild.IconUrl);
-                embed.WithFooter("Guild Information is shown incorrectly or not shown at all? Use `n!syncguild` to sync the current server owner!");
-
-                await MiscHelpers.SendMessage(Context, embed);
+                string description =
+                    $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
             }
 
+            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
+            var embed = MiscHelpers.CreateEmbed(Context, Context.Guild.Name, $"Server ID: {config.Id}\n" +
+                                                                             $"Owner: <@{config.GuildOwnerId}>");
+
+            var welcomemessages = "";
+            for (var i = 0; i < config.WelcomeMessages.Count; i++)
+            {
+                welcomemessages = (config.WelcomeMessages[i]);
+            }
+
+            var leavemessages = "";
+            for (var i = 0; i < config.LeaveMessages.Count; i++)
+            {
+                leavemessages = (config.LeaveMessages[i]);
+            }
+
+            if (config.WelcomeChannel != 0)
+            {
+                embed.AddField("Welcome/Leaving", "On:\n" +
+                                                  $"- Welcome Channel: <#{config.WelcomeChannel}>\n" +
+                                                  $"- Leave Channel: <#{config.LeaveChannel}>\n" +
+                                                  $"- Welcome Messages: {string.Join(", ", config.WelcomeMessages.ToArray())}\n" +
+                                                  $"- Leaving Messges: {string.Join(", ", config.LeaveMessages.ToArray())}",
+                    true);
+            }
             else
             {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
+                embed.AddField("Welcome/Leaving", "Off", true);
             }
+
+            var antiLinkIgnoredChannels = "#" + string.Join(", #", config.AntilinkIgnoredChannels.ToArray());
+            embed.AddField("Other", $"Antilink: {ConvertBoolean(config.Antilink)}\n" +
+
+                                    $"Autorole: {config.Autorole}\n" +
+                                    $"Anti-link Ignored Channels: {antiLinkIgnoredChannels}\n" +
+                                    $"Blacklist: {ConvertBoolean(config.Filter)}\n" +
+                                    $"Custom Blacklist: {string.Join(", ", config.CustomFilter.ToArray())}\n" +
+                                    $"Custom Currency: {config.Currency}\n" +
+                                    $"Custom Prefix: {config.CommandPrefix}\n" +
+                                    $"Slow mode: {ConvertBoolean(config.IsSlowModeEnabled)}\n" +
+                                    $"Leveling: {ConvertBoolean(config.Leveling)}\n" +
+                                    $"Mass Ping Checks: {ConvertBoolean(config.MassPingChecks)}\n" +
+                                    $"Server Logging: {ConvertBoolean(config.IsServerLoggingEnabled)}\n" +
+                                    $"Unflipping: {ConvertBoolean(config.Unflip)}\n");
+
+            embed.WithThumbnailUrl(Context.Guild.IconUrl);
+            embed.WithFooter(
+                "Guild Information is shown incorrectly or not shown at all? Use `n!syncguild` to sync the current server owner!");
+
+            await MiscHelpers.SendMessage(Context, embed);
         }
 
         [Command("SyncGuild")]
@@ -111,25 +112,24 @@ namespace Nayu.Modules.Admin
         public async Task SyncGuild()
         {
             var guildUser = Context.User as SocketGuildUser;
-            if (guildUser.GuildPermissions.Administrator)
+            if (!guildUser.GuildPermissions.Administrator)
             {
-                ulong In = Context.Guild.Id;
-                string Out = Convert.ToString(In);
-                if (!Directory.Exists(Out))
-                    Directory.CreateDirectory(Path.Combine(Constants.ServerUserAccountsFolder, Out));
+                string description =
+                    $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+            }
 
-                var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                config.GuildOwnerId = Context.Guild.Owner.Id;
-                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-                await SendMessage(Context, null, $"Successfully synced the Guild's owner to <@{Context.Guild.OwnerId}>!");
-            }
-            else
-            {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
-            }
+            ulong In = Context.Guild.Id;
+            string Out = Convert.ToString(In);
+            if (!Directory.Exists(Out))
+                Directory.CreateDirectory(Path.Combine(Constants.ServerUserAccountsFolder, Out));
+
+            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
+            config.GuildOwnerId = Context.Guild.Owner.Id;
+            GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
+            await SendMessage(Context, null, $"Successfully synced the Guild's owner to <@{Context.Guild.OwnerId}>!");
         }
     }
 }

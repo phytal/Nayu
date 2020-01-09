@@ -2,10 +2,13 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
+using Nayu.Modules.API.Anime.NekosLife;
 using Nayu.Preconditions;
 using Newtonsoft.Json;
+using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 
 namespace Nayu.Modules.API.Anime.Both
 {
@@ -20,56 +23,29 @@ namespace Nayu.Modules.API.Anime.Both
             int rand = Global.Rng.Next(1, 3);
             if (rand == 1)
             {
-                string[] tags = new[] {""};
-                weebDotSh.Helpers.WebRequest webReq = new weebDotSh.Helpers.WebRequest();
-                RandomData result = await webReq.GetTypesAsync("baka", tags, FileType.Gif, NsfwSearch.False, false);
-                string url = result.Url;
-                string id = result.Id;
-                if (user == null)
-                {
-                    var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.WithTitle("Baka!");
-                    embed.WithDescription(
-                        $"{Context.User.Mention} called themselves a baka! I kind of agree with that.. \n**(Include a user with your command! Example: n!baka <person you want to call a baka>)**");
-                    embed.WithImageUrl(url);
-                    embed.WithFooter($"Powered by weeb.sh | ID: {id}");
+                string nekolink = NekosLifeHelper.GetNekoLink("baka");
+                string description = user == null
+                    ? $"{Context.User.Mention} called themselves a baka! I kind of agree with that.. \n**(Include a user with your command! Example: n!baka <person you want to call a baka>)**"
+                    : $"{Context.User.Username} cuddled with {user.Mention}!";
 
-                    await SendMessage(Context, embed.Build());
-                }
-                else
-                {
-                    var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.WithImageUrl(url);
-                    embed.WithTitle("Baka!");
-                    embed.WithDescription($"{Context.User.Username} called {user.Mention} a baka!");
-                    embed.WithFooter($"Powered by weeb.sh | ID: {id}");
-
-                    await SendMessage(Context, embed.Build());
-                }
+                var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, "Baka!", description);
+                await SendMessage(Context, embed);
             }
 
             if (rand == 2)
             {
-                {
-                    string json = "";
-                    using (WebClient client = new WebClient())
-                    {
-                        json = client.DownloadString("https://nekos.life/api/v2/img/baka");
-                    }
+                string[] tags = {""};
+                WebRequest webReq = new WebRequest();
+                RandomData result = await webReq.GetTypesAsync("baka", tags, FileType.Gif, NsfwSearch.False, false);
+                string url = result.Url;
+                //string id = result.Id;
 
-                    var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
+                string description = user == null
+                    ? $"{Context.User.Mention}, baka desuka? \n **(Include a user with your command! Example: n!baka <person you want to call a baka>)**"
+                    : $"{Context.User.Username} called {user.Mention} a baka!";
 
-                    string nekolink = dataObject.url.ToString();
-
-                    var embed = new EmbedBuilder();
-                    embed.WithTitle("Randomly generated neko just for you <3!");
-                    embed.WithImageUrl(nekolink);
-                    embed.WithFooter($"Powered by nekos.life");
-
-                    await SendMessage(Context, embed.Build());
-                }
+                var embed = ImageEmbed.GetImageEmbed(url, Source.WeebDotSh, "Baka!", description);
+                await SendMessage(Context, embed);
             }
         }
     }

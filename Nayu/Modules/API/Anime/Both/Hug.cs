@@ -2,10 +2,13 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
+using Nayu.Modules.API.Anime.NekosLife;
 using Nayu.Preconditions;
 using Newtonsoft.Json;
+using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 
 namespace Nayu.Modules.API.Anime.Both
 {
@@ -15,76 +18,34 @@ namespace Nayu.Modules.API.Anime.Both
         [Summary("Hug someone!")]
         [Remarks("n!hug <user you want to hug (if left empty you will hug yourself)> Ex: n!hug @Phytal")]
         [Cooldown(10)]
-        public async Task GetRandomNekoHug(IGuildUser user = null)
+        public async Task GetRandomNHug(IGuildUser user = null)
         {
             int rand = Global.Rng.Next(1, 3);
             if (rand == 1)
             {
-                string json = "";
-                using (WebClient client = new WebClient())
-                {
-                    json = client.DownloadString("https://nekos.life/api/v2/img/hug");
-                }
+                string nekolink = NekosLifeHelper.GetNekoLink("hug");
+                string description = user == null
+                    ? $"{Context.User.Mention} hugged themselves... Aw, don't be sad, you can hug me! \n **(Include a user with your command! Example: n!hug <person you want to hug>)**"
+                    : $"❤ | {Context.User.Username} hugged {user.Mention}!";
 
-                var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
-
-                string nekolink = dataObject.url.ToString();
-
-                if (user == null)
-                {
-                    var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.WithTitle("Hug!");
-                    embed.WithDescription(
-                        $"{Context.User.Mention} hugged themselves... Aw, don't be sad, you can hug me! \n **(Include a user with your command! Example: n!hug <person you want to hug>)**");
-                    embed.WithImageUrl(nekolink);
-                    embed.WithFooter($"Powered by nekos.life");
-
-                    await SendMessage(Context, embed.Build());
-                }
-                else
-                {
-                    var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.WithImageUrl(nekolink);
-                    embed.WithTitle("Hug!");
-                    embed.WithDescription($":heart:  |  {Context.User.Username} hugged {user.Mention}!");
-                    embed.WithFooter($"Powered by nekos.life");
-
-                    await SendMessage(Context, embed.Build());
-                }
+                var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, "Hug!", description);
+                await SendMessage(Context, embed);
             }
 
             if (rand == 2)
             {
-                string[] tags = new[] { "" };
-                weebDotSh.Helpers.WebRequest webReq = new weebDotSh.Helpers.WebRequest();
+                string[] tags = {""};
+                WebRequest webReq = new WebRequest();
                 RandomData result = await webReq.GetTypesAsync("hug", tags, FileType.Gif, NsfwSearch.False, false);
                 string url = result.Url;
-                string id = result.Id;
-                if (user == null)
-                {
-                    var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.WithTitle("Hug!");
-                    embed.WithDescription(
-                        $"{Context.User.Mention} hugged themselves, how is that even physically possible? \n **(Include a user with your command! Example: n!hug <person you want to hug>)**");
-                    embed.WithImageUrl(url);
-                    embed.WithFooter($"Powered by weeb.sh | ID: {id}");
+                //string id = result.Id;
 
-                    await SendMessage(Context, embed.Build());
-                }
-                else
-                {
-                    var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.WithImageUrl(url);
-                    embed.WithTitle("Hug!");
-                    embed.WithDescription($"{Context.User.Username} hugged {user.Mention}!");
-                    embed.WithFooter($"Powered by weeb.sh | ID: {id}");
+                string description = user == null
+                    ? $"{Context.User.Mention} hugged themselves, how is that even physically possible? \n **(Include a user with your command! Example: n!hug <person you want to hug>)**"
+                    : $"❤ |  {Context.User.Username} hugged {user.Mention}!";
 
-                    await SendMessage(Context, embed.Build());
-                }
+                var embed = ImageEmbed.GetImageEmbed(url, Source.WeebDotSh, "Hug!", description);
+                await SendMessage(Context, embed);
             }
         }
     }

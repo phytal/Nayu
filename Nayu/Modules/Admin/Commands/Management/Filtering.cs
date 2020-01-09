@@ -4,6 +4,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Core.Handlers;
 using Nayu.Helpers;
 using Nayu.Preconditions;
 
@@ -18,31 +19,31 @@ namespace Nayu.Modules.Admin.Commands.Management
         public async Task SetBoolIntoConfigFilter(string setting)
         {
             var guildUser = Context.User as SocketGuildUser;
-            if (guildUser.GuildPermissions.Administrator)
+            if (!guildUser.GuildPermissions.Administrator)
             {
-                var result = ConvertBool.ConvertStringToBoolean(setting);
-                if (result.Item1)
-                {
-                    var argg = result.Item2;
-                    var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.WithDescription(argg ? "✅  | Filter successfully turned on. Stay safe!" : "✅  | Filter successfully turned off. Daredevil!");
-                    await ReplyAsync("", embed: embed.Build());
-                    var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                    config.Filter = argg;
-                    GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-                }
-                else
-                {
-                    await SendMessage(Context, null, $"Please say `n!filter <on/off>`");
-                }
+                string description = $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+            }
+
+            var result = ConvertBool.ConvertStringToBoolean(setting);
+            if (result.Item1)
+            {
+                var argg = result.Item2;
+                var embed = new EmbedBuilder();
+                embed.WithColor(37, 152, 255);
+                embed.WithDescription(argg
+                    ? "✅  | Filter successfully turned on. Stay safe!"
+                    : "✅  | Filter successfully turned off. Daredevil!");
+                await ReplyAsync("", embed: embed.Build());
+                var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
+                config.Filter = argg;
+                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
             }
             else
             {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
+                await SendMessage(Context, null, $"Please say `n!filter <on/off>`");
             }
         }
 
@@ -53,42 +54,42 @@ namespace Nayu.Modules.Admin.Commands.Management
         public async Task SetChannelToBeIgnoredByFilter(string type, SocketGuildChannel chnl = null)
         {
             var guildUser = Context.User as SocketGuildUser;
-            if (guildUser.GuildPermissions.ManageMessages)
+            if (!guildUser.GuildPermissions.Administrator)
             {
-                var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                switch (type)
-                {
-                    case "add":
-                    case "Add":
-                        config.NoFilterChannels.Add(chnl.Id);
-                        embed.WithDescription($"Added <#{chnl.Id}> to the list of ignored channels for Filter.");
-                        break;
-                    case "rem":
-                    case "Rem":
-                        config.NoFilterChannels.Remove(chnl.Id);
-                        embed.WithDescription($"Removed <#{chnl.Id}> from the list of ignored channels for Filter.");
-                        break;
-                    case "clear":
-                    case "Clear":
-                        config.NoFilterChannels.Clear();
-                        embed.WithDescription("List of channels to be ignored by Filter has been cleared.");
-                        break;
-                    default:
-                        embed.WithDescription($"Valid types are `add`, `rem`, and `clear`. Syntax: `n!fi {{add/rem/clear}} [channelMention]`");
-                        break;
-                }
-                GlobalUserAccounts.SaveAccounts(Context.Guild.Id);
-                await SendMessage(Context, embed.Build());
+                string description = $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
             }
-            else
+
+            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
+            var embed = new EmbedBuilder();
+            embed.WithColor(37, 152, 255);
+            switch (type)
             {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
+                case "add":
+                case "Add":
+                    config.NoFilterChannels.Add(chnl.Id);
+                    embed.WithDescription($"Added <#{chnl.Id}> to the list of ignored channels for Filter.");
+                    break;
+                case "rem":
+                case "Rem":
+                    config.NoFilterChannels.Remove(chnl.Id);
+                    embed.WithDescription($"Removed <#{chnl.Id}> from the list of ignored channels for Filter.");
+                    break;
+                case "clear":
+                case "Clear":
+                    config.NoFilterChannels.Clear();
+                    embed.WithDescription("List of channels to be ignored by Filter has been cleared.");
+                    break;
+                default:
+                    embed.WithDescription(
+                        $"Valid types are `add`, `rem`, and `clear`. Syntax: `n!fi {{add/rem/clear}} [channelMention]`");
+                    break;
             }
+
+            GlobalUserAccounts.SaveAccounts(Context.Guild.Id);
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("BlacklistAdd")]
@@ -96,24 +97,22 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Summary("Add a word to the filter")]
         [Remarks("n!bladd <word you want to add> Ex: n!bladd gay")]
         [Cooldown(5)]
-        public async Task AddStringToBl([Remainder]string word)
+        public async Task AddStringToBl([Remainder] string word)
         {
             var guildUser = Context.User as SocketGuildUser;
-            if (guildUser.GuildPermissions.Administrator)
+            if (!guildUser.GuildPermissions.Administrator)
             {
-                var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                await SendMessage(Context, null, $"✅  | Added **{word}** to the Blacklist.");
+                string description = $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+            }
 
-                config.CustomFilter.Add(word);
-                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-            }
-            else
-            {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
-            }
+            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
+            await SendMessage(Context, null, $"✅  | Added **{word}** to the Blacklist.");
+
+            config.CustomFilter.Add(word);
+            GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
         }
 
         [Command("BlacklistRemove")]
@@ -124,30 +123,29 @@ namespace Nayu.Modules.Admin.Commands.Management
         public async Task RemoveStringFromBl([Remainder] string bl)
         {
             var guildUser = Context.User as SocketGuildUser;
-            if (guildUser.GuildPermissions.Administrator)
+            if (!guildUser.GuildPermissions.Administrator)
             {
-                var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                if (!config.CustomFilter.Contains(bl))
-                {
-                    embed.WithDescription($"`{bl}` isn't present in the Blacklist.");
-                }
-                else
-                {
-                    embed.WithDescription($"Removed {bl} from the Blacklist.");
-                    config.CustomFilter.Remove(bl);
-                    GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-                }
-                await SendMessage(Context, embed.Build());
+                string description = $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+            }
+
+            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
+            var embed = new EmbedBuilder();
+            embed.WithColor(37, 152, 255);
+            if (!config.CustomFilter.Contains(bl))
+            {
+                embed.WithDescription($"`{bl}` isn't present in the Blacklist.");
             }
             else
             {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
+                embed.WithDescription($"Removed {bl} from the Blacklist.");
+                config.CustomFilter.Remove(bl);
+                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
             }
+
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("BlacklistClear")]
@@ -158,24 +156,22 @@ namespace Nayu.Modules.Admin.Commands.Management
         public async Task ClearBlacklist()
         {
             var guildUser = Context.User as SocketGuildUser;
-            if (guildUser.GuildPermissions.Administrator)
+            if (!guildUser.GuildPermissions.Administrator)
             {
-                var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                config.CustomFilter.Clear();
-                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-                var embed = new EmbedBuilder();
-                embed.WithDescription("Cleared the Blacklist for this server.");
-                embed.WithColor(37, 152, 255);
+                string description = $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+            }
 
-                await SendMessage(Context, embed.Build());
-            }
-            else
-            {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
-            }
+            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
+            config.CustomFilter.Clear();
+            GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
+            var embed = new EmbedBuilder();
+            embed.WithDescription("Cleared the Blacklist for this server.");
+            embed.WithColor(37, 152, 255);
+
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("BlacklistList")]
@@ -186,28 +182,27 @@ namespace Nayu.Modules.Admin.Commands.Management
         public async Task ListBlacklist()
         {
             var guildUser = Context.User as SocketGuildUser;
-            if (guildUser.GuildPermissions.Administrator)
+            if (!guildUser.GuildPermissions.ManageMessages)
             {
-                var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                string list = string.Empty;
-                foreach (var word in config.CustomFilter)
-                {
-                    list += $"{word}  ";
-                }
-                var embed = new EmbedBuilder();
-                embed.WithTitle($"Blacklisted words in {Context.Guild.Name}");
-                embed.WithDescription(list);
-                embed.WithColor(37, 152, 255);
+                string description = $"{Global.ENo} | You Need the **Manage Messages** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+            }
 
-                await SendMessage(Context, embed.Build());
-            }
-            else
+            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
+            string list = string.Empty;
+            foreach (var word in config.CustomFilter)
             {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
+                list += $"{word}  ";
             }
+
+            var embed = new EmbedBuilder();
+            embed.WithTitle($"Blacklisted words in {Context.Guild.Name}");
+            embed.WithDescription(list);
+            embed.WithColor(37, 152, 255);
+
+            await SendMessage(Context, embed.Build());
         }
     }
 }

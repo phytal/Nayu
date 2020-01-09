@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Nayu.Core.Handlers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Management
@@ -18,20 +19,20 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Cooldown(5)]
         public async Task ClearCMD(SocketGuildUser user)
         {
-            if (user.GuildPermissions.ManageMessages)
+            var guildUser = Context.User as SocketGuildUser;
+            if (!guildUser.GuildPermissions.ManageMessages)
             {
-                var messages = await Context.Channel.GetMessagesAsync(100).FlattenAsync();
-                var result = messages.Where(x => x.Author.Id == user.Id && x.CreatedAt >= DateTimeOffset.UtcNow.Subtract(TimeSpan.FromDays(14)));
-                if (Context.Channel is ITextChannel channel) await channel.DeleteMessagesAsync(result);
+                string description =
+                    $"{Global.ENo} | You Need the **Manage Messages** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+            }
 
-            }
-            else
-            {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You need the Manange Messages Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
-            }
+            var messages = await Context.Channel.GetMessagesAsync(100).FlattenAsync();
+            var result = messages.Where(x =>
+                x.Author.Id == user.Id && x.CreatedAt >= DateTimeOffset.UtcNow.Subtract(TimeSpan.FromDays(14)));
+            if (Context.Channel is ITextChannel channel) await channel.DeleteMessagesAsync(result);
         }
 
         [Command("clear")]
@@ -42,33 +43,29 @@ namespace Nayu.Modules.Admin.Commands.Management
         [RequireBotPermission(GuildPermission.ManageMessages)]
         public async Task Purge([Remainder] int num = 0)
         {
-            if (Context.Channel is ITextChannel text)
+            var guildUser = Context.User as SocketGuildUser;
+            if (!guildUser.GuildPermissions.ManageMessages)
             {
-                var user = Context.User as SocketGuildUser;
-                if (user.GuildPermissions.ManageMessages)
-                {
-                    if (num <= 100)
-                    {
-                        var messagesToDelete = await Context.Channel.GetMessagesAsync(num + 1).FlattenAsync();
-                        if (Context.Channel is ITextChannel channel) await channel.DeleteMessagesAsync(messagesToDelete);
-                        if (num == 1) await ReplyAndDeleteAsync("✅  | Deleted 1 message.");
-                        else await ReplyAndDeleteAsync("✅  | Cleared " + num + " messages.", timeout: TimeSpan.FromSeconds(5));
-                    }
-                    else
-                    {
-                        var embed = new EmbedBuilder();
-                        embed.WithColor(37, 152, 255);
-                        embed.Title = ":x:  | You cannot delete more than 100 messages at once!";
-                        await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
-                    }
-                }
-                else
-                {
-                    var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.Title = $":x:  | You need the Manange Messages Permission to do that {Context.User.Username}";
-                    await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
-                }
+                string description =
+                    $"{Global.ENo} | You Need the **Manage Messages** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+            }
+
+            if (num <= 100)
+            {
+                var messagesToDelete = await Context.Channel.GetMessagesAsync(num + 1).FlattenAsync();
+                if (Context.Channel is ITextChannel channel) await channel.DeleteMessagesAsync(messagesToDelete);
+                if (num == 1) await ReplyAndDeleteAsync("✅  | Deleted 1 message.");
+                else await ReplyAndDeleteAsync("✅  | Cleared " + num + " messages.", timeout: TimeSpan.FromSeconds(5));
+            }
+            else
+            {
+                var embed = new EmbedBuilder();
+                embed.WithColor(37, 152, 255);
+                embed.Title = "{Global.ENo} | You cannot delete more than 100 messages at once!";
+                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
         }
     }

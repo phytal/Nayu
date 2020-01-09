@@ -4,6 +4,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Core.Handlers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Management
@@ -17,27 +18,26 @@ namespace Nayu.Modules.Admin.Commands.Management
         public async Task AutoRoleRoleAdd(string arg = "")
         {
             var guildUser = Context.User as SocketGuildUser;
-            if (guildUser.GuildPermissions.Administrator)
+            if (!guildUser.GuildPermissions.Administrator)
             {
-                if (arg == null) await ReplyAndDeleteAsync("Please include the name of the role you want to autorole");
-                var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                config.Autorole = arg;
-                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-
-                var embed = new EmbedBuilder();
-                embed.WithDescription($"Added the **{arg}** role to Autorole!");
-                embed.WithColor(37, 152, 255);
-                embed.WithFooter("Make sure that Nayu has a higher role than the autoroled role!");
-
-                await SendMessage(Context, embed.Build());
+                string description =
+                    $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
             }
-            else
-            {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You need the Administrator Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
-            }
+
+            if (arg == null) await ReplyAndDeleteAsync("Please include the name of the role you want to autorole");
+            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
+            config.Autorole = arg;
+            GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
+
+            var embed = new EmbedBuilder();
+            embed.WithDescription($"Added the **{arg}** role to Autorole!");
+            embed.WithColor(37, 152, 255);
+            embed.WithFooter("Make sure that Nayu has a higher role than the autoroled role!");
+
+            await SendMessage(Context, embed.Build());
         }
     }
 }

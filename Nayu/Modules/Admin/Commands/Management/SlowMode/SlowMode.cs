@@ -16,7 +16,7 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
             var msg = s as SocketUserMessage;
             var context = new ShardedCommandContext(_client, msg);
             var config = GlobalGuildAccounts.GetGuildAccount(context.Guild.Id);
-            if (config.IsSlowModeEnabled == true)
+            if (config.IsSlowModeEnabled)
             {
                 if (context.User is IGuildUser user && user.GuildPermissions.ManageChannels) return;
                 if (msg == null) return;
@@ -36,15 +36,12 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
                     await msg.DeleteAsync();
                     var dm = await context.User.GetOrCreateDMChannelAsync();
                     await dm.SendMessageAsync($"Slow down! You can send a message in **{timeSpanString}** in **{context.Guild.Name}**.");
-                    return;
                 }
                 else
                 {
                     userAcc.LastMessage = now;
-                    return;
                 }
             }
-            else return;
         }
     }
 }

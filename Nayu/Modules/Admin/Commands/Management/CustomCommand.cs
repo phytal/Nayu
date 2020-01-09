@@ -5,6 +5,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Core.Handlers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Management
@@ -18,27 +19,26 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Cooldown(5)]
         public async Task AddCustomCommand(string commandName, [Remainder] string commandValue)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (!guildUser.GuildPermissions.Administrator)
             {
-                var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                config.CustomCommands.Add(commandName, commandValue);
-                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-                var embed = new EmbedBuilder()
-                    .WithTitle("Custom Command Added!")
-                    .AddField("Command Name", $"__{commandName}__")
-                    .AddField("Bot Response", $"**{commandValue}**")
-                    .WithColor(37, 152, 255);
+                string description =
+                    $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+            }
 
-                await SendMessage(Context, embed.Build());
-            }
-            else
-            {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
-            }
+            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
+            config.CustomCommands.Add(commandName, commandValue);
+            GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
+            var embed = new EmbedBuilder()
+                .WithTitle("Custom Command Added!")
+                .AddField("Command Name", $"__{commandName}__")
+                .AddField("Bot Response", $"**{commandValue}**")
+                .WithColor(37, 152, 255);
+
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("CustomCommandRemove")]
@@ -47,32 +47,31 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Remarks("n!ccr <custom command name you want to remove> Ex: n!ccr whatsup")]
         public async Task RemCustomCommand(string commandName)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (!guildUser.GuildPermissions.Administrator)
             {
-                var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                var embed = new EmbedBuilder()
-                    .WithColor(37, 152, 255);
-                if (config.CustomCommands.Keys.Contains(commandName))
-                {
-                    embed.WithDescription($"Removed **{commandName}** as a command!");
-                    config.CustomCommands.Remove(commandName);
-                    GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-                }
-                else
-                {
-                    embed.WithDescription($"**{commandName}** isn't a command on this server.");
-                }
+                string description =
+                    $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+            }
 
-                await SendMessage(Context, embed.Build());
+            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
+            var embed = new EmbedBuilder()
+                .WithColor(37, 152, 255);
+            if (config.CustomCommands.Keys.Contains(commandName))
+            {
+                embed.WithDescription($"Removed **{commandName}** as a command!");
+                config.CustomCommands.Remove(commandName);
+                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
             }
             else
             {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
+                embed.WithDescription($"**{commandName}** isn't a command on this server.");
             }
+
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("CustomCommandList")]

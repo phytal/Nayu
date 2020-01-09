@@ -110,7 +110,7 @@ namespace Nayu.Modules
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Administrator Permission to do that {Context.User.Username}";
+                embed.Title = $"{Global.ENo} | You Need the Administrator Permission to do that {Context.User.Username}";
                 var use = await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
         }
@@ -147,7 +147,7 @@ namespace Nayu.Modules
                 {
                     var embed = new EmbedBuilder();
                     embed.WithColor(37, 152, 255);
-                    embed.Title = $":x:  | You Need to be in a NSFW channel to do that {Context.User.Username}";
+                    embed.Title = $"{Global.ENo} | You Need to be in a NSFW channel to do that {Context.User.Username}";
                     var use = await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
                 }
             }

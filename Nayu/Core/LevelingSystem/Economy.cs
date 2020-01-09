@@ -90,7 +90,7 @@ namespace Nayu.Core.LevelingSystem
                 {
                     var embed = new EmbedBuilder();
                     embed.WithColor(37, 152, 255);
-                    embed.WithTitle($":hand_splayed:  | Please say who you want to gift {config.Currency} to. Ex: n!gift <amount of Taiyakis> @user");
+                    embed.WithTitle($"🖐️ | Please say who you want to gift {config.Currency} to. Ex: n!gift <amount of Taiyakis> @user");
                     await SendMessage(Context, embed.Build());
                 }
                 else

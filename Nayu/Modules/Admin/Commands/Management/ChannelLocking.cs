@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Nayu.Core.Handlers;
 using Nayu.Helpers;
 using Nayu.Preconditions;
 
@@ -17,26 +18,25 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Cooldown(5)]
         public async Task LockChannel()
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.ManageChannels)
+            var guildUser = Context.User as SocketGuildUser;
+            if (!guildUser.GuildPermissions.ManageChannels)
             {
-                var chnl = Context.Channel as ITextChannel;
-                var role = Context.Guild.Roles.FirstOrDefault(r => r.Name == "@everyone");
-                var perms = new OverwritePermissions(
-                    sendMessages: PermValue.Deny
-                    );
-                await chnl.AddPermissionOverwriteAsync(role, perms);
+                string description =
+                    $"{Global.ENo} | You Need the **Manage Channels** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+            }
 
-                var embed = MiscHelpers.CreateEmbed(Context, "Channel Locked", $":lock: Locked {Context.Channel.Name}.");
-                await MiscHelpers.SendMessage(Context, embed);
-            }
-            else
-            {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Manage Channels Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
-            }
+            var chnl = Context.Channel as ITextChannel;
+            var role = Context.Guild.Roles.FirstOrDefault(r => r.Name == "@everyone");
+            var perms = new OverwritePermissions(
+                sendMessages: PermValue.Deny
+            );
+            await chnl.AddPermissionOverwriteAsync(role, perms);
+
+            var embed = MiscHelpers.CreateEmbed(Context, "Channel Locked", $":lock: Locked {Context.Channel.Name}.");
+            await MiscHelpers.SendMessage(Context, embed);
         }
 
         [Command("unlockchannel"), Alias("ulc")]
@@ -45,26 +45,27 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Cooldown(5)]
         public async Task UnlockChannel()
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.ManageChannels)
+            var guildUser = Context.User as SocketGuildUser;
+            if (!guildUser.GuildPermissions.ManageChannels)
             {
-                var chnl = Context.Channel as ITextChannel;
-                var role = Context.Guild.Roles.FirstOrDefault(r => r.Name == "@everyone");
-                var perms = new OverwritePermissions(
-                    sendMessages: PermValue.Allow
-                    );
-                await chnl.AddPermissionOverwriteAsync(role, perms);
+                string description =
+                    $"{Global.ENo} | You Need the **Manage Channels** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+            }
 
-                var embed = MiscHelpers.CreateEmbed(Context, "Channel Unlocked", $":unlock: Unlocked {Context.Channel.Name}.").WithColor(37, 152, 255);
-                await MiscHelpers.SendMessage(Context, embed);
-            }
-            else
-            {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You Need the Manage Channels Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
-            }
+            var chnl = Context.Channel as ITextChannel;
+            var role = Context.Guild.Roles.FirstOrDefault(r => r.Name == "@everyone");
+            var perms = new OverwritePermissions(
+                sendMessages: PermValue.Allow
+            );
+            await chnl.AddPermissionOverwriteAsync(role, perms);
+
+            var embed = MiscHelpers
+                .CreateEmbed(Context, "Channel Unlocked", $":unlock: Unlocked {Context.Channel.Name}.")
+                .WithColor(37, 152, 255);
+            await MiscHelpers.SendMessage(Context, embed);
         }
     }
 }

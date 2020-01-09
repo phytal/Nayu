@@ -4,6 +4,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Core.Handlers;
 using Nayu.Helpers;
 using Nayu.Preconditions;
 
@@ -17,35 +18,35 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Cooldown(5)]
         public async Task PingCheck(string arg)
         {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.Administrator)
+            var guildUser = Context.User as SocketGuildUser;
+            if (!guildUser.GuildPermissions.Administrator)
             {
-                var result = ConvertBool.ConvertStringToBoolean(arg);
-                if (result.Item1 == true)
-                {
-                    bool argg = result.Item2;
-                    var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                    var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.WithDescription(argg
-                        ? "Enabled mass ping checks for this server."
-                        : "Disabled mass ping checks for this server.");
-                    config.MassPingChecks = argg;
-                    GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-                    await ReplyAsync("", embed: embed.Build());
-                }
-                if (result.Item1 == false)
-                {
-                    await SendMessage(Context, null, $"Please say `n!pc <on/off>`");
-                    return;
-                }
+                string description =
+                    $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
             }
-            else
+
+            var result = ConvertBool.ConvertStringToBoolean(arg);
+            if (result.Item1 == true)
             {
+                bool argg = result.Item2;
+                var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
-                embed.Title = $":x:  | You need the Administrator Permission to do that {Context.User.Username}";
-                await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
+                embed.WithDescription(argg
+                    ? "Enabled mass ping checks for this server."
+                    : "Disabled mass ping checks for this server.");
+                config.MassPingChecks = argg;
+                GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
+                await ReplyAsync("", embed: embed.Build());
+            }
+
+            if (result.Item1 == false)
+            {
+                await SendMessage(Context, null, $"Please say `n!pc <on/off>`");
+                return;
             }
         }
     }

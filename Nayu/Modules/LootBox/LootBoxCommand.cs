@@ -153,7 +153,7 @@ namespace Nayu.Modules.LootBox
                 {
                     var embed = new EmbedBuilder();
                     embed.WithColor(37, 152, 255);
-                    embed.WithTitle(":hand_splayed:  | Please say who you want to gift lootboxes to. Ex: n!gift <rarity of lootbox> @user");
+                    embed.WithTitle("🖐️ | Please say who you want to gift lootboxes to. Ex: n!gift <rarity of lootbox> @user");
                     await SendMessage(Context, embed.Build());
                 }
                 else

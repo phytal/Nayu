@@ -6,6 +6,9 @@ using Type = Nayu.Modules.Chomusuke.Dueling.Enums.Type;
 
 namespace Nayu.Core.Entities
 {
+
+    #region Chomusuke
+
     public class Chomusuke
     {
         public bool Have { get; set; }
@@ -84,6 +87,8 @@ namespace Nayu.Core.Entities
             PotionEffects = potionEffects;
         }
     }
+
+    #endregion
 
     public class Message
     {

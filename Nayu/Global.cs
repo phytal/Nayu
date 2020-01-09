@@ -27,7 +27,7 @@ namespace Nayu
             0, 0, 0, 0, DateTime.MinValue, null, null, null);
         
         internal static Slot slot = new Slot();
-
+        internal static Color NayuColor = new Color(153, 255, 255);
         internal static Emote ENo = Emote.Parse("<:no:453716729525174273>");
 
         internal static Emote EChomusuke = Emote.Parse("<:chomusuke:601183653657182280>");

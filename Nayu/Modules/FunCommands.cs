@@ -1,12 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
-using Discord.WebSocket;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Net;
 using System.IO;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Core.Handlers;
@@ -17,6 +12,7 @@ namespace Nayu.Modules
 {
     public class FunCommands : NayuModule
     {
+        [Subject(Categories.Fun)]
         [Command("ping")]
         [Summary("Ping Pong!")]
         [Remarks("Ex: n!ping")]
@@ -75,16 +71,16 @@ namespace Nayu.Modules
         public async Task Echo([Remainder] string message)
         {
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-            var LocalTime = DateTime.Now;
+            var localTime = DateTime.Now;
             var Sender = Context.Message.Author;
 
             var embed = new EmbedBuilder();
             embed.WithTitle(message);
-            embed.WithFooter(LocalTime + " Message from " + Sender);
+            embed.WithFooter(localTime + " Message from " + Sender);
             embed.WithColor(37, 152, 255);
 
             await SendMessage(Context, embed.Build());
-            if (config.MassPingChecks == true)
+            if (config.MassPingChecks)
             {
                 if (message.Contains("@everyone") || message.Contains("@here")) return;
             }
@@ -96,7 +92,7 @@ namespace Nayu.Modules
         [Summary("Sends an Let me Google that for you link with what you inputed")]
         [Remarks("n!lmgtfy <what you want to search up> Ex: n!lmgtfy how to use discord")]
         [Cooldown(10)]
-        public async Task lmgtfy([Remainder]string link = "enter something")
+        public async Task Lmgtfy([Remainder]string link = "enter something")
         {
             link = link.Replace(' ', '+');
             await ReplyAsync("https://lmgtfy.com/?q=" + link);
@@ -179,11 +175,10 @@ namespace Nayu.Modules
         [Summary("Rock, Paper Scissors!")]
         [Remarks("n!rps <rock/paper/scissors> Ex: n!rps rock")]
         [Cooldown(5)]
-        public async Task rps([Remainder] string play)
+        public async Task Rps([Remainder] string play)
         {
             play = play.ToLower();
-            Random rnd = new Random();
-            int choice = rnd.Next(4); //1= rock 2= paper 3= scissors
+            int choice = Global.Rng.Next(4); //1= rock 2= paper 3= scissors
             if (play == "rock")
             {
                 if (choice == 1)
@@ -192,11 +187,11 @@ namespace Nayu.Modules
                 }
                 if (choice == 2)
                 {
-                    await SendMessage(Context, null, "I choose **Paper**! :hand_splayed: **PAPER** wins!");
+                    await SendMessage(Context, null, "I choose **Paper**! 🖐️**PAPER** wins!");
                 }
                 if (choice == 3)
                 {
-                    await SendMessage(Context, null, "I choose **Scissors**! :hand_splayed: **ROCK** wins!");
+                    await SendMessage(Context, null, "I choose **Scissors**! 🖐️**ROCK** wins!");
                 }
                 return;
             }
@@ -208,11 +203,11 @@ namespace Nayu.Modules
                 }
                 if (choice == 2)
                 {
-                    await SendMessage(Context, null, "I choose **Paper**! :hand_splayed: It's a tie!");
+                    await SendMessage(Context, null, "I choose **Paper**! 🖐️It's a tie!");
                 }
                 if (choice == 3)
                 {
-                    await SendMessage(Context, null, "I choose **Scissors**! :hand_splayed: **SCISSORS** wins!");
+                    await SendMessage(Context, null, "I choose **Scissors**! 🖐️**SCISSORS** wins!");
                 }
                 return;
             }
@@ -224,11 +219,11 @@ namespace Nayu.Modules
                 }
                 if (choice == 2)
                 {
-                    await SendMessage(Context, null, "I choose **Paper**! :hand_splayed: **SCISSORS** wins!");
+                    await SendMessage(Context, null, "I choose **Paper**! 🖐️**SCISSORS** wins!");
                 }
                 if (choice == 3)
                 {
-                    await SendMessage(Context, null, "I choose **Scissors**! :hand_splayed: It's a tie!");
+                    await SendMessage(Context, null, "I choose **Scissors**! 🖐️It's a tie!");
                 }
                 return;
             }

@@ -2,10 +2,13 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
+using Nayu.Modules.API.Anime.NekosLife;
 using Nayu.Preconditions;
 using Newtonsoft.Json;
+using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 
 namespace Nayu.Modules.API.Anime.Both
 {
@@ -15,76 +18,34 @@ namespace Nayu.Modules.API.Anime.Both
         [Summary("Feed someone!")]
         [Remarks("n!feed <user you want to feed (if left empty you will feed yourself)> Ex: n!feed @Phytal")]
         [Cooldown(10)]
-        public async Task GetRandomNekoHug(IGuildUser user = null)
+        public async Task GetRandomFeed(IGuildUser user = null)
         {
             int rand = Global.Rng.Next(1, 3);
             if (rand == 1)
             {
-                string json = "";
-                using (WebClient client = new WebClient())
-                {
-                    json = client.DownloadString("https://nekos.life/api/v2/img/feed");
-                }
+                string nekolink = NekosLifeHelper.GetNekoLink("feed");
+                string description = user == null
+                    ? $"{Context.User.Mention} fed themselves... Let's hope they don't get fat... \n **(Include a user with your command! Example: n!feed <person you want to feed>)**"
+                    : $"{Context.User.Username} fed {user.Mention}!";
 
-                var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
-
-                string nekolink = dataObject.url.ToString();
-
-                if (user == null)
-                {
-                    var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.WithTitle("Munch!");
-                    embed.WithDescription(
-                        $"{Context.User.Mention} fed themselves... Let's hope they don't get fat... \n **(Include a user with your command! Example: n!feed <person you want to feed>)**");
-                    embed.WithImageUrl(nekolink);
-                    embed.WithFooter($"Powered by nekos.life");
-
-                    await SendMessage(Context, embed.Build());
-                }
-                else
-                {
-                    var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.WithImageUrl(nekolink);
-                    embed.WithTitle("Munch!");
-                    embed.WithDescription($"{Context.User.Username} fed {user.Mention}!");
-                    embed.WithFooter($"Powered by nekos.life");
-
-                    await SendMessage(Context, embed.Build());
-                }
+                var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, "Munch!", description);
+                await SendMessage(Context, embed);
             }
 
             if (rand == 2)
             {
-                string[] tags = new[] { "" };
-                weebDotSh.Helpers.WebRequest webReq = new weebDotSh.Helpers.WebRequest();
+                string[] tags = {""};
+                WebRequest webReq = new WebRequest();
                 RandomData result = await webReq.GetTypesAsync("feed", tags, FileType.Gif, NsfwSearch.False, false);
                 string url = result.Url;
-                string id = result.Id;
-                if (user == null)
-                {
-                    var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.WithTitle("Yum!");
-                    embed.WithDescription(
-                        $"{Context.User.Mention} fed themselves, I think that's a bit too normal. \n **(Include a user with your command! Example: n!feed <person you want to feed>)**");
-                    embed.WithImageUrl(url);
-                    embed.WithFooter($"Powered by weeb.sh | ID: {id}");
+                //string id = result.Id;
 
-                    await SendMessage(Context, embed.Build());
-                }
-                else
-                {
-                    var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.WithImageUrl(url);
-                    embed.WithTitle("Yum!");
-                    embed.WithDescription($"{Context.User.Username} fed {user.Mention}!");
-                    embed.WithFooter($"Powered by weeb.sh | ID: {id}");
+                string description = user == null
+                    ? $"{Context.User.Mention} fed themselves, I think that's a bit too normal. \n **(Include a user with your command! Example: n!feed <person you want to feed>)**"
+                    : $"{Context.User.Username} fed {user.Mention}!";
 
-                    await SendMessage(Context, embed.Build());
-                }
+                var embed = ImageEmbed.GetImageEmbed(url, Source.WeebDotSh, "Munch!", description);
+                await SendMessage(Context, embed);
             }
         }
     }

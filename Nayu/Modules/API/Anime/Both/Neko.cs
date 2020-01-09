@@ -2,10 +2,13 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
+using Nayu.Modules.API.Anime.NekosLife;
 using Nayu.Preconditions;
 using Newtonsoft.Json;
+using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 
 namespace Nayu.Modules.API.Anime.Both
 {
@@ -20,41 +23,25 @@ namespace Nayu.Modules.API.Anime.Both
             int rand = Global.Rng.Next(1, 3);
             if (rand == 1)
             {
-                string json = "";
-                using (WebClient client = new WebClient())
-                {
-                    json = client.DownloadString("https://nekos.life/api/v2/img/neko");
-                }
+                string nekolink = NekosLifeHelper.GetNekoLink("neko");
+                string description = "Randomly generated neko just for you <3!";
 
-                var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
-
-                string nekolink = dataObject.url.ToString();
-
-                var embed = new EmbedBuilder();
-                embed.WithTitle("Randomly generated neko just for you <3!");
-                embed.WithImageUrl(nekolink);
-                embed.WithFooter($"Powered by nekos.life");
-
-                await SendMessage(Context, embed.Build());
+                var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, "Neko!", description);
+                await SendMessage(Context, embed);
             }
 
             if (rand == 2)
             {
-                string[] tags = new[] { "" };
-                weebDotSh.Helpers.WebRequest webReq = new weebDotSh.Helpers.WebRequest();
+                string[] tags = {""};
+                WebRequest webReq = new WebRequest();
                 RandomData result = await webReq.GetTypesAsync("neko", tags, FileType.Gif, NsfwSearch.False, false);
                 string url = result.Url;
-                string id = result.Id;
-                var embed = new EmbedBuilder();
+                //string id = result.Id;
 
-                embed.WithColor(37, 152, 255);
-                embed.WithTitle("Neko!");
-                embed.WithDescription(
-                    $"{Context.User.Mention} here's some nekos at your disposal :3");
-                embed.WithImageUrl(url);
-                embed.WithFooter($"Powered by weeb.sh | ID: {id}");
+                string description = "Randomly generated neko just for you <3!";
 
-                await SendMessage(Context, embed.Build());
+                var embed = ImageEmbed.GetImageEmbed(url, Source.WeebDotSh, "Neko!", description);
+                await SendMessage(Context, embed);
             }
         }
     }

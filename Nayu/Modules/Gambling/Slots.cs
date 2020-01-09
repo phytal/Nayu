@@ -30,13 +30,13 @@ namespace Nayu.Modules.Gambling
         {
             if (amount < 1)
             {
-                await ReplyAsync($":x:  | You can't spin for that amount of Taiyakis.");
+                await ReplyAsync($"{Global.ENo} | You can't spin for that amount of Taiyakis.");
                 return;
             }
             var account = GlobalUserAccounts.GetUserAccount(Context.User.Id);
             if (account.Taiyaki < amount)
             {
-                await ReplyAsync($":hand_splayed:  | Sorry but it seems like you don't have enough Taiyakis... You only have {account.Taiyaki}.");
+                await ReplyAsync($"🖐️ | Sorry but it seems like you don't have enough Taiyakis... You only have {account.Taiyaki}.");
                 return;
             }
 
