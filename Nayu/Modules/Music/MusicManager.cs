@@ -100,12 +100,6 @@ namespace Nayu.Modules.Music {
             var currentTrack = player.Track;
             var artwork = await currentTrack.FetchArtworkAsync();
 
-            var embed = new EmbedBuilder
-            {
-                Title = $"Queue",
-                ThumbnailUrl = artwork,
-            };
-
             var descriptionBuilder = new StringBuilder();
 
             if (player.Queue.Count < 1 && player.PlayerState != PlayerState.Playing)
@@ -120,18 +114,26 @@ namespace Nayu.Modules.Music {
             {
                 if (trackNum == 2)
                 {
-                    descriptionBuilder.Append($"Up Next: **[{track.Title}]**({track.Duration})\n\n");
+                    descriptionBuilder.Append($"Up Next: **[{track.Title}]** - ({track.Duration})\n\n");
                     trackNum++;
                 }
                 else
                 {
-                    descriptionBuilder.Append($"#{trackNum}: **[{track.Title}]**({track.Duration})\n");
+                    descriptionBuilder.Append($"#{trackNum}: **[{track.Title}]** - ({track.Duration})\n\n");
                     trackNum++;
                 }
             }
 
-            return EmbedHandler.CreateEmbed(context, "Music Playlist",
-                $"Now Playing: [{player.Track.Title}]({player.Track.Duration})\n{descriptionBuilder}", EmbedHandler.EmbedMessageType.Success);
+            
+            var embed = new EmbedBuilder
+            {
+                Title = $"Queue",
+                ThumbnailUrl = artwork,
+                Description = $"Now Playing: [{player.Track.Title}]({player.Track.Duration})\n\n{descriptionBuilder}",
+                Color = Global.NayuColor
+            };
+
+            return embed.Build();
         }
         
         public async Task<Embed> NowPlayingAsync(ShardedCommandContext context)
@@ -153,7 +155,8 @@ namespace Nayu.Modules.Music {
                 {
                     Title = $"{track.Author} - {track.Title}",
                     ThumbnailUrl = artwork,
-                    Url = track.Url
+                    Url = track.Url,
+                    Color = Global.NayuColor
                 }
                 .AddField("Id", track.Id)
                 .AddField("Duration", track.Duration)

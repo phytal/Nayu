@@ -36,7 +36,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             await chnl.AddPermissionOverwriteAsync(role, perms);
 
             var embed = MiscHelpers.CreateEmbed(Context, "Channel Locked", $":lock: Locked {Context.Channel.Name}.");
-            await MiscHelpers.SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("unlockchannel"), Alias("ulc")]
@@ -65,7 +65,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             var embed = MiscHelpers
                 .CreateEmbed(Context, "Channel Unlocked", $":unlock: Unlocked {Context.Channel.Name}.")
                 .WithColor(37, 152, 255);
-            await MiscHelpers.SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
     }
 }

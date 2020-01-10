@@ -45,7 +45,7 @@ namespace Nayu.Modules.Admin
             var embed = MiscHelpers.CreateEmbed(Context, "Set Bot Streaming",
                     $"Set the stream name to **{streamName}**, and set the streamer to <https://twitch.tv/{streamer}>!")
                 .WithColor(37, 152, 255);
-            await MiscHelpers.SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
 
 

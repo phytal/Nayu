@@ -102,7 +102,7 @@ namespace Nayu.Modules.Admin
             embed.WithFooter(
                 "Guild Information is shown incorrectly or not shown at all? Use `n!syncguild` to sync the current server owner!");
 
-            await MiscHelpers.SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("SyncGuild")]

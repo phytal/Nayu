@@ -88,7 +88,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
 
                     if (!result.Success)
                     {
-                        await Nayu.Helpers.MiscHelpers.SendMessage(Context, null, result.Response);
+                        await SendMessage(Context, null, result.Response);
                         return;
                     }
 
@@ -97,7 +97,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     Tuple<bool, string> death = await CheckDeath(Context, activeChomusuke, activeChomusukee);
                     if (death.Item1)
                     {
-                        await Nayu.Helpers.MiscHelpers.SendMessage(Context, null, death.Item2);
+                        await SendMessage(Context, null, death.Item2);
                         return;
                     }
 
@@ -112,7 +112,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
 
                     if (!result.Success)
                     {
-                        await Nayu.Helpers.MiscHelpers.SendMessage(Context, null, result.Response);
+                        await SendMessage(Context, null, result.Response);
                         return;
                     }
 
@@ -121,7 +121,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     Tuple<bool, string> death = await CheckDeath(Context, activeChomusuke, activeChomusukee);
                     if (death.Item1)
                     {
-                        await Nayu.Helpers.MiscHelpers.SendMessage(Context, null, death.Item2);
+                        await SendMessage(Context, null, death.Item2);
                         return;
                     }
 
@@ -136,7 +136,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
 
                     if (!result.Success)
                     {
-                        await Nayu.Helpers.MiscHelpers.SendMessage(Context, null, result.Response);
+                        await SendMessage(Context, null, result.Response);
                         return;
                     }
 
@@ -145,7 +145,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     Tuple<bool, string> death = await CheckDeath(Context, activeChomusuke, activeChomusukee);
                     if (death.Item1)
                     {
-                        await Nayu.Helpers.MiscHelpers.SendMessage(Context, null, death.Item2);
+                        await SendMessage(Context, null, death.Item2);
                         return;
                     }
 
@@ -160,7 +160,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
 
                     if (!result.Success)
                     {
-                        await Nayu.Helpers.MiscHelpers.SendMessage(Context, null, result.Response);
+                        await SendMessage(Context, null, result.Response);
                         return;
                     }
 
@@ -169,7 +169,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     Tuple<bool, string> death = await CheckDeath(Context, activeChomusuke, activeChomusukee);
                     if (death.Item1)
                     {
-                        await Nayu.Helpers.MiscHelpers.SendMessage(Context, null, death.Item2);
+                        await SendMessage(Context, null, death.Item2);
                         return;
                     }
 

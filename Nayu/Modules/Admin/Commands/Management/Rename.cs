@@ -32,7 +32,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             var embed = MiscHelpers
                 .CreateEmbed(Context, "User Nicked", $"Set <@{user.Id}>'s nickname on this server to **{nick}**!")
                 .WithColor(37, 152, 255);
-            await MiscHelpers.SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
     }
 }

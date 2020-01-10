@@ -110,7 +110,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             {
                 var embed = MiscHelpers.CreateEmbed(Context, "SoftBan",
                     $"{Context.User.Mention} SoftBanned <@{user.Id}>, deleting the last 7 days of messages from that user.");
-                await MiscHelpers.SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
                 await Context.Guild.AddBanAsync(user, 7);
                 await Context.Guild.RemoveBanAsync(user);
             }
@@ -147,7 +147,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 embed.Title = $"**{userid}** was banned";
                 embed.Description =
                     $"**Username: **{userid}\n**Banned by: **{Context.User.Mention}\n**Reason: **{reason}";
-                await MiscHelpers.SendMessage(Context, embed);
+                await SendMessage(Context, embed.Build());
             }
             catch
             {

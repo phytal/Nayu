@@ -1,9 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Configuration;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules
@@ -41,7 +45,7 @@ namespace Nayu.Modules
         [Cooldown(30)]
         public async Task HelpMessage()
         {
-            string helpMessage =
+            /*string helpMessage =
             "```cs\n" +
             "'Standard Command List'\n" +
             "```\n" +
@@ -67,9 +71,58 @@ namespace Nayu.Modules
             "# To view Moderator commands, use n!helpmod\n" +
             "# To view NSFW commands, use n!helpnsfw\n" +
             "# To view Dueling commands, use n!duelhelp\n" +
-            "```";
+            "```";*/
+            Assembly assembly = Assembly.Load("Nayu");
+            var methods = assembly.GetTypes()
+                .SelectMany(t => t.GetMethods())
+                .Where(m => m.GetCustomAttributes(typeof(Subject), false).Length > 0)
+                .ToArray();
 
-            await ReplyAsync(helpMessage);
+            string helpMessage = "```cs\n" +
+                                 "'Standard Command List'\n" +
+                                 "```\n" +
+                                 "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n " +
+                                 "\n";
+            var categoryNum = 1;
+            foreach (Categories category in (Categories[]) Enum.GetValues(typeof(Categories)))
+            {
+                string categoryDesc = null;
+                try
+                {
+                   categoryDesc = MiscHelpers.GetAttributeOfType<DescriptionAttribute>(category).Description;
+                }
+                catch (Exception e)
+                {
+                    // var num = Enum.GetValues(typeof(Categories)).Length;
+                    // var embed = EmbedHandler.CreateEmbed(Context, "Error",
+                    //     $"Please report this error to my support server.\n```{e}```", EmbedHandler.EmbedMessageType.Error, false);
+                    // if ( num == categoryNum - 1) 
+                    //     await SendMessage(Context, embed);
+                }
+                string categoryName = categoryDesc != null ? categoryDesc : category.ToString();
+
+
+                helpMessage += $"**{categoryNum}. {categoryName} -**";
+
+                foreach (var method in methods)
+                {
+                    var sub = method.GetCustomAttribute<Subject>(false);
+                    if (sub.GetCategories() == category)
+                        helpMessage += $" `{MiscHelpers.GetCommandAttribute(method).Text}`";
+                }
+
+                categoryNum++;
+            }
+
+            helpMessage += "\n" +
+                           "```\n" +
+                           "# Don't include the example brackets when using commands!\n" +
+                           "# To view Moderator commands, use n!helpMod\n" +
+                           "# To view NSFW commands, use n!helpNsfw\n" +
+                           "# To view Chomusuke commands, use n!chomHelp\n" +
+                           "```";
+            
+            await SendMessage(Context, null, helpMessage);
         }
 
         [Command("helpmod")]
@@ -190,7 +243,8 @@ namespace Nayu.Modules
                     x.Name = string.Join(", ", cmd.Aliases);
                     x.Value = //$"Parameters: {string.Join(", ", cmd.Parameters.Select(p => p.Name))}\n" +
                                 $"Description: {cmd.Summary}\n" +
-                                $"Usage: {cmd.Remarks}";
+                                $"Usage: {cmd.Remarks}" +
+                                $"Category: {cmd.Attributes}";
                     x.IsInline = false;
                 });
             }

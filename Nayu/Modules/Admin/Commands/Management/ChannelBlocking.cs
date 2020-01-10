@@ -34,7 +34,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             BotAccounts.SaveAccounts();
 
             var embed = MiscHelpers.CreateEmbed(Context, "Channel Blocked", $":lock: Blocked {Context.Channel.Name}.");
-            await MiscHelpers.SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
 
         [Command("unblockchannel"), Alias("ubc")]
@@ -60,7 +60,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             var embed = MiscHelpers
                 .CreateEmbed(Context, "Channel Unblocked", $":unlock: Unblocked {Context.Channel.Name}.")
                 .WithColor(Constants.DefaultColor);
-            await MiscHelpers.SendMessage(Context, embed);
+            await SendMessage(Context, embed.Build());
         }
     }
 }

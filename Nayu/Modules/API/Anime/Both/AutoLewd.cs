@@ -99,11 +99,29 @@ namespace Nayu.Modules.API.Anime.Both
             var config = BotAccounts.GetAccount();
             foreach (var guild in config.AutoLewdGuilds)
             {
-                var guildAcc = GlobalGuildAccounts.GetGuildAccount(guild);
-                string nekolink = NekosLifeHelper.GetNekoLink("lewd");
-                string description = "Randomly generated lewd nekos just for you <3!";
+                Embed embed = null;
+                int rand = Global.Rng.Next(1, 3);
+                if (rand == 1)
+                {
+                    string nekolink = NekosLifeHelper.GetNekoLink("lewd");
+                    string description = "Randomly generated lewd neko just for you <3!";
 
-                var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, description);
+                    embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, description);
+                }
+
+                if (rand == 2)
+                {
+                    string[] tags = {""};
+                    WebRequest webReq = new WebRequest();
+                    RandomData result = await webReq.GetTypesAsync("neko", tags, FileType.Any, NsfwSearch.Only, false);
+                    string url = result.Url;
+                    //string id = result.Id;
+
+                    string description = "Randomly generated lewd neko just for you <3!";
+
+                    embed = ImageEmbed.GetImageEmbed(url, Source.WeebDotSh, description);
+                }
+                var guildAcc = GlobalGuildAccounts.GetGuildAccount(guild);
                 await Program._client.GetGuild(guildAcc.Id).GetTextChannel(guildAcc.AutoLewdChannel)
                     .SendMessageAsync("", embed: embed);
             }

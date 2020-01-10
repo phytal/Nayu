@@ -45,7 +45,7 @@ namespace Nayu.Modules.API.Anime.Both
             {
                 string[] tags = {""};
                 WebRequest webReq = new WebRequest();
-                RandomData result = await webReq.GetTypesAsync("nsfw-gtn", tags, FileType.Any, NsfwSearch.True, false);
+                RandomData result = await webReq.GetTypesAsync("neko", tags, FileType.Any, NsfwSearch.Only, false);
                 string url = result.Url;
                 //string id = result.Id;
 
