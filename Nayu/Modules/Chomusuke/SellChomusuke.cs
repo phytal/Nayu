@@ -6,12 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Nayu.Helpers;
 
 namespace Nayu.Modules.Chomusuke
 {
     public class SellChomusuke : NayuModule
     {
         //TODO: finish
+        [Subject(ChomusukeCategories.Chomusuke)]
         [Command("sell")]
         public async Task SellChomusukeAsync()
         {

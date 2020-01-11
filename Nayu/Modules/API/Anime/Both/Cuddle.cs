@@ -13,11 +13,12 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Cuddle : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("cuddle")]
         [Summary("Displays an random cuddle picture!")]
         [Remarks("n!cuddle <user you want to cuddle (if left empty you will cuddle yourself)> Ex: n!cuddle @Phytal")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetRandomCuddle(IGuildUser user = null)
         {
             int rand = Global.Rng.Next(1, 3);

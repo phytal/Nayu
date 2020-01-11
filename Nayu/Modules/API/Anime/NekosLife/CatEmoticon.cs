@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 using Newtonsoft.Json;
 
@@ -8,6 +9,7 @@ namespace Nayu.Modules.API.Anime.NekosLife
 {
     public class CatEmoticon : NayuModule
     {
+        [Subject(Categories.Fun)]
         [Command("catemoticon")]
         [Summary("Displays an random cat emoticon :3")]
         [Alias("cate")]

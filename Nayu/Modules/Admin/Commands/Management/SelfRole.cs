@@ -5,13 +5,14 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Core.Handlers;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Management
 {
     public class SelfRole : NayuModule
     {
-
+        [Subject(AdminCategories.Roles)]
         [Command("SelfRoleAdd"), Alias("SRA")]
         [Summary("Adds a role a user can add themselves with n!Iam or n!Iamnot")]
         [Remarks("n!sra <role you want to be available> Ex: n!sra Member")]
@@ -26,6 +27,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -36,7 +38,8 @@ namespace Nayu.Modules.Admin.Commands.Management
             config.SelfRoles.Add(role);
             GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
         }
-
+        
+        [Subject(AdminCategories.Roles)]
         [Command("SelfRoleRem"), Alias("SRR")]
         [Summary("Removes a Self Role. Users can add a role themselves with n!Iam or n!Iamnot")]
         [Remarks("n!srr <self role you want to be removed> Ex: n!srr Member")]
@@ -51,6 +54,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -69,7 +73,8 @@ namespace Nayu.Modules.Admin.Commands.Management
 
             await SendMessage(Context, embed.Build());
         }
-
+        
+        [Subject(AdminCategories.Roles)]
         [Command("SelfRoleClear"), Alias("SRC")]
         [Summary("Clears all Self Roles. Users can add a role themselves with n!Iam or n!Iamnot")]
         [Remarks("n!src")]
@@ -84,6 +89,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);

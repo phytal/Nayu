@@ -13,6 +13,7 @@ namespace Nayu.Modules.Admin.Commands.Management
 {
     public class Ban : NayuModule
     {
+        [Subject(AdminCategories.UserManagement)]
         [Command("ban")]
         [Summary("Bans a specified user")]
         [Remarks("n!ban <user you want to ban> Ex: n!ban @Phytal")]
@@ -29,23 +30,17 @@ namespace Nayu.Modules.Admin.Commands.Management
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
             }
-
-            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             try
             {
-                var logs =
-                    (Context.Client).GetChannel(config.ServerLoggingChannel) as
-                    SocketTextChannel;
-                var gld = Context.Guild as SocketGuild;
+                var guild = Context.Guild;
                 var embed = new EmbedBuilder();
                 embed.WithColor(new Color(37, 152, 255));
                 embed.Title = $"**{user.Username}** was banned";
                 embed.Description =
                     $"**Username: **{user.Username}\n**Guild Name: **{user.Guild.Name}\n**Banned by: **{Context.User.Mention}\n**Reason: **{reason}";
 
-                await gld.AddBanAsync(user);
+                await guild.AddBanAsync(user);
                 await SendMessage(Context, embed.Build());
-                await logs.SendMessageAsync("", embed: embed.Build());
             }
             catch
             {
@@ -56,6 +51,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             }
         }
 
+        [Subject(AdminCategories.UserManagement)]
         [Command("Unban")]
         [Summary("Unban A User")]
         [Remarks("n!Unban <user you want to Unban> Ex: n!UnBans @Phytal#8213")]
@@ -90,6 +86,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             }
         }
 
+        [Subject(AdminCategories.UserManagement)]
         [Command("SoftBan"), Alias("Sb")]
         [Summary("Bans then UnBans a user.")]
         [Remarks("n!SoftBan <user you want to soft ban> Ex: n!SoftBan @Phytal")]
@@ -123,6 +120,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             }
         }
 
+        [Subject(AdminCategories.UserManagement)]
         [Command("IdBan")]
         [Summary("Ban a user by their ID")]
         [Remarks("n!IdBan <user you want to IdBan> Ex: n!IdBan 264897146837270529")]

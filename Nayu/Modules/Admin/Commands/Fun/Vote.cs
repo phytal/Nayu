@@ -3,12 +3,14 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Fun
 {
     public class Vote : NayuModule
     {
+        [Subject(AdminCategories.FunStuff)]
         [Command("Vote")]
         [Alias("poll")]
         [Summary("Creates a voting poll")]

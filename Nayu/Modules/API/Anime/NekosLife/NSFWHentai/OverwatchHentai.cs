@@ -4,13 +4,15 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Nayu.Core.Handlers;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 using Newtonsoft.Json;
 
 namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
 {
     public class OverwatchHentai : NayuModule
-    {
+    {        
+        [Subject(NSFWCategories.Hentai)]
         [Command("overwatchnsfw")]
         [Summary("Generates a picture of NSFW Overwatch from r/OverwatchNSFW")]
         [Alias("ownsfw")]
@@ -24,7 +26,8 @@ namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
                 var nsfwText = $"{Global.ENo} | You need to use this command in a NSFW channel, {Context.User.Username}!";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", nsfwText,
                     EmbedHandler.EmbedMessageType.Exception);
-                await ReplyAndDeleteAsync("", embed: errorEmbed, timeout: TimeSpan.FromSeconds(5));
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             string json;

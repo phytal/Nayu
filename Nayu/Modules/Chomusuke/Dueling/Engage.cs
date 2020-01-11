@@ -6,11 +6,13 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 
 namespace Nayu.Modules.Chomusuke.Dueling
 {
     public class Engage : NayuModule
-    {
+    {        
+        [Subject(ChomusukeCategories.Chomusuke)]
         [Command("engage"), Alias("attack", "item", "giveup")]
         [Summary("Opens the duels engagment GUI")]
         [Remarks("Ex: n!engage")]

@@ -13,11 +13,12 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Poke : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("poke")]
         [Summary("Poke someone! :3")]
         [Remarks("n!poke <user you want to poke (if left empty you will poke yourself)> Ex: n!poke @Phytal")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetRandomPoke(IGuildUser user = null)
         {
             int rand = Global.Rng.Next(1, 3);

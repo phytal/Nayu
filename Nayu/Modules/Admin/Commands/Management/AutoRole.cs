@@ -5,12 +5,14 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Core.Handlers;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Management
 {
     public class AutoRole : NayuModule
     {
+        [Subject(AdminCategories.Roles)]
         [Command("AutoRole")]
         [Summary("Adds a role that new members will receive automatically")]
         [Remarks("n!autorole <role name> Ex: n!autorole Member")]
@@ -25,6 +27,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             if (arg == null) await ReplyAndDeleteAsync("Please include the name of the role you want to autorole");

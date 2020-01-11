@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
@@ -8,7 +9,8 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
 {
     public class Kill : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("kill")]
         [Summary("Displays an image of an anime kill gif")]
         [Alias("waste")]

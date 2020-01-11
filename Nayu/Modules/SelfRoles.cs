@@ -7,14 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 
 namespace Nayu.Modules
 {
     public class SelfRoles : NayuModule
     {
-        [Command("Iam")]
-        [Alias("iam")]
+        [Subject(Categories.SelfRoles)]
+        [Command("iAm")]
         [Summary("Gives you a self role")]
+        [Remarks("n!iAm <role> Ex: n!iAm custom role")]
         public async Task GiveYourselfRole([Remainder]string role)
         {
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -45,8 +47,10 @@ namespace Nayu.Modules
             await ReplyAsync("", embed: embed.Build());
         }
 
-        [Command("Iamnot"), Alias("Iamn", "iamnot", "iamn")]
+        [Subject(Categories.SelfRoles)]
+        [Command("iAmNot"), Alias("iAmN")]
         [Summary("Remove a self role from you")]
+        [Remarks("n!iAmNot <role> Ex: n!iAmNot custom role")]
         public async Task TakeAwayRole([Remainder]string role)
         {
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -77,7 +81,10 @@ namespace Nayu.Modules
             await ReplyAsync("", embed: embed.Build());
         }
 
-        [Command("SelfRoleList"), Alias("selfroles", "srl"), Summary("Shows all currently set Self Roles")]
+        [Subject(Categories.SelfRoles)]
+        [Command("selfRoleList"), Alias("selfRoles", "srl")]
+        [Summary("Shows all currently set Self Roles")]
+        [Remarks("Ex: n!srl")]
         public async Task SelfRoleList()
         {
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);

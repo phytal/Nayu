@@ -3,11 +3,13 @@ using Discord.Commands;
 using System;
 using System.Threading.Tasks;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 
 namespace Nayu.Modules.Chomusuke
 {
     public class SetActive : NayuModule
-    {
+    {        
+        [Subject(ChomusukeCategories.Chomusuke)]
         [Command("active")]
         [Summary("Replace your active chomusuke with another one")]
         [Remarks("Usage: n!active Ex: n!active")]

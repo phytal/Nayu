@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Inbox
 {
     public class Inbox : NayuModule
     {
+        [Subject(Categories.Inbox)]
         [Command("inbox")]
         [Summary("Shows your inbox of messages. Pageable to see older messages.")]
         [Alias("mail", "email", "messages", "msgs")]

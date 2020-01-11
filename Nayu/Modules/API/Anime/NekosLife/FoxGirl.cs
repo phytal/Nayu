@@ -2,17 +2,19 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 using Newtonsoft.Json;
 
 namespace Nayu.Modules.API.Anime.NekosLife
 {
     public class FoxGirl : NayuModule
-    {
+    {        
+        [Subject(Categories.Images)]
         [Command("foxgirl")]
         [Summary("Displays an random fox girl :3")]
         [Remarks("Ex: n!neko")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetRandomFoxGirl()
         {
             string json = "";

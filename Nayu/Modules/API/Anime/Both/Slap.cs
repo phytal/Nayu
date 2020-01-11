@@ -12,7 +12,8 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Slap : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("slap")]
         [Summary("Slap someone!")]
         [Remarks("n!slap <user you want to slap (if left empty you will slap yourself)> Ex: n!slap @Phytal")]

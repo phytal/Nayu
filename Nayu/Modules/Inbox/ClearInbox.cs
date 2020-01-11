@@ -3,16 +3,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Discord.Commands;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Inbox
 {
     public class ClearInbox : NayuModule
-    {
-        [Command("clearinbox")]
+    {        
+        [Subject(Categories.Inbox)]
+        [Command("clearInbox")]
         [Summary("Clears your entire inbox (irreversible)")]
         [Alias("ci")]
-        [Remarks("n!clearinbox Ex: n!clearinbox")]
+        [Remarks("n!clearInbox Ex: n!clearInbox")]
         [Cooldown(3)]
         public async Task ClearInboxCommand()
         {

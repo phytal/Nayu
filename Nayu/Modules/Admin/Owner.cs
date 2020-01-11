@@ -22,7 +22,8 @@ namespace Nayu.Modules.Admin
 
         public void Kill() =>
             KillProgram(); // DO. NOT. USE. THIS. This is only for deliberately causing a StackOverflowException to stop the program.
-
+        
+        [Subject(OwnerCategories.Owner)]
         [Command("Shutdown")]
         [Summary("Shuts down Nayu :((")]
         [RequireOwner]
@@ -33,9 +34,9 @@ namespace Nayu.Modules.Admin
             await client.LogoutAsync();
             await client.StopAsync();
             KillProgram();
-
         }
-
+        
+        [Subject(OwnerCategories.Owner)]
         [Command("Stream")]
         [Summary("Sets what Nayu is streaming")]
         [RequireOwner]
@@ -48,7 +49,7 @@ namespace Nayu.Modules.Admin
             await SendMessage(Context, embed.Build());
         }
 
-
+        [Subject(OwnerCategories.Owner)]
         [Command("Game")]
         [Summary("Sets the game Nayu is playing")]
         [RequireOwner]
@@ -63,6 +64,7 @@ namespace Nayu.Modules.Admin
             await ReplyAsync("", embed: embed.Build());
         }
 
+        [Subject(OwnerCategories.Owner)]
         [Command("setVersion")]
         [Summary("Set Nayu's version")]
         [RequireOwner]
@@ -75,6 +77,7 @@ namespace Nayu.Modules.Admin
             await ReplyAsync("", embed: embed.Build());
         }
 
+        [Subject(OwnerCategories.Owner)]
         [Command("Status")]
         [Summary("Sets Nayu's user status")]
         [RequireOwner]
@@ -106,6 +109,7 @@ namespace Nayu.Modules.Admin
             await ReplyAsync("", embed: embed.Build());
         }
 
+        [Subject(OwnerCategories.Owner)]
         [Command("LeaveServer")]
         [Summary("Make's Nayu leave the server")]
         [RequireOwner]
@@ -117,6 +121,7 @@ namespace Nayu.Modules.Admin
             await Context.Guild.LeaveAsync();
         }
 
+        [Subject(OwnerCategories.Owner)]
         [Command("ServerCount"), Alias("Sc")]
         [Summary("Sets Nayu's game/stream the number of guilds in")]
         [RequireOwner]
@@ -133,6 +138,7 @@ namespace Nayu.Modules.Admin
 
         }
 
+        [Subject(OwnerCategories.Owner)]
         [Command("setAvatar"), Remarks("Sets the bots Avatar")]
         [RequireOwner]
         public async Task SetAvatar(string link)
@@ -155,6 +161,7 @@ namespace Nayu.Modules.Admin
             }
         }
 
+        [Subject(OwnerCategories.Owner)]
         [Command("uptime")]
         [Alias("runtime")]
         public async Task UpTime()
@@ -181,6 +188,7 @@ namespace Nayu.Modules.Admin
             await ReplyAsync("", embed: embed.Build());
         }
 
+        [Subject(OwnerCategories.Owner)]
         [Command("announceToEveryone"), Remarks("Sets the bots Avatar")]
         [RequireOwner]
         public async Task Announce([Remainder]string content)

@@ -1,17 +1,19 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 using Newtonsoft.Json;
 
 namespace Nayu.Modules.API
 {
     public class UserStats : NayuModule
-    {
+    {        
+        [Subject(Categories.osu)]
         [Command("osustats")]
         [Summary("Get a osu! user's statistics.")]
         [Remarks("n!osustats <osu username> Ex: n!osustats Phytal")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetOsuStats([Remainder] string user)
         {
             var json = await Global.SendWebRequest("https://osu.ppy.sh/api/get_user?k=2ce122dfe83fb6826b3f2dfe58336006db65c138&type=string&u=" + user);
@@ -58,11 +60,12 @@ namespace Nayu.Modules.API
 
             await SendMessage(Context, embed.Build());
         }
-
+        
+        [Subject(Categories.osu)]
         [Command("maniastats")]
         [Summary("Get a osu! mania user's statistics.")]
         [Remarks("n!maniastats <osu username> Ex: n!maniastats Phytal")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetOsuManiaStats([Remainder] string user)
         {
             var json = await Global.SendWebRequest("https://osu.ppy.sh/api/get_user?k=2ce122dfe83fb6826b3f2dfe58336006db65c138&type=string&m=3&u=" + user);
@@ -109,11 +112,12 @@ namespace Nayu.Modules.API
 
             await SendMessage(Context, embed.Build());
         }
-
+        
+        [Subject(Categories.osu)]
         [Command("taikostats")]
         [Summary("Get a osu! taiko user's statistics.")]
         [Remarks("n!taikostats <osu username> Ex: n!taikostats Phytal")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetOsuTaikoStats([Remainder] string user)
         {
             var json = await Global.SendWebRequest("https://osu.ppy.sh/api/get_user?k=2ce122dfe83fb6826b3f2dfe58336006db65c138&type=string&m=1&u=" + user);
@@ -160,11 +164,12 @@ namespace Nayu.Modules.API
 
             await SendMessage(Context, embed.Build());
         }
-
+        
+        [Subject(Categories.osu)]
         [Command("ctbstats")]
         [Summary("Get a osu! ctb user's statistics.")]
         [Remarks("n!ctbstats <osu username> Ex: n!ctbstats Phytal")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetOsuCtbStats([Remainder] string user)
         {
             var json = await Global.SendWebRequest("https://osu.ppy.sh/api/get_user?k=2ce122dfe83fb6826b3f2dfe58336006db65c138&type=string&m=2&u=" + user);

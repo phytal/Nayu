@@ -11,6 +11,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
 {
     public class Unflip : NayuModule
     {
+        [Subject(AdminCategories.FunStuff)]
         [Command("unflip"), Alias("uf")]
         [Summary("Enables or disables unflipping reactions for the server.")]
         [Remarks("n!uf <on/off> Ex: n!uf on")]

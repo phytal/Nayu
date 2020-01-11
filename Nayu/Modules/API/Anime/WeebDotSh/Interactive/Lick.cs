@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
@@ -8,7 +9,8 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
 {
     public class Lick : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("lick")]
         [Summary("Displays an image of an anime lick gif")]
         [Remarks("Usage: n!lick <user you want to lick (or can be left empty)> Ex: n!lick @Phytal")]

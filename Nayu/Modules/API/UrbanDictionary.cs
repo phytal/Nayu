@@ -7,17 +7,19 @@ using Newtonsoft.Json;
 using Discord.Commands;
 using Discord;
 using System.Net;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.API
 {
     public class UrbanDictionary : NayuModule
-    {
+    {        
+        [Subject(Categories.Fun)]
         [Command("define")]
         [Summary("Use Urban Dictionary to define a given word")]
         [Alias("dictionary", "urban", "definition")]
         [Remarks("n!define <word you want to define> Ex: n!define Weeb")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task Define([Remainder] string link)
         {
             if (Context.Guild.Id == 264445053596991498 && !(Context.Channel as ITextChannel).IsNsfw) //dbl server (dont kill me pls)

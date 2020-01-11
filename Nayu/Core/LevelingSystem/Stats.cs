@@ -5,6 +5,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Modules;
 using Nayu.Preconditions;
 
@@ -12,11 +13,12 @@ namespace Nayu.Core.LevelingSystem
 {
     public class StatsModule : NayuModule
     {
+        [Subject(Categories.EconomyGambling)]
         [Command("stats")]
         [Summary("Checks your stats (level, xp, reputation)")]
         [Alias("userstats")]
         [Remarks("n!stats <person you want to check(will default to you if left empty)> Ex: n!stats @Phytal")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task Stats([Remainder]string arg = "")
         {
             SocketUser target = null;

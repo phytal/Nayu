@@ -11,6 +11,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
 {
     public class Leveling : NayuModule
     {
+        [Subject(AdminCategories.BotSettings)]
         [Command("levelingmsg")]
         [Alias("lvlmsg")]
         [Summary("Sets the way leveling messages are sent")]
@@ -51,6 +52,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
             }
         }
 
+        [Subject(AdminCategories.BotSettings)]
         [Command("Leveling"), Alias("L")]
         [Summary("Enables or disables leveling for the server.")]
         [Remarks("n!leveling <on/off> Ex: n!leveling on")]

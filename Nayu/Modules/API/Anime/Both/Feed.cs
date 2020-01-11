@@ -13,11 +13,12 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Feed : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("feed")]
         [Summary("Feed someone!")]
         [Remarks("n!feed <user you want to feed (if left empty you will feed yourself)> Ex: n!feed @Phytal")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetRandomFeed(IGuildUser user = null)
         {
             int rand = Global.Rng.Next(1, 3);

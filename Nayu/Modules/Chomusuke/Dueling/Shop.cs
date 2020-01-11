@@ -5,11 +5,13 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 
 namespace Nayu.Modules.Chomusuke.Dueling
 {
     public class Shop : NayuModule
-    {
+    {        
+        [Subject(ChomusukeCategories.Chomusuke)]
         [Command("duelsBuy"), Alias("duels shop", "duel buy", "duel shop")]
         [Summary("Opens the duels shop menu!")]
         [Remarks("Ex: n!duels shop")]

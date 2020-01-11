@@ -5,27 +5,29 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Handlers;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin
 {
     public class ReportsChannel : NayuModule
     {
+        [Subject(AdminCategories.ServerManagement)]
         [Command("reports")]
         [Summary("If the reports channel isn't automatically created, you can use this command to manually create it")]
         [Remarks("Ex: n!reports")]
-        [Cooldown(10)]
-        [RequireBotPermission(GuildPermission.ManageChannels)]
+        [Cooldown(5)]
         public async Task Text()
         {
             var guildUser = Context.User as SocketGuildUser;
-            if (!guildUser.GuildPermissions.Administrator)
+            if (!guildUser.GuildPermissions.ManageChannels)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} | You Need the **Manage Channels** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var role = Context.Guild.Roles.FirstOrDefault(r => r.Name == "@everyone");
@@ -38,10 +40,11 @@ namespace Nayu.Modules.Admin
             await channel.AddPermissionOverwriteAsync(role, perms);
         }
 
-        [Command("Report")]
+        [Subject(Categories.Other)]
+        [Command("report")]
         [Summary("Reports @Username")]
         [Remarks("n!report <user> <reason> Ex: n!report @Phytal abusing")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task ReportAsync(SocketGuildUser user, [Remainder] string reason)
         {
             if ((user == null)

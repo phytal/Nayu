@@ -5,13 +5,14 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Handlers;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Management
 {
     public class Clear : NayuModule
     {
-
+        [Subject(AdminCategories.ServerManagement)]
         [Command("clear")]
         [Alias("purge", "delete")]
         [Summary("Purges A User's Last 100 Messages")]
@@ -27,6 +28,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var messages = await Context.Channel.GetMessagesAsync(100).FlattenAsync();
@@ -35,6 +37,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (Context.Channel is ITextChannel channel) await channel.DeleteMessagesAsync(result);
         }
 
+        [Subject(AdminCategories.ServerManagement)]
         [Command("clear")]
         [Alias("purge", "delete")]
         [Summary("Clears *x* amount of messages")]
@@ -51,6 +54,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             if (num <= 100)

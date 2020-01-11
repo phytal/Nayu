@@ -3,13 +3,15 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Gambling
 {
     public class Gambling : NayuModule
-    {
-        [Command("coinflip")]
+    {        
+        [Subject(Categories.EconomyGambling)]
+        [Command("coinFlip")]
         [Summary("Flips a coin and if you win you earn x2 of the Taiyakis you betted. If lost you lose your Taiyakis.")]
         [Alias("Coin", "flip", "cf")]
         [Remarks("n!cf <side (heads/tails)> <amount of Taiyakis you want to flip for(you will earn nothing if left empty)> Ex: n!cf tails 20")]
@@ -57,7 +59,8 @@ namespace Nayu.Modules.Gambling
             GlobalUserAccounts.SaveAccounts(config.Id);
             await SendMessage(Context, embed.Build());
         }
-
+        
+        [Subject(Categories.EconomyGambling)]
         [Command("roll")]
         [Summary("Rolls a Dice")]
         [Alias("dice", "dice roll")]

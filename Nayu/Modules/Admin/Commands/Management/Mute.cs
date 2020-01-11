@@ -5,6 +5,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Handlers;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Management
@@ -14,7 +15,8 @@ namespace Nayu.Modules.Admin.Commands.Management
         private static readonly OverwritePermissions denyOverwrite =
             new OverwritePermissions(addReactions: PermValue.Deny, sendMessages: PermValue.Deny,
                 attachFiles: PermValue.Deny);
-
+        
+        [Subject(AdminCategories.UserManagement)]
         [Command("mute")]
         [Summary("Mutes @Username")]
         [Remarks("n!mute <user you want to mute> Ex: n!mute @Phytal")]
@@ -29,6 +31,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var muteRole = await GetMuteRole(user.Guild);
@@ -43,7 +46,8 @@ namespace Nayu.Modules.Admin.Commands.Management
             await user.AddRoleAsync(muted);
             await SendMessage(Context, embed.Build());
         }
-
+        
+        [Subject(AdminCategories.UserManagement)]
         [Command("unmute")]
         [Summary("Unmutes @Username")]
         [Remarks("n!unmute <user you want to unmute> Ex: n!unmute @Phytal")]
@@ -58,6 +62,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             try

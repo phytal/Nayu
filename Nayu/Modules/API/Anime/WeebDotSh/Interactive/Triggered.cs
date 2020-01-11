@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
@@ -8,7 +9,8 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
 {
     public class Triggered : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("triggered")]
         [Summary("Displays an image of an anime triggered gif")]
         [Remarks("Usage: n!triggered <user you want to be triggered at (or can be left empty)> Ex: n!triggered @Phytal")]

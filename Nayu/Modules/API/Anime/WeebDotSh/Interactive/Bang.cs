@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
@@ -9,6 +10,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
 {
     public class Bang : NayuModule
     {
+        [Subject(Categories.Interaction)]
         [Command("bang")]
         [Summary("Displays an image of an anime bang gif")]
         [Remarks("Usage: n!bang <user you want to shoot (or can be left empty)> Ex: n!bang @Phytal")]

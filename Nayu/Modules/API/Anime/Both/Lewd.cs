@@ -15,11 +15,12 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Lewd : NayuModule
-    {
+    {        
+        [Subject(NSFWCategories.Neko)]
         [Command("lewd")]
         [Summary("Displays a lewd image (nsfw)")]
         [Remarks("Ex: n!lewd")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetRandomNekoLewd()
         {
             var channel = Context.Channel as ITextChannel;
@@ -28,7 +29,8 @@ namespace Nayu.Modules.API.Anime.Both
                 var nsfwText = $"{Global.ENo} | You need to use this command in a NSFW channel, {Context.User.Username}!";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", nsfwText,
                     EmbedHandler.EmbedMessageType.Exception);
-                await ReplyAndDeleteAsync("", embed: errorEmbed, timeout: TimeSpan.FromSeconds(5));
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
             
             int rand = Global.Rng.Next(1, 3);

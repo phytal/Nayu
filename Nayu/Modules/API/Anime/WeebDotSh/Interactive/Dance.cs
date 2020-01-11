@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
@@ -8,7 +9,8 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
 {
     public class Dance : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("dance")]
         [Summary("Displays an image of an anime dance gif")]
         [Remarks("Usage: n!dance <user you want to dance with (or can be left empty)> Ex: n!dance @Phytal")]

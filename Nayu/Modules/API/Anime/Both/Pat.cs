@@ -13,11 +13,12 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Pat : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("pat")]
         [Summary("Pat someone! :3")]
         [Remarks("n!pat <user you want to pat (if left empty you will pat yourself)> Ex: n!pat @Phytal")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetRandomPat(IGuildUser user = null)
         {
             int rand = Global.Rng.Next(1, 3);

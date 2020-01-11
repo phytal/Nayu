@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
@@ -9,6 +10,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
 {
     public class Shrug : NayuModule
     {
+        [Subject(Categories.Interaction)]
         [Command("shrug")]
         [Summary("Displays an image of an anime shrug gif")]
         [Remarks("Usage: n!shrug <user you want to shrug at (or can be left empty)> Ex: n!shrug @Phytal")]

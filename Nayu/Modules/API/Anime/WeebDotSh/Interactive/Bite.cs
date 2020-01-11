@@ -2,6 +2,7 @@
 using Discord;
 using Discord.Commands;
 using Nayu.Core.Configuration;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
@@ -9,7 +10,8 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
 {
     public class Bite : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("bite")]
         [Summary("Displays an image of an anime bite gif")]
         [Remarks("Usage: n!bite <user you want to bite (or can be left empty)> Ex: n!bite @Phytal")]

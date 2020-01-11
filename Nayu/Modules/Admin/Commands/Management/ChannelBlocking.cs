@@ -13,6 +13,7 @@ namespace Nayu.Modules.Admin.Commands.Management
 {
     public class ChannelBlocking : NayuModule
     {
+        [Subject(AdminCategories.ServerManagement)]
         [Command("blockchannel"), Alias("bc")]
         [Summary("Blocks the current channel (users will be unable to use commands, only admins)")]
         [Remarks("n!bc")]
@@ -27,6 +28,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = BotAccounts.GetAccount();
@@ -37,6 +39,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             await SendMessage(Context, embed.Build());
         }
 
+        [Subject(AdminCategories.ServerManagement)]
         [Command("unblockchannel"), Alias("ubc")]
         [Summary("Unblocks the current channel (users can use commands again)")]
         [Remarks("n!ubc")]
@@ -51,6 +54,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = BotAccounts.GetAccount();

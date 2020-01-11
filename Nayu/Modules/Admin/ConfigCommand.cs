@@ -36,11 +36,11 @@ namespace Nayu.Modules.Admin
             return dict.Count >= count ? "**On**" : "**Off**";
         }
 
-
+        [Subject(AdminCategories.ServerManagement)]
         [Command("Config")]
         [Summary("Displays all of the bot settings on this server")]
         [Remarks("Ex: n!config")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task MasterConfig()
         {
             var guildUser = Context.User as SocketGuildUser;
@@ -95,7 +95,6 @@ namespace Nayu.Modules.Admin
                                     $"Slow mode: {ConvertBoolean(config.IsSlowModeEnabled)}\n" +
                                     $"Leveling: {ConvertBoolean(config.Leveling)}\n" +
                                     $"Mass Ping Checks: {ConvertBoolean(config.MassPingChecks)}\n" +
-                                    $"Server Logging: {ConvertBoolean(config.IsServerLoggingEnabled)}\n" +
                                     $"Unflipping: {ConvertBoolean(config.Unflip)}\n");
 
             embed.WithThumbnailUrl(Context.Guild.IconUrl);

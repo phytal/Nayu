@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
@@ -8,7 +9,8 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh
 {
     public class Any : NayuModule
-    {
+    {        
+        [Subject(Categories.Images)]
         [Command("anyweeb")]
         [Summary("Displays an image of a sfw anime gif/image, provided with the type")]
         [Remarks("Usage: n!anyweeb <type> Ex: n!anyweeb lick")]
@@ -17,7 +19,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh
         {
             try
             {
-                string[] tags = new[] {""};
+                string[] tags = {""};
                 Helpers.WebRequest webReq = new Helpers.WebRequest();
                 RandomData result = await webReq.GetTypesAsync(type, tags, FileType.Any, NsfwSearch.False, false);
                 string url = result.Url;

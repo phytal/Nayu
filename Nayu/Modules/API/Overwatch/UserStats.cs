@@ -7,18 +7,20 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.API.Overwatch
 {
     public class UserStats : NayuModule
-    {
+    {        
+        [Subject(Categories.Overwatch)]
         [Command("owstats")]
         [Summary("Get a Overwatch user's statistics.")]
         [Alias("ows", "overwatchstats")]
         [Remarks(
             "n!owstats <Your Battle.net username and id> <platform (pc/xbl/psn)> <region (us/eu etc.)> Ex: n!owstats Phytal-1427 pc us")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetOwStats(string username, string platform, string region)
         {
             try
@@ -298,13 +300,14 @@ namespace Nayu.Modules.API.Overwatch
                     "Oops! Are you sure that your Overwatch career profile is set to public and you typed in your username correctly?\n**n!ows <Your Battle.net username and id> <platform (pc/xbl/psn)> <region> Ex: n!owstats Phytal-1427 pc us**\nNote that you must have completed your placement matches in competetive for this to show up, otherwise use n!owsqp");
             }
         }
-
+        
+        [Subject(Categories.Overwatch)]
         [Command("owstatsqp")]
         [Summary("Get a Overwatch user's Quickplay statistics.")]
         [Alias("owsqp", "overwatchstatsqp", "owsquickplay")]
         [Remarks(
             "n!owsqp <Your Battle.net username and id> <platform (pc/xbl/psn)> <region (us/eu etc.)> Ex: n!owstatsqp Phytal-1427 pc us")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetOwQPStats(string username, string platform, string region)
         {
             try
@@ -467,13 +470,14 @@ namespace Nayu.Modules.API.Overwatch
                     "Oops! Are you sure that your Overwatch career profile is set to public and you typed in your username correctly?\n**n!owstatsqp <Your Battle.net username and id> <platform (pc/xbl/psn)> <region> Ex: n!owsqp Phytal-1427 pc us**");
             }
         }
-
+        
+        [Subject(Categories.Overwatch)]
         [Command("owstatscomp")]
         [Summary("Get a Overwatch user's Competitive statistics.")]
         [Alias("owsc", "overwatchstatscomp", "owscompetitive")]
         [Remarks(
             "n!owsc <Your Battle.net username and id> <platform (pc/xbl/psn)> <region (us/eu etc.)> Ex: n!owstatscomp Phytal-1427 pc us")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetOwCompStats(string username, string platform, string region)
         {
             try

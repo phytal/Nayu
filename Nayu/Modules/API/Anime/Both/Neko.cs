@@ -13,11 +13,12 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Neko : NayuModule
-    {
+    {        
+        [Subject(Categories.Images)]
         [Command("neko")]
         [Summary("Displays an random neko :3")]
         [Remarks("Ex: n!neko")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetRandomNeko()
         {
             int rand = Global.Rng.Next(1, 3);

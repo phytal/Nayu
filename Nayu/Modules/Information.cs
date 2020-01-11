@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Configuration;
+using Nayu.Core.Handlers;
 using Nayu.Helpers;
 using Nayu.Preconditions;
 
@@ -21,11 +24,11 @@ namespace Nayu.Modules
             _service = service;
         }
 
-
+        [Subject(Categories.Information)]
         [Command("info")]
         [Summary("Shows Nayu's information")]
         [Remarks("Ex: n!info")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task Info()
         {
             string version = Config.bot.version;
@@ -39,76 +42,138 @@ namespace Nayu.Modules
             await SendMessage(Context, embed.Build());
         }
 
+        [Subject(Categories.Information)]
         [Command("help")]
         [Summary("Shows all possible standard commands for this bot")]
         [Remarks("Ex: n!help")]
         [Cooldown(30)]
         public async Task HelpMessage()
         {
-            /*string helpMessage =
-            "```cs\n" +
-            "'Standard Command List'\n" +
-            "```\n" +
-            "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n " +
-            "\n" +
-            "**1. Core -** `help` `invite` `patreon` `ping` `dailyVote` `command` `changeLog`\n" +
-            "**2. Social -** `stats` `topXP` `report`\n" +
-            "**3. Emotes -** `cuddle` `feed` `hug` `kiss` `pat` `poke` `tickle` `slap` `baka` `bite` `waifuInsult` `dab` `greet` `insult` `kill` `lick` `shrug` `triggered` `bang` `baka` `cry` `dance` `highFive` `holdHand` `pout` `punch` `smug` `stare` `thumbsUp` `wag`\n" +
-            "**4. Fun -**  `lenny` `rateWaifu` `bigLetter` `rps` `define` `meme` `gif`\n" +
-            "**5. Economy -** `balance` `daily` `rank`\n" +
-            "**6. Gambling -** `roll` `coinFlip` `newSlots` `slots` `showSlots`\n" +
-            "**7. Misc -** `shiba`\n" +
-            "**7. Anime Images -** `neko` `foxGirl` `kemonomimi` `lewdSFW` `megumin` `rem` `owo`\n" +
-            "**8. Overwatch -** `owStats` `owStatsComp` `owStatsQP` `myOwStats` `myOwStatsComp` `myOwStatsQP` `owHeroStats` `owHeroStatsComp` `owHeroStatsQP` `myOwHeroStats` `myOwHeroStatsComp` `myOwHeroStatsQP` `owAccount`\n" +
-            "**9. osu! -** `osuStats` `maniaStats` `taikoStats` `ctbStats`\n" +
-            "**10. Self Roles -** `iAm` `iAmNot` `selfRoleList`\n" +
-            "**11. Chomusuke (n!chomusuke <command>) -** `stats` `feed` `clean` `train` `play` `name` `buy` `picture` `help` `openCapsule` `inventory`\n" +
-            "**17. Personal Tags (n!ptag <command>)-** `new` `update` `remove` `list`\n" +
-            "**18. Lootboxes -** `openLootBox` `lootBoxInventory` `giftLootbox`\n" +
-            "\n" +
-            "```\n" +
-            "# Don't include the example brackets when using commands!\n" +
-            "# To view Moderator commands, use n!helpmod\n" +
-            "# To view NSFW commands, use n!helpnsfw\n" +
-            "# To view Dueling commands, use n!duelhelp\n" +
-            "```";*/
             Assembly assembly = Assembly.Load("Nayu");
             var methods = assembly.GetTypes()
                 .SelectMany(t => t.GetMethods())
                 .Where(m => m.GetCustomAttributes(typeof(Subject), false).Length > 0)
-                .ToArray();
+                .ToList();
 
             string helpMessage = "```cs\n" +
                                  "'Standard Command List'\n" +
-                                 "```\n" +
-                                 "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n " +
-                                 "\n";
+                                 "```" +
+                                 "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n ";
             var categoryNum = 1;
-            foreach (Categories category in (Categories[]) Enum.GetValues(typeof(Categories)))
+            var categories = new List<Categories>((Categories[])Enum.GetValues(typeof(Categories)));
+            //removes the none enum
+            categories.RemoveAt(0);
+            
+            foreach (Categories category in categories)
             {
                 string categoryDesc = null;
                 try
                 {
                    categoryDesc = MiscHelpers.GetAttributeOfType<DescriptionAttribute>(category).Description;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    // var num = Enum.GetValues(typeof(Categories)).Length;
-                    // var embed = EmbedHandler.CreateEmbed(Context, "Error",
-                    //     $"Please report this error to my support server.\n```{e}```", EmbedHandler.EmbedMessageType.Error, false);
-                    // if ( num == categoryNum - 1) 
-                    //     await SendMessage(Context, embed);
+                    //do nothing
                 }
                 string categoryName = categoryDesc != null ? categoryDesc : category.ToString();
 
 
-                helpMessage += $"**{categoryNum}. {categoryName} -**";
+                helpMessage += $"\n**{categoryNum}. {categoryName} -**";
 
-                foreach (var method in methods)
+                foreach (var method in methods.ToList())
                 {
-                    var sub = method.GetCustomAttribute<Subject>(false);
-                    if (sub.GetCategories() == category)
-                        helpMessage += $" `{MiscHelpers.GetCommandAttribute(method).Text}`";
+                    var sub = method.GetCustomAttribute<Subject>(true);
+                    if (sub.GetAdminCategories() == AdminCategories.None &&
+                        sub.GetChomusukeCategories() == ChomusukeCategories.None &&
+                        sub.GetOwnerCategories() == OwnerCategories.None &&
+                        sub.GetNSFWCategories() == NSFWCategories.None)
+                    {
+                        if (sub.GetCategories() == category)
+                        {
+                            helpMessage += $" `{MiscHelpers.GetCommandAttribute(method).Text}`";
+                            //removes the method from the list if successful to make it faster
+                            methods.Remove(method);
+                        }
+                    }
+                }
+                categoryNum++;
+            }
+            helpMessage += "\n" +
+                           "```\n" +
+                           "# Don't include the example brackets when using commands!\n" +
+                           "# To view Moderator commands, use n!helpMod\n" +
+                           "# To view NSFW commands, use n!helpNsfw\n" +
+                           "# To view Chomusuke commands, use n!helpChom\n" +
+                           "```";
+
+            await SendMessage(Context, null, helpMessage);
+        }
+
+        [Subject(Categories.Information)]
+        [Command("helpMod")]
+        [Summary("Shows all possible moderator commands for this bot")]
+        [Remarks("Ex: n!helpMod")]
+        [Cooldown(30)]
+        public async Task HelpMessageMod()
+        {
+            var guildUser = Context.User as SocketGuildUser;
+            if (!guildUser.GuildPermissions.Administrator)
+            {
+                string description =
+                    $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
+            }
+
+            Assembly assembly = Assembly.Load("Nayu");
+            var methods = assembly.GetTypes()
+                .SelectMany(t => t.GetMethods())
+                .Where(m => m.GetCustomAttributes(typeof(Subject), false).Length > 0)
+                .ToList();
+
+            string helpMessage = "```cs\n" +
+                                 "Moderator Command List\n" +
+                                 "```" +
+                                 "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n ";
+            var categoryNum = 1;
+            var categories = new List<AdminCategories>((AdminCategories[]) Enum.GetValues(typeof(AdminCategories)));
+            //removes the none enum
+            categories.RemoveAt(0);
+
+            foreach (AdminCategories category in categories)
+            {
+                string categoryDesc = null;
+                try
+                {
+                    categoryDesc = MiscHelpers.GetAttributeOfType<DescriptionAttribute>(category).Description;
+                }
+                catch (Exception)
+                {
+                    //do nothing
+                }
+
+                string categoryName = categoryDesc != null ? categoryDesc : category.ToString();
+
+
+                helpMessage += $"\n**{categoryNum}. {categoryName} -**";
+
+                foreach (var method in methods.ToList())
+                {
+                    var sub = method.GetCustomAttribute<Subject>(true);
+                    if (sub.GetCategories() == Categories.None &&
+                        sub.GetChomusukeCategories() == ChomusukeCategories.None &&
+                        sub.GetOwnerCategories() == OwnerCategories.None &&
+                        sub.GetNSFWCategories() == NSFWCategories.None)
+                    {
+                        if (sub.GetAdminCategories() == category)
+                        {
+                            helpMessage += $" `{MiscHelpers.GetCommandAttribute(method).Text}`";
+                            //removes the method from the list if successful to make it faster
+                            methods.Remove(method);
+                        }
+                    }
                 }
 
                 categoryNum++;
@@ -117,95 +182,167 @@ namespace Nayu.Modules
             helpMessage += "\n" +
                            "```\n" +
                            "# Don't include the example brackets when using commands!\n" +
-                           "# To view Moderator commands, use n!helpMod\n" +
+                           "# To view standard commands, use n!help\n" +
                            "# To view NSFW commands, use n!helpNsfw\n" +
-                           "# To view Chomusuke commands, use n!chomHelp\n" +
+                           "# To view Chomusuke commands, use n!helpChom\n" +
                            "```";
-            
+
             await SendMessage(Context, null, helpMessage);
         }
 
-        [Command("helpmod")]
-        [Summary("Shows all possible moderator commands for this bot")]
-        [Remarks("Ex: n!helpmod")]
-        [Cooldown(30)]
-        public async Task HelpMessageMod()
-        {
-            var guser = Context.User as SocketGuildUser;
-            if (guser.GuildPermissions.ManageMessages)
-            {
-                string helpMessageMod =
-            "```cs\n" +
-            "Moderator Command List\n" +
-            "```\n" +
-            "Use `n!command [command]` to get more info on a specific command. Ex: `n!command xp`  `[Prefix 'n!']`\n" +
-            "\n" +
-            "**Filters -** `antiLink` `filter` `pingChecks` `antiLinkIgnore` `filterIgnore` `blacklistAdd` `blacklistRemove` `blacklistClear` `blacklistList`\n" +
-            "**User Management -** `ban` `kick` `mute` `unmute` `clear` `warn` `warnings` `clearWarnings` `say` `softBan` `idBan` `promote` `demote` `rename`\n" +
-            "**Bot Settings -** `serverPrefix` `leveling` `levelingMsg` `config` `customCurrency`\n" +
-            "**Welcome Messages (n!celcome <command>) -** `channel` `add` `remove` `list`\n" +
-            "**Leaving Messages (n!leave <command>) -** `channel` `add` `remove` `list`\n" +
-            "**Announcements (n!announcements <command>) -** `setChannel` `unsetChannel` `announce`\n" +
-            "**Server Management -** `serverLogging` `slowMode` `lockChannel` `unlockChannel`\n" +
-            "**Roles -** `helperRole` `modRole` `adminRole` `selfRoleAdd` `selfRoleRem` `selfRoleClear`\n" +
-                        "**Server Tags (n!tag <command>)-** `new` `update` `remove` `list`\n" +
-            "**Fun Stuff -** `unFlip` `vote` `customCommandAdd` `customCommandRemove` `customCommandList`\n" +
-            "\n" +
-            "```\n" +
-            "# Don't include the example brackets when using commands!\n" +
-            "# To view standard commands, use n!help\n" +
-            "# To view NSFW commands, use n!helpnsfw\n" +
-            "```";
-
-                await ReplyAsync(helpMessageMod);
-            }
-            else
-            {
-                var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
-                embed.Title = $"{Global.ENo} | You Need the Administrator Permission to do that {Context.User.Username}";
-                var use = await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
-            }
-        }
-
-        [Command("helpnsfw")]
+        [Subject(Categories.Information)]
+        [Command("helpNsfw")]
         [Summary("Shows all possible NSFW Commands for this bot")]
-        [Remarks("Ex: n!helpnsfw")]
+        [Remarks("Ex: n!helpNsfw")]
         [Cooldown(30)]
         public async Task HelpMessageNSFW()
         {
-            if (Context.Channel is ITextChannel text)
+            var channel = Context.Channel as ITextChannel;
+            if (!channel.IsNsfw)
             {
-                var nsfw = text.IsNsfw;
-                if (nsfw)
-                {
-                    string helpMessageNSFW =
-                "```cs\n" +
-                "NSFW Command List (why did i make this)\n" +
-                "```\n" +
-                "Use `n!command [command]` to get more info on a specific command. Ex: `n!command xp`  `[Prefix 'n!']`\n" +
-                "\n" +
-                "**Neko -** `lewd` `nekoNsfwGif` `autoLewd`\n" +
-                "**Hentai -** `anal` `boobs` `cum` `les` `pussy` `blowJob` `classic` `kuni` `overwatchNSFW`\n" +
-                "\n" +
-                "```\n" +
-                "# Don't include the example brackets when using commands!\n" +
-                "# To view Standard commands, use n!help\n" +
-                "# To view Moderator commands, use n!helpmod\n" +
-                "```";
-
-                    await ReplyAsync(helpMessageNSFW);
-                }
-                else
-                {
-                    var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.Title = $"{Global.ENo} | You Need to be in a NSFW channel to do that {Context.User.Username}";
-                    var use = await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
-                }
+                var nsfwText = $"{Global.ENo} | You need to use this command in a NSFW channel, {Context.User.Username}!";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", nsfwText,
+                    EmbedHandler.EmbedMessageType.Exception);
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
+                return;
             }
+            
+            Assembly assembly = Assembly.Load("Nayu");
+            var methods = assembly.GetTypes()
+                .SelectMany(t => t.GetMethods())
+                .Where(m => m.GetCustomAttributes(typeof(Subject), false).Length > 0)
+                .ToList();
+
+            string helpMessage = "```cs\n" +
+                                 "NSFW Command List\n" +
+                                 "```" +
+                                 "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n ";
+            var categoryNum = 1;
+            var categories = new List<NSFWCategories>((NSFWCategories[]) Enum.GetValues(typeof(NSFWCategories)));
+            //removes the none enum
+            categories.RemoveAt(0);
+
+            foreach (NSFWCategories category in categories)
+            {
+                string categoryDesc = null;
+                try
+                {
+                    categoryDesc = MiscHelpers.GetAttributeOfType<DescriptionAttribute>(category).Description;
+                }
+                catch (Exception)
+                {
+                    //do nothing
+                }
+
+                string categoryName = categoryDesc != null ? categoryDesc : category.ToString();
+
+
+                helpMessage += $"\n**{categoryNum}. {categoryName} -**";
+
+                foreach (var method in methods.ToList())
+                {
+                    var sub = method.GetCustomAttribute<Subject>(true);
+                    if (sub.GetCategories() == Categories.None &&
+                        sub.GetChomusukeCategories() == ChomusukeCategories.None &&
+                        sub.GetOwnerCategories() == OwnerCategories.None &&
+                        sub.GetAdminCategories() == AdminCategories.None)
+                    {
+                        if (sub.GetNSFWCategories() == category)
+                        {
+                            helpMessage += $" `{MiscHelpers.GetCommandAttribute(method).Text}`";
+                            //removes the method from the list if successful to make it faster
+                            methods.Remove(method);
+                        }
+                    }
+                }
+
+                categoryNum++;
+            }
+
+            helpMessage += "\n" +
+                           "```\n" +
+                           "# Don't include the example brackets when using commands!\n" +
+                           "# To view standard commands, use n!help\n" +
+                           "# To view moderator commands, use n!helpmod\n" +
+                           "# To view Chomusuke commands, use n!helpChom\n" +
+                           "```";
+
+            await SendMessage(Context, null, helpMessage);
         }
 
+        [Subject(Categories.Information)]
+        [Command("helpChom"), Alias("helpChomusuke")]
+        [Summary("Shows all possible Chomusuke commands for this bot")]
+        [Remarks("Ex: n!helpChom")]
+        [Cooldown(30)]
+        public async Task ChomusukeHelpMessage()
+        {
+            Assembly assembly = Assembly.Load("Nayu");
+            var methods = assembly.GetTypes()
+                .SelectMany(t => t.GetMethods())
+                .Where(m => m.GetCustomAttributes(typeof(Subject), false).Length > 0)
+                .ToList();
+
+            string helpMessage = "```cs\n" +
+                                 "'Chomusuke Command List'\n" +
+                                 "```" +
+                                 "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n ";
+            var categoryNum = 1;
+            var categories =
+                new List<ChomusukeCategories>((ChomusukeCategories[]) Enum.GetValues(typeof(ChomusukeCategories)));
+            //removes the none enum
+            categories.RemoveAt(0);
+
+            foreach (ChomusukeCategories category in categories)
+            {
+                string categoryDesc = null;
+                try
+                {
+                    categoryDesc = MiscHelpers.GetAttributeOfType<DescriptionAttribute>(category).Description;
+                }
+                catch (Exception)
+                {
+                    //do nothing
+                }
+
+                string categoryName = categoryDesc != null ? categoryDesc : category.ToString();
+
+
+                helpMessage += $"\n**{categoryNum}. {categoryName} -**";
+
+                foreach (var method in methods.ToList())
+                {
+                    var sub = method.GetCustomAttribute<Subject>(true);
+                    if (sub.GetAdminCategories() == AdminCategories.None &&
+                        sub.GetCategories() == Categories.None &&
+                        sub.GetOwnerCategories() == OwnerCategories.None &&
+                        sub.GetNSFWCategories() == NSFWCategories.None)
+                    {
+                        if (sub.GetChomusukeCategories() == category)
+                        {
+                            helpMessage += $" `{MiscHelpers.GetCommandAttribute(method).Text}`";
+                            //removes the method from the list if successful to make it faster
+                            methods.Remove(method);
+                        }
+                    }
+                }
+
+                categoryNum++;
+            }
+
+            helpMessage += "\n" +
+                           "```\n" +
+                           "# Don't include the example brackets when using commands!\n" +
+                           "# To view standard commands, use n!help\n" +
+                           "# To view moderator commands, use n!helpMod\n" +
+                           "# To view NSFW commands, use n!helpNsfw\n" +
+                           "```";
+
+            await SendMessage(Context, null, helpMessage);
+        }
+
+        [Subject(Categories.Information)]
         [Command("command")]
         [Summary("Shows what a specific command does and the usage")]
         [Remarks("n!command <command you want to search up> Ex: n!command stats")]
@@ -230,7 +367,7 @@ namespace Nayu.Modules
             {
                 Author = auth,
                 Title = ":book: Command Dictionary",
-                Color = new Color(37, 152, 255),
+                Color = Global.NayuColor,
                 Description = $"Here are the aliases of **{command}**"
             };
 
@@ -243,7 +380,7 @@ namespace Nayu.Modules
                     x.Name = string.Join(", ", cmd.Aliases);
                     x.Value = //$"Parameters: {string.Join(", ", cmd.Parameters.Select(p => p.Name))}\n" +
                                 $"Description: {cmd.Summary}\n" +
-                                $"Usage: {cmd.Remarks}" +
+                                $"Usage: {cmd.Remarks}\n" +
                                 $"Category: {cmd.Attributes}";
                     x.IsInline = false;
                 });
@@ -251,50 +388,76 @@ namespace Nayu.Modules
             await SendMessage(Context, builder.Build());
         }
 
+        //TODO: update
+        [Subject(Categories.Information)]
         [Command("nayuLink")]
         [Summary("Provides Nayu's server invite link")]
-        [Alias("serverinvitelink")]
-        [Remarks("Ex: n!Nayulink")]
-        [Cooldown(10)]
+        [Alias("serverInviteLink")]
+        [Remarks("Ex: n!nayuLink")]
+        [Cooldown(5)]
         public async Task SendAsync()
         {
-            await ReplyAsync("https://discord.gg/NuUdx4h ~~ Here's my server! :blush: ");
+            var embed = new EmbedBuilder{
+                Title = "Server Invite", 
+                Url = "https://discord.gg/NuUdx4h",
+                Description = "^^ ~~ Here's my server! :blush:"
+            };
+            await SendMessage(Context, embed.Build());
         }
 
-        [Command("dailyvote")]
+        [Subject(Categories.Information)]
+        [Command("dailyVote"), Alias("dv")]
         [Summary("Provides Nayu's daily vote link")]
-        [Alias("dv")]
         [Remarks("Ex: n!dv")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task DailyVote()
         {
-            await ReplyAsync("https://discordbots.org/bot/417160957010116608/vote ~~ Vote for me please! I'll love you forever! ");
+            var embed = new EmbedBuilder{
+                Title = "Vote Link",
+                Url = "https://discordbots.org/bot/417160957010116608/vote",
+                Description = "^^ ~~ Vote for me please! I'll love you forever! :blush:"
+            };
+            await SendMessage(Context, embed.Build());
         }
 
+        [Subject(Categories.Information)]
         [Command("invite")]
         [Summary("Invite Nayu to your server!")]
         [Alias("Nayuinvitelink")]
         [Remarks("Ex: n!invite")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task InviteAsync()
         {
-            await ReplyAsync("https://discordapp.com/api/oauth2/authorize?client_id=417160957010116608&permissions=8&scope=bot ~~ Invite me to your servers! :blush: ");
+            var embed = new EmbedBuilder
+            {
+                Title = "Invite!",
+                Url = "https://discordapp.com/api/oauth2/authorize?client_id=417160957010116608&permissions=8&scope=bot",
+                Description = "^^ ~~ Invite me to your servers! :blush: "
+            };
         }
 
+        [Subject(Categories.Information)]
         [Command("patreon")]
-        [Summary("Sends the Patreon link to help contribue to the efforts of Nayu")]
+        [Summary("Sends the Patreon link to help contribute to the efforts of Nayu")]
         [Alias("donate")]
         [Remarks("Ex: n!patreon")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task Patreon()
         {
-            await ReplyAsync("https://www.patreon.com/phytal ~~ Help us out! :blush: ");
+            var embed = new EmbedBuilder
+                {
+                    Title = "Donate!",
+                    Url = "https://www.patreon.com/phytal",
+                    Description = "^^ ~~ Help us out! :blush:"
+                };
+            await SendMessage(Context, embed.Build());
         }
 
-        [Command("changelog")]
+        [Subject(Categories.Information)]
+        [Command("changeLog")]
         [Summary("Shows the latest update notes")]
         [Alias("update")]
-        [Remarks("Ex: n!changelog")]
+        [Remarks("Ex: n!changeLog")]
         [Cooldown(15)]
         public async Task Update()
         {

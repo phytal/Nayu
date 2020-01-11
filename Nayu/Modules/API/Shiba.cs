@@ -13,12 +13,13 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API
 {
     public class Shiba : NayuModule
-    {
+    {        
+        [Subject(Categories.Images)]
         [Command("shiba")]
         [Alias("shibe")]
         [Summary("Sends an image of a Shiba Inu :3")]
         [Remarks("Ex: n!shiba")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetRandomShiba()
         {
             string json = "";

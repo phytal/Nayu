@@ -13,11 +13,12 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Kiss : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("kiss")]
         [Summary("Kiss someone! :3")]
         [Remarks("n!kiss <user you want to kiss (if left empty you will kiss yourself)> Ex: n!kiss @Phytal")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetRandomKiss(IGuildUser user = null)
         {
             int rand = Global.Rng.Next(1, 3);

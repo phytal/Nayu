@@ -5,12 +5,14 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Core.Handlers;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Management
 {
     public class ServerPrefix : NayuModule
     {
+        [Subject(AdminCategories.BotSettings)]
         [Command("ServerPrefix")]
         [Alias("setprefix")]
         [Summary("Changes the prefix for the bot on the current server")]
@@ -26,6 +28,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);

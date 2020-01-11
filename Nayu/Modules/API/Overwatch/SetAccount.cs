@@ -5,16 +5,18 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.API.Overwatch
 {
     public class SetAccount : NayuModule
-    {
+    {        
+        [Subject(Categories.Overwatch)]
         [Command("owaccount")]
         [Summary("Set your Overwatch username, platform and region")]
         [Remarks("n!owaccount <username> <platform> <region> Ex: n!owaccount Username#1234 pc us")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task OwAccount(string user, string platform, string region)
         {
             user = user.Replace('#', '-');
@@ -36,11 +38,12 @@ namespace Nayu.Modules.API.Overwatch
 
             await SendMessage(Context, embed.Build());
         }
-
+        
+        [Subject(Categories.Overwatch)]
         [Command("owaccount")]
         [Summary("View your Overwatch information")]
         [Remarks("n!owaccountinfo")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetOwAccount()
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);

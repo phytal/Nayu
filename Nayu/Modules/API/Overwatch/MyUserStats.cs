@@ -8,17 +8,19 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.API.Overwatch
 {
     public class MyUserStats : NayuModule
-    {
+    {        
+        [Subject(Categories.Overwatch)]
         [Command("myowstats")]
         [Summary("Get your Overwatch statistics. NOTE: You must first register your Battle.net Username and ID with n!owaccount")]
         [Alias("myows", "myoverwatchstats")]
         [Remarks("n!myows")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetOwStats()
         {
             try
@@ -209,7 +211,7 @@ namespace Nayu.Modules.API.Overwatch
         [Summary("Get your Overwatch Quickplay statistics. NOTE: You must first register your Battle.net Username and ID with n!owaccount")]
         [Alias("myowsqp", "myoverwatchstatsqp", "myowsquickplay")]
         [Remarks("n!myowsqp")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetOwQpStats()
         {
             try
@@ -332,7 +334,7 @@ namespace Nayu.Modules.API.Overwatch
         [Summary("Get your Overwatch Competitive statistics. NOTE: You must first register your Battle.net Username and ID with n!owaccount")]
         [Alias("myowsc", "myoverwatchstatscomp", "myowscompetitive")]
         [Remarks("n!myowsc")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetOwCompStats()
         {
             try

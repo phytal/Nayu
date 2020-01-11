@@ -13,11 +13,12 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Hug : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("Hug")]
         [Summary("Hug someone!")]
         [Remarks("n!hug <user you want to hug (if left empty you will hug yourself)> Ex: n!hug @Phytal")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetRandomNHug(IGuildUser user = null)
         {
             int rand = Global.Rng.Next(1, 3);

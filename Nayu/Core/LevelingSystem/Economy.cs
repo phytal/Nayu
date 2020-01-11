@@ -14,7 +14,8 @@ namespace Nayu.Core.LevelingSystem
 {
     public class Economy : NayuModule
     {
-        [Command("Daily")]
+        [Subject(Categories.EconomyGambling)]
+        [Command("daily")]
         [Alias("GetDaily", "ClaimDaily")]
         [Summary("Claims your daily Taiyakis!")]
         [Remarks("Ex: n!daily")]
@@ -40,7 +41,8 @@ namespace Nayu.Core.LevelingSystem
             }
         }
 
-        [Command("Reputation")]
+        [Subject(Categories.EconomyGambling)]
+        [Command("reputation")]
         [Alias("rep")]
         [Summary("Gives a mentioned user reputation points, you can only use this once every 24 hours.")]
         [Remarks("n!rep <person you want to rep> Ex: n!rep @Phytal")]
@@ -70,11 +72,12 @@ namespace Nayu.Core.LevelingSystem
             }
         }
 
+        [Subject(Categories.EconomyGambling)]
         [Command("gift")]
         [Alias("grant", "pay")]
         [Summary("Gifts/Pays Taiyakis to a selected user (of course taken from your balance) Ex: n!gift <amount of Taiyakis> @user")]
         [Remarks("n!gift <amount> <user you want to gift to> Ex: n!gift 500 @Phytal")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task Gift(uint taiyaki, IGuildUser userB)
         {
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -106,6 +109,7 @@ namespace Nayu.Core.LevelingSystem
             }
         }
 
+        [Subject(OwnerCategories.Owner)]
         [Command("addTaiyakis")]
         [Summary("Grants Taiyakis to selected user")]
         [Alias("giveptaiyakis")]
@@ -127,6 +131,7 @@ namespace Nayu.Core.LevelingSystem
             await SendMessage(Context, embed.Build());
         }
 
+        [Subject(Categories.EconomyGambling)]
         [Command("levels")]
         [Summary("Shows a user list of the sorted by currency. Pageable to see lower ranked users.")]
         [Alias("Top", "Top10", "richest", "rank")]
@@ -171,11 +176,12 @@ namespace Nayu.Core.LevelingSystem
             await ReplyAsync("", false, embB.Build());
         }
 
+        [Subject(Categories.EconomyGambling)]
         [Command("balance")]
         [Alias("Cash", "Taiyaki", "bal")]
         [Summary("Checks the balance for your, or an mentioned account")]
         [Remarks("n!bal <person you want to check (will default to you if left empty)> Ex: n!bal @Phytal")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task CheckTaiyakis([Remainder]string arg = "")
         {
             SocketUser target;

@@ -13,7 +13,8 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Baka : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("baka")]
         [Summary("Displays an image of an anime baka gif")]
         [Remarks("Usage: n!baka <user you want to call a baka (or can be left empty)> Ex: n!baka @Phytal")]

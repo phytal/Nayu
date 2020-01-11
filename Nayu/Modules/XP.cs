@@ -8,11 +8,14 @@ using Discord.Commands;
 using Discord.WebSocket;
 using System.Net;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Core.Handlers;
+using Nayu.Helpers;
 
 namespace Nayu.Modules
 {
     public class XP : NayuModule
     {
+        [Subject(OwnerCategories.Owner)]
         [Command("addXP")]
         [Summary("Grants XP/Exp to selected user")]
         [Alias("givexp", "giveexp", "addexp")]
@@ -26,9 +29,11 @@ namespace Nayu.Modules
 
             userAccount.XP += xp;
             GlobalGuildUserAccounts.SaveAccounts();
-            await SendMessage(Context, null, $"✅  | **{xp}** Exp were added to " + target.Username + "'s account.");
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", $"✅  | **{xp}** xp were added to {target.Username}'s account.", EmbedHandler.EmbedMessageType.Success, false);
+            await SendMessage(Context, embed);
         }
 
+        [Subject(OwnerCategories.Owner)]
         [Command("addrep")]
         [Summary("Grants reputation points to selected user")]
         [Alias("givepoints")]
@@ -43,10 +48,9 @@ namespace Nayu.Modules
             userAccount.Reputation += Points;
             GlobalGuildUserAccounts.SaveAccounts();
 
-            var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
-            embed.WithTitle($"✅  | **{Points}** reputation points were added to " + target.Username + "'s account.");
-            await SendMessage(Context, embed.Build());
+            
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", $"✅  | **{Points}** reputation points were added to {target.Username}'s account.", EmbedHandler.EmbedMessageType.Success, false);
+            await SendMessage(Context, embed);
         }
     }
 }

@@ -4,12 +4,14 @@ using Discord.WebSocket;
 using System.Linq;
 using System.Threading.Tasks;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.LootBox
 {
     public class LootBoxCommand : NayuModule
-    {
+    {        
+        [Subject(Categories.Lootboxes)]
         [Command("openLootBox")]
         [Alias("olb")]
         [Summary("Opens one of the loot boxes you have")]
@@ -85,7 +87,8 @@ namespace Nayu.Modules.LootBox
             }
             GlobalUserAccounts.SaveAccounts(Context.User.Id);
         }
-
+        
+        [Subject(Categories.Lootboxes)]
         [Command("lootBoxInventory"), Alias("lbi")]
         [Summary("View your loot box inventory")]
         [Remarks("Usage: n!inventory")]
@@ -104,7 +107,8 @@ namespace Nayu.Modules.LootBox
 
             await SendMessage(Context, embed.Build());
         }
-
+        
+        [Subject(Categories.Lootboxes)]
         [Command("addLootBox"), Alias("alb")]
         [Summary("Adds some loot boxes to a person")]
         [Remarks("Usage: n!alb <user>")]
@@ -125,12 +129,13 @@ namespace Nayu.Modules.LootBox
 
             await SendMessage(Context, null, $"Successfully added one of every loot box to {target}");
         }
-
+        
+        [Subject(Categories.Lootboxes)]
         [Command("giftLootbox")]
         [Alias("giftlb", "grantlb", "glb")]
         [Summary("Gifts a lootbox to a selected user from your arsenal of lootboxes Ex: n!giftlb epic @user")]
         [Remarks("n!giftlb <rarity> <user you want to gift to> Ex: n!giftlb rare @Phytal")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task Gift(string Rarity, IGuildUser userB)
         {
             var giveaccount = GlobalUserAccounts.GetUserAccount(Context.User);

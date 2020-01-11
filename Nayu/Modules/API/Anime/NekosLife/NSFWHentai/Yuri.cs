@@ -10,6 +10,7 @@ namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
 {
     public class Yuri : NayuModule
     {
+        [Subject(NSFWCategories.Hentai)]
         [Command("yuri")]
         [Summary("Displays a yuri")]
         [Remarks("Ex: n!yuri")]
@@ -22,7 +23,8 @@ namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
                 var nsfwText = $"{Global.ENo} | You need to use this command in a NSFW channel, {Context.User.Username}!";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", nsfwText,
                     EmbedHandler.EmbedMessageType.Exception);
-                await ReplyAndDeleteAsync("", embed: errorEmbed, timeout: TimeSpan.FromSeconds(5));
+                await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             string nekolink = NekosLifeHelper.GetNekoLink("yuri");

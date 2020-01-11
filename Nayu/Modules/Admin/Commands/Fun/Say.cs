@@ -4,12 +4,14 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Fun
 {
     public class Say : NayuModule
     {
+        [Subject(AdminCategories.FunStuff)]
         [Command("say")]
         [Summary("Lets you speak for the bot anonymously")]
         [Remarks("n!say <your message> Ex: n!say whats up my doots")]

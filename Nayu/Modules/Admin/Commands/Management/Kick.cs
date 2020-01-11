@@ -5,12 +5,14 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Core.Handlers;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Management
 {
     public class Kick : NayuModule
-    {
+    {        
+        [Subject(AdminCategories.UserManagement)]
         [Command("kick")]
         [Summary("Kicks @Username")]
         [Remarks("n!kick <user you want to kick> Ex: n!kick @Phytal")]
@@ -26,22 +28,18 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             try
             {
-                var kb =
-                    (Context.Client as DiscordShardedClient).GetChannel(config.ServerLoggingChannel) as
-                    SocketTextChannel;
                 await user.KickAsync();
-                var gld = Context.Guild as SocketGuild;
                 var embed = new EmbedBuilder();
                 embed.WithColor(37, 152, 255);
                 embed.Title = $" {user.Username} has been kicked from {user.Guild.Name}";
                 embed.Description =
                     $"**Username: **{user.Username}\n**Guild Name: **{user.Guild.Name}\n**Kicked by: **{Context.User.Mention}\n**Reason: **{reason}";
                 await SendMessage(Context, embed.Build());
-                await kb.SendMessageAsync("", embed: embed.Build());
             }
             catch
             {

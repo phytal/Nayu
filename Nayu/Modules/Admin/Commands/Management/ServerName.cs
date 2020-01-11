@@ -4,13 +4,14 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Handlers;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Management
 {
     public class ServerName : NayuModule
     {
-
+        [Subject(AdminCategories.ServerManagement)]
         [Command("ServerName")]
         [Summary("Changes the name of the server")]
         [Remarks("n!servername <new name of the server> Ex: n!servername roblox is best")]
@@ -25,6 +26,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             await Context.Guild.ModifyAsync(x => x.Name = name);

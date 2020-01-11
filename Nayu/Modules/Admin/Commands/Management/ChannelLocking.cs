@@ -12,6 +12,7 @@ namespace Nayu.Modules.Admin.Commands.Management
 {
     public class ChannelLocking : NayuModule
     {
+        [Subject(AdminCategories.ServerManagement)]
         [Command("lockchannel"), Alias("lc")]
         [Summary("Locks the current channel (users will be unable to send messages, only admins)")]
         [Remarks("n!lc")]
@@ -26,6 +27,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var chnl = Context.Channel as ITextChannel;
@@ -39,6 +41,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             await SendMessage(Context, embed.Build());
         }
 
+        [Subject(AdminCategories.ServerManagement)]
         [Command("unlockchannel"), Alias("ulc")]
         [Summary("Unlocks the current channel (users can send messages again)")]
         [Remarks("n!ulc")]
@@ -53,6 +56,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var chnl = Context.Channel as ITextChannel;

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
@@ -8,7 +9,8 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
 {
     public class Cry : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("cry")]
         [Summary("Displays an image of an anime cry gif")]
         [Remarks("Usage: n!cry <user you want to cry at (or can be left empty)> Ex: n!cry @Phytal")]

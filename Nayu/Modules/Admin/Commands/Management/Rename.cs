@@ -11,6 +11,7 @@ namespace Nayu.Modules.Admin.Commands.Management
 {
     public class Rename : NayuModule
     {
+        [Subject(AdminCategories.UserManagement)]
         [Command("Rename")]
         [Alias("Nick")]
         [Summary("Changes a user's nickname")]
@@ -26,6 +27,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             await user.ModifyAsync(x => x.Nickname = nick);

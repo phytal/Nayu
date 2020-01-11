@@ -5,12 +5,14 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Core.Handlers;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Management.SlowMode
 {
     public class Slowmode : NayuModule
-    {
+    {        
+        [Subject(AdminCategories.ServerManagement)]
         [Command("SlowMode"), Alias("sm")]
         [Summary("Adds a slowmode to the entire server (usually for large servers)")]
         [Remarks("n!slowmode <length between messages> Ex: n!slowmode 5")]
@@ -25,6 +27,7 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -35,6 +38,7 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
             await SendMessage(Context, null, $":snail:  | Successfully turned on slow mode for **{length}** seconds.");
         }
 
+        [Subject(AdminCategories.ServerManagement)]
         [Command("SlowModeOff"), Alias("smo")]
         [Summary("Disables Slowmode")]
         [Remarks("n!slowmodeoff")] //        [Remarks("n! <> Ex: n!")]
@@ -49,6 +53,7 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);

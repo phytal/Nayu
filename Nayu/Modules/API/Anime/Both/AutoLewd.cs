@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -18,7 +19,8 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class AutoLewd : NayuModule
-    {
+    {        
+        [Subject(AdminCategories.NSFW)]
         [Command("autolewd")]
         [Summary("Loops images of lewd anime girls :3")]
         [Remarks("Usage: n!autolewd <on/off> Ex: n!autolewd on")]
@@ -52,7 +54,8 @@ namespace Nayu.Modules.API.Anime.Both
             }
             
         }
-
+//TODO: need admin
+        [Subject(AdminCategories.NSFW)]
         [Command("autolewdchannel")]
         [Summary("Loops images of lewd anime girls :3")]
         [Remarks("Usage: n!autolewdchannel <channel you want images being sent to> Ex: n!autolewdchannel #nsfw")]
@@ -66,6 +69,7 @@ namespace Nayu.Modules.API.Anime.Both
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var guildAcc = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);

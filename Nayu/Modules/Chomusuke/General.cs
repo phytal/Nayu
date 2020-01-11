@@ -14,7 +14,7 @@ namespace Nayu.Modules.Chomusuke
 {
     public class General : NayuModule
     {
-
+        [Subject(ChomusukeCategories.Chomusuke)]
         [Command("chomusukeStats"), Alias("cStats")]
         [Summary("Brings up the main stats/info of your or someone else's Chomusukes!")]
         [Remarks("n!cStats <specified user (will be yours if left empty)> Ex: n!cStats @Phytal")]
@@ -52,7 +52,8 @@ namespace Nayu.Modules.Chomusuke
                 await PagedReplyAsync(pages);
             }
         }
-
+        
+        [Subject(ChomusukeCategories.Chomusuke)]
         [Command("activeChomusuke"), Alias("aStats")]
         [Summary("Brings up the stats/info of your or someone else's Chomusuke!")]
         [Remarks("n!aStats <specified user (will be yours if left empty)> Ex: n!aStats @Phytal")]
@@ -160,7 +161,8 @@ namespace Nayu.Modules.Chomusuke
                 await SendMessage(Context, embed.Build());
             }
         }
-
+        
+        [Subject(Categories.Information)]
         [Command("chomusukeHelp"), Alias("cHelp")]
         [Summary("Displays all Chomusuke commands with a description of what they do")]
         [Remarks("Ex: n!cHelp")]
@@ -182,6 +184,7 @@ namespace Nayu.Modules.Chomusuke
 
             var embed = new EmbedBuilder();
             embed.WithTitle($"{Global.EChomusuke} Chomusuke Command List");
+            embed.WithColor(Global.NayuColor);
             embed.AddField("n!chomusuke help", "Brings up the help command", true);
             embed.AddField("n!chomusuke shop", "Opens the Chomusuke shop menu!", true);
             embed.AddField("n!chomusuke stats", "Brings up the stats/info of your or someone else's Chomusuke!", true);
@@ -195,7 +198,8 @@ namespace Nayu.Modules.Chomusuke
             embed.WithFooter(text);
             await SendMessage(Context, embed.Build());
         }
-
+        
+        [Subject(ChomusukeCategories.Chomusuke)]
         [Command("chomusukeName"), Alias("cName")]
         [Summary("Set the name of your Chomusuke!")]
         [Remarks("n!cName <your desired name> Ex: n!cName Taiyaki")]
@@ -217,7 +221,7 @@ namespace Nayu.Modules.Chomusuke
             }
         }
 
-//TODO: add embeds and chom names
+        [Subject(ChomusukeCategories.Chomusuke)]
         [Command("chomusukeFeed"), Alias("cFeed")]
         [Summary("Feeds your Chomusuke at the cost of Taiyakis! Otherwise it will starve!")]
         [Remarks("Ex: n!cFeed")]
@@ -279,7 +283,8 @@ namespace Nayu.Modules.Chomusuke
                 }
             }
         }
-
+        
+        [Subject(ChomusukeCategories.Chomusuke)]
         [Command("chomusukeClean"), Alias("cClean")]
         [Summary("Clean up your Chomusuke's waste, otherwise it'll get sick!")]
         [Remarks("Ex: n!cClean")]
@@ -342,7 +347,8 @@ namespace Nayu.Modules.Chomusuke
                 }
             }
         }
-
+        
+        [Subject(ChomusukeCategories.Chomusuke)]
         [Command("chomusukePlay"), Alias("cPlay")]
         [Summary("Play with your chomusuke! Your Chomusuke must have high trust at all times!")]
         [Remarks("Ex: n!cPlay")]
@@ -404,7 +410,8 @@ namespace Nayu.Modules.Chomusuke
                 }
             }
         }
-
+        
+        [Subject(ChomusukeCategories.Chomusuke)]
         [Command("chomusukeTrain"), Alias("cTrain")]
         [Summary("Train your Chomusuke to earn Exp and level up!")]
         [Remarks("Ex: n!cTrain")]
@@ -465,7 +472,8 @@ namespace Nayu.Modules.Chomusuke
                 }
             }
         }
-
+        
+        [Subject(ChomusukeCategories.Chomusuke)]
         [Command("chomusukeAdd")]
         [RequireOwner]
         public async Task AddCapsules()

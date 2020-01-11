@@ -3,13 +3,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Discord.Commands;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Inbox
 {
     public class DeleteMessage : NayuModule
-    {
-        [Command("deletemessage")]
+    {        
+        [Subject(Categories.Inbox)]
+        [Command("deleteMessage")]
         [Summary("Delete a message in your inbox through its ID")]
         [Alias("dm")]
         [Remarks("n!dm <message ID> Ex: n!dm 2")]

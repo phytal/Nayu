@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 using Type = Nayu.Modules.Chomusuke.Dueling.Enums.Type;
 
@@ -11,6 +12,7 @@ namespace Nayu.Modules.Chomusuke
     public class OpenCapsule : NayuModule
     {
         //TODO: update this
+        [Subject(ChomusukeCategories.Chomusuke)]
         [Command("opencapsule"), Alias("opencapsule")]
         [Summary("Opens one of the Chomusuke capsules you have! Note: You must have the capsule you want to open.")]
         [Remarks("n!opencapsule <type (normal, shiny, mythical)> Ex: n!opencapsule normal")]

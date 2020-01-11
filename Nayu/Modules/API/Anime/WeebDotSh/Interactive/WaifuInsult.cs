@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
@@ -9,6 +10,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
 {
     public class WaifuInsult : NayuModule
     {
+        [Subject(Categories.Interaction)]
         [Command("waifuInsult")]
         [Summary("Displays an image of an anime waifu insult gif")]
         [Alias("insultWaifu")]

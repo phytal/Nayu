@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
@@ -8,7 +9,8 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
 {
     public class Pout : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("pout")]
         [Summary("Displays an image of an anime pouting gif")]
         [Remarks("Usage: n!pout <user you want to pout at (or can be left empty)> Ex: n!pout @Phytal")]

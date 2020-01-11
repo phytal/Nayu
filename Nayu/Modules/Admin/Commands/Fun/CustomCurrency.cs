@@ -4,12 +4,14 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Fun
 {
     public class CustomCurrency : NayuModule
     {
+        [Subject(AdminCategories.FunStuff)]
         [Command("customcurrency"), Alias("cc")]
         [Summary("Make a custom currency for the server! (Defaulted to Taiyakis)")]
         [Remarks("n!cc <name of your custom currency> Ex: n!cc Credits")]

@@ -26,10 +26,11 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var result = ConvertBool.ConvertStringToBoolean(arg);
-            if (result.Item1 == true)
+            if (result.Item1)
             {
                 bool argg = result.Item2;
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);

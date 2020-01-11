@@ -3,19 +3,21 @@ using Discord.Commands;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Libs.CustomLibraries.Discord.Addons.Interactive.Paginator;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.API.Overwatch
 {
     public class HeroStats : NayuModule
-    {
+    {        
+        [Subject(Categories.Overwatch)]
         [Command("owherostats")]
         [Summary("Get a Overwatch user's statistics for a specific hero on both Quickplay and Competitive.")]
         [Alias("owhs")]
         [Remarks(
             "n!owherostats <hero> <Your Battle.net username and id> <platform (pc/xbl/psn)> <region (us/eu etc.)> Ex: n!owherostats dVa Phytal-1427 pc us")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetOwHeroStats(string hero, string username, string platform, string region)
         {
             try
@@ -2818,13 +2820,14 @@ namespace Nayu.Modules.API.Overwatch
                     "Make sure you have played Competitive and Quickplay with this hero, otherwise check your command.\n**n!owhs <hero> <Your Battle.net username and id> <platform (pc/xbl/psn)> <region> Ex: n!owhs dVa Phytal-1427 pc us**");
             }
         }
-
+        
+        [Subject(Categories.Overwatch)]
         [Command("owherostatsqp")]
         [Summary("Get a Overwatch user's statistics for a specific hero on Quickplay.")]
         [Alias("owhsqp")]
         [Remarks(
             "n!owherostatsqp <hero> <Your Battle.net username and id> <platform (pc/xbl/psn)> <region (us/eu etc.)> Ex: n!owherostatsqp dVa Phytal-1427 pc us")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetOwHeroStatsQP(string hero, string username, string platform, string region)
         {
             try
@@ -4265,13 +4268,14 @@ namespace Nayu.Modules.API.Overwatch
                     "Make sure you have played Quickplay with this hero, otherwise check your command.\n**n!owhsqp <hero> <Your Battle.net username and id> <platform (pc/xbl/psn)> <region> Ex: n!owhsqp dVa Phytal-1427 pc us**");
             }
         }
-
+        
+        [Subject(Categories.Overwatch)]
         [Command("owherostatscomp")]
         [Summary("Get a Overwatch user's statistics for a specific hero on Competitive.")]
         [Alias("owhsc")]
         [Remarks(
             "n!owherostatscomp <hero> <Your Battle.net username and id> <platform (pc/xbl/psn)> <region (us/eu etc.)> Ex: n!owherostatscomp dVa Phytal-1427 pc us")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetOwHeroStatsComp(string hero, string username, string platform, string region)
         {
             try
@@ -5723,12 +5727,13 @@ namespace Nayu.Modules.API.Overwatch
                     "Make sure you have played Competitive with this hero, otherwise check your command.\n**n!owhscomp <hero> <Your Battle.net username and id> <platform (pc/xbl/psn)> <region> Ex: n!owhscomp dVa Phytal-1427 pc us**");
             }
         }
-
+        
+        [Subject(Categories.Overwatch)]
         [Command("myowherostats")]
         [Summary("Get your statistics for a specific hero.")]
         [Alias("myowhs")]
         [Remarks("n!owherostats <hero> Ex: n!myowherostats dVa")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetMyOwHeroStats(string hero)
         {
             try
@@ -8524,12 +8529,13 @@ namespace Nayu.Modules.API.Overwatch
                     "Make sure you have played Competitive and Quickplay with this hero, otherwise check your command.\n**n!myowhs <hero> Ex: n!myowhs dVa**");
             }
         }
-
+        
+        [Subject(Categories.Overwatch)]
         [Command("myowherostatsqp")]
         [Summary("Get your statistics for a specific hero on Quickplay.")]
         [Alias("myowhsqp")]
         [Remarks("n!myowherostatsqp <hero> Ex: n!myowherostatsqp dVa")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetMyOwHeroStatsQP(string hero)
         {
             try
@@ -9966,12 +9972,13 @@ namespace Nayu.Modules.API.Overwatch
                     "Have you already registered your Battle.Net account with `n!owaccount`?\nMake sure you have played Quickplay with this hero, otherwise check your command.\n**n!myowhsqp <hero>Ex: n!myowhsqp dVa Phytal-1427**");
             }
         }
-
+        
+        [Subject(Categories.Overwatch)]
         [Command("myowherostatscomp")]
         [Summary("Get your statistics for a specific hero on Competitive.")]
         [Alias("myowhsc")]
         [Remarks("n!myowherostatscomp <hero> Ex: n!myowherostatscomp dVa")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task GetMyOwHeroStatsComp(string hero)
         {
             try

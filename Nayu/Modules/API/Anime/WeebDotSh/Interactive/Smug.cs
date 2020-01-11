@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
@@ -9,6 +10,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
 {
     public class Smug : NayuModule
     {
+        [Subject(Categories.Interaction)]
         [Command("smug")]
         [Summary("Displays an image of an anime smug gif")]
         [Remarks("Usage: n!smug <user you want to be smug at (or can be left empty)> Ex: n!smug @Phytal")]

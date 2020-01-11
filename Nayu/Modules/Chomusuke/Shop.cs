@@ -4,12 +4,14 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Modules.Chomusuke.Dueling;
 
 namespace Nayu.Modules.Chomusuke
 {
     public class Shop : NayuModule
-    {
+    {        
+        [Subject(ChomusukeCategories.Chomusuke)]
         [Command("chomusukebuy"), Alias("cshop", "cbuy")]
         [Summary("Opens the Chomusuke shop menu!")]
         [Remarks("Ex: n!c shop")]

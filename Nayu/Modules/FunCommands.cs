@@ -48,6 +48,7 @@ namespace Nayu.Modules
                 ":8ball:  | Very doubtful"
             };
 
+        [Subject(Categories.Fun)]
         [Command("8ball")]
         [Alias("eightball")]
         [Summary("Gives a prediction")]
@@ -57,13 +58,11 @@ namespace Nayu.Modules
         {
             int randomIndex = Global.Rng.Next(predictionsTexts.Length);
             string text = predictionsTexts[randomIndex];
-            var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
-            embed.WithTitle(text + ", " + Context.User.Username);
-            await SendMessage(Context, embed.Build());
+            var embed = EmbedHandler.CreateEmbed(Context, "8 Ball", $"{text}, {Context.User.Username}", EmbedHandler.EmbedMessageType.Success, false);
+            await SendMessage(Context, embed);
         }
 
-
+        [Subject(Categories.Fun)]
         [Command("echo")]
         [Summary("Make me say a message!")]
         [Remarks("n!echo <what you want the bot to say> Ex: n!echo I like to eat oreos")]
@@ -71,44 +70,41 @@ namespace Nayu.Modules
         public async Task Echo([Remainder] string message)
         {
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-            var localTime = DateTime.Now;
-            var Sender = Context.Message.Author;
 
-            var embed = new EmbedBuilder();
-            embed.WithTitle(message);
-            embed.WithFooter(localTime + " Message from " + Sender);
-            embed.WithColor(37, 152, 255);
-
-            await SendMessage(Context, embed.Build());
             if (config.MassPingChecks)
             {
                 if (message.Contains("@everyone") || message.Contains("@here")) return;
             }
-            await Context.Message.DeleteAsync();
+            
+            var embed = EmbedHandler.CreateEmbed(Context, "Echo!", message, EmbedHandler.EmbedMessageType.Success);
+            await SendMessage(Context, embed);
         }
 
-
+        [Subject(Categories.Fun)]
         [Command("lmgtfy")]
         [Summary("Sends an Let me Google that for you link with what you inputed")]
         [Remarks("n!lmgtfy <what you want to search up> Ex: n!lmgtfy how to use discord")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task Lmgtfy([Remainder]string link = "enter something")
         {
             link = link.Replace(' ', '+');
-            await ReplyAsync("https://lmgtfy.com/?q=" + link);
+            var embed = EmbedHandler.CreateEmbed(Context, "", "https://lmgtfy.com/?q=" + link, EmbedHandler.EmbedMessageType.Success, false);
+            await SendMessage(Context, embed);
         }
 
-
-        [Command("Lenny")]
+        [Subject(Categories.Fun)]
+        [Command("lenny")]
         [Summary("Sends a lenny face ( ͡° ͜ʖ ͡°)")]
         [Remarks("Ex: n!lenny")]
         [Cooldown(5)]
         public async Task Lenny()
         {
-            await SendMessage(Context, null, "( ͡° ͜ʖ ͡°)");
+            var embed = EmbedHandler.CreateEmbed(Context, "Lenny!", "( ͡° ͜ʖ ͡°)", EmbedHandler.EmbedMessageType.Success, false);
+            await SendMessage(Context, embed);
         }
-
-        [Command("Prefix")]
+        
+        [Subject(Categories.Information)]
+        [Command("prefix")]
         [Summary("Show's you the server prefix")]
         [Remarks("Ex: n!prefix")]
         [Cooldown(5)]
@@ -126,9 +122,11 @@ namespace Nayu.Modules
                     break;
             }
 
-            await SendMessage(Context, null, $"The prefix for this server is {prefix}.");
+            var embed = EmbedHandler.CreateEmbed(Context, "Prefix", $"The prefix for this server is {prefix}.", EmbedHandler.EmbedMessageType.Success, false);
+            await SendMessage(Context, embed);
         }
 
+        [Subject(Categories.Fun)]
         [Command("ratewaifu")]
         [Summary("Rates your waifu :3")]
         [Remarks("n!ratewaifu <whoever (waifu) that you want to rate> Ex: n!ratewaifu Taiyakiman22")]
@@ -137,9 +135,11 @@ namespace Nayu.Modules
         {
             Random rnd = new Random();
             int rating = rnd.Next(101);
-            await SendMessage(Context, null, $"I'd rate {input} a **{rating} / 100**");
+            var embed = EmbedHandler.CreateEmbed(Context, "Rate Waifu", $"I'd rate {input} a **{rating} / 100**", EmbedHandler.EmbedMessageType.Success, false);
+            await SendMessage(Context, embed);
         }
 
+        [Subject(Categories.Fun)]
         [Command("bigletter")]
         [Alias("emoji", "emotion", "emotify")]
         [Remarks("n!bigletter <whatever you want to 'emotify'> Ex: n!bigletter hello how is your day")]
@@ -162,6 +162,7 @@ namespace Nayu.Modules
             await ReplyAsync(convertedText);
         }
 
+        [Subject(Categories.Fun)]
         [Command("woop")]
         [Summary("Woop! <o/")]
         [Remarks("Ex: n!coop")]
@@ -171,6 +172,7 @@ namespace Nayu.Modules
             await Context.Channel.SendFileAsync(@Path.Combine(Constants.ResourceFolder, Constants.MemeFolder, "woop.gif"));
         }
 
+        [Subject(Categories.Fun)]
         [Command("rps")]
         [Summary("Rock, Paper Scissors!")]
         [Remarks("n!rps <rock/paper/scissors> Ex: n!rps rock")]
@@ -193,9 +195,8 @@ namespace Nayu.Modules
                 {
                     await SendMessage(Context, null, "I choose **Scissors**! 🖐️**ROCK** wins!");
                 }
-                return;
             }
-            if (play == "paper")
+            else if (play == "paper")
             {
                 if (choice == 1)
                 {
@@ -209,9 +210,8 @@ namespace Nayu.Modules
                 {
                     await SendMessage(Context, null, "I choose **Scissors**! 🖐️**SCISSORS** wins!");
                 }
-                return;
             }
-            if (play == "scissors")
+            else if (play == "scissors")
             {
                 if (choice == 1)
                 {
@@ -225,12 +225,10 @@ namespace Nayu.Modules
                 {
                     await SendMessage(Context, null, "I choose **Scissors**! 🖐️It's a tie!");
                 }
-                return;
             }
             else
             {
                 await SendMessage(Context, null, "Your response was invalid, use `n!rps <rock, paper, or scissors>`");
-                return;
             }
         }
     }

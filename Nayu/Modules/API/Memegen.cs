@@ -4,17 +4,19 @@ using Discord.WebSocket;
 using Newtonsoft.Json;
 using System.Net;
 using System.Threading.Tasks;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.API
 {
     public class Memegen : NayuModule
-    {
+    {        
+        [Subject(Categories.Fun)]
         [Command("memegen")]
         [Summary("Create a meme!")]
         [Alias("memecreate")]
         [Remarks("n!meme <top text>/<bottom text> (Note that there is no space between top and bottom text from the slash) Ex: n!meme hi/lol")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task Define([Remainder] string message)
         {
             message= message.Replace(' ', '_');
@@ -31,7 +33,9 @@ namespace Nayu.Modules.API
             {
                 await Context.Channel.SendFileAsync(stream, "meme.jpg");
             }
-        }
+        }        
+        
+        [Subject(Categories.Fun)]
         [Command("meme")]
         [Summary("Sends a meme from r/dankmemes")]
         [Remarks("n!meme")]

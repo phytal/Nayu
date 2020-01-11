@@ -4,28 +4,32 @@ using Discord;
 using Discord.Commands;
 using Nayu.Core.Features.Economy;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
+using Nayu.Modules.Chomusuke.Dueling.Enums;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Gambling
 {
     public class Slots : NayuModule
-    {
+    {        
+        [Subject(Categories.EconomyGambling)]
         [Command("newslot")]
         [Alias("newslots")]
         [Summary("Generates a new slot machine (duh)")]
         [Remarks("Ex: n!newslot")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task NewSlot(int amount = 0)
         {
             Global.slot = new Slot(amount);
             await ReplyAsync("✅  | A new slotmachine got generated!");
         }
-
+        
+        [Subject(Categories.EconomyGambling)]
         [Command("slots")]
         [Alias("slot")]
         [Summary("Play a game of slots! Ex: n!slots <amount you bet on>")]
         [Remarks("n!slots <amount you want to gamble> Ex: n!slots 50")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task SpinSlot(uint amount)
         {
             if (amount < 1)
@@ -57,12 +61,13 @@ namespace Nayu.Modules.Gambling
             await ReplyAsync(payoutAndFlavour.Item2);
 
         }
-
+        
+        [Subject(Categories.EconomyGambling)]
         [Command("showslots")]
         [Alias("showslot")]
         [Summary("Shows the slots wheel (don't worry it gets randomized everytime :stuck_out_tongue: ")]
         [Remarks("Ex: n!showslots")]
-        [Cooldown(10)]
+        [Cooldown(5)]
         public async Task ShowSlot()
         {
             await ReplyAsync(String.Join("\n", Global.slot.GetCylinderEmojis(true)));

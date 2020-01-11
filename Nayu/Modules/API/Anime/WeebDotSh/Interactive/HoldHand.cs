@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
@@ -8,7 +9,8 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
 {
     public class HoldHand : NayuModule
-    {
+    {        
+        [Subject(Categories.Interaction)]
         [Command("holdHand")]
         [Summary("Displays an image of an anime hand holding gif")]
         [Remarks("Usage: n!holdHand <user you want to holdHand (or can be left empty)> Ex: n!holdHand @Phytal")]

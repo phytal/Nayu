@@ -6,12 +6,14 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Core.Handlers;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Admin.Commands.Management
 {
     public class CustomCommand : NayuModule
     {
+        [Subject(AdminCategories.FunStuff)]
         [Command("CustomCommandAdd")]
         [Alias("Cca")]
         [Summary("Add a custom command")]
@@ -27,6 +29,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -41,6 +44,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             await SendMessage(Context, embed.Build());
         }
 
+        [Subject(AdminCategories.FunStuff)]
         [Command("CustomCommandRemove")]
         [Alias("Ccr")]
         [Summary("Remove a custom command")]
@@ -55,6 +59,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -74,6 +79,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             await SendMessage(Context, embed.Build());
         }
 
+        [Subject(AdminCategories.FunStuff)]
         [Command("CustomCommandList")]
         [Alias("Ccl")]
         [Summary("Lists all custom commands and its outputs")]

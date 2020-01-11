@@ -8,6 +8,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Core.Handlers;
+using Nayu.Helpers;
 using Victoria;
 using Victoria.Enums;
 
@@ -24,8 +25,9 @@ namespace Nayu.Modules.Music
             _lavaNode = lavaNode;
             _musicManager = musicManager;
         }
-
-        [Command("Join")]
+        
+        [Subject(Categories.Music)]
+        [Command("join")]
         [Summary("Nayu joins the current voice channel you are in")]
         [Remarks("Ex: n!join")]
         public async Task JoinAsync()
@@ -54,8 +56,9 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
-
-        [Command("Leave")]
+        
+        [Subject(Categories.Music)]
+        [Command("leave")]
         [Summary("Nayu leaves from the current voice channel you are in")]
         [Remarks("Ex: n!leave")]
         public async Task LeaveAsync()
@@ -83,8 +86,9 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
-
-        [Command("Play")]
+        
+        [Subject(Categories.Music)]
+        [Command("play")]
         [Summary("Searches and plays a song from Youtube")]
         [Remarks("n!play <song name or link> Ex: n!play gangnam style")]
         public async Task PlayAsync([Remainder] string query)
@@ -172,8 +176,9 @@ namespace Nayu.Modules.Music
                 }
             }
         }
-
-        [Command("Pause")]
+        
+        [Subject(Categories.Music)]
+        [Command("pause")]
         [Summary("Pauses the current song")]
         [Remarks("Ex: n!pause")]
         public async Task PauseAsync()
@@ -200,8 +205,9 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
-
-        [Command("Resume")]
+        
+        [Subject(Categories.Music)]
+        [Command("resume")]
         [Summary("Resumes the song that is paused")]
         [Remarks("Ex: n!resume")]
         public async Task ResumeAsync()
@@ -228,8 +234,9 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
-
-        [Command("Stop")]
+        
+        [Subject(Categories.Music)]
+        [Command("stop")]
         [Summary("Stops the current song")]
         [Remarks("Ex: n!stop")]
         public async Task StopAsync()
@@ -256,8 +263,9 @@ namespace Nayu.Modules.Music
                 throw e;
             }
         }
-
-        [Command("Skip")]
+        
+        [Subject(Categories.Music)]
+        [Command("skip")]
         [Summary("Skips the song that is currently playing")]
         [Remarks("Ex: n!skip")]
         public async Task SkipAsync()
@@ -301,8 +309,9 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
-
-        [Command("Seek")]
+        
+        [Subject(Categories.Music)]
+        [Command("seek")]
         [Summary("Seeks to a specific time point in the song/video")]
         [Remarks("n!seek <time> Ex: n!seek 5:12")]
         public async Task SeekAsync(TimeSpan timeSpan)
@@ -329,8 +338,9 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
-
-        [Command("Volume"), Alias("vol")]
+        
+        [Subject(Categories.Music)]
+        [Command("volume"), Alias("vol")]
         [Summary("Changes the volume of the song per guild (100 is default)")]
         [Remarks("n!vol <volume> Ex: n!vol 86")]
         public async Task VolumeAsync(ushort volume)
@@ -354,22 +364,23 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
-
-        [Command("NowPlaying"), Alias("Np")]
+        
+        [Subject(Categories.Music)]
+        [Command("nowPlaying"), Alias("Np")]
         [Summary("Shows the song that is currently playing")]
         [Remarks("Ex: n!np")]
         public async Task NowPlayingAsync()
             => await ReplyAsync("", embed: await _musicManager.NowPlayingAsync(Context));
-
-        [Command("Queue"), Alias("q")]
+        
+        [Subject(Categories.Music)]
+        [Command("queue"), Alias("q")]
         [Summary("Shows the current queue")]
         [Remarks("Ex: n!queue")]
         public async Task GetQueueAsync()
             => await ReplyAsync("", embed: await _musicManager.GetQueueAsync(Context));
         
-
-
-        [Command("Lyrics")]
+        [Subject(Categories.Music)]
+        [Command("lyrics")]
         [Summary("Shows the lyrics for the current song playing")]
         [Remarks("Ex: n!lyrics")]
         public async Task ShowGeniusLyrics()

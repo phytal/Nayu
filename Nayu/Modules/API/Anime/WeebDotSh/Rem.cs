@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Nayu.Helpers;
 using Nayu.Libs.Weeb.net;
 using Nayu.Libs.Weeb.net.Data;
 using Nayu.Preconditions;
@@ -8,14 +9,15 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh
 {
     public class Rem : NayuModule
-    {
+    {        
+        [Subject(Categories.Images)]
         [Command("rem")]
         [Summary("Displays an image of an anime rem gif")]
         [Remarks("Ex: n!rem")]
         [Cooldown(5)]
         public async Task RemIMG()
         {
-            string[] tags = new[] { "" };
+            string[] tags = { "" };
             Helpers.WebRequest webReq = new Helpers.WebRequest();
             RandomData result = await webReq.GetTypesAsync("rem", tags, FileType.Any, NsfwSearch.False, false);
             string url = result.Url;

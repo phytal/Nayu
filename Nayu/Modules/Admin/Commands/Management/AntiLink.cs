@@ -11,7 +11,8 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.Admin.Commands.Management
 {
     public class AntiLink : NayuModule
-    {
+    {        
+        [Subject(AdminCategories.Filters)]
         [Command("Antilink"), Alias("Al")]
         [Summary("Turns on or off the link filter.")]
         [Remarks("n!al <on/off> Ex: n!al on")]
@@ -26,6 +27,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var result = ConvertBool.ConvertStringToBoolean(arg);
@@ -49,6 +51,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             }
         }
 
+        [Subject(AdminCategories.Filters)]
         [Command("AntilinkIgnore"), Alias("Ali")]
         [Summary("Sets a channel that if Antilink is turned on, it will be disabled there")]
         [Remarks("n!ali <channel you want anti-link to be ignored> Ex: n!ali #links-only")]
@@ -63,6 +66,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);

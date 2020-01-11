@@ -4,13 +4,15 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Inbox
 {
     public class OpenMessage : NayuModule
-    {
-        [Command("openmessage")]
+    {        
+        [Subject(Categories.Inbox)]
+        [Command("openMessage")]
         [Summary("Open a message in your inbox through its ID")]
         [Alias("om")]
         [Remarks("n!om <message ID> Ex: n!om 2")]

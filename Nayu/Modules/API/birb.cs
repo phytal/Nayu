@@ -1,12 +1,14 @@
 ﻿using System.Threading.Tasks;
 using Discord.Commands;
 using System.Net;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.API
 {
     public class birb : NayuModule
-    {
+    {        
+        [Subject(Categories.Images)]
         [Command("birb")]
         [Alias("birdmeme")]
         [Summary("Displays an random birb meme")]

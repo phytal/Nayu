@@ -12,6 +12,7 @@ namespace Nayu.Modules.Admin.Commands.Management
 {
     public class Filtering : NayuModule
     {
+        [Subject(AdminCategories.Filters)]
         [Command("Filter"), Alias("blacklist", "bl", "fil")]
         [Summary("Turns on or off filter. Usage: n!filter true/false")]
         [Remarks("n!filter <on/off> Ex: n!filter on")]
@@ -25,6 +26,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var result = ConvertBool.ConvertStringToBoolean(setting);
@@ -46,7 +48,8 @@ namespace Nayu.Modules.Admin.Commands.Management
                 await SendMessage(Context, null, $"Please say `n!filter <on/off>`");
             }
         }
-
+        
+        [Subject(AdminCategories.Filters)]
         [Command("FilterIgnore"), Alias("Fi")]
         [Summary("Sets a channel that if Filter is turned on, it will be disabled there")]
         [Remarks("n!fi <channel you want filter to be ignored> Ex: n!fi #nsfw")]
@@ -60,6 +63,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -91,7 +95,8 @@ namespace Nayu.Modules.Admin.Commands.Management
             GlobalUserAccounts.SaveAccounts(Context.Guild.Id);
             await SendMessage(Context, embed.Build());
         }
-
+        
+        [Subject(AdminCategories.Filters)]
         [Command("BlacklistAdd")]
         [Alias("Bladd")]
         [Summary("Add a word to the filter")]
@@ -106,6 +111,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -114,7 +120,8 @@ namespace Nayu.Modules.Admin.Commands.Management
             config.CustomFilter.Add(word);
             GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
         }
-
+        
+        [Subject(AdminCategories.Filters)]
         [Command("BlacklistRemove")]
         [Alias("Blrem")]
         [Summary("Remove a custom word from filter")]
@@ -129,6 +136,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -147,7 +155,8 @@ namespace Nayu.Modules.Admin.Commands.Management
 
             await SendMessage(Context, embed.Build());
         }
-
+        
+        [Subject(AdminCategories.Filters)]
         [Command("BlacklistClear")]
         [Alias("Blcl")]
         [Summary("Clears the custom words in the filter")]
@@ -162,6 +171,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -173,7 +183,8 @@ namespace Nayu.Modules.Admin.Commands.Management
 
             await SendMessage(Context, embed.Build());
         }
-
+        
+        [Subject(AdminCategories.Filters)]
         [Command("BlacklistList")]
         [Alias("Bll")]
         [Summary("Lists the custom words in the filter")]
@@ -188,6 +199,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
+                return;
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);

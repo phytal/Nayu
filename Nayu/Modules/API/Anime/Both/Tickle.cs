@@ -14,6 +14,7 @@ namespace Nayu.Modules.API.Anime.Both
 {
     public class Tickle : NayuModule
     {
+        [Subject(Categories.Interaction)]
         [Command("Tickle")]
         [Summary("Tickle someone! :3")]
         [Remarks("n!tickle <user you want to tickle (if left empty you will tickle yourself)> Ex: n!tickle @Phytal")]
