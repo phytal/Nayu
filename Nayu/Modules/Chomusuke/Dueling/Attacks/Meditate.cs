@@ -10,9 +10,9 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
         public static AttackResult MeditateAttack(ShardedCommandContext context, Core.Entities.Chomusuke chom)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
-            string response = string.Empty;
+            string response;
             bool success = false;
-            int dmg = 0;
+            var dmg = 0;
             
             if (chom.Effects.Contains(Effect.Meditating))
                 response = $"{chom.Name} has already meditated! Try Again!";

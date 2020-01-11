@@ -104,9 +104,8 @@ namespace Nayu.Modules.API.Anime.Both
                 if (rand == 1)
                 {
                     string nekolink = NekosLifeHelper.GetNekoLink("lewd");
-                    string description = "Randomly generated lewd neko just for you <3!";
 
-                    embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, description);
+                    embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife);
                 }
 
                 if (rand == 2)
@@ -119,14 +118,14 @@ namespace Nayu.Modules.API.Anime.Both
 
                     string description = "Randomly generated lewd neko just for you <3!";
 
-                    embed = ImageEmbed.GetImageEmbed(url, Source.WeebDotSh, description);
+                    embed = ImageEmbed.GetImageEmbed(url, Source.WeebDotSh);
                 }
                 var guildAcc = GlobalGuildAccounts.GetGuildAccount(guild);
                 await Program._client.GetGuild(guildAcc.Id).GetTextChannel(guildAcc.AutoLewdChannel)
                     .SendMessageAsync("", embed: embed);
             }
 
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Successfully sent Autolewd");
         }
     }

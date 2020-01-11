@@ -11,7 +11,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
         
         public uint Mana { get; set; }
         
-        public uint Accuracy { get; set; }
+        public int Accuracy { get; set; } // misses every 1/value
         
         public List<Type> Types { get; set; }
         

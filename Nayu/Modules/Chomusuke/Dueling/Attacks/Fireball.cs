@@ -1,13 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Discord.Commands;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Modules.Chomusuke.Dueling.Enums;
+using Type = System.Type;
 
 namespace Nayu.Modules.Chomusuke.Dueling.Attacks
 {
     public class Fireball
     {
+        private static readonly AttackStructure Attack = new AttackStructure
+        {
+            Name = "Fireball",
+            Damage = 11,
+            Mana = 4,
+            Accuracy = 7,
+            Types = new List<Enums.Type> {Enums.Type.Fire},
+            Effects = new List<Effect> {Effect.Burned}
+        };
+        
         public static AttackResult FireballAttack(ShardedCommandContext context)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
@@ -17,10 +29,10 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             var chom1 = choms.Item1;
             var chom2 = choms.Item2;
 
-            int hitOrMiss = Global.Rng.Next(1, 5);
-            string response = string.Empty;
-            bool success = false;
-            int dmg = Global.Rng.Next(3,7);
+            var accuracy = Global.Rng.Next(1, Attack.Accuracy + 1);
+            string response;
+            bool success;
+            var dmg = (int)Math.Round(Attack.Damage * chom1.CP * .05);
             //use if something negates this
             /*if (configg.armour == "reinforced")
             {
@@ -29,7 +41,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
                 success = true;
                 return new AttackResult{Success = success, Response = response, Damage = 0};
             }*/
-            if (hitOrMiss > 1)
+            if (accuracy > 1)
             {
                 var result = CheckModifiers.GetDMGModifiers(context.User, player2, dmg);
                 dmg = result.Item1;

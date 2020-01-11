@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Nayu.Core.Handlers;
+using Nayu.Helpers;
 using Victoria;
 using Victoria.Enums;
 using Victoria.EventArgs;
@@ -14,7 +17,8 @@ namespace Nayu.Modules.Music {
         private readonly LavaNode _lavaNode;
         private readonly Logger _logger;
         public readonly HashSet<ulong> VoteQueue;
-
+        const string Format1 = @"hh\.mm\:ss";
+        const string Format2 = @"mm\.ss";
         public MusicManager(LavaNode lavaNode, Logger logger)
         {
             _logger = logger;
@@ -135,34 +139,65 @@ namespace Nayu.Modules.Music {
 
             return embed.Build();
         }
-        
+
         public async Task<Embed> NowPlayingAsync(ShardedCommandContext context)
         {
             if (!_lavaNode.TryGetPlayer(context.Guild, out var player))
             {
-                return EmbedHandler.CreateEmbed(context, "Music",$"{Global.ENo} | I'm not connected to a voice channel.", EmbedHandler.EmbedMessageType.Error);
+                return EmbedHandler.CreateEmbed(context, "Music",
+                    $"{Global.ENo} | I'm not connected to a voice channel.", EmbedHandler.EmbedMessageType.Error);
             }
 
             if (player.PlayerState != PlayerState.Playing)
             {
-                return EmbedHandler.CreateEmbed(context, "Music",$"{Global.ENo} | There's nothing playing at the moment", EmbedHandler.EmbedMessageType.Error);
+                return EmbedHandler.CreateEmbed(context, "Music",
+                    $"{Global.ENo} | There's nothing playing at the moment", EmbedHandler.EmbedMessageType.Error);
             }
 
             var track = player.Track;
             var artwork = await track.FetchArtworkAsync();
 
             var embed = new EmbedBuilder
-                {
-                    Title = $"{track.Author} - {track.Title}",
-                    ThumbnailUrl = artwork,
-                    Url = track.Url,
-                    Color = Global.NayuColor
-                }
-                .AddField("Id", track.Id)
-                .AddField("Duration", track.Duration)
-                .AddField("Position", track.Position);
+            {
+                Title = $"{track.Author} - {track.Title}",
+                ThumbnailUrl = artwork,
+                Description = GetSong(player),
+                Url = track.Url,
+                Color = Global.NayuColor,
+            };
+            embed.WithFooter($"Id: {track.Id}");
 
             return embed.Build();
+        }
+
+        public string GetSong(LavaPlayer player)
+        {
+            var track = player.Track;
+
+            var formattedDuration = track.Duration.ToString(track.Duration.Hours < 1 ? Format2 : Format1);
+            var formattedPosition = track.Position.ToString(track.Position.Hours < 1 ? Format2 : Format1);
+            
+            var dur = track.Duration - track.Position;
+            var ratio = dur / track.Duration;
+            var duration = (int)Math.Floor(ratio * 37);
+            var bar1 = new string('─', duration);
+            var bar2 = new string('─', 37 - duration);
+            var descriptionBuilder = new StringBuilder();
+            var song = track.Title;
+            
+            descriptionBuilder.Append($"ɴᴏᴡ ᴘʟᴀʏɪɴɢ: {song}\n");
+            descriptionBuilder.Append($"{bar2}⚪{bar1}\n");
+            descriptionBuilder.Append(player.PlayerState == PlayerState.Playing ? "◄◄  ▐▐   ►►⠀  " : "◄◄⠀  ▶   ►►⠀  ");
+            descriptionBuilder.Append($" {formattedPosition} / {formattedDuration} ");
+            var volumeRatio = player.Volume / 150;
+            var volumeNum = volumeRatio * 5;
+            var volBar1 = new string('─', volumeNum);
+            var volBar2 = new string('─', 5 - volumeNum);
+            var volEmoji = player.Volume >= 75 ? "🔊 " : "🔉 ";
+            string volume = $" {volBar2}○{volBar1} ";
+            descriptionBuilder.Append(volume);
+            descriptionBuilder.Append($"{volEmoji} ⠀　　　ᴴᴰ⚙️ ❐ ⊏⊐");
+            return descriptionBuilder.ToString();
         }
     }
 }

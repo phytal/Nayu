@@ -8,7 +8,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
 {
     public class Bash
     {
-        static AttackStructure Attack = new AttackStructure
+        private static readonly AttackStructure Attack = new AttackStructure
         {
             Damage = Global.Rng.Next(5, 10),
             Effects = new List<Effect>{Effect.Stunned},
@@ -24,10 +24,10 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             var chom1 = choms.Item1;
             var chom2 = choms.Item2;
             
-            string response = string.Empty;
+            string response;
             bool success = false;
-            int dmg = (int)Math.Round(Attack.Damage * chom1.CP * .05);
-            int stunProb = Global.Rng.Next(1, 3);
+            var dmg = (int)Math.Round(Attack.Damage * chom1.CP * .05);
+            var stunProb = Global.Rng.Next(1, 3);
             chom1.Mana -= Attack.Mana;
 
             var result = CheckModifiers.GetDMGModifiers(context.User, player2, dmg);
@@ -68,8 +68,6 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
 
             response = $"**{context.User.Username}**, You bashed **{chom2.Name}** and did **{dmg}** damage (buffed by {modifier}% due to active damage modifiers)!\n\n{Helpers.GetHpLeft(chom1, chom2)}";
             success = true;
-
-
 
             return new AttackResult{Success = success, Response = response, Damage = dmg};
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Discord.Commands;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Modules.Chomusuke.Dueling.Enums;
@@ -7,17 +8,24 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
 {
     public class Earthquake
     {
+        private static readonly AttackStructure Attack = new AttackStructure
+        {
+            Name = "Earthquake",
+            Damage = 18,
+            Mana = 6,
+            Effects = new List<Effect> {Effect.Stunned},
+            Accuracy = 16
+        };
         public static AttackResult EarthquakeAttack(ShardedCommandContext context)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
-            var player2 = context.Guild.GetUser(config.OpponentId);
             var choms = ActiveChomusuke.GetActiveChomusuke(config.Id, config.OpponentId);
             var chom1 = choms.Item1;
             var chom2 = choms.Item2;
 
-            string response = string.Empty;
-            bool success = false;
-            int dmg = Global.Rng.Next(15, 25);
+            string response;
+            bool success;
+            var dmg = (int)Math.Round(Attack.Damage * chom1.CP * .05);
             if (chom1.Effects.Contains(Effect.Blocking))
                 chom1.Effects.Remove(Effect.Blocking);
             if (chom2.Effects.Contains(Effect.Blocking))

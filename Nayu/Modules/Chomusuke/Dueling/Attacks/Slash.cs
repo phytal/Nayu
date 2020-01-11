@@ -1,11 +1,23 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Discord.Commands;
 using Nayu.Core.Features.GlobalAccounts;
+using Type = Nayu.Modules.Chomusuke.Dueling.Enums.Type;
 
 namespace Nayu.Modules.Chomusuke.Dueling.Attacks
 {
     public class Slash
     {
+        private static readonly AttackStructure Attack = new AttackStructure
+        {
+            Name = "Slash",
+            Damage = 13,
+            Mana = 2,
+            Types = new List<Type> {Type.Normal},
+            Accuracy = 9
+        };
+        
         public static AttackResult SlashAttack(ShardedCommandContext context)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
@@ -14,16 +26,15 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             var chom1 = choms.Item1;
             var chom2 = choms.Item2;
 
-            string response = string.Empty;
-            int dmg = 0;
-            int hitormiss = Global.Rng.Next(1, 9);
+            string response;
+            var dmg = (int)Math.Round(Attack.Damage * chom1.CP * .05);
+            var accuracy = Global.Rng.Next(1, Attack.Accuracy + 1);
 
-            if (hitormiss > 1)
+            if (accuracy > 1)
             {
-                dmg = Global.Rng.Next(7, 15);
                 var result = CheckModifiers.GetDMGModifiers(context.User, player2, dmg);
                 dmg = result.Item1;
-                int modifier = result.Item2;
+                var modifier = result.Item2;
 
                 var block = CheckModifiers.CheckForBlock(context.User, player2, dmg);
                 var deflect = CheckModifiers.CheckForDeflect(context.User, player2, dmg);

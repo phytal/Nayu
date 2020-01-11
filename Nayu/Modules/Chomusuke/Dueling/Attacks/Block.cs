@@ -12,9 +12,9 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
 
-            string response = string.Empty;
+            string response;
             bool success = false;
-            int dmg = 0;
+            var dmg = 0;
             if (chom.Effects.Contains(Effect.Blocking))
             {
                 response = "You are already in blocking formation! Try again!";

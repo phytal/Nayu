@@ -1,11 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using Discord.Commands;
 using Nayu.Core.Features.GlobalAccounts;
+using Type = Nayu.Modules.Chomusuke.Dueling.Enums.Type;
 
 namespace Nayu.Modules.Chomusuke.Dueling.Attacks
 {
     public class Absorb
     {
+        private static readonly AttackStructure Attack = new AttackStructure
+        {
+            Name = "Absorb",
+            Damage = 15,
+            Mana = 5,
+            Types = new List<Type> {Type.Chaos},
+            Accuracy = 7
+        };
+        
         public static AttackResult AbsorbAttack(ShardedCommandContext context)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
@@ -14,9 +25,9 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             var chom1 = choms.Item1;
             var chom2 = choms.Item2;
 
-            string response = string.Empty;
-            bool success = false;
-            int hit = Global.Rng.Next(1, 3);
+            string response;
+            bool success;
+            int hit = Global.Rng.Next(1, Attack.Accuracy + 1);
 
             if (hit == 1)
             {
@@ -30,11 +41,11 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
                     return new AttackResult{Success = success, Response = response, Damage = 0};
                 }*/
 
-                int dmg = Global.Rng.Next(7, 15);
+                var dmg = (int)Math.Round(Attack.Damage * chom1.CP * .05);
 
                 var result = CheckModifiers.GetDMGModifiers(context.User, player2, dmg);
                 dmg = result.Item1;
-                int modifier = result.Item2;
+                var modifier = result.Item2;
 
                 var block = CheckModifiers.CheckForBlock(context.User, player2, dmg);
                 if (block.Item1 == true)

@@ -4,7 +4,7 @@ namespace Nayu.Helpers
 {
     public class ImageEmbed
     {
-        public static Embed GetImageEmbed(string link, Source source, string title, string description = "")
+        public static Embed GetImageEmbed(string link, Source source, string title = "", string description = "")
         {
             var embed = new EmbedBuilder();
             embed.WithTitle(title);
