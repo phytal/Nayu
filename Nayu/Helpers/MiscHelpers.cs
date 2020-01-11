@@ -16,9 +16,9 @@ namespace Nayu.Helpers
         internal static bool UserHasRole(ShardedCommandContext ctx, ulong roleId)
         {
             var targetRole = ctx.Guild.Roles.FirstOrDefault(r => r.Id == roleId);
-            var gUser = ctx.User as SocketGuildUser;
+            var guildUser = ctx.User as SocketGuildUser;
 
-            return (gUser.Roles.Contains(targetRole));
+            return (guildUser.Roles.Contains(targetRole));
         }
         
         /// <summary>

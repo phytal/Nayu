@@ -13,15 +13,15 @@ namespace Nayu.Modules.Gambling
     public class Slots : NayuModule
     {        
         [Subject(Categories.EconomyGambling)]
-        [Command("newslot")]
-        [Alias("newslots")]
-        [Summary("Generates a new slot machine (duh)")]
-        [Remarks("Ex: n!newslot")]
+        [Command("newSlot")]
+        [Alias("newSlots")]
+        [Summary("Generates a new slot machine")]
+        [Remarks("Ex: n!newSlot")]
         [Cooldown(5)]
         public async Task NewSlot(int amount = 0)
         {
             Global.slot = new Slot(amount);
-            await ReplyAsync("✅  | A new slotmachine got generated!");
+            await ReplyAsync("✅  | A new slot machine got generated!");
         }
         
         [Subject(Categories.EconomyGambling)]
@@ -63,10 +63,10 @@ namespace Nayu.Modules.Gambling
         }
         
         [Subject(Categories.EconomyGambling)]
-        [Command("showslots")]
-        [Alias("showslot")]
-        [Summary("Shows the slots wheel (don't worry it gets randomized everytime :stuck_out_tongue: ")]
-        [Remarks("Ex: n!showslots")]
+        [Command("showSlots")]
+        [Alias("showSlot")]
+        [Summary("Shows the slots wheel (don't worry it gets randomized every time :stuck_out_tongue: ")]
+        [Remarks("Ex: n!showSlots")]
         [Cooldown(5)]
         public async Task ShowSlot()
         {

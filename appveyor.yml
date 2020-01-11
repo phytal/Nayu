@@ -4,11 +4,8 @@ configuration: Release
 before_build: 
     - nuget restore
 
-image: Visual Studio 2017
+image: Visual Studio 2019
 
 build: 
     verbosity: minimal
     publish_wap: true
-    
-install:
-  - cmd: choco install dotnetcore-sdk --pre

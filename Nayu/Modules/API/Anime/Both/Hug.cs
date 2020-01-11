@@ -15,7 +15,7 @@ namespace Nayu.Modules.API.Anime.Both
     public class Hug : NayuModule
     {        
         [Subject(Categories.Interaction)]
-        [Command("Hug")]
+        [Command("hug")]
         [Summary("Hug someone!")]
         [Remarks("n!hug <user you want to hug (if left empty you will hug yourself)> Ex: n!hug @Phytal")]
         [Cooldown(5)]
