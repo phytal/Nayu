@@ -1,7 +1,7 @@
 <img src="https://i.imgur.com/1tT1Wkk.png" alt="Phytal" style="box-shadow: 25px 25px 50px 0 white inset, -25px -25px 50px 0 white inset;"/>
 
-[![Build Status](https://api.travis-ci.com/Phytal/Nayu.svg?branch=master)](https://travis-ci.com/Phytal/Nayu)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Phytal/Nayu/blob/master/LICENSE)
+[![Build Status](https://api.travis-ci.com/Phytal/Nayu.svg?branch=master)](https://travis-ci.com/Phytal/Nayu)
 [![Actions Status](https://github.com/Phytal/Nayu/workflows/.NET%20Core/badge.svg)](https://github.com/Phytal/Nayu/actions)
 [![Build status](https://ci.appveyor.com/api/projects/status/x9ckwganoya5ap5h?svg=true)](https://ci.appveyor.com/project/Phytal/nayu)
 [![Discord Shield](https://discordapp.com/api/guilds/601118427909718076/widget.png?style=shield)](https://discord.gg/eyHg6hS)
