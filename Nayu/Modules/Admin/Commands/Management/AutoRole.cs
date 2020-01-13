@@ -17,7 +17,7 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Summary("Adds a role that new members will receive automatically")]
         [Remarks("n!autorole <role name> Ex: n!autorole Member")]
         [Cooldown(5)]
-        public async Task AutoRoleRoleAdd(string arg = "")
+        public async Task AutoRoleRoleAdd([Remainder]string arg = "")
         {
             var guildUser = Context.User as SocketGuildUser;
             if (!guildUser.GuildPermissions.Administrator)

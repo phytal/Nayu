@@ -34,6 +34,7 @@ using Nayu.Libs.CustomLibraries.Discord.Addons.Interactive;
 using Nayu.Modules.API.Anime.Both;
 using Nayu.Modules.Chomusuke;
 using Nayu.Modules.Music;
+using Sentry;
 using Victoria;
       
       namespace Nayu
@@ -46,6 +47,7 @@ using Victoria;
 
         private static void Main()
         {
+            SentrySdk.Init("https://a3ae64952ed84801a7def80a09d8b170@sentry.io/1869654");
             // All required tasks that need to run simultaneously
             var botLaunchers = new List<Task>
             {

@@ -30,7 +30,7 @@ namespace Nayu.Core.Handlers
             var footer = new EmbedFooterBuilder()
             {
                 IconUrl = boturl,
-                Text = "Nayu | n!help"
+                Text = type == EmbedMessageType.Error ? "Did you use the command correctly? If so, please report this to our discord server https://discord.gg/eyHg6hS" : "Nayu | n!help"
             };
 
             var embed = new EmbedBuilder()
