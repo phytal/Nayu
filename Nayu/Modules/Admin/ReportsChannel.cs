@@ -51,7 +51,7 @@ namespace Nayu.Modules.Admin
                 || (string.IsNullOrWhiteSpace(reason)))
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("🖐️ | You must mention a user and provide a reason. Ex: n!report @Username <reason>");
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
@@ -71,7 +71,7 @@ namespace Nayu.Modules.Admin
                 }
                 var channel = chnl as SocketTextChannel;
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.Title = $"{Context.User}'s report of {user.Username}";
                 embed.Description = $"**Username: **{user.Username}\n**Reported by: **{Context.User.Mention}\n**Reason: **{reason}";
                 await SendMessage(Context, embed.Build());

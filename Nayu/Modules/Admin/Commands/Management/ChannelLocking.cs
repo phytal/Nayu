@@ -68,7 +68,7 @@ namespace Nayu.Modules.Admin.Commands.Management
 
             var embed = MiscHelpers
                 .CreateEmbed(Context, "Channel Unlocked", $":unlock: Unlocked {Context.Channel.Name}.")
-                .WithColor(37, 152, 255);
+                .WithColor(Global.NayuColor);
             await SendMessage(Context, embed.Build());
         }
     }

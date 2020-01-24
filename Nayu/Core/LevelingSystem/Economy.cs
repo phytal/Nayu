@@ -27,7 +27,7 @@ namespace Nayu.Core.LevelingSystem
             if (result.Success)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithDescription($"{Emote.Parse("<:taiyaki:599774631984889857>")}  | Here's **{Constants.DailyTaiyakiGain}** Taiyakis, {Context.User.Mention}! Come back tomorrow for more!");
                 await SendMessage(Context, embed.Build());
             }
@@ -35,7 +35,7 @@ namespace Nayu.Core.LevelingSystem
             {
                 var timeSpanString = string.Format("{0:%h} hours {0:%m} minutes {0:%s} seconds", result.RefreshTimeSpan);
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithDescription($"{Emote.Parse("<:taiyaki:599774631984889857>")}  | **You have already claimed your free daily Taiyakis, {Context.User.Mention}.\nCome back in {timeSpanString}.**");
                 await SendMessage(Context, embed.Build());
             }
@@ -58,7 +58,7 @@ namespace Nayu.Core.LevelingSystem
                 mentionedaccount.Reputation += 1;
                 GlobalGuildUserAccounts.SaveAccounts();
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithDescription($":diamond_shape_with_a_dot_inside:   | {Context.User.Mention} gave {userB.Mention} a reputation point!");
                 await SendMessage(Context, embed.Build());
             }
@@ -66,7 +66,7 @@ namespace Nayu.Core.LevelingSystem
             {
                 var timeSpanString = string.Format("{0:%h} hours {0:%m} minutes {0:%s} seconds", result.RefreshTimeSpan);
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithDescription($":diamond_shape_with_a_dot_inside::arrows_counterclockwise:  | **You already gave someone reputation points recently, {Context.User.Mention}.\nCome back in {timeSpanString}.**");
                 await SendMessage(Context, embed.Build());
             }
@@ -92,7 +92,7 @@ namespace Nayu.Core.LevelingSystem
                 if (userB == null)
                 {
                     var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
+                    embed.WithColor(Global.NayuColor);
                     embed.WithTitle($"🖐️ | Please say who you want to gift {config.Currency} to. Ex: n!gift <amount of Taiyakis> @user");
                     await SendMessage(Context, embed.Build());
                 }
@@ -126,8 +126,8 @@ namespace Nayu.Core.LevelingSystem
             GlobalUserAccounts.SaveAccounts(userAccount.Id);
 
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
-            embed.WithTitle($"✅  | **{Taiyaki}** {config.Currency} were added to " + target.Username + "'s account.");
+            embed.WithColor(Global.NayuColor);
+            embed.WithTitle($"✅  **|** **{Taiyaki}** {config.Currency} were added to " + target.Username + "'s account.");
             await SendMessage(Context, embed.Build());
         }
 
@@ -169,7 +169,7 @@ namespace Nayu.Core.LevelingSystem
             {
                 var account = ordered[i - 1 + usersPerPage * page];
                 var user = Global.Client.GetUser(account.Id);
-                embB.WithColor(37, 152, 255);
+                embB.WithColor(Global.NayuColor);
                 embB.AddField($"#{i + usersPerPage * page} {user.Username}", $"{account.Taiyaki} {config.Currency}", true);
             }
 

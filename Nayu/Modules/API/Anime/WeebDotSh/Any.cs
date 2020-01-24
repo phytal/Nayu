@@ -26,7 +26,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh
                 string id = result.Id;
 
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("QWERTY!");
                 embed.WithDescription($"Looks like {Context.User.Username} is interested in some {type} owo");
                 embed.WithImageUrl(url);

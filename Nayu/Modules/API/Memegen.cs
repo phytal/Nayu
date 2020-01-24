@@ -60,7 +60,7 @@ namespace Nayu.Modules.API
                 .WithImageUrl(image)
                 .WithFooter($"👍 {ups} | 💬 {comments}")
                 .WithUrl($"https://www.reddit.com{link}")
-                .WithColor(37, 152, 255);
+                .WithColor(Global.NayuColor);
             await SendMessage(Context, embed.Build());
         }
     }

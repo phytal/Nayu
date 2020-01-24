@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("Insult!");
                 embed.WithDescription(
                     $"{Context.User.Mention} insulted themselves! Why the pessimism? \n**(Include a user with your command! Example: n!insult <person you want to insult>)**");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("Insult!");
                 embed.WithDescription($"{Context.User.Username} insulted {user.Mention}!");

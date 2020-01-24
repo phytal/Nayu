@@ -85,7 +85,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             embed.AddField("n!blessings", "Shows all of your possessed blessings.", true);
             embed.AddField("n!activeblessing", "Set your active blessing.", true);
             embed.WithFooter(text);
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             await SendMessage(Context, embed.Build());
         }
 
@@ -128,7 +128,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             target = mentionedUser ?? Context.User;
             var config = GlobalUserAccounts.GetUserAccount(target);
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.WithTitle($"{Context.User.Username}'s Duel Stats :crossed_swords: ");
             embed.AddField("**Wins**", config.Wins);
             embed.AddField("**Losses**", config.Losses);
@@ -216,7 +216,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             {
                 var account = ordered[i - 1 + usersPerPage * page];
                 var user = Global.Client.GetUser(account.Id);
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.AddField($"#{i + usersPerPage * page} {user.Username}", $"{account.Wins} Wins", true);
             }
 
@@ -258,7 +258,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             {
                 var account = ordered[i - 1 + usersPerPage * page];
                 var user = Global.Client.GetUser(account.Id);
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.AddField($"#{i + usersPerPage * page} {user.Username}", $"{account.Wins} Wins", true);
             }
 

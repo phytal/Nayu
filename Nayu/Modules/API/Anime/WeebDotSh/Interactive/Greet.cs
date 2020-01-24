@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("Konichiwa!");
                 embed.WithDescription(
                     $"{Context.User.Mention} greeted themselves! You know I'm here.. right? \n**(Include a user with your command! Example: n!greet <person you want to greet>)**");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("Konichiwa!");
                 embed.WithDescription($"{Context.User.Username} greeted {user.Mention}!");

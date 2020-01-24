@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("Dance!");
                 embed.WithDescription(
                     $"{Context.User.Mention} danced with themselves.. *I'm just going to whip out my camera...*? \n**(Include a user with your command! Example: n!dance <person you want to dance with>)**");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("Dance!");
                 embed.WithDescription($"{Context.User.Username} danced with {user.Mention}!");

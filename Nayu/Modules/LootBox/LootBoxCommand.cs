@@ -20,70 +20,77 @@ namespace Nayu.Modules.LootBox
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
 
-            if (arg == "common")
+            switch (arg)
             {
-                if (config.LootBoxCommon > 0)
-                {
-                    config.LootBoxCommon -= 1;
-                    await OpenLootBox.OpenCommonBox(Context.User, (ITextChannel)Context.Channel);
-                }
-                else
-                {
-                    await SendMessage(Context, null, $":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Common Loot Boxes!");
-                    return;
-                }
-            }
-            if (arg == "uncommon")
-            {
-                if (config.LootBoxCommon > 0)
-                {
-                    config.LootBoxUncommon -= 1;
-                    await OpenLootBox.OpenUncommonBox(Context.User, (ITextChannel)Context.Channel);
-                }
-                else
-                {
-                    await SendMessage(Context, null, $":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Uncommon Loot Boxes!");
-                    return;
-                }
-            }
-            if (arg == "rare")
-            {
-                if (config.LootBoxRare > 0)
-                {
-                    config.LootBoxRare -= 1;
-                    await OpenLootBox.OpenRareBox(Context.User, (ITextChannel)Context.Channel);
-                }
-                else
-                {
-                    await SendMessage(Context, null, $":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Rare Loot Boxes!");
-                    return;
-                }
-            }
-            if (arg == "epic")
-            {
-                if (config.LootBoxEpic > 0)
-                {
-                    config.LootBoxEpic -= 1;
-                    await OpenLootBox.OpenEpicBox(Context.User, (ITextChannel)Context.Channel);
-                }
-                else
-                {
-                    await SendMessage(Context, null, $":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Epic Loot Boxes!");
-                    return;
-                }
-            }
-            if (arg == "legendary")
-            {
-                if (config.LootBoxLegendary > 0)
-                {
-                    config.LootBoxLegendary -= 1;
-                    await OpenLootBox.OpenLegendaryBox(Context.User, (ITextChannel)Context.Channel);
-                }
-                else
-                {
-                    await SendMessage(Context, null, $":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Legendary Loot Boxes!");
-                    return;
-                }
+                case "common":
+                    if (config.LootBoxCommon > 0)
+                    {
+                        config.LootBoxCommon -= 1;
+                        await OpenLootBox.OpenCommonBox(Context.User, (ITextChannel) Context.Channel);
+                    }
+                    else
+                    {
+                        await SendMessage(Context, null,
+                            $"🛑  |  **{Context.User.Username}**, you don't have any Common Loot Boxes!");
+                        return;
+                    }
+
+                    break;
+                case "uncommon":
+                    if (config.LootBoxUncommon > 0)
+                    {
+                        config.LootBoxUncommon -= 1;
+                        await OpenLootBox.OpenUncommonBox(Context.User, (ITextChannel) Context.Channel);
+                    }
+                    else
+                    {
+                        await SendMessage(Context, null,
+                            $"🛑  |  **{Context.User.Username}**, you don't have any Uncommon Loot Boxes!");
+                        return;
+                    }
+
+                    break;
+                case "rare":
+                    if (config.LootBoxRare > 0)
+                    {
+                        config.LootBoxRare -= 1;
+                        await OpenLootBox.OpenRareBox(Context.User, (ITextChannel) Context.Channel);
+                    }
+                    else
+                    {
+                        await SendMessage(Context, null,
+                            $"🛑  |  **{Context.User.Username}**, you don't have any Rare Loot Boxes!");
+                        return;
+                    }
+
+                    break;
+                case "epic":
+                    if (config.LootBoxEpic > 0)
+                    {
+                        config.LootBoxEpic -= 1;
+                        await OpenLootBox.OpenEpicBox(Context.User, (ITextChannel) Context.Channel);
+                    }
+                    else
+                    {
+                        await SendMessage(Context, null,
+                            $"🛑  |  **{Context.User.Username}**, you don't have any Epic Loot Boxes!");
+                        return;
+                    }
+
+                    break;
+                case "legendary":
+                    if (config.LootBoxLegendary > 0)
+                    {
+                        config.LootBoxLegendary -= 1;
+                        await OpenLootBox.OpenLegendaryBox(Context.User, (ITextChannel)Context.Channel);
+                    }
+                    else
+                    {
+                        await SendMessage(Context, null, $"🛑  |  **{Context.User.Username}**, you don't have any Legendary Loot Boxes!");
+                        return;
+                    }
+
+                    break;
             }
             GlobalUserAccounts.SaveAccounts(Context.User.Id);
         }
@@ -108,7 +115,7 @@ namespace Nayu.Modules.LootBox
             await SendMessage(Context, embed.Build());
         }
         
-        [Subject(Categories.Lootboxes)]
+        [Subject(OwnerCategories.Owner)]
         [Command("addLootBox"), Alias("alb")]
         [Summary("Adds some loot boxes to a person")]
         [Remarks("Usage: n!alb <user>")]
@@ -130,10 +137,32 @@ namespace Nayu.Modules.LootBox
             await SendMessage(Context, null, $"Successfully added one of every loot box to {target}");
         }
         
+        [Subject(OwnerCategories.Owner)]
+        [Command("clearLootBox"), Alias("clb")]
+        [Summary("Clears a person's loot boxes")]
+        [Remarks("Usage: n!clb <user>")]
+        [RequireOwner]
+        public async Task ClearLootBox([Remainder] string arg = "")
+        {
+            SocketUser target = null;
+            var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
+            target = mentionedUser ?? Context.User;
+
+            var account = GlobalUserAccounts.GetUserAccount(target);
+            account.LootBoxCommon = 0;
+            account.LootBoxUncommon = 0;
+            account.LootBoxRare = 0;
+            account.LootBoxEpic = 0;
+            account.LootBoxLegendary = 0;
+            GlobalUserAccounts.SaveAccounts(account.Id);
+
+            await SendMessage(Context, null, $"Successfully cleared {target}'s loot boxes");
+        }
+        
         [Subject(Categories.Lootboxes)]
-        [Command("giftLootbox")]
+        [Command("giftLootBox")]
         [Alias("giftlb", "grantlb", "glb")]
-        [Summary("Gifts a lootbox to a selected user from your arsenal of lootboxes Ex: n!giftlb epic @user")]
+        [Summary("Gifts a loot box to a selected user from your arsenal of loot boxes Ex: n!giftlb epic @user")]
         [Remarks("n!giftlb <rarity> <user you want to gift to> Ex: n!giftlb rare @Phytal")]
         [Cooldown(5)]
         public async Task Gift(string Rarity, IGuildUser userB)
@@ -150,15 +179,15 @@ namespace Nayu.Modules.LootBox
 
             if (numOfLootboxes < 1)
             {
-                await ReplyAsync(":angry:  | Stop trying to gift lootboxes you don't have!");
+                await ReplyAsync(":angry:  | Stop trying to gift loot boxes you don't have!");
             }
             else
             {
                 if (userB == null)
                 {
                     var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
-                    embed.WithTitle("🖐️ | Please say who you want to gift lootboxes to. Ex: n!gift <rarity of lootbox> @user");
+                    embed.WithColor(Global.NayuColor);
+                    embed.WithTitle("🖐️ | Please say who you want to gift loot boxes to. Ex: n!gift <rarity of loot box> @user");
                     await SendMessage(Context, embed.Build());
                 }
                 else
@@ -173,7 +202,7 @@ namespace Nayu.Modules.LootBox
 
                     GlobalUserAccounts.SaveAccounts(giveaccount.Id, receiver.Id);
 
-                    await SendMessage(Context, null, $":gift:  | {Context.User.Mention} has gifted {userB.Mention} a **{Rarity}** Lootbox! How generous.");
+                    await SendMessage(Context, null, $":gift:  | {Context.User.Mention} has gifted {userB.Mention} a **{Rarity}** Loot box! How generous.");
                 }
             }
         }

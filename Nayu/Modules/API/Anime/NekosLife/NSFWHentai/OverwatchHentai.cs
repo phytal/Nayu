@@ -23,7 +23,7 @@ namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
             var channel = Context.Channel as ITextChannel;
             if (!channel.IsNsfw)
             {
-                var nsfwText = $"{Global.ENo} | You need to use this command in a NSFW channel, {Context.User.Username}!";
+                var nsfwText = $"{Global.ENo} **|**| You need to use this command in a NSFW channel, {Context.User.Username}!";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", nsfwText,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -46,9 +46,9 @@ namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
             var embed = new EmbedBuilder()
                 .WithTitle(posttitle)
                 .WithImageUrl(image)
-                .WithFooter($"👍 {ups} | 💬 {comments} (If image is not shown you can click on the link)")
+                .WithFooter($"👍 {ups} **|** 💬 {comments} (If image is not shown you can click on the link)")
                 .WithUrl($"https://www.reddit.com{link}")
-                .WithColor(37, 152, 255);
+                .WithColor(Global.NayuColor);
             await SendMessage(Context, embed.Build());
         }
     }

@@ -23,7 +23,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
             {
                     var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                     var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
+                    embed.WithColor(Global.NayuColor);
                     embed.WithDescription($"The server's currency is now set to the **{arg}**!");
                     config.Currency = arg;
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
@@ -39,7 +39,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.Title = $"{Global.ENo} | You Need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }

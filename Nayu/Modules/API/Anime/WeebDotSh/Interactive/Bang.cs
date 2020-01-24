@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("Bang!");
                 embed.WithDescription(
                     $"{Context.User.Mention} shot themselves! Oh noes! Here, take a max revive! \n**(Include a user with your command! Example: n!bite <person you want to bite>)**");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("Bang!");
                 embed.WithDescription($"{Context.User.Username} shot {user.Mention}!");

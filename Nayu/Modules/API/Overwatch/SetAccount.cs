@@ -23,7 +23,7 @@ namespace Nayu.Modules.API.Overwatch
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
 
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.WithTitle("Overwatch Credentials");
             embed.AddField("Username", user);
             embed.AddField("Platform", platform);
@@ -55,7 +55,7 @@ namespace Nayu.Modules.API.Overwatch
             }
 
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.WithTitle("Here are your Overwatch credentials");
             embed.AddField("Username", config.OverwatchID);
             embed.AddField("Region", config.OverwatchRegion);

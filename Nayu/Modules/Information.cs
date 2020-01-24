@@ -33,7 +33,7 @@ namespace Nayu.Modules
         {
             string version = Config.bot.version;
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.AddField("Creator", "Phytal#8213", true);
             embed.AddField("Last Updated", "11/29/2018", true);
             embed.AddField("Bot version", $"Beta {version}", true);
@@ -463,7 +463,7 @@ namespace Nayu.Modules
         {
             string version = Config.bot.version;
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.WithTitle("Update Notes");
             embed.WithDescription($"`Bot version {version}` **<<Last Updated on 6/24>>**\n"
                 + "`----- LAST UPDATE -----`\n"

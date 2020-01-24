@@ -8,11 +8,11 @@ namespace Nayu.Modules.LootBox
         public static string DuelsItemProbabiliy(SocketUser user, char tier)
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
-            string[] legendary = {"ChainsOfTartarus", "FreyasBlessing", "DiceOfGod", "MeadOfPoetry",};
+            string[] legendary = {"ChainsOfTartarus", "FreyasBlessing", "DiceOfGod", "MeadOfPoetry", "HairOfAGoddess"};
             string[] epic = {"BlessingOfProtection", "Blessing of Strength",  "BlessingOfSwiftness", "BlessingOfWar"};
             string[] rare = {"ConstantineMedallion", "BookOfExodus", "VolcanicRune", "FlaskOfIchor", "FlaskOfElixir", "FlaskOfMana"};
             string[] uncommon = {"FireThread", "SkyPowder", "TearsOfHera", "HornOfVeles", "BranchOfYggdrasil"};
-            string[] common = {"ShardsOfImmortality", "ReviveCrystal"};
+            string[] common = {"ShardsOfImmortality", "ReviveCrystal", "SilverWood", "AGlowingRock", "PhoenixFeathers"};
             /*
              * rates:
              * legendary: 4%

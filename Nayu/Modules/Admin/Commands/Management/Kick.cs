@@ -35,7 +35,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             {
                 await user.KickAsync();
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.Title = $" {user.Username} has been kicked from {user.Guild.Name}";
                 embed.Description =
                     $"**Username: **{user.Username}\n**Guild Name: **{user.Guild.Name}\n**Kicked by: **{Context.User.Mention}\n**Reason: **{reason}";

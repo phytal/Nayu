@@ -61,7 +61,7 @@ namespace Nayu.Helpers
             {
                 Author = auth,
                 Footer = footer,
-                Color = new Color(37, 152, 255),
+                Color = Global.NayuColor,
                 Title = title,
                 Description = desc,
             };

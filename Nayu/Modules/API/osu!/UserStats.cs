@@ -42,7 +42,7 @@ namespace Nayu.Modules.API
 
             var embed = new EmbedBuilder();
             embed.WithThumbnailUrl("https://images.discordapp.net/avatars/421879566265614337/7035b241f838c0e1de3f0ab047352d0b.png?size=512");
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.WithTitle($":video_game:  | **{Username}'s osu! Profile**");
             embed.AddField("Username", Username + $" ({country})", true);
             embed.AddField("UserId", UserId, true);
@@ -94,7 +94,7 @@ namespace Nayu.Modules.API
 
             var embed = new EmbedBuilder();
             embed.WithThumbnailUrl("https://images.discordapp.net/avatars/421879566265614337/7035b241f838c0e1de3f0ab047352d0b.png?size=512");
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.WithTitle($":video_game:  | **{Username}'s osu! mania Profile**");
             embed.AddField("Username", Username + $" ({country})", true);
             embed.AddField("UserId", UserId, true);
@@ -146,7 +146,7 @@ namespace Nayu.Modules.API
 
             var embed = new EmbedBuilder();
             embed.WithThumbnailUrl("https://images.discordapp.net/avatars/421879566265614337/7035b241f838c0e1de3f0ab047352d0b.png?size=512");
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.WithTitle($":video_game:  | **{Username}'s osu! taiko Profile**");
             embed.AddField("Username", Username + $" ({country})", true);
             embed.AddField("UserId", UserId, true);
@@ -198,7 +198,7 @@ namespace Nayu.Modules.API
 
             var embed = new EmbedBuilder();
             embed.WithThumbnailUrl("https://images.discordapp.net/avatars/421879566265614337/7035b241f838c0e1de3f0ab047352d0b.png?size=512");
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.WithTitle($":video_game:  | **{Username}'s osu! ctb Profile**");
             embed.AddField("Username", Username + $" ({country})", true);
             embed.AddField("UserId", UserId, true);

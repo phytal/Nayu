@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("Hehe!");
                 embed.WithDescription(
                     $"{Context.User.Mention} was smug at themselves, self-infatuation much? \n**(Include a user with your command! Example: n!smug <person you want to be smug at>)**");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("Hehe!");
                 embed.WithDescription($"{Context.User.Username} is looking all smug at {user.Mention}!");

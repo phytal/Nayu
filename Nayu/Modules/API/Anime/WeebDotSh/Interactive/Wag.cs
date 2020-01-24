@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("Wag!");
                 embed.WithDescription(
                     $"{Context.User.Mention} wagged at themselves... You know you aren't *that* funny.. \n**(Include a user with your command! Example: n!cag <person you want to wag (your imaginary tail) at>)**");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("Wag!");
                 embed.WithDescription($"{Context.User.Username} wagged their tail at {user.Mention}!");

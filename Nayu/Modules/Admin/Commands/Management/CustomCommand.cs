@@ -39,7 +39,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 .WithTitle("Custom Command Added!")
                 .AddField("Command Name", $"__{commandName}__")
                 .AddField("Bot Response", $"**{commandValue}**")
-                .WithColor(37, 152, 255);
+                .WithColor(Global.NayuColor);
 
             await SendMessage(Context, embed.Build());
         }
@@ -64,7 +64,7 @@ namespace Nayu.Modules.Admin.Commands.Management
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var embed = new EmbedBuilder()
-                .WithColor(37, 152, 255);
+                .WithColor(Global.NayuColor);
             if (config.CustomCommands.Keys.Contains(commandName))
             {
                 embed.WithDescription($"Removed **{commandName}** as a command!");

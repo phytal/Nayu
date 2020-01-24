@@ -24,7 +24,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh
             string id = result.Id;
             var embed = new EmbedBuilder();
 
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.WithTitle("Lewd!");
             embed.WithDescription(
                 $"{Context.User.Mention} here's some lewd pictures at your disposal :3");

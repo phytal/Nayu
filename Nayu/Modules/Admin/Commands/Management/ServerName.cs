@@ -32,7 +32,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             await Context.Guild.ModifyAsync(x => x.Name = name);
             var embed = new EmbedBuilder();
             embed.WithDescription($"Set this server's name to **{name}**!");
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
 
             await ReplyAsync("", embed: embed.Build());
         }

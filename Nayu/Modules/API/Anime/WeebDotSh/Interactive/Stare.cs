@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("Chiiiiii...");
                 embed.WithDescription(
                     $"{Context.User.Mention} is staring at themselves! You know, you can't win a staring contest against a mirror.. \n**(Include a user with your command! Example: n!stare <person you want to stare at>)**");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("Chiiiiii...");
                 embed.WithDescription($"{Context.User.Username} is staring at {user.Mention}!");

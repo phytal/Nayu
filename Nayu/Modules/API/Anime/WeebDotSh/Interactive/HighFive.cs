@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("High Five!");
                 embed.WithDescription(
                     $"{Context.User.Mention} highfived themselves.. that was a pretty nice clap, {Context.User.Username}. \n**(Include a user with your command! Example: n!highfive <person you want to highfive>)**");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("High Five!");
                 embed.WithDescription($"{Context.User.Username} high fived {user.Mention}!");

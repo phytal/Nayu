@@ -118,7 +118,7 @@ namespace Nayu.Core.Features.Economy
             payoutModifier += CheckPayoutForCoordinates(2, 0, 1, 1, 0, 2);
 
             uint moneyGain = (uint)(amount * payoutModifier);
-            string message = ":tada:  | You played and ";
+            string message = ":tada:  **|** You played and ";
             if (moneyGain > amount)
                 message += $"won **{moneyGain} Taiyakis**!";
             else if (moneyGain == amount)

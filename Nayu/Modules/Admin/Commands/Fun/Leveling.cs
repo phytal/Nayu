@@ -31,7 +31,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
                 if (preset == "dm" || preset == "server")
                 {
                     var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
+                    embed.WithColor(Global.NayuColor);
                     embed.WithDescription($"Set leveling messages to {preset}");
 
                     config.LevelingMsgs = preset;
@@ -46,7 +46,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.Title = $"{Global.ENo} | You Need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
@@ -68,7 +68,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
                     bool argg = result.Item2;
                     var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                     var embed = new EmbedBuilder();
-                    embed.WithColor(37, 152, 255);
+                    embed.WithColor(Global.NayuColor);
                     embed.WithDescription(argg ? "Enabled leveling for this server." : "Disabled leveling for this server.");
                     config.Leveling = argg;
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
@@ -83,7 +83,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.Title = $"{Global.ENo} | You Need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }

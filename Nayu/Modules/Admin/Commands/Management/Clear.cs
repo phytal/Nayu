@@ -67,7 +67,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.Title = "{Global.ENo} | You cannot delete more than 100 messages at once!";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }

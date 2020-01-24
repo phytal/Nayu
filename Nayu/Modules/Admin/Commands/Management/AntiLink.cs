@@ -23,7 +23,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.ManageMessages)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Manage Messages** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Manage Messages** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -38,7 +38,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 config.Antilink = setting;
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithDescription(setting
                     ? "Enabled Antilink for this server."
                     : "Disabled Antilink for this server.");
@@ -62,7 +62,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.ManageMessages)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Manage Messages** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Manage Messages** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -71,7 +71,7 @@ namespace Nayu.Modules.Admin.Commands.Management
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             switch (type)
             {
                 case "add":

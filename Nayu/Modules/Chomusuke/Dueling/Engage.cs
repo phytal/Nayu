@@ -43,7 +43,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             }
 
             var embed = new EmbedBuilder()
-                .WithColor(37, 152, 255)
+                .WithColor(Global.NayuColor)
                 .WithFooter("Type [cancel] anytime to cancel the engagement.");
             embed.WithTitle("What do you want to do?");
             embed.AddField("[1]", "**ATTACK**");
@@ -65,7 +65,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 (response.Author.Equals(Context.User)))
             {
                 var embeddd = new EmbedBuilder()
-                    .WithColor(37, 152, 255)
+                    .WithColor(Global.NayuColor)
                     .WithFooter("Type [cancel] anytime to cancel the engagement.");
 
                 embeddd.AddField("[1]", activeChomusuke.Attack1);
@@ -201,7 +201,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             {
                 var values = 0;
                 var embedd = new EmbedBuilder()
-                    .WithColor(37, 152, 255)
+                    .WithColor(Global.NayuColor)
                     .WithFooter("Type [cancel] anytime to cancel the engagement.");
 
                 embedd.WithTitle("Which item would you like to use?");

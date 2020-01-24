@@ -33,7 +33,8 @@ namespace Nayu.Modules.Inbox
                 var embB = new EmbedBuilder()
                     .WithTitle($"{readIcon}{msg.Title}")
                     .WithDescription(msg.Content)
-                    .WithFooter($"Accessed {DateTime.Now:f}");
+                    .WithFooter($"Accessed {DateTime.Now:f}")
+                    .WithColor(Global.NayuColor);
                 msg.Read = true;
                 GlobalUserAccounts.SaveAccounts(Context.User.Id);
                 await ReplyAsync("", false, embB.Build());

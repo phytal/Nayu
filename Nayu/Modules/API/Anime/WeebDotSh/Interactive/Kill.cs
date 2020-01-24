@@ -26,7 +26,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("Wasted!");
                 embed.WithDescription(
                     $"{Context.User.Mention} killed themselves... I guess the world is cruel to everyone... \n**(Include a user with your command! Example: n!kill <person you want to kill>)**");
@@ -38,7 +38,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("Wasted!");
                 embed.WithDescription($"{Context.User.Username} killed {user.Mention}!");

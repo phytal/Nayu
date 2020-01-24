@@ -25,7 +25,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
                 embed.WithTitle("Vote Started");
                 embed.WithDescription(Input);
                 embed.WithFooter($"requested by: {Context.User.Username}");
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
 
                 var CheckMark = new Emoji("✅");
                 var XMark = new Emoji("❌");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.Title = $"{Global.ENo} | You Need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }

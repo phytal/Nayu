@@ -116,30 +116,36 @@ namespace Nayu.Core.LevelingSystem
             if (legendary == 0)
             {
                 config.LootBoxLegendary += 1;
-                msg = $"**{user.Username}**, you have received a **LEGENDARY** lootbox for reaching level {config.LevelNumber}";
+                msg = lootBoxMessage(user, "LEGENDARY");
             }
             else if (epic == 0)
             {
                 config.LootBoxEpic += 1;
-                msg = $"**{user.Username}**, you have received a **EPIC** lootbox for reaching level {config.LevelNumber}";
+                msg = lootBoxMessage(user, "EPIC");
             }
             else if (rare == 0)
             {
                 config.LootBoxRare += 1;
-                msg = $"**{user.Username}**, you have received a **RARE** lootbox for reaching level {config.LevelNumber}";
+                msg = lootBoxMessage(user, "RARE");
             }
             else if (uc == 0)
             {
                 config.LootBoxUncommon += 1;
-                msg = $"**{user.Username}**, you have received a **UNCOMMON** lootbox for reaching level {config.LevelNumber}";
+                msg = lootBoxMessage(user, "UNCOMMON");
             }
             else
             {
                 config.LootBoxCommon += 1;
-                msg = $"**{user.Username}**, you have received a **COMMON** lootbox for reaching level {config.LevelNumber}";
+                msg = lootBoxMessage(user, "COMMON");
             }
             GlobalUserAccounts.SaveAccounts(user.Id);
             await CreateMessage.CreateAndSendMessageAsync("Lootbox Reward", msg, DateTime.UtcNow, user);
         }
+
+            public static string lootBoxMessage(SocketUser user, string rarity)
+            {
+                var config = GlobalUserAccounts.GetUserAccount(user);
+                return $"**{user.Username}**, you have received a **{rarity}** loot box for reaching level {config.LevelNumber}!\nUse `n!lbi` to view all of your loot boxes!";
+            }
     }
 }

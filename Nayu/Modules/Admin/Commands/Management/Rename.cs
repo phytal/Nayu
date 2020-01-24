@@ -23,7 +23,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.ManageNicknames)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Manage Nicknames** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Manage Nicknames** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -33,7 +33,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             await user.ModifyAsync(x => x.Nickname = nick);
             var embed = MiscHelpers
                 .CreateEmbed(Context, "User Nicked", $"Set <@{user.Id}>'s nickname on this server to **{nick}**!")
-                .WithColor(37, 152, 255);
+                .WithColor(Global.NayuColor);
             await SendMessage(Context, embed.Build());
         }
     }

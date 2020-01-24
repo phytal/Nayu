@@ -27,7 +27,7 @@ namespace Nayu.Modules.Chomusuke
             if (!config.Chomusuke1.Have) //if they own a Chomusuke or not
             {
                 await SendMessage(Context, null,
-                    $"{Global.ENo}  |  **{Context.User.Username}**, you don't own a {Global.EChomusuke} Chomusuke! \n\nPurchase one with n!chomusuke buy!");
+                    $"{Global.ENo}  **|  {Context.User.Username}**, you don't own a {Global.EChomusuke} Chomusuke! \n\nPurchase one with n!chomusuke buy!");
             }
             else //show their Chomusuke status
             {
@@ -66,7 +66,7 @@ namespace Nayu.Modules.Chomusuke
             if (config.ActiveChomusuke == 0 && user == Context.User) //if they own a Chomusuke or not
             {
                 await SendMessage(Context, null,
-                    $"{Global.ENo}  |  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
+                    $"{Global.ENo}  **|**  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
             }
             else //show their Chomusuke status
             {
@@ -87,7 +87,7 @@ namespace Nayu.Modules.Chomusuke
                         embed.WithThumbnailUrl("https://i.imgur.com/oKGxPZ4.png");
                     else
                         embed.WithThumbnailUrl("https://i.imgur.com/7kpEWPb.png");
-                    embed.WithColor(37, 152, 255);
+                    embed.WithColor(Global.NayuColor);
                     embed.AddField("Owner", user, true);
                     embed.AddField("Name", config.Chomusuke1.Name, true);
                     embed.AddField("Zodiac", config.Chomusuke1.Zodiac + $":{config.Chomusuke1.Zodiac.ToLower()}:",
@@ -113,7 +113,7 @@ namespace Nayu.Modules.Chomusuke
                         embed.WithThumbnailUrl("https://i.imgur.com/oKGxPZ4.png");
                     else
                         embed.WithThumbnailUrl("https://i.imgur.com/7kpEWPb.png");
-                    embed.WithColor(37, 152, 255);
+                    embed.WithColor(Global.NayuColor);
                     embed.AddField("Owner", user, true);
                     embed.AddField("Name", config.Chomusuke2.Name, true);
                     embed.AddField("Zodiac", config.Chomusuke2.Zodiac + $":{config.Chomusuke2.Zodiac.ToLower()}:",
@@ -139,7 +139,7 @@ namespace Nayu.Modules.Chomusuke
                         embed.WithThumbnailUrl("https://i.imgur.com/oKGxPZ4.png");
                     else
                         embed.WithThumbnailUrl("https://i.imgur.com/7kpEWPb.png");
-                    embed.WithColor(37, 152, 255);
+                    embed.WithColor(Global.NayuColor);
                     embed.AddField("Owner", user, true);
                     embed.AddField("Name", config.Chomusuke3.Name, true);
                     embed.AddField("Zodiac", config.Chomusuke3.Zodiac + $":{config.Chomusuke3.Zodiac.ToLower()}:",
@@ -209,7 +209,7 @@ namespace Nayu.Modules.Chomusuke
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             if (config.ActiveChomusuke == 0) //if they set an active chomusuke
                 await SendMessage(Context, null,
-                    $"{Global.ENo}  |  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
+                    $"{Global.ENo}  **|**  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
             else
             {
                 var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
@@ -217,7 +217,7 @@ namespace Nayu.Modules.Chomusuke
                 await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                 GlobalUserAccounts.SaveAccounts(Context.User.Id);
                 await SendMessage(Context, null,
-                    $"✅   |  **{Context.User.Username}**, you successfully changed {Global.EChomusuke} {chom.Name}'s name to **{name}**!");
+                    $"✅   **|**  **{Context.User.Username}**, you successfully changed {Global.EChomusuke} {chom.Name}'s name to **{name}**!");
             }
         }
 
@@ -231,7 +231,7 @@ namespace Nayu.Modules.Chomusuke
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             if (config.ActiveChomusuke == 0) //if they set an active chomusuke
                 await SendMessage(Context, null,
-                    $"{Global.ENo}  |  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
+                    $"{Global.ENo}  **|**  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
             else
             {
                 var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
@@ -250,7 +250,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.WithColor(255, 128, 0);
                     embed.WithThumbnailUrl("https://i.imgur.com/Sc4HGir.gif");
                     embed.WithDescription(
-                        $":poultry_leg:  |  **{Context.User.Username}**, {Global.EChomusuke} {chom.Name} is full!");
+                        $":poultry_leg:  **|**  **{Context.User.Username}**, {Global.EChomusuke} {chom.Name} is full!");
                     await SendMessage(Context, embed.Build());
                 }
                 else
@@ -278,7 +278,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.WithColor(0, 255, 0);
                     embed.WithThumbnailUrl("https://i.imgur.com/Sc4HGir.gif");
                     embed.WithDescription(
-                        $":poultry_leg:  |  **{Context.User.Username}**, you fill {Global.EChomusuke} {chom.Name}'s bowl with food. It looks happy! **(+{hungerGain} food [-{cost} {Global.ETaiyaki}])**");
+                        $":poultry_leg:  **|**  **{Context.User.Username}**, you fill {Global.EChomusuke} {chom.Name}'s bowl with food. It looks happy! **(+{hungerGain} food [-{cost} {Global.ETaiyaki}])**");
                     await SendMessage(Context, embed.Build());
                 }
             }
@@ -294,7 +294,7 @@ namespace Nayu.Modules.Chomusuke
             var config = GlobalUserAccounts.GetUserAccount(Context.User.Id);
             if (config.ActiveChomusuke == 0) //if they set an active chomusuke
                 await SendMessage(Context, null,
-                    $"{Global.ENo}  |  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
+                    $"{Global.ENo}  **|**  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
             else
             {
                 var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
@@ -313,7 +313,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.WithColor(255, 128, 0);
                     embed.WithThumbnailUrl("https://i.imgur.com/OtVepvM.gif");
                     embed.WithDescription(
-                        $":sparkles:  | **{Context.User.Username}, your {Global.EChomusuke} Chomusuke's room is squeaky clean!**");
+                        $":sparkles:  **|** **{Context.User.Username}, your {Global.EChomusuke} Chomusuke's room is squeaky clean!**");
                     await SendMessage(Context, embed.Build());
                 }
                 else
@@ -342,7 +342,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.WithColor(0, 255, 0);
                     embed.WithThumbnailUrl("https://i.imgur.com/PI2z8rm.gif");
                     embed.WithDescription(
-                        $":sparkles:  |  **{Context.User.Username}**, {text} **(-{cleanedAmount} waste)**");
+                        $":sparkles:  **|**  **{Context.User.Username}**, {text} **(-{cleanedAmount} waste)**");
                     await SendMessage(Context, embed.Build());
                 }
             }
@@ -358,7 +358,7 @@ namespace Nayu.Modules.Chomusuke
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             if (config.ActiveChomusuke == 0) //if they set an active chomusuke
                 await SendMessage(Context, null,
-                    $"{Global.ENo}  |  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
+                    $"{Global.ENo}  **|**  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
             else
             {
                 var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
@@ -377,7 +377,7 @@ namespace Nayu.Modules.Chomusuke
                     embed.WithColor(255, 128, 0);
                     embed.WithThumbnailUrl(NoPlayLinks[Global.Rng.Next(NoPlayLinks.Length)]);
                     embed.WithDescription(
-                        $":soccer:  |  **{Context.User.Username}, your {Global.EChomusuke} Chomusuke is bored of playing right now!**");
+                        $":soccer:  **|**  **{Context.User.Username}, your {Global.EChomusuke} Chomusuke is bored of playing right now!**");
                     await SendMessage(Context, embed.Build());
                     return;
                 }
@@ -405,7 +405,7 @@ namespace Nayu.Modules.Chomusuke
                     };
                     embed.WithColor(0, 255, 0);
                     embed.WithThumbnailUrl(YesPlayLinks[Global.Rng.Next(YesPlayLinks.Length)]);
-                    embed.WithDescription($":soccer:  |  **{Context.User.Username}**, {text} **(+{trustGain} trust)**");
+                    embed.WithDescription($":soccer:  **|**  **{Context.User.Username}**, {text} **(+{trustGain} trust)**");
                     await SendMessage(Context, embed.Build());
                 }
             }
@@ -421,7 +421,7 @@ namespace Nayu.Modules.Chomusuke
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             if (config.ActiveChomusuke == 0) //if they set an active chomusuke
                 await SendMessage(Context, null,
-                    $"{Global.ENo}  |  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
+                    $"{Global.ENo}  **|**  **{Context.User.Username}**, you don't have an active {Global.EChomusuke} Chomusuke set!\n\nSet an active Chomusuke with `n!active`!");
             else
             {
                 var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);

@@ -45,7 +45,7 @@ namespace Nayu.Modules.Admin
             await Program._client.SetGameAsync(streamName, $"https://twitch.tv/{streamer}", ActivityType.Streaming);
             var embed = MiscHelpers.CreateEmbed(Context, "Set Bot Streaming",
                     $"Set the stream name to **{streamName}**, and set the streamer to <https://twitch.tv/{streamer}>!")
-                .WithColor(37, 152, 255);
+                .WithColor(Global.NayuColor);
             await SendMessage(Context, embed.Build());
         }
 
@@ -59,7 +59,7 @@ namespace Nayu.Modules.Admin
 
             var embed = new EmbedBuilder();
             embed.WithDescription($"Set the bot's game to {game}");
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             await client.SetGameAsync(game);
             await ReplyAsync("", embed: embed.Build());
         }
@@ -73,7 +73,7 @@ namespace Nayu.Modules.Admin
             Config.bot.version = version;
             var embed = new EmbedBuilder();
             embed.WithDescription($"Set the bot's version to {version}");
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             await ReplyAsync("", embed: embed.Build());
         }
 
@@ -86,7 +86,7 @@ namespace Nayu.Modules.Admin
             var embed = new EmbedBuilder();
             embed.WithDescription($"Set the status to {status}.");
 
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
 
             var client = Program._client;
 
@@ -116,7 +116,7 @@ namespace Nayu.Modules.Admin
         public async Task LeaveServer()
         {
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             await ReplyAsync("", embed: embed.Build());
             await Context.Guild.LeaveAsync();
         }
@@ -131,7 +131,7 @@ namespace Nayu.Modules.Admin
             var guilds = client.Guilds.Count;
             var embed = new EmbedBuilder();
             embed.WithDescription($"Done. In {guilds}");
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             await ReplyAsync("", embed: embed.Build());
             await client.SetGameAsync($"n!help | in {guilds} servers!",
                 $"https://twitch.tv/{Config.bot.twitchStreamer}", ActivityType.Streaming);
@@ -178,7 +178,7 @@ namespace Nayu.Modules.Admin
             sw.Stop();
 
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.AddField("Bot Statistics:", $"Your ping: {(int) sw.Elapsed.TotalMilliseconds}ms\n" +
                                               $"Runtime: {time.Hours}h:{time.Minutes}m\n" +
                                               //$"CPU usage: {cpu:n0}\n" +

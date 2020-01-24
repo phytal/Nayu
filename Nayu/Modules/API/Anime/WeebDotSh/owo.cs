@@ -33,7 +33,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh
             string id = result.Id;
             var embed = new EmbedBuilder();
 
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.WithTitle("owo");
             embed.WithDescription(
                 $"owo");

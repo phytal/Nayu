@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("Yoku yatta!");
                 embed.WithDescription(
                     $"{Context.User.Mention} gave themselves a thumbs up, high self-esteem is good you know. \n**(Include a user with your command! Example: n!thumbsUp <person you want to give a thumbs-up>)**");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("Yoku yatta!");
                 embed.WithDescription($"{Context.User.Username} gave {user.Mention} a thumbs up!");

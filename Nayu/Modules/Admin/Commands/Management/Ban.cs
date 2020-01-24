@@ -34,7 +34,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             {
                 var guild = Context.Guild;
                 var embed = new EmbedBuilder();
-                embed.WithColor(new Color(37, 152, 255));
+                embed.WithColor(Global.NayuColor);
                 embed.Title = $"**{user.Username}** was banned";
                 embed.Description =
                     $"**Username: **{user.Username}\n**Guild Name: **{user.Guild.Name}\n**Banned by: **{Context.User.Mention}\n**Reason: **{reason}";
@@ -141,7 +141,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             {
                 await Context.Guild.AddBanAsync(userid, 7, reason);
                 var embed = new EmbedBuilder();
-                embed.WithColor(new Color(37, 152, 255));
+                embed.WithColor(Global.NayuColor);
                 embed.Title = $"**{userid}** was banned";
                 embed.Description =
                     $"**Username: **{userid}\n**Banned by: **{Context.User.Mention}\n**Reason: **{reason}";

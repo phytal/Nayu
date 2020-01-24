@@ -43,7 +43,7 @@ namespace Nayu.Core.LevelingSystem
                 Author = auth
             };
 
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.AddField("Affection Lvl.", Level, true);
             embed.AddField("Exp.", $"{xp}/{requiredXp} (tot. {userAccount.XP})", true);
             embed.AddField("Reputation Points", userAccountt.Reputation, true);

@@ -40,7 +40,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             var gld = Context.Guild as SocketGuild;
             var muted = user.Guild.Roles.Where(input => input.Name.ToUpper() == "MUTED").FirstOrDefault() as SocketRole;
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.Title = $"**{user.Username}** was muted";
             embed.Description = $"**Username: **{user.Username}\n**Muted by: **{Context.User.Username}";
             await user.AddRoleAsync(muted);

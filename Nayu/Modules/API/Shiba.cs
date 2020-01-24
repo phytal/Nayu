@@ -32,7 +32,7 @@ namespace Nayu.Modules.API
 
             string link = dataObject[0].ToString();
 
-            var title = "🐶 | Here's a Shiba!";
+            var title = "🐶 **|** Here's a Shiba!";
             var embed = ImageEmbed.GetImageEmbed(link, Source.None, title);
             await SendMessage(Context, embed);
         }

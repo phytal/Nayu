@@ -41,7 +41,7 @@ namespace Nayu.Modules.API
             string down = dataObject.list[0].thumbs_down.ToString();
 
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.WithTitle(link);
             embed.WithDescription($"By *{author}*");
             embed.AddField("Definition", definition, true);

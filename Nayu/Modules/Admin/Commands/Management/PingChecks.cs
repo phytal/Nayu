@@ -35,7 +35,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 bool argg = result.Item2;
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithDescription(argg
                     ? "Enabled mass ping checks for this server."
                     : "Disabled mass ping checks for this server.");

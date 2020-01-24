@@ -27,7 +27,7 @@ namespace Nayu.Modules.API.Anime.Both
                 string nekolink = NekosLifeHelper.GetNekoLink("hug");
                 string description = user == null
                     ? $"{Context.User.Mention} hugged themselves... Aw, don't be sad, you can hug me! \n **(Include a user with your command! Example: n!hug <person you want to hug>)**"
-                    : $"❤ | {Context.User.Username} hugged {user.Mention}!";
+                    : $"❤ **|** {Context.User.Username} hugged {user.Mention}!";
 
                 var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, "Hug!", description);
                 await SendMessage(Context, embed);
@@ -43,7 +43,7 @@ namespace Nayu.Modules.API.Anime.Both
 
                 string description = user == null
                     ? $"{Context.User.Mention} hugged themselves, how is that even physically possible? \n **(Include a user with your command! Example: n!hug <person you want to hug>)**"
-                    : $"❤ |  {Context.User.Username} hugged {user.Mention}!";
+                    : $"❤ **|**  {Context.User.Username} hugged {user.Mention}!";
 
                 var embed = ImageEmbed.GetImageEmbed(url, Source.WeebDotSh, "Hug!", description);
                 await SendMessage(Context, embed);

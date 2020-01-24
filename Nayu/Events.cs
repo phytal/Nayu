@@ -41,7 +41,7 @@ namespace Nayu
             embed.WithDescription("For quick information, use the `n!help` command! \nNeed quick help? Visit the my support server! https://discord.gg/z8TgwT!");
             embed.WithThumbnailUrl(s.IconUrl);
             embed.WithFooter("Found an issue in a command? Report it in the server linked above!");
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
 
             config.GuildOwnerId = s.Owner.Id;
 
@@ -81,7 +81,7 @@ namespace Nayu
                     {
                         await msg.DeleteAsync();
                         var embed = new EmbedBuilder();
-                        embed.WithColor(37, 152, 255);
+                        embed.WithColor(Global.NayuColor);
                         embed.WithDescription($":warning:  | {context.User.Mention}, Don't post your filthy links here! (No links)");
                         await ReplyAndDeleteAsync("", embed: embed.Build());
                     }
@@ -123,7 +123,7 @@ namespace Nayu
                         await msg.DeleteAsync();
                         var embed = new EmbedBuilder();
                         embed.WithDescription($":warning:  |  {text} (Inappropriate language)");
-                        embed.WithColor(37, 152, 255);
+                        embed.WithColor(Global.NayuColor);
                         await ReplyAndDeleteAsync("", embed: embed.Build());
                     }
                 }

@@ -37,7 +37,7 @@ namespace Nayu.Modules.Admin.Commands.Management
 
             var embed = new EmbedBuilder();
             embed.WithDescription($"Added the **{arg}** role to Autorole!");
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.WithFooter("Make sure that Nayu has a higher role than the autoroled role!");
 
             await SendMessage(Context, embed.Build());

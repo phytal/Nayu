@@ -44,7 +44,7 @@ namespace Nayu.Modules.Inbox
             var ordered = config.Inbox.OrderByDescending(msg => msg.Time).ToList();
             ulong newMessages = config.InboxIDTracker - config.InboxIDLastRead;
             
-            var embB = new EmbedBuilder()
+            var embed = new EmbedBuilder()
                 .WithTitle($"{Context.User}'s Inbox ({newMessages} new message{(newMessages == 1 ? "" : "s")})")
                 .WithFooter($"Page {page}/{lastPageNumber} - {DateTime.Now:f}");
 
@@ -52,7 +52,7 @@ namespace Nayu.Modules.Inbox
             for (var i = 1; i <= msgsPerPage && i + msgsPerPage * page <= ordered.Count; i++)
             {
                 var msg = ordered[i - 1 + msgsPerPage * page];
-                embB.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 string readIcon = null;
                 if (!msg.Read) readIcon = ":small_blue_diamond: ";
                 var difference = DateTime.Now - msg.Time;
@@ -65,12 +65,12 @@ namespace Nayu.Modules.Inbox
                 else if (difference.Seconds > 0)
                     time = $"{difference.Seconds} second{(difference.Seconds == 1 ? "" : "s")} ago";
                 string content = msg.Content.Substring(0,msg.Content.Length > 50 ? 50 : msg.Content.Length);
-                embB.AddField(readIcon + $"{msg.Title} - {time}", $"{content}{(msg.Content.Length > 50 ? "..." : "")}\n---\nID:{msg.ID}", true);
+                embed.AddField(readIcon + $"{msg.Title} - {time}", $"{content}{(msg.Content.Length > 50 ? "..." : "")}\n---\nID:{msg.ID}", true);
             }
 
             config.InboxIDLastRead = config.InboxIDTracker;
             GlobalUserAccounts.SaveAccounts(config.Id);
-            await ReplyAsync("", false, embB.Build());
+            await ReplyAsync("", false, embed.Build());
         }
     }
 }

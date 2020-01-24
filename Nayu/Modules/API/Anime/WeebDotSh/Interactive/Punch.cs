@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("Punch!");
                 embed.WithDescription(
                     $"{Context.User.Mention} punched themselves, that must have knocked a bit of sense into you. \n**(Include a user with your command! Example: n!punch <person you want to punch>)**");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("Punch!");
                 embed.WithDescription($"{Context.User.Username} punched {user.Mention}!");

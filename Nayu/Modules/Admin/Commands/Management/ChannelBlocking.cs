@@ -14,7 +14,7 @@ namespace Nayu.Modules.Admin.Commands.Management
     public class ChannelBlocking : NayuModule
     {
         [Subject(AdminCategories.ServerManagement)]
-        [Command("blockchannel"), Alias("bc")]
+        [Command("blockChannel"), Alias("bc")]
         [Summary("Blocks the current channel (users will be unable to use commands, only admins)")]
         [Remarks("n!bc")]
         [Cooldown(5)]
@@ -40,7 +40,7 @@ namespace Nayu.Modules.Admin.Commands.Management
         }
 
         [Subject(AdminCategories.ServerManagement)]
-        [Command("unblockchannel"), Alias("ubc")]
+        [Command("unblockChannel"), Alias("ubc")]
         [Summary("Unblocks the current channel (users can use commands again)")]
         [Remarks("n!ubc")]
         [Cooldown(5)]

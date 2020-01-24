@@ -34,7 +34,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             {
                 var argg = result.Item2;
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithDescription(argg
                     ? "✅  | Filter successfully turned on. Stay safe!"
                     : "✅  | Filter successfully turned off. Daredevil!");
@@ -68,7 +68,7 @@ namespace Nayu.Modules.Admin.Commands.Management
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             switch (type)
             {
                 case "add":
@@ -141,7 +141,7 @@ namespace Nayu.Modules.Admin.Commands.Management
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             if (!config.CustomFilter.Contains(bl))
             {
                 embed.WithDescription($"`{bl}` isn't present in the Blacklist.");
@@ -179,7 +179,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
             var embed = new EmbedBuilder();
             embed.WithDescription("Cleared the Blacklist for this server.");
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
 
             await SendMessage(Context, embed.Build());
         }
@@ -212,7 +212,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             var embed = new EmbedBuilder();
             embed.WithTitle($"Blacklisted words in {Context.Guild.Name}");
             embed.WithDescription(list);
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
 
             await SendMessage(Context, embed.Build());
         }

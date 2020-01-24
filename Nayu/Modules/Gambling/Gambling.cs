@@ -28,7 +28,7 @@ namespace Nayu.Modules.Gambling
             Random rand = new Random();
             string sid = side.ToLower();
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             embed.WithTitle($"<:coin:459944364546981909> Coin Flip for {amount} Taiyakis on the Side of {sid}.");
             if (sid == "tails")
             {
@@ -81,7 +81,7 @@ namespace Nayu.Modules.Gambling
             int product = randomNumber1 * randomNumber2;
 
             var embed = new EmbedBuilder();
-            embed.WithColor(37, 152, 255);
+            embed.WithColor(Global.NayuColor);
             if (product > 50)
             {
                 _ = amountGained == amountBetted * (product / 20);

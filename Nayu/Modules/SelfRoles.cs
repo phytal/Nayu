@@ -22,7 +22,7 @@ namespace Nayu.Modules
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var user = Context.User as SocketGuildUser;
             var embed = new EmbedBuilder()
-                .WithColor(37, 152, 255);
+                .WithColor(Global.NayuColor);
 
             var roleList = new List<string>();
             foreach (var roleName in config.SelfRoles) roleList.Add(roleName.ToLower());
@@ -56,7 +56,7 @@ namespace Nayu.Modules
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var user = Context.User as SocketGuildUser;
             var embed = new EmbedBuilder()
-                .WithColor(37, 152, 255);
+                .WithColor(Global.NayuColor);
 
             var roleList = new List<string>();
             foreach (var roleName in config.SelfRoles) roleList.Add(roleName.ToLower());

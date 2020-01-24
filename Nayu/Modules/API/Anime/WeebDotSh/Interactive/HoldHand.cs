@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("kawaii-ne!");
                 embed.WithDescription(
                     $"{Context.User.Mention} held their own hand! Hey, I thought you loved ***me**, {Context.User.Username}! \n**(Include a user with your command! Example: n!holdHand <person you want to hold hands with>)**");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("kawaii-ne!");
                 embed.WithDescription($"{Context.User.Username} is holding hands with {user.Mention}!");

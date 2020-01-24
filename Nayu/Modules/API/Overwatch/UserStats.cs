@@ -258,7 +258,7 @@ namespace Nayu.Modules.API.Overwatch
                     Footer = bottom
                 };
                 embed.WithThumbnailUrl(playerIcon);
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.AddField("Quickplay All Hero Stats Total",
                     $"Defensive Assists: **{QpdefensiveAssists}**\nOffensive Assists: **{QpoffensiveAssists}**\nDamage Done: **{QpdamageDone}**\nBarrier Damage Done: **{QpbarrierDamageDone}**\nHero Damage Done: **{QpheroDamageDone}**\nHealing Done: **{QphealingDone}**\nEliminations: **{Qpeliminations}**\nDeaths: **{Qpdeaths}**\nEnvironmental Kills: **{QpenvironmentalKills}**\nFinal Blows: **{QpfinalBlows}**\nMelee Final Blows: **{QpmeleeFinalBlows}**\nMulti Kills: **{Qpmultikills}**\nObjective Kills: **{QpobjectiveKills}**\nObjective Time: **{QpobjectiveTime}**\nSolo Kills: **{QpsoloKills}**\nTime Spent On Fire: **{QptimeSpentOnFire}**",
                     true);
@@ -444,7 +444,7 @@ namespace Nayu.Modules.API.Overwatch
                     Footer = bottom
                 };
                 embed.WithThumbnailUrl(playerIcon);
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.AddField("Quickplay All Hero Stats Total",
                     $"Defensive Assists: **{QpdefensiveAssists}**\nOffensive Assists: **{QpoffensiveAssists}**\nDamage Done: **{QpdamageDone}**\nBarrier Damage Done: **{QpbarrierDamageDone}**\nHero Damage Done: **{QpheroDamageDone}**\nHealing Done: **{QphealingDone}**\nEliminations: **{Qpeliminations}**\nDeaths: **{Qpdeaths}**\nEnvironmental Kills: **{QpenvironmentalKills}**\nFinal Blows: **{QpfinalBlows}**\nMelee Final Blows: **{QpmeleeFinalBlows}**\nMulti Kills: **{Qpmultikills}**\nObjective Kills: **{QpobjectiveKills}**\nObjective Time: **{QpobjectiveTime}**\nSolo Kills: **{QpsoloKills}**\nTime Spent On Fire: **{QptimeSpentOnFire}**",
                     true);
@@ -613,7 +613,7 @@ namespace Nayu.Modules.API.Overwatch
                     Footer = bottom
                 };
                 embed.WithThumbnailUrl(playerIcon);
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.AddField("Competitive All Hero Stats Total",
                     $"Defensive Assists: **{CompdefensiveAssists}**\nOffensive Assists: **{CompoffensiveAssists}**\nDamage Done: **{CompdamageDone}**\nBarrier Damage Done: **{CompbarrierDamageDone}**\nHero Damage Done: **{CompheroDamageDone}**\nHealing Done: **{ComphealingDone}**\nEliminations: **{Compeliminations}**\nDeaths: **{Compdeaths}**\nEnvironmental Kills: **{CompenvironmentalKills}**\nFinal Blows: **{CompfinalBlows}**\nMelee Final Blows: **{CompmeleeFinalBlows}**\nMulti Kills: **{Compmultikills}**\nObjective Kills: **{CompobjectiveKills}**\nObjective Time: **{CompobjectiveTime}**\nSolo Kills: **{CompsoloKills}**\nTime Spent On Fire: **{ComptimeSpentOnFire}**",
                     true);

@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("Pout!");
                 embed.WithDescription(
                     $"{Context.User.Mention} is pouting at themselves, you know everyone makes mistakes, right? \n**(Include a user with your command! Example: n!pout <person you want to pout at>)**");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("Pout!");
                 embed.WithDescription($"{Context.User.Username} is pouting at {user.Mention}!");

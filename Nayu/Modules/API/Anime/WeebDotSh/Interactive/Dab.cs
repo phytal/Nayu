@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("Dab!");
                 embed.WithDescription(
                     $"{Context.User.Mention} dabbed on themselves! Woah where are your friends? \n**(Include a user with your command! Example: n!dab <person you want to dab on>)**");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("Dab!");
                 embed.WithDescription($"{Context.User.Username} dabbed {user.Mention}!");

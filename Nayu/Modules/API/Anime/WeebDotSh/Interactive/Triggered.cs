@@ -25,7 +25,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             if (user == null)
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithTitle("Triggered!");
                 embed.WithDescription(
                     $"{Context.User.Mention} is triggered at themselves! What happened? May I be of assistance? \n**(Include a user with your command! Example: n!triggered <person you want to be triggered at>)**");
@@ -37,7 +37,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
             else
             {
                 var embed = new EmbedBuilder();
-                embed.WithColor(37, 152, 255);
+                embed.WithColor(Global.NayuColor);
                 embed.WithImageUrl(url);
                 embed.WithTitle("Triggered!");
                 embed.WithDescription($"{Context.User.Username} is triggered {user.Mention}!");
