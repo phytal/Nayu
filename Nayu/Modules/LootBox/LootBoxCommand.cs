@@ -31,7 +31,7 @@ namespace Nayu.Modules.LootBox
                     else
                     {
                         await SendMessage(Context, null,
-                            $"🛑  |  **{Context.User.Username}**, you don't have any Common Loot Boxes!");
+                            $"🛑  **|**  **{Context.User.Username}**, you don't have any Common Loot Boxes!");
                         return;
                     }
 
@@ -45,7 +45,7 @@ namespace Nayu.Modules.LootBox
                     else
                     {
                         await SendMessage(Context, null,
-                            $"🛑  |  **{Context.User.Username}**, you don't have any Uncommon Loot Boxes!");
+                            $"🛑  **|**  **{Context.User.Username}**, you don't have any Uncommon Loot Boxes!");
                         return;
                     }
 
@@ -59,7 +59,7 @@ namespace Nayu.Modules.LootBox
                     else
                     {
                         await SendMessage(Context, null,
-                            $"🛑  |  **{Context.User.Username}**, you don't have any Rare Loot Boxes!");
+                            $"🛑  **|**  **{Context.User.Username}**, you don't have any Rare Loot Boxes!");
                         return;
                     }
 
@@ -73,7 +73,7 @@ namespace Nayu.Modules.LootBox
                     else
                     {
                         await SendMessage(Context, null,
-                            $"🛑  |  **{Context.User.Username}**, you don't have any Epic Loot Boxes!");
+                            $"🛑  **|**  **{Context.User.Username}**, you don't have any Epic Loot Boxes!");
                         return;
                     }
 
@@ -86,7 +86,7 @@ namespace Nayu.Modules.LootBox
                     }
                     else
                     {
-                        await SendMessage(Context, null, $"🛑  |  **{Context.User.Username}**, you don't have any Legendary Loot Boxes!");
+                        await SendMessage(Context, null, $"🛑  **|**  **{Context.User.Username}**, you don't have any Legendary Loot Boxes!");
                         return;
                     }
 
@@ -179,7 +179,7 @@ namespace Nayu.Modules.LootBox
 
             if (numOfLootboxes < 1)
             {
-                await ReplyAsync(":angry:  | Stop trying to gift loot boxes you don't have!");
+                await ReplyAsync(":angry:  **|** Stop trying to gift loot boxes you don't have!");
             }
             else
             {
@@ -187,7 +187,7 @@ namespace Nayu.Modules.LootBox
                 {
                     var embed = new EmbedBuilder();
                     embed.WithColor(Global.NayuColor);
-                    embed.WithTitle("🖐️ | Please say who you want to gift loot boxes to. Ex: n!gift <rarity of loot box> @user");
+                    embed.WithTitle("🖐️ **|** Please say who you want to gift loot boxes to. Ex: n!gift <rarity of loot box> @user");
                     await SendMessage(Context, embed.Build());
                 }
                 else
@@ -202,7 +202,7 @@ namespace Nayu.Modules.LootBox
 
                     GlobalUserAccounts.SaveAccounts(giveaccount.Id, receiver.Id);
 
-                    await SendMessage(Context, null, $":gift:  | {Context.User.Mention} has gifted {userB.Mention} a **{Rarity}** Loot box! How generous.");
+                    await SendMessage(Context, null, $":gift:  **|** {Context.User.Mention} has gifted {userB.Mention} a **{Rarity}** Loot box! How generous.");
                 }
             }
         }

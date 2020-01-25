@@ -24,7 +24,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.KickMembers)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Kick Members** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Kick Members** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -43,7 +43,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             }
             catch
             {
-                await ReplyAndDeleteAsync("🖐️ | You must mention a valid user",
+                await ReplyAndDeleteAsync("🖐️ **|** You must mention a valid user",
                     timeout: TimeSpan.FromSeconds(5));
             }
         }

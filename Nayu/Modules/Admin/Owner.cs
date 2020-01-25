@@ -78,7 +78,21 @@ namespace Nayu.Modules.Admin
         }
 
         [Subject(OwnerCategories.Owner)]
-        [Command("Status")]
+        [Command("setChangeLog"), Alias("scl")]
+        [Summary("Set Nayu's changelog")]
+        [RequireOwner]
+        public async Task SetChangeLog([Remainder] string changeLog)
+        {
+            var config = BotAccounts.GetAccount();
+            config.ChangeLog = changeLog;
+            config.LastUpdate = DateTime.Today;
+            var embed = EmbedHandler.CreateEmbed(Context, "Update Change Log",
+                $"Set the bot's changeLog to ```{changeLog}```", EmbedHandler.EmbedMessageType.Success);
+            await SendMessage(Context, embed);
+        }
+        
+        [Subject(OwnerCategories.Owner)]
+        [Command("status")]
         [Summary("Sets Nayu's user status")]
         [RequireOwner]
         public async Task SetBotStatus(string status)
@@ -133,7 +147,7 @@ namespace Nayu.Modules.Admin
             embed.WithDescription($"Done. In {guilds}");
             embed.WithColor(Global.NayuColor);
             await ReplyAsync("", embed: embed.Build());
-            await client.SetGameAsync($"n!help | in {guilds} servers!",
+            await client.SetGameAsync($"n!help **|** in {guilds} servers!",
                 $"https://twitch.tv/{Config.bot.twitchStreamer}", ActivityType.Streaming);
 
         }

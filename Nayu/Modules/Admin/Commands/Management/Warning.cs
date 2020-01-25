@@ -24,7 +24,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.ManageMessages)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Manage Messages** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Manage Messages** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -34,7 +34,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (user == null)
             {
                 var embed = EmbedHandler.CreateEmbed(Context, "Error",
-                    "🖐️ | Please say who you want to warn and a reason for their warning. Ex: n!warn @Phytal bullied my brother",
+                    "🖐️ **|** Please say who you want to warn and a reason for their warning. Ex: n!warn @Phytal bullied my brother",
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: embed);
             }
@@ -61,7 +61,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.ManageMessages)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Manage Messages** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Manage Messages** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -94,7 +94,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.ManageMessages)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Manage Messages** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Manage Messages** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);

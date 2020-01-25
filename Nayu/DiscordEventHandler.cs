@@ -176,7 +176,7 @@ namespace Nayu
         private async Task ReactionAdded(Cacheable<IUserMessage, ulong> cacheMessage, ISocketMessageChannel channel, SocketReaction reaction)
         {
             if (reaction.User.Value.IsBot) return;
-            //_commandHandler.OnReactionAddedDuelRequest(cacheMessage, channel, reaction);
+            _commandHandler.OnReactionAddedDuelRequest(cacheMessage, channel, reaction);
         }
 
         private async Task ReactionRemoved(Cacheable<IUserMessage, ulong> cacheMessage, ISocketMessageChannel channel,

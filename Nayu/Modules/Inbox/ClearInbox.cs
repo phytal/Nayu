@@ -30,13 +30,13 @@ namespace Nayu.Modules.Inbox
             {
                 config.Inbox.Clear();
                 GlobalUserAccounts.SaveAccounts(Context.User.Id);
-                await ReplyAsync($"✅  | Cleared your inbox!");
+                await ReplyAsync($"✅  **|** Cleared your inbox!");
             }
 
             else if (response.Content.Equals("no", StringComparison.CurrentCultureIgnoreCase) &&
                 (response.Author.Equals(Context.User)))
             {
-                await ReplyAsync($"✅ | Successfully canceled the action.");
+                await ReplyAsync($"✅ **|** Successfully canceled the action.");
             }
             else throw new ArgumentException("Please enter a valid response `(yes/no)`.");
         }

@@ -62,7 +62,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             }
             else
             {
-                response = $":dash:  | **{context.User.Username}**, your attack missed!";
+                response = $":dash:  **|** **{context.User.Username}**, your attack missed!";
             }
 
             return new AttackResult{Success = true, Response = response, Damage = dmg};

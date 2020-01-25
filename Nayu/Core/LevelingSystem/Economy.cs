@@ -28,7 +28,7 @@ namespace Nayu.Core.LevelingSystem
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
-                embed.WithDescription($"{Emote.Parse("<:taiyaki:599774631984889857>")}  | Here's **{Constants.DailyTaiyakiGain}** Taiyakis, {Context.User.Mention}! Come back tomorrow for more!");
+                embed.WithDescription($"{Emote.Parse("<:taiyaki:599774631984889857>")}  **|** Here's **{Constants.DailyTaiyakiGain}** Taiyakis, {Context.User.Mention}! Come back tomorrow for more!");
                 await SendMessage(Context, embed.Build());
             }
             else
@@ -36,7 +36,7 @@ namespace Nayu.Core.LevelingSystem
                 var timeSpanString = string.Format("{0:%h} hours {0:%m} minutes {0:%s} seconds", result.RefreshTimeSpan);
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
-                embed.WithDescription($"{Emote.Parse("<:taiyaki:599774631984889857>")}  | **You have already claimed your free daily Taiyakis, {Context.User.Mention}.\nCome back in {timeSpanString}.**");
+                embed.WithDescription($"{Global.ETaiyaki}  **|** **You have already claimed your free daily Taiyakis, {Context.User.Mention}.\nCome back in {timeSpanString}.**");
                 await SendMessage(Context, embed.Build());
             }
         }
@@ -59,7 +59,7 @@ namespace Nayu.Core.LevelingSystem
                 GlobalGuildUserAccounts.SaveAccounts();
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
-                embed.WithDescription($":diamond_shape_with_a_dot_inside:   | {Context.User.Mention} gave {userB.Mention} a reputation point!");
+                embed.WithDescription($":diamond_shape_with_a_dot_inside:   **|** {Context.User.Mention} gave {userB.Mention} a reputation point!");
                 await SendMessage(Context, embed.Build());
             }
             else
@@ -85,7 +85,7 @@ namespace Nayu.Core.LevelingSystem
 
             if (giver.Taiyaki < taiyaki)
             {
-                await ReplyAsync($":angry:  | Stop trying to gift an amount of {config.Currency} over your account balance! ");
+                await ReplyAsync($":angry:  **|** Stop trying to gift an amount of {config.Currency} over your account balance! ");
             }
             else
             {
@@ -93,7 +93,7 @@ namespace Nayu.Core.LevelingSystem
                 {
                     var embed = new EmbedBuilder();
                     embed.WithColor(Global.NayuColor);
-                    embed.WithTitle($"🖐️ | Please say who you want to gift {config.Currency} to. Ex: n!gift <amount of Taiyakis> @user");
+                    embed.WithTitle($"🖐️ **|** Please say who you want to gift {config.Currency} to. Ex: n!gift <amount of Taiyakis> @user");
                     await SendMessage(Context, embed.Build());
                 }
                 else
@@ -104,7 +104,7 @@ namespace Nayu.Core.LevelingSystem
                     recipient.Taiyaki += taiyaki;
                     GlobalUserAccounts.SaveAccounts(giver.Id, recipient.Id);
 
-                    await SendMessage(Context, null, $"✅  | {Context.User.Mention} has gifted {userB.Mention} {taiyaki} {config.Currency}(s). How generous.");
+                    await SendMessage(Context, null, $"✅  **|** {Context.User.Mention} has gifted {userB.Mention} {taiyaki} {config.Currency}(s). How generous.");
                 }
             }
         }
@@ -189,7 +189,7 @@ namespace Nayu.Core.LevelingSystem
             target = mentionedUser ?? Context.User;
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var account = GlobalUserAccounts.GetUserAccount(target.Id);
-            await SendMessage(Context, null,$"{Global.ETaiyaki}  | {target.Mention} has **{account.Taiyaki} {config.Currency}**!");
+            await SendMessage(Context, null,$"{Global.ETaiyaki}  **|** {target.Mention} has **{account.Taiyaki} {config.Currency}**!");
         }
 
     }

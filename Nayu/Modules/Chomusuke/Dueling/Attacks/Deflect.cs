@@ -27,7 +27,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             }
             chom.Effects.Add(Effect.Deflecting);
             GlobalUserAccounts.SaveAccounts(config.Id);
-            response = $":shield:  | **{config.OpponentName}**, You are now in deflecting formation!\n\n**{config.OpponentName}**'s shield will deflect 50% of the damage from the next attack";
+            response = $":shield:  **|** **{config.OpponentName}**, You are now in deflecting formation!\n\n**{config.OpponentName}**'s shield will deflect 50% of the damage from the next attack";
             success = true;
             return new AttackResult{Success = success, Response = response, Damage = dmg};
         }

@@ -93,7 +93,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 }
                 if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                 {
-                    await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                    await shop.ModifyAsync(m => { m.Content = $":shield:   **|**  **{Context.User.Username}**, purchase cancelled."; });
                     return;
                 }
                 if (newresponse == null)
@@ -103,13 +103,13 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 }
                 else
                 {
-                    await shop.ModifyAsync(m => { m.Content = "<:no:453716729525174273>  | That is an invalid response. Please try again."; });
+                    await shop.ModifyAsync(m => { m.Content = $"{Global.ENo}  **|** That is an invalid response. Please try again."; });
                     return;
                 }
             }
             if (response.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
             {
-                await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                await shop.ModifyAsync(m => { m.Content = $":shield:   **|**  **{Context.User.Username}**, purchase cancelled."; });
                 return;
             }
             if (response.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
@@ -183,7 +183,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 }
                 if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                 {
-                    await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                    await shop.ModifyAsync(m => { m.Content = $":shield:   **|**  **{Context.User.Username}**, purchase cancelled."; });
                     return;
                 }
                 if (newresponse == null)
@@ -193,7 +193,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 }
                 else
                 {
-                    await shop.ModifyAsync(m => { m.Content = "<:no:453716729525174273>  | That is an invalid response. Please try again."; });
+                    await shop.ModifyAsync(m => { m.Content = $"{Global.ENo}  **|** That is an invalid response. Please try again."; });
                     return;
                 }*/
             }
@@ -225,7 +225,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     }
                     if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                     {
-                        await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                        await shop.ModifyAsync(m => { m.Content = $":shield:   **|**  **{Context.User.Username}**, purchase cancelled."; });
                         return;
                     }
                 }
@@ -253,7 +253,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     }
                     if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                     {
-                        await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                        await shop.ModifyAsync(m => { m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled."; });
                         return;
                     }
                 }
@@ -281,7 +281,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     }
                     if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                     {
-                        await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                        await shop.ModifyAsync(m => { m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled."; });
                         return;
                     }
                 }
@@ -292,12 +292,12 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 }
                 if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                 {
-                    await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                    await shop.ModifyAsync(m => { m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled."; });
                     return;
                 }
                 else
                 {
-                    await shop.ModifyAsync(m => { m.Content = "<:no:453716729525174273>  | That is an invalid response. Please try again."; });
+                    await shop.ModifyAsync(m => { m.Content = $"{Global.ENo} **|** That is an invalid response. Please try again."; });
                     return;
                 }
             }
@@ -330,7 +330,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         }
                         if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                         {
-                            await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                            await shop.ModifyAsync(m => { m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled."; });
                             return;
                         }
                     }
@@ -358,7 +358,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         }
                         if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                         {
-                            await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                            await shop.ModifyAsync(m => { m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled."; });
                             return;
                         }
                     }
@@ -386,7 +386,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         }
                         if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                         {
-                            await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                            await shop.ModifyAsync(m => { m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled."; });
                             return;
                         }
                     }
@@ -414,7 +414,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         }
                         if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                         {
-                            await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                            await shop.ModifyAsync(m => { m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled."; });
                             return;
                         }
                     }
@@ -442,13 +442,13 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         }
                         if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                         {
-                            await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                            await shop.ModifyAsync(m => { m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled."; });
                             return;
                         }
                     }
                     if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                     {
-                        await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                        await shop.ModifyAsync(m => { m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled."; });
                         return;
                     }
                     if (newresponse == null)
@@ -458,7 +458,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     }
                     else
                     {
-                        await shop.ModifyAsync(m => { m.Content = "<:no:453716729525174273>  | That is an invalid response. Please try again."; });
+                        await shop.ModifyAsync(m => { m.Content = $"{Global.ENo} **|** That is an invalid response. Please try again."; });
                         return;
                     }
                 }
@@ -544,12 +544,12 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 }
                 if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                 {
-                    await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                    await shop.ModifyAsync(m => { m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled."; });
                     return;
                 }
                 else
                 {
-                    await shop.ModifyAsync(m => { m.Content = "<:no:453716729525174273>  | That is an invalid response. Please try again."; });
+                    await shop.ModifyAsync(m => { m.Content = $"{Global.ENo} **|** That is an invalid response. Please try again."; });
                     return;
                 }
             }
@@ -624,12 +624,12 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 }
                 if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                 {
-                    await shop.ModifyAsync(m => { m.Content = $":shield:   |  **{Context.User.Username}**, purchase cancelled."; });
+                    await shop.ModifyAsync(m => { m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled."; });
                     return;
                 }
                 else
                 {
-                    await shop.ModifyAsync(m => { m.Content = "<:no:453716729525174273>  | That is an invalid response. Please try again."; });
+                    await shop.ModifyAsync(m => { m.Content = $"{Global.ENo} **|** That is an invalid response. Please try again."; });
                     return;
                 }*/
             }
@@ -640,7 +640,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             }
             else
             {
-                await shop.ModifyAsync(m => { m.Content = "<:no:453716729525174273>  | That is an invalid response. Please try again."; });
+                await shop.ModifyAsync(m => { m.Content = $"{Global.ENo} **|** That is an invalid response. Please try again."; });
                 return;
             }
         }
@@ -734,25 +734,25 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 {
                     string oldAttack = chom.Attack1;
                     chom.Attack1 = attackName;
-                    await SendMessage(Context, null, $"✅  | Successfully replaced {oldAttack} with {attackName}");
+                    await SendMessage(Context, null, $"✅ **|** Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 2)
                 {
                     string oldAttack = chom.Attack2;
                     chom.Attack2 = attackName;
-                    await SendMessage(Context, null, $"✅  | Successfully replaced {oldAttack} with {attackName}");
+                    await SendMessage(Context, null, $"✅ **|** Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 3)
                 {
                     string oldAttack = chom.Attack3;
                     chom.Attack3 = attackName;
-                    await SendMessage(Context, null, $"✅  | Successfully replaced {oldAttack} with {attackName}");
+                    await SendMessage(Context, null, $"✅ **|** Successfully replaced {oldAttack} with {attackName}");
                 }
                 if (attackNum == 4)
                 {
                     string oldAttack = chom.Attack4;
                     chom.Attack4 = attackName;
-                    await SendMessage(Context, null, $"✅  | Successfully replaced {oldAttack} with {attackName}");
+                    await SendMessage(Context, null, $"✅ **|** Successfully replaced {oldAttack} with {attackName}");
                 }
                 GlobalUserAccounts.SaveAccounts(Context.User.Id);
             }

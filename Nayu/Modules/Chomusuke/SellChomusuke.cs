@@ -46,7 +46,7 @@ namespace Nayu.Modules.Chomusuke
                 }
                 if (newresponse.Content.Equals("n", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                 {
-                    await shop.ModifyAsync(m => { m.Content = $":feet:  |  **{Context.User.Username}**, action cancelled."; });
+                    await shop.ModifyAsync(m => { m.Content = $":feet:  **|**  **{Context.User.Username}**, action cancelled."; });
                     return;
                 }
                 if (response == null)
@@ -56,7 +56,7 @@ namespace Nayu.Modules.Chomusuke
                 }
                 else
                 {
-                    await shop.ModifyAsync(m => { m.Content = "<:no:453716729525174273>  | That is an invalid response. Please try again."; });
+                    await shop.ModifyAsync(m => { m.Content = $"{Global.ENo}  **|** That is an invalid response. Please try again."; });
                     return;
                 }
             }

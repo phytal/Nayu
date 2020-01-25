@@ -24,7 +24,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.ManageMessages)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Manage Messages** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Manage Messages** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -50,7 +50,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.ManageMessages)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Manage Messages** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Manage Messages** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -61,14 +61,14 @@ namespace Nayu.Modules.Admin.Commands.Management
             {
                 var messagesToDelete = await Context.Channel.GetMessagesAsync(num + 1).FlattenAsync();
                 if (Context.Channel is ITextChannel channel) await channel.DeleteMessagesAsync(messagesToDelete);
-                if (num == 1) await ReplyAndDeleteAsync("✅  | Deleted 1 message.");
-                else await ReplyAndDeleteAsync("✅  | Cleared " + num + " messages.", timeout: TimeSpan.FromSeconds(5));
+                if (num == 1) await ReplyAndDeleteAsync("✅  **|** Deleted 1 message.");
+                else await ReplyAndDeleteAsync("✅  **|** Cleared " + num + " messages.", timeout: TimeSpan.FromSeconds(5));
             }
             else
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
-                embed.Title = "{Global.ENo} | You cannot delete more than 100 messages at once!";
+                embed.Title = "{Global.ENo} **|** You cannot delete more than 100 messages at once!";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
         }

@@ -23,7 +23,7 @@ namespace Nayu.Modules.Admin
             if (!guildUser.GuildPermissions.ManageChannels)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Manage Channels** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Manage Channels** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -52,7 +52,7 @@ namespace Nayu.Modules.Admin
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
-                embed.WithTitle("🖐️ | You must mention a user and provide a reason. Ex: n!report @Username <reason>");
+                embed.WithTitle("🖐️ **|** You must mention a user and provide a reason. Ex: n!report @Username <reason>");
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
             else
@@ -75,7 +75,7 @@ namespace Nayu.Modules.Admin
                 embed.Title = $"{Context.User}'s report of {user.Username}";
                 embed.Description = $"**Username: **{user.Username}\n**Reported by: **{Context.User.Mention}\n**Reason: **{reason}";
                 await SendMessage(Context, embed.Build());
-                await ReplyAsync("✅  | *Your report has been furthered to staff.*");
+                await ReplyAsync("✅  **|** *Your report has been furthered to staff.*");
             }
         }
 

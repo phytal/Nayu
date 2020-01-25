@@ -27,7 +27,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.ManageRoles)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Manage Roles** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Manage Roles** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -58,7 +58,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.ManageRoles)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Manage Roles** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Manage Roles** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -85,11 +85,11 @@ namespace Nayu.Modules.Admin.Commands.Management
 
                 var muted =
                     user.Guild.Roles.Where(input => input.Name.ToUpper() == "MUTED").FirstOrDefault() as SocketRole;
-                await ReplyAsync("✅  | " + Context.User.Mention + " unmuted " + user.Username);
+                await ReplyAsync("✅  **|** " + Context.User.Mention + " unmuted " + user.Username);
             }
             catch
             {
-                await ReplyAsync("🖐️ | You must mention a valid user that is muted");
+                await ReplyAsync("🖐️ **|** You must mention a valid user that is muted");
             }
         }
 

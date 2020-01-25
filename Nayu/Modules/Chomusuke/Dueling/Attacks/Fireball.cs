@@ -37,7 +37,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             /*if (configg.armour == "reinforced")
             {
                 GlobalUserAccounts.SaveAccounts();
-                response = $":fire:  | **{configg.OpponentName}** used **Fireball** but {config.OpponentName}** has reinforced armour. Therefore it had no effect.";
+                response = $":fire: **|** **{configg.OpponentName}** used **Fireball** but {config.OpponentName}** has reinforced armour. Therefore it had no effect.";
                 success = true;
                 return new AttackResult{Success = success, Response = response, Damage = 0};
             }*/
@@ -58,7 +58,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             {
                 dmg = 0;
                 var result = CheckModifiers.GetDMGModifiers(context.User, player2, dmg);
-                response = $":dash:  | **{context.User.Username}**, your attack missed!";
+                response = $":dash:  **|** **{context.User.Username}**, your attack missed!";
                 success = true;
                 return new AttackResult{Success = success, Response = response, Damage = dmg};
             }

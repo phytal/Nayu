@@ -82,7 +82,7 @@ namespace Nayu
                         await msg.DeleteAsync();
                         var embed = new EmbedBuilder();
                         embed.WithColor(Global.NayuColor);
-                        embed.WithDescription($":warning:  | {context.User.Mention}, Don't post your filthy links here! (No links)");
+                        embed.WithDescription($":warning:  **|** {context.User.Mention}, Don't post your filthy links here! (No links)");
                         await ReplyAndDeleteAsync("", embed: embed.Build());
                     }
                 }
@@ -122,7 +122,7 @@ namespace Nayu
                         string text = reactionTexts[randomIndex];
                         await msg.DeleteAsync();
                         var embed = new EmbedBuilder();
-                        embed.WithDescription($":warning:  |  {text} (Inappropriate language)");
+                        embed.WithDescription($":warning:  **|**  {text} (Inappropriate language)");
                         embed.WithColor(Global.NayuColor);
                         await ReplyAndDeleteAsync("", embed: embed.Build());
                     }
@@ -138,7 +138,7 @@ namespace Nayu
                 if (msg.Content.Contains("@everyone") || msg.Content.Contains("@here"))
                 {
                     await msg.DeleteAsync();
-                    await ReplyAndDeleteAsync($":warning:  | {msg.Author.Mention}, try not to mass ping.");
+                    await ReplyAndDeleteAsync($":warning:  **|** {msg.Author.Mention}, try not to mass ping.");
                 }
             }
         }

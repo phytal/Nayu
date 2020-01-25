@@ -33,7 +33,7 @@ namespace Nayu.Modules.Chomusuke
                     }
                     else
                     {
-                        await SendMessage(Context, null, $":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Normal Chomusuke Capsules!");
+                        await SendMessage(Context, null, $":octagonal_sign:  **|**  **{Context.User.Username}**, you don't have any Normal Chomusuke Capsules!");
                         return;
                     }
                 }
@@ -46,7 +46,7 @@ namespace Nayu.Modules.Chomusuke
                     }
                     else
                     {
-                        await SendMessage(Context, null, $":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Shiny Chomusuke Capsules!");
+                        await SendMessage(Context, null, $":octagonal_sign:  **|**  **{Context.User.Username}**, you don't have any Shiny Chomusuke Capsules!");
                         return;
                     }
                 }
@@ -59,7 +59,7 @@ namespace Nayu.Modules.Chomusuke
                     }
                     else
                     {
-                        await SendMessage(Context, null, $":octagonal_sign:  |  **{Context.User.Username}**, you don't have any Mythical Chomusuke Capsules!");
+                        await SendMessage(Context, null, $":octagonal_sign:  **|**  **{Context.User.Username}**, you don't have any Mythical Chomusuke Capsules!");
                         return;
                     }
                 }

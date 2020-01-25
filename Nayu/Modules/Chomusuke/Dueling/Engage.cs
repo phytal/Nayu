@@ -184,14 +184,14 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 {
                     await gui.ModifyAsync(m =>
                     {
-                        m.Content = $":shield:   |  **{Context.User.Username}**, engagement cancelled.";
+                        m.Content = $":shield:  **|**  **{Context.User.Username}**, engagement cancelled.";
                     });
                     return;
                 }
 
                 await gui.ModifyAsync(m =>
                 {
-                    m.Content = "<:no:453716729525174273>  | That is an invalid response. Please try again.";
+                    m.Content = $"{Global.ENo} **|** That is an invalid response. Please try again.";
                 });
                 return;
             }
@@ -238,7 +238,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     await gui.DeleteAsync();
                     await newGui.DeleteAsync();
                     await SendMessage(Context, null, 
-                        $":shield:   |  **{Context.User.Username}**, engagement cancelled.");
+                        $":shield:  **|**  **{Context.User.Username}**, engagement cancelled.");
                     return;
                 }
 
@@ -251,7 +251,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     await gui.ModifyAsync(m =>
                     {
                         m.Content =
-                            "<:no:453716729525174273>  | That is an invalid response. Please try again.";
+                            $"{Global.ENo} **|** That is an invalid response. Please try again.";
                     });
                     return;
                 }
@@ -273,7 +273,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 {
                     await gui.ModifyAsync(m =>
                     {
-                        m.Content = $":shield:   |  **{Context.User.Username}**, engagement cancelled.";
+                        m.Content = $":shield:  **|**  **{Context.User.Username}**, engagement cancelled.";
                     });
                     return;
                 }
@@ -309,7 +309,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             {
                 if (config.Fighting || configg.Fighting)
                 {
-                    await ReplyAsync(":flag_white:  | " + Context.User.Mention + " gave up. The fight stopped.");
+                    await ReplyAsync(":flag_white: **|** " + Context.User.Mention + " gave up. The fight stopped.");
                     config.Wins += 1;
                     configg.Losses += 1;
                     await Reset(Context, activeChomusuke, activeChomusukee);

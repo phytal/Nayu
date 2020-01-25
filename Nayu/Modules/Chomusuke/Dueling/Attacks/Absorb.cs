@@ -36,7 +36,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
                 {
                     GlobalUserAccounts.SaveAccounts();
                     response =
-                        $":fire:  | **{configg.OpponentName}** used **Absorb** but {config.OpponentName}** has reinforced armour. Therefore it had no effect.";
+                        $":fire: **|** **{configg.OpponentName}** used **Absorb** but {config.OpponentName}** has reinforced armour. Therefore it had no effect.";
                     success = true;
                     return new AttackResult{Success = success, Response = response, Damage = 0};
                 }*/
@@ -84,7 +84,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             {
                 int dmg = 0;
                 var result = CheckModifiers.GetDMGModifiers(context.User, player2, dmg); //resets 1 turn buffs
-                response = $":dash:  | **{context.User.Username}**, your attack missed!";
+                response = $":dash:  **|** **{context.User.Username}**, your attack missed!";
                 success = true;
                 return new AttackResult{Success = success, Response = response, Damage = dmg};
             }

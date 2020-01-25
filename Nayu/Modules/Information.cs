@@ -9,6 +9,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Configuration;
+using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Core.Handlers;
 using Nayu.Helpers;
 using Nayu.Preconditions;
@@ -105,8 +106,9 @@ namespace Nayu.Modules
                            "# To view NSFW commands, use n!helpNsfw\n" +
                            "# To view Chomusuke commands, use n!helpChom\n" +
                            "```";
-
-            await SendMessage(Context, null, helpMessage);
+            var embed = EmbedHandler.CreateEmbed(Context, "Help Command", helpMessage, EmbedHandler.EmbedMessageType.Info,
+                false);
+            await SendMessage(Context, embed);
         }
 
         [Subject(Categories.Information)]
@@ -120,7 +122,7 @@ namespace Nayu.Modules
             if (!guildUser.GuildPermissions.Administrator)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Administrator** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -187,7 +189,9 @@ namespace Nayu.Modules
                            "# To view Chomusuke commands, use n!helpChom\n" +
                            "```";
 
-            await SendMessage(Context, null, helpMessage);
+            var embed = EmbedHandler.CreateEmbed(Context, "Moderator Help Command", helpMessage, EmbedHandler.EmbedMessageType.Info,
+                false);
+            await SendMessage(Context, embed);
         }
 
         [Subject(Categories.Information)]
@@ -200,7 +204,7 @@ namespace Nayu.Modules
             var channel = Context.Channel as ITextChannel;
             if (!channel.IsNsfw)
             {
-                var nsfwText = $"{Global.ENo} | You need to use this command in a NSFW channel, {Context.User.Username}!";
+                var nsfwText = $"{Global.ENo} **|** You need to use this command in a NSFW channel, {Context.User.Username}!";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", nsfwText,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -268,7 +272,9 @@ namespace Nayu.Modules
                            "# To view Chomusuke commands, use n!helpChom\n" +
                            "```";
 
-            await SendMessage(Context, null, helpMessage);
+            var embed = EmbedHandler.CreateEmbed(Context, "NSFW Help Command", helpMessage, EmbedHandler.EmbedMessageType.Info,
+                false);
+            await SendMessage(Context, embed);
         }
 
         [Subject(Categories.Information)]
@@ -338,14 +344,15 @@ namespace Nayu.Modules
                            "# To view moderator commands, use n!helpMod\n" +
                            "# To view NSFW commands, use n!helpNsfw\n" +
                            "```";
-
-            await SendMessage(Context, null, helpMessage);
+            var embed = EmbedHandler.CreateEmbed(Context, "Chomusuke Help Command", helpMessage, EmbedHandler.EmbedMessageType.Info,
+                false);
+            await SendMessage(Context, embed);
         }
 
         [Subject(Categories.Information)]
-        [Command("command")]
+        [Command("command"), Alias("cmd")]
         [Summary("Shows what a specific command does and the usage")]
-        [Remarks("n!command <command you want to search up> Ex: n!command stats")]
+        [Remarks("n!cmd <command you want to search up> Ex: n!cmd stats")]
         [Cooldown(5)]
         public async Task CommandAsync(string command)
         {
@@ -381,7 +388,7 @@ namespace Nayu.Modules
                     x.Value = //$"Parameters: {string.Join(", ", cmd.Parameters.Select(p => p.Name))}\n" +
                                 $"Description: {cmd.Summary}\n" +
                                 $"Usage: {cmd.Remarks}\n" +
-                                $"Category: {cmd.Attributes}";
+                                $"Category: {cmd.Attributes[0]}";
                     x.IsInline = false;
                 });
             }
@@ -399,7 +406,7 @@ namespace Nayu.Modules
         {
             var embed = new EmbedBuilder{
                 Title = "Server Invite", 
-                Url = "https://discord.gg/NuUdx4h",
+                Url = "https://discord.gg/eyHg6hS",
                 Description = "^^ ~~ Here's my server! :blush:"
             };
             await SendMessage(Context, embed.Build());
@@ -454,32 +461,18 @@ namespace Nayu.Modules
         }
 
         [Subject(Categories.Information)]
-        [Command("changeLog")]
+        [Command("changeLog"), Alias("update", "cl")]
         [Summary("Shows the latest update notes")]
-        [Alias("update")]
         [Remarks("Ex: n!changeLog")]
-        [Cooldown(15)]
+        [Cooldown(5)]
         public async Task Update()
         {
             string version = Config.bot.version;
-            var embed = new EmbedBuilder();
-            embed.WithColor(Global.NayuColor);
-            embed.WithTitle("Update Notes");
-            embed.WithDescription($"`Bot version {version}` **<<Last Updated on 6/24>>**\n"
-                + "`----- LAST UPDATE -----`\n"
-                + "• Added rock paper scissors!Use `n!rps`!\n"
-                + "• Made it so that you will now have a * seperate * account per server, money is carried over, but XP is different (the leveling system was also updated :D)!\n"
-                + "• Aesthetically improved the `n!command` command!\n"
-                + "• Squished a bugs and fixed typos :D..\n"
-                + "`----- CURRENT UPDATE -----`\n"
-                + " • Improved the old dueling system(IMPROVED IT SO MUCH) use `n!duelhelp` to see the commands!\n"
-                + " • Added more stuff to the Dog and Cat API(Cat API broke so I got a new onw :D)!\n"
-                + " • Fixed `n!help` as some commands were missing..\n"
-                + " • Added Reminders!You can use `n!reminder add < reminder > in < time >`.\n"
-                + " • Improved gambling(just `n!coinflip` i'm sorry xd)\n"
-                );
+            var config = BotAccounts.GetAccount();
+            var embed = EmbedHandler.CreateEmbed(Context, "Update Notes", $"**<<Last Updated on {config.LastUpdate.ToShortDateString()}>>**\n`Version {version}`\n" + config.ChangeLog,
+                EmbedHandler.EmbedMessageType.Success);
 
-            await ReplyAsync("", embed: embed.Build());
+            await SendMessage(Context, embed);
         }
     }
 }

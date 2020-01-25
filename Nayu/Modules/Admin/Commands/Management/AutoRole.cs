@@ -23,7 +23,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.Administrator)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Administrator** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);

@@ -25,7 +25,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.BanMembers)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Ban Members** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Ban Members** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -45,7 +45,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             catch
             {
                 var embed = EmbedHandler.CreateEmbed(Context, "Error",
-                    "🖐️ | You must mention a valid user that has a low enough rank to be banned.",
+                    "🖐️ **|** You must mention a valid user that has a low enough rank to be banned.",
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: embed);
             }
@@ -62,7 +62,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.BanMembers)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Ban Members** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Ban Members** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -75,12 +75,12 @@ namespace Nayu.Modules.Admin.Commands.Management
                     bans.FirstOrDefault(x => x.User.ToString().ToLowerInvariant() == user2.ToLowerInvariant());
 
                 await Context.Guild.RemoveBanAsync(theUser.User).ConfigureAwait(false);
-                await SendMessage(Context, null, $"✅  | Unbanned {user2}.");
+                await SendMessage(Context, null, $"✅  **|** Unbanned {user2}.");
             }
             catch
             {
                 var embed = EmbedHandler.CreateEmbed(Context, "Error",
-                    "🖐️ | You must enter a valid user (Ex: Phytal#8213)",
+                    "🖐️ **|** You must enter a valid user (Ex: Phytal#8213)",
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: embed);
             }
@@ -97,7 +97,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.BanMembers)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Ban Members** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Ban Members** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -114,7 +114,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             catch
             {
                 var embed = EmbedHandler.CreateEmbed(Context, "Error",
-                    "🖐️ | You must enter a valid user",
+                    "🖐️ **|** You must enter a valid user",
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: embed);
             }
@@ -131,7 +131,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             if (!guildUser.GuildPermissions.BanMembers)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Ban Members** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Ban Members** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -150,7 +150,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             catch
             {
                 var embed = EmbedHandler.CreateEmbed(Context, "Error",
-                    "🖐️ | You must enter a valid user-id",
+                    "🖐️ **|** You must enter a valid user-id",
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: embed);
             }

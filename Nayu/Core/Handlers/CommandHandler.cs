@@ -135,7 +135,7 @@ namespace Nayu.Core.Handlers
             {
                 var context = new ShardedCommandContext(Global.Client, (SocketUserMessage)reaction.Message);
                 if (!PendingDuelProvider.UserIsPlaying(reaction.UserId)) return;
-                var emote = Emote.Parse("<:no:453716729525174273>");
+                var emote = Emote.Parse($"{Global.ENo}");
                 var user = (SocketGuildUser)reaction.User;
                 var req = PendingDuelProvider.RequestUser(reaction.UserId);
                 var requester = Global.Client.GetUser(req);

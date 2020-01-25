@@ -23,7 +23,7 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
             if (!guildUser.GuildPermissions.ManageChannels)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Manage Channels** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Manage Channels** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -35,7 +35,7 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
             config.SlowModeCooldown = length;
             GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
-            await SendMessage(Context, null, $":snail:  | Successfully turned on slow mode for **{length}** seconds.");
+            await SendMessage(Context, null, $":snail:  **|** Successfully turned on slow mode for **{length}** seconds.");
         }
 
         [Subject(AdminCategories.ServerManagement)]
@@ -49,7 +49,7 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
             if (!guildUser.GuildPermissions.ManageChannels)
             {
                 string description =
-                    $"{Global.ENo} | You Need the **Manage Channels** Permission to do that {Context.User.Username}";
+                    $"{Global.ENo} **|** You Need the **Manage Channels** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -61,7 +61,7 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
             config.SlowModeCooldown = 0;
             GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
-            await SendMessage(Context, null, $":snail:  | Successfully turned off slow mode.");
+            await SendMessage(Context, null, $":snail:  **|** Successfully turned off slow mode.");
         }
     }
 }

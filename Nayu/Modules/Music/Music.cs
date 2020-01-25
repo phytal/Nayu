@@ -49,7 +49,7 @@ namespace Nayu.Modules.Music
             try
             {
                 await _lavaNode.JoinAsync(voiceState.VoiceChannel, Context.Channel as ITextChannel);
-                await ReplyAsync($"✅  | Joined {voiceState.VoiceChannel.Name}!");
+                await ReplyAsync($"✅ **|** Joined {voiceState.VoiceChannel.Name}!");
             }
             catch (Exception exception)
             {
@@ -79,7 +79,7 @@ namespace Nayu.Modules.Music
             try
             {
                 await _lavaNode.LeaveAsync(voiceChannel);
-                await ReplyAsync($"✅  | I've left {voiceChannel.Name}!");
+                await ReplyAsync($"✅ **|** I've left {voiceChannel.Name}!");
             }
             catch (Exception exception)
             {
@@ -139,13 +139,13 @@ namespace Nayu.Modules.Music
                         player.Queue.Enqueue(track);
                     }
 
-                    await ReplyAsync($"✅  | **Enqueued {searchResponse.Tracks.Count} tracks.**");
+                    await ReplyAsync($"✅ **|** **Enqueued {searchResponse.Tracks.Count} tracks.**");
                 }
                 else
                 {
                     var track = searchResponse.Tracks[0];
                     player.Queue.Enqueue(track);
-                    await ReplyAsync($"✅  | **Enqueued: {track.Title}**");
+                    await ReplyAsync($"✅ **|** **Enqueued: {track.Title}**");
                 }
             }
             else
@@ -167,7 +167,7 @@ namespace Nayu.Modules.Music
                         }
                     }
 
-                    await ReplyAsync($"✅  | **Enqueued {searchResponse.Tracks.Count} tracks.**");
+                    await ReplyAsync($"✅ **|** **Enqueued {searchResponse.Tracks.Count} tracks.**");
                 }
                 else
                 {
@@ -198,7 +198,7 @@ namespace Nayu.Modules.Music
             try
             {
                 await player.PauseAsync();
-                await ReplyAsync($"✅  | Paused: {player.Track.Title}");
+                await ReplyAsync($"✅ **|** Paused: {player.Track.Title}");
             }
             catch (Exception exception)
             {
@@ -227,7 +227,7 @@ namespace Nayu.Modules.Music
             try
             {
                 await player.ResumeAsync();
-                await ReplyAsync($"✅  | Resumed: {player.Track.Title}");
+                await ReplyAsync($"✅ **|** Resumed: {player.Track.Title}");
             }
             catch (Exception exception)
             {
@@ -256,7 +256,7 @@ namespace Nayu.Modules.Music
             try
             {
                 await player.StopAsync();
-                await ReplyAsync("✅  | No longer playing anything.");
+                await ReplyAsync("✅ **|** No longer playing anything.");
             }
             catch (Exception e)
             {
@@ -331,7 +331,7 @@ namespace Nayu.Modules.Music
             try
             {
                 await player.SeekAsync(timeSpan);
-                await ReplyAsync($"✅  | I've seeked `{player.Track.Title}` to {timeSpan}.");
+                await ReplyAsync($"✅ **|** I've seeked `{player.Track.Title}` to {timeSpan}.");
             }
             catch (Exception exception)
             {
@@ -357,7 +357,7 @@ namespace Nayu.Modules.Music
             try
             {
                 await player.UpdateVolumeAsync(volume);
-                await ReplyAsync($"🔊  | I've changed the player volume to {volume}.");
+                await ReplyAsync($"🔊 **|** I've changed the player volume to {volume}.");
             }
             catch (Exception exception)
             {

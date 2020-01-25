@@ -29,7 +29,7 @@ namespace Nayu.Modules
 
             userAccount.XP += xp;
             GlobalGuildUserAccounts.SaveAccounts();
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", $"✅  | **{xp}** xp were added to {target.Username}'s account.", EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", $"✅  **|** **{xp}** xp were added to {target.Username}'s account.", EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
         }
 
@@ -49,7 +49,7 @@ namespace Nayu.Modules
             GlobalGuildUserAccounts.SaveAccounts();
 
             
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", $"✅  | **{Points}** reputation points were added to {target.Username}'s account.", EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", $"✅  **|** **{Points}** reputation points were added to {target.Username}'s account.", EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
         }
     }

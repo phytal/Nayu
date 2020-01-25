@@ -27,7 +27,7 @@ namespace Nayu.Modules.Chomusuke
                 config.ActiveChomusuke = 1;
                 GlobalUserAccounts.SaveAccounts(config.Id);
                 await SendMessage(Context, null, 
-                    $"✅  | Successfully made your only Chomusuke your active Chomusuke.");
+                    $"✅  **|** Successfully made your only Chomusuke your active Chomusuke.");
                 return;
             }
 
@@ -60,7 +60,7 @@ namespace Nayu.Modules.Chomusuke
 
             GlobalUserAccounts.SaveAccounts(config.Id);
             await SendMessage(Context, null, 
-                $"✅  | Successfully made Chomusuke #{response} your active Chomusuke.");
+                $"✅  **|** Successfully made Chomusuke #{response} your active Chomusuke.");
         }
     }
 }

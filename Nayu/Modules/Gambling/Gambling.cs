@@ -85,17 +85,17 @@ namespace Nayu.Modules.Gambling
             if (product > 50)
             {
                 _ = amountGained == amountBetted * (product / 20);
-                embed.WithTitle($":game_die:  | You Rolled **{randomNumber1}** and **{randomNumber2}** ({product}). Alright you win this time, here are your Taiyakis..");
+                embed.WithTitle($":game_die:  **|** You Rolled **{randomNumber1}** and **{randomNumber2}** ({product}). Alright you win this time, here are your Taiyakis..");
             }
             else if(product < 50)
             {
                 _ = amountGained == amountBetted*-1;
-                embed.WithTitle($":game_die:  | You Rolled **{randomNumber1}** and **{randomNumber2}** ({ product}). HAH YOUR TAIYAKIS ARE MINEEEE");
+                embed.WithTitle($":game_die:  **|** You Rolled **{randomNumber1}** and **{randomNumber2}** ({ product}). HAH YOUR TAIYAKIS ARE MINEEEE");
             }
             else if (product == 50)
             {
                 _ = amountGained == amountBetted;
-                embed.WithTitle($":game_die:  | You Rolled **{randomNumber1}** and **{randomNumber2}** ({product}). You know what, I'll be nice and give back your Taiyakis");
+                embed.WithTitle($":game_die:  **|** You Rolled **{randomNumber1}** and **{randomNumber2}** ({product}). You know what, I'll be nice and give back your Taiyakis");
             }
 
             bool isNegative = amountGained > 0;

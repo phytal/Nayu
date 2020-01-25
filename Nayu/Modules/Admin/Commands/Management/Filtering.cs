@@ -22,7 +22,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             var guildUser = Context.User as SocketGuildUser;
             if (!guildUser.GuildPermissions.Administrator)
             {
-                string description = $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                string description = $"{Global.ENo} **|** You Need the **Administrator** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -36,8 +36,8 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
                 embed.WithDescription(argg
-                    ? "✅  | Filter successfully turned on. Stay safe!"
-                    : "✅  | Filter successfully turned off. Daredevil!");
+                    ? "✅  **|** Filter successfully turned on. Stay safe!"
+                    : "✅  **|** Filter successfully turned off. Daredevil!");
                 await ReplyAsync("", embed: embed.Build());
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                 config.Filter = argg;
@@ -59,7 +59,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             var guildUser = Context.User as SocketGuildUser;
             if (!guildUser.GuildPermissions.Administrator)
             {
-                string description = $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                string description = $"{Global.ENo} **|** You Need the **Administrator** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -107,7 +107,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             var guildUser = Context.User as SocketGuildUser;
             if (!guildUser.GuildPermissions.Administrator)
             {
-                string description = $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                string description = $"{Global.ENo} **|** You Need the **Administrator** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -115,7 +115,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             }
 
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-            await SendMessage(Context, null, $"✅  | Added **{word}** to the Blacklist.");
+            await SendMessage(Context, null, $"✅  **|** Added **{word}** to the Blacklist.");
 
             config.CustomFilter.Add(word);
             GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
@@ -132,7 +132,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             var guildUser = Context.User as SocketGuildUser;
             if (!guildUser.GuildPermissions.Administrator)
             {
-                string description = $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                string description = $"{Global.ENo} **|** You Need the **Administrator** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -167,7 +167,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             var guildUser = Context.User as SocketGuildUser;
             if (!guildUser.GuildPermissions.Administrator)
             {
-                string description = $"{Global.ENo} | You Need the **Administrator** Permission to do that {Context.User.Username}";
+                string description = $"{Global.ENo} **|** You Need the **Administrator** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -195,7 +195,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             var guildUser = Context.User as SocketGuildUser;
             if (!guildUser.GuildPermissions.ManageMessages)
             {
-                string description = $"{Global.ENo} | You Need the **Manage Messages** Permission to do that {Context.User.Username}";
+                string description = $"{Global.ENo} **|** You Need the **Manage Messages** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);

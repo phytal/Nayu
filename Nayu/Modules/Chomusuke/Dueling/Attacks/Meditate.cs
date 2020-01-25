@@ -23,7 +23,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             else
             {
                 response =
-                    $":shield:  | **{config.OpponentName}**, {chom.Name} just meditated! \n\n**{config.OpponentName}**'s next attack will deal 30% more damage";
+                    $":shield:  **|** **{config.OpponentName}**, {chom.Name} just meditated! \n\n**{config.OpponentName}**'s next attack will deal 30% more damage";
                 chom.Effects.Add(Effect.Meditating);
                 GlobalUserAccounts.SaveAccounts(config.Id);
                 success = true;
