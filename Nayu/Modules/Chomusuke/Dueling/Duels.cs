@@ -7,6 +7,7 @@ using Discord.Commands;
 using Discord.Rest;
 using Discord.WebSocket;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Helpers;
 using Nayu.Preconditions;
 
 namespace Nayu.Modules.Chomusuke.Dueling
@@ -103,7 +104,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 await ReplyAndDeleteAsync($"{Global.ENo} **|** Both players need an active chomusuke to start the duel!");
                 return;
             }
-            if (!config.Fighting && configg.Fighting)
+            if (!config.Fighting && !configg.Fighting)
             {
                 if (PendingDuelProvider.UserIsPlaying(Context.User.Id))
                 {
@@ -178,7 +179,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 configg.WhoWaits = req.Mention;
             }
             GlobalUserAccounts.SaveAccounts(config.Id, configg.Id);
-            var choms = ActiveChomusuke.GetActiveChomusuke(user.Id, config.OpponentId);
+            var choms = ActiveChomusuke.GetActiveChomusuke(user.Id, req.Id);
             var chom1 = choms.Item1;
             var chom2 = choms.Item2;
             await channel.SendMessageAsync($":crossed_swords:  **|** {req.Mention} challenged {user.Mention} to a duel!\n\n**{chom1.Name}** has **{chom1.Health}** health!\n**{chom2.Name}** has **{chom2.Health}** health!\n\n{text}, you go first!");
@@ -269,11 +270,13 @@ namespace Nayu.Modules.Chomusuke.Dueling
             await ReplyAsync("", embed: embed.Build());
         }
 
+        [Subject(OwnerCategories.Owner)]
         [Command("endfight")]
         [Summary("Ends the fight between users (DEBUG PURPOSES ONLY)")]
         [Remarks("n!endfight")]
         [Cooldown(15)]
-        public async Task Endfight()
+        [RequireOwner]
+        public async Task EndFight()
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             var configg = GlobalUserAccounts.GetUserAccount(config.OpponentId);
@@ -295,10 +298,10 @@ namespace Nayu.Modules.Chomusuke.Dueling
             config.PlaceHolder = null;
             configg.WhosTurn = null;
             configg.WhoWaits = null;
-            chom1.Effects.Clear();
-            chom2.Effects.Clear();
-            chom1.PotionEffects.Clear();
-            chom2.PotionEffects.Clear();
+            chom1.Effects?.Clear();
+            chom2.Effects?.Clear();
+            chom1.PotionEffects?.Clear();
+            chom2.PotionEffects?.Clear();
 
             GlobalUserAccounts.SaveAccounts(config.Id, configg.Id);
         }

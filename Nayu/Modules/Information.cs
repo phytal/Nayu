@@ -26,24 +26,6 @@ namespace Nayu.Modules
         }
 
         [Subject(Categories.Information)]
-        [Command("info")]
-        [Summary("Shows Nayu's information")]
-        [Remarks("Ex: n!info")]
-        [Cooldown(5)]
-        public async Task Info()
-        {
-            string version = Config.bot.version;
-            var embed = new EmbedBuilder();
-            embed.WithColor(Global.NayuColor);
-            embed.AddField("Creator", "Phytal#8213", true);
-            embed.AddField("Last Updated", "11/29/2018", true);
-            embed.AddField("Bot version", $"Beta {version}", true);
-            embed.WithImageUrl(Global.Client.CurrentUser.GetAvatarUrl());
-
-            await SendMessage(Context, embed.Build());
-        }
-
-        [Subject(Categories.Information)]
         [Command("help")]
         [Summary("Shows all possible standard commands for this bot")]
         [Remarks("Ex: n!help")]
@@ -395,7 +377,30 @@ namespace Nayu.Modules
             await SendMessage(Context, builder.Build());
         }
 
-        //TODO: update
+        
+        [Subject(Categories.Information)]
+        [Command("info")]
+        [Summary("Shows Nayu's information")]
+        [Remarks("Ex: n!info")]
+        [Cooldown(5)]
+        public async Task Info()
+        {
+            var config = BotAccounts.GetAccount();
+            string version = Config.bot.version;
+            var embed = new EmbedBuilder();
+            embed.WithColor(Global.NayuColor);
+            embed.AddField("Creator", "Phytal#8213", true);
+            embed.AddField("Last Updated", config.LastUpdate.ToShortDateString(), true);
+            embed.AddField("Bot version", $"Beta {version}", true);
+            embed.AddField("Vote Link", "https://discordbots.org/bot/417160957010116608/vote");
+            embed.AddField("Invite Link",
+                "https://discordapp.com/api/oauth2/authorize?client_id=417160957010116608&permissions=8&scope=bot");
+            embed.AddField("Patreon Link", "https://www.patreon.com/phytal");
+            embed.WithImageUrl(Global.Client.CurrentUser.GetAvatarUrl());
+
+            await SendMessage(Context, embed.Build());
+        }
+        
         [Subject(Categories.Information)]
         [Command("nayuLink")]
         [Summary("Provides Nayu's server invite link")]

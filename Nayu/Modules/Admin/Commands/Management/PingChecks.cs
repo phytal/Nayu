@@ -30,6 +30,12 @@ namespace Nayu.Modules.Admin.Commands.Management
             }
 
             var result = ConvertBool.ConvertStringToBoolean(arg);
+            if (!result.Item1)
+            {
+                await SendMessage(Context, null, $"Please say `n!pc <on/off>`");
+                return;
+            }
+            
             if (result.Item1)
             {
                 bool argg = result.Item2;
@@ -41,13 +47,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                     : "Disabled mass ping checks for this server.");
                 config.MassPingChecks = argg;
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-                await ReplyAsync("", embed: embed.Build());
-            }
-
-            if (result.Item1 == false)
-            {
-                await SendMessage(Context, null, $"Please say `n!pc <on/off>`");
-                return;
+                await SendMessage(Context, embed.Build());
             }
         }
     }

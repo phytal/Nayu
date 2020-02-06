@@ -68,7 +68,7 @@ namespace Nayu.Modules.Chomusuke
                 int randomIndex = Global.Rng.Next(Zodiac.Length);
                 string zodiac = Zodiac[randomIndex];
                 uint cp = 20 * (config.LevelNumber / 10); //cp is boosted based off their user level *.1
-                if (config.Chomusuke1.Have != true)
+                if (!config.Chomusuke1.Have)
                 {
                     if (trait.Item1) config.Chomusuke1.Trait1 = Trait.Lucky;
                     if (trait.Item2) config.Chomusuke1.Shiny = true;
@@ -82,7 +82,7 @@ namespace Nayu.Modules.Chomusuke
                     config.Chomusuke1.ShieldCapacity = 5;
                     config.Chomusuke1.BoughtDay = DateTime.Now;
                 }
-                else if (config.Chomusuke2.Have != true)
+                else if (!config.Chomusuke2.Have)
                 {
                     if (trait.Item1) config.Chomusuke2.Trait1 = Trait.Lucky;
                     if (trait.Item2) config.Chomusuke2.Shiny = true;
@@ -96,7 +96,7 @@ namespace Nayu.Modules.Chomusuke
                     config.Chomusuke2.ShieldCapacity = 5;
                     config.Chomusuke2.BoughtDay = DateTime.Now;
                 }
-                else if (config.Chomusuke3.Have != true)
+                else if (!config.Chomusuke3.Have)
                 {
                     if (trait.Item1) config.Chomusuke3.Trait1 = Trait.Lucky;
                     if (trait.Item2) config.Chomusuke3.Shiny = true;

@@ -407,10 +407,10 @@ namespace Nayu.Modules.Chomusuke.Dueling
             config.PlaceHolder = null;
             configg.WhosTurn = null;
             configg.WhoWaits = null;
-            chom1.Effects.Clear();
-            chom2.Effects.Clear();
-            chom1.PotionEffects.Clear();
-            chom2.PotionEffects.Clear();
+            chom1.Effects?.Clear();
+            chom2.Effects?.Clear();
+            chom1.PotionEffects?.Clear();
+            chom2.PotionEffects?.Clear();
             await ActiveChomusuke.ConvertActiveVariable(context.User.Id, config.OpponentId, chom1, chom2);
 
             GlobalUserAccounts.SaveAccounts(config.Id, configg.Id);
