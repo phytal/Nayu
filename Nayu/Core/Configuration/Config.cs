@@ -41,6 +41,7 @@ namespace Nayu.Core.Configuration
         public string version;
         public string wolkeToken;
         public string dblToken;
+        public string sentryLink;
     }
 }
 

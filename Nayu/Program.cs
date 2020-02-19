@@ -47,7 +47,7 @@ using Victoria;
 
         private static void Main()
         {
-            SentrySdk.Init("https://a3ae64952ed84801a7def80a09d8b170@sentry.io/1869654");
+            SentrySdk.Init(Config.bot.sentryLink);
             // All required tasks that need to run simultaneously
             var botLaunchers = new List<Task>
             {
@@ -122,8 +122,9 @@ using Victoria;
         
         private static void LaunchLavalink()
         {
-            var directory = Directory.GetCurrentDirectory() + @"\Lavalink";
-            var psi = new ProcessStartInfo("cmd.exe", $"/c java -jar {directory}" + @"\Lavalink.jar");
+            var directory =  Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())))) + @"/Lavalink";
+            Console.WriteLine(directory);
+            var psi = new ProcessStartInfo("/bin/bash", $"-c {directory}/lava.sh");
             psi.WorkingDirectory = directory;
             psi.CreateNoWindow = true;
             psi.UseShellExecute = false;
