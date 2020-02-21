@@ -17,8 +17,8 @@ namespace Nayu.Modules.Music {
         private readonly LavaNode _lavaNode;
         private readonly Logger _logger;
         public readonly HashSet<ulong> VoteQueue;
-        const string Format1 = @"hh\.mm\:ss";
-        const string Format2 = @"mm\.ss";
+        private const string Format1 = @"hh\.mm\:ss";
+        private const string Format2 = @"mm\.ss";
         public MusicManager(LavaNode lavaNode, Logger logger)
         {
             _logger = logger;
@@ -170,7 +170,7 @@ namespace Nayu.Modules.Music {
             return embed.Build();
         }
 
-        public string GetSong(LavaPlayer player)
+        private static string GetSong(LavaPlayer player)
         {
             var track = player.Track;
 
@@ -189,12 +189,12 @@ namespace Nayu.Modules.Music {
             descriptionBuilder.Append($"{bar2}⚪{bar1}\n");
             descriptionBuilder.Append(player.PlayerState == PlayerState.Playing ? "◄◄  ▐▐   ►►⠀  " : "◄◄⠀  ▶   ►►⠀  ");
             descriptionBuilder.Append($" {formattedPosition} / {formattedDuration} ");
-            var volumeRatio = player.Volume / 150;
-            var volumeNum = volumeRatio * 5;
+            var volumeRatio = player.Volume / 150.0;
+            var volumeNum = (int)Math.Round(volumeRatio * 5);
             var volBar1 = new string('─', volumeNum);
             var volBar2 = new string('─', 5 - volumeNum);
             var volEmoji = player.Volume >= 75 ? "🔊 " : "🔉 ";
-            string volume = $" {volBar2}○{volBar1} ";
+            var volume = $" {volBar1}○{volBar2} ";
             descriptionBuilder.Append(volume);
             descriptionBuilder.Append($"{volEmoji} ⠀　　　ᴴᴰ⚙️ ❐ ⊏⊐");
             return descriptionBuilder.ToString();

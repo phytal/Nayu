@@ -124,7 +124,8 @@ using Victoria;
         {
             var directory =  Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())))) + @"/Lavalink";
             Console.WriteLine(directory);
-            var psi = new ProcessStartInfo("/bin/bash", $"-c {directory}/lava.sh");
+            //var psi = new ProcessStartInfo("/bin/bash", $"-c {directory}/lava.sh");
+            var psi = new ProcessStartInfo("/bin/bash", $"java -jar {directory.Substring(1)}/Lavalink.jar");
             psi.WorkingDirectory = directory;
             psi.CreateNoWindow = true;
             psi.UseShellExecute = false;

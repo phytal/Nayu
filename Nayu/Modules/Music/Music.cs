@@ -49,7 +49,7 @@ namespace Nayu.Modules.Music
             try
             {
                 await _lavaNode.JoinAsync(voiceState.VoiceChannel, Context.Channel as ITextChannel);
-                await ReplyAsync($"✅ **|** Joined {voiceState.VoiceChannel.Name}!");
+                await ReplyAsync($"✅ **|** Joined **{voiceState.VoiceChannel.Name}!**");
             }
             catch (Exception exception)
             {
@@ -79,7 +79,7 @@ namespace Nayu.Modules.Music
             try
             {
                 await _lavaNode.LeaveAsync(voiceChannel);
-                await ReplyAsync($"✅ **|** I've left {voiceChannel.Name}!");
+                await ReplyAsync($"✅ **|** I've left **{voiceChannel.Name}**!");
             }
             catch (Exception exception)
             {
@@ -309,7 +309,7 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
-        
+        //TODO: fix
         [Subject(Categories.Music)]
         [Command("seek")]
         [Summary("Seeks to a specific time point in the song/video")]
@@ -353,6 +353,7 @@ namespace Nayu.Modules.Music
             if (volume >= 150 || volume <= 0)
             {
                 await ReplyAndDeleteAsync($"{Global.ENo} | Volume must be between 1 and 149.");
+                return;
             }
             try
             {
@@ -411,7 +412,7 @@ namespace Nayu.Modules.Music
             {
                 if (Range.Contains(stringBuilder.Length))
                 {
-                    var embedd = Helpers.MiscHelpers.CreateEmbed(Context, "", stringBuilder.ToString());
+                    var embedd = MiscHelpers.CreateEmbed(Context, "", stringBuilder.ToString());
                     await ReplyAsync("", embed: embedd.Build());
                     stringBuilder.Clear();
                 }
@@ -421,7 +422,7 @@ namespace Nayu.Modules.Music
                 }
             }
 
-            var embed = Helpers.MiscHelpers.CreateEmbed(Context, "", stringBuilder.ToString());
+            var embed = MiscHelpers.CreateEmbed(Context, "", stringBuilder.ToString());
             await ReplyAsync("", embed: embed.Build());
         }
         

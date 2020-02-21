@@ -25,7 +25,7 @@ namespace Victoria {
         /// <summary>
         ///     Server's IP/Hostname.
         /// </summary>
-        public string Hostname { get; set; } = "0.0.0.0";
+        public string Hostname { get; set; } = "127.0.0.1";
 
         /// <summary>
         ///     Server's password/authentication.
