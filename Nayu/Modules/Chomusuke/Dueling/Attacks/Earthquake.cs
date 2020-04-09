@@ -21,8 +21,8 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var choms = ActiveChomusuke.GetActiveChomusuke(config.Id, config.OpponentId);
-            var chom1 = choms.Item1;
-            var chom2 = choms.Item2;
+            var chom1 = choms.ChomusukeOne;
+            var chom2 = choms.ChomusukeTwo;
 
             string response;
             bool success;

@@ -58,8 +58,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
             var choms = ActiveChomusuke.GetActiveChomusuke(user, config.OpponentId);
-            var chom1 = choms.Item1;
-            var chom2 = choms.Item2;
+            var chom1 = choms.ChomusukeOne;
+            var chom2 = choms.ChomusukeTwo;
             var result = new PotionResult();
             switch (potion)
             {
@@ -83,8 +83,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
         public static async Task ApplyEffects(ShardedCommandContext context, ulong user1, ulong user2)
         {
             var choms = ActiveChomusuke.GetActiveChomusuke(user1, user2);
-            var chom1 = choms.Item1;
-            var chom2 = choms.Item2;
+            var chom1 = choms.ChomusukeOne;
+            var chom2 = choms.ChomusukeTwo;
             foreach (var effect in chom1.Effects)
             {
                 switch (effect)
@@ -123,7 +123,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
 
         public static int GetEffectIndex(List<Effect> effectList, Effect effect)
         {
-            var index = 0;
+            int index;
             for (index = 0; index < effectList.Count; index++)
             {
                 if (effectList[index] == effect)
@@ -133,6 +133,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             return index;
         }
 
+        /*
         public static int GetNextElement(int[] strArray, int index)
         {
             if ((index > strArray.Length - 1) || (index < 0))
@@ -142,16 +143,10 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 index = 0;
 
             else
-                ++index;
+                index++;
 
             return strArray[index];
-        }
-
-        internal static int GetValueFromKey(string keyName, SocketUser user)
-        {
-            var config = GlobalUserAccounts.GetUserAccount(user);
-            return config.Items[keyName];
-        }
+        }*/
     }
 
     public class AttackResult

@@ -12,8 +12,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
         {
             var config = GlobalUserAccounts.GetUserAccount(attacker);
             var choms = ActiveChomusuke.GetActiveChomusuke(attacker.Id, defender.Id);
-            var chom1 = choms.Item1;
-            var chom2 = choms.Item2;
+            var chom1 = choms.ChomusukeOne;
+            var chom2 = choms.ChomusukeTwo;
             int modifier = 0;
 
             if (chom1.PotionEffects.Keys.Contains("Strength")) modifier += chom1.PotionEffects["Strength"];
@@ -43,8 +43,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
         {
             var config = GlobalUserAccounts.GetUserAccount(defender);
             var choms = ActiveChomusuke.GetActiveChomusuke(attacker.Id, defender.Id);
-            var chom1 = choms.Item1;
-            var chom2 = choms.Item2;
+            var chom1 = choms.ChomusukeOne;
+            var chom2 = choms.ChomusukeTwo;
 
             int finaldmg2 = 0, finaldmg1 = 0;
             if (chom1.PotionEffects.ContainsKey("Speed"))
@@ -71,8 +71,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
         {
             var config = GlobalUserAccounts.GetUserAccount(defender);
             var choms = ActiveChomusuke.GetActiveChomusuke(attacker.Id, defender.Id);
-            var chom1 = choms.Item1;
-            var chom2 = choms.Item2;
+            var chom1 = choms.ChomusukeOne;
+            var chom2 = choms.ChomusukeTwo;
             int finaldmg = 0;
             if (chom1.PotionEffects.ContainsKey("Speed"))
             {

@@ -8,7 +8,7 @@ namespace Nayu.Modules.Inbox
 {
     public class CreateMessage : NayuModule
     {
-        public static async Task CreateAndSendMessageAsync(string title, string content, DateTime time, SocketUser user)
+        public static Task CreateAndSendMessageAsync(string title, string content, DateTime time, SocketUser user)
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
             Message createdMessage = new Message(null, null, DateTime.MinValue, false, 0);
@@ -19,6 +19,7 @@ namespace Nayu.Modules.Inbox
             config.InboxIDTracker++;
             config.Inbox.Add(createdMessage);
             GlobalUserAccounts.SaveAccounts(user.Id);
+            return Task.CompletedTask;
         }
     }
 }
