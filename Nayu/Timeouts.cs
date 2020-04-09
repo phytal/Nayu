@@ -5,7 +5,8 @@ namespace Nayu
 {
     class Timeouts
     {
-        internal static Dictionary<string, Dictionary<ulong, DateTime>> timeouts = new Dictionary<string, Dictionary<ulong, DateTime>>();
+        internal static Dictionary<string, Dictionary<ulong, DateTime>> timeouts =
+            new Dictionary<string, Dictionary<ulong, DateTime>>();
 
         internal static bool HasCommandTimeout(ulong userId, string command, double seconds = -1)
         {
@@ -16,6 +17,7 @@ namespace Nayu
                 cmdTimeouts.Add(userId, DateTime.Now);
                 return false;
             }
+
             DateTime lastRequest = cmdTimeouts[userId];
             TimeSpan difference = DateTime.Now - lastRequest;
             if (difference.TotalSeconds >= seconds)
@@ -23,6 +25,7 @@ namespace Nayu
                 cmdTimeouts[userId] = DateTime.Now;
                 return false;
             }
+
             return true;
         }
 

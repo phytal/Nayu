@@ -15,7 +15,7 @@ namespace Nayu.Modules.Admin.Commands.Management
         private static readonly OverwritePermissions denyOverwrite =
             new OverwritePermissions(addReactions: PermValue.Deny, sendMessages: PermValue.Deny,
                 attachFiles: PermValue.Deny);
-        
+
         [Subject(AdminCategories.UserManagement)]
         [Command("mute")]
         [Summary("Mutes @Username")]
@@ -46,7 +46,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             await user.AddRoleAsync(muted);
             await SendMessage(Context, embed.Build());
         }
-        
+
         [Subject(AdminCategories.UserManagement)]
         [Command("unmute")]
         [Summary("Unmutes @Username")]
@@ -105,11 +105,15 @@ namespace Nayu.Modules.Admin.Commands.Management
             {
                 try
                 {
-                    muteRole = await guild.CreateRoleAsync(muteRoleName, GuildPermissions.None, Color.Magenta, false, null).ConfigureAwait(false);
+                    muteRole = await guild
+                        .CreateRoleAsync(muteRoleName, GuildPermissions.None, Color.Magenta, false, null)
+                        .ConfigureAwait(false);
                 }
                 catch
                 {
-                    muteRole = guild.Roles.FirstOrDefault(r => r.Name == muteRoleName) ?? await guild.CreateRoleAsync(defaultMuteRoleName, GuildPermissions.None, Color.Magenta, false, null).ConfigureAwait(false);
+                    muteRole = guild.Roles.FirstOrDefault(r => r.Name == muteRoleName) ?? await guild
+                        .CreateRoleAsync(defaultMuteRoleName, GuildPermissions.None, Color.Magenta, false,
+                            null).ConfigureAwait(false);
                 }
             }
 
@@ -117,7 +121,8 @@ namespace Nayu.Modules.Admin.Commands.Management
             {
                 try
                 {
-                    if (!toOverwrite.PermissionOverwrites.Any(x => x.TargetId == muteRole.Id && x.TargetType == PermissionTarget.Role))
+                    if (!toOverwrite.PermissionOverwrites.Any(x =>
+                        x.TargetId == muteRole.Id && x.TargetType == PermissionTarget.Role))
                     {
                         await toOverwrite.AddPermissionOverwriteAsync(muteRole, denyOverwrite)
                             .ConfigureAwait(false);
@@ -127,7 +132,6 @@ namespace Nayu.Modules.Admin.Commands.Management
                 }
                 catch
                 {
-
                 }
             }
 

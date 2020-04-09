@@ -32,7 +32,8 @@ namespace Nayu.Modules.WelcomeAndLeave
             var response = $"Set this guild's leave channel to #{channel}.";
             config.LeaveChannel = channel.Id;
             GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success,
+                false);
             await SendMessage(Context, embed);
         }
 
@@ -64,7 +65,8 @@ namespace Nayu.Modules.WelcomeAndLeave
                 response = $"Successfully added `{message}` as a leave message!";
             }
 
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success,
+                false);
             await SendMessage(Context, embed);
         }
 
@@ -95,7 +97,8 @@ namespace Nayu.Modules.WelcomeAndLeave
                 response = $"Successfully removed message #{messageIndex} as possible Welcome Message!";
             }
 
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success,
+                false);
             await SendMessage(Context, embed);
         }
 
@@ -121,7 +124,7 @@ namespace Nayu.Modules.WelcomeAndLeave
                 "No leave messages set yet... add some if you want a message to be shown if someone leaves.");
             if (leaveMessages.Count > 0) embed.WithTitle("Possible leave messages:");
             embed.WithColor(Global.NayuColor);
-            
+
             for (var i = 0; i < leaveMessages.Count; i++)
             {
                 embed.AddField($"Message #{i + 1}:", leaveMessages[i], true);

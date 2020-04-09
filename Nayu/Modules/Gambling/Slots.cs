@@ -11,7 +11,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.Gambling
 {
     public class Slots : NayuModule
-    {        
+    {
         [Subject(Categories.EconomyGambling)]
         [Command("newSlot")]
         [Alias("newSlots")]
@@ -23,7 +23,7 @@ namespace Nayu.Modules.Gambling
             Global.slot = new Slot(amount);
             await ReplyAsync("✅  **|** A new slot machine got generated!");
         }
-        
+
         [Subject(Categories.EconomyGambling)]
         [Command("slots")]
         [Alias("slot")]
@@ -37,10 +37,12 @@ namespace Nayu.Modules.Gambling
                 await ReplyAsync($"{Global.ENo} **|** You can't spin for that amount of Taiyakis.");
                 return;
             }
+
             var account = GlobalUserAccounts.GetUserAccount(Context.User.Id);
             if (account.Taiyaki < amount)
             {
-                await ReplyAsync($"🖐️ **|** Sorry but it seems like you don't have enough Taiyakis... You only have {account.Taiyaki}.");
+                await ReplyAsync(
+                    $"🖐️ **|** Sorry but it seems like you don't have enough Taiyakis... You only have {account.Taiyaki}.");
                 return;
             }
 
@@ -59,9 +61,8 @@ namespace Nayu.Modules.Gambling
             IUserMessage msg = await ReplyAsync(slotEmojis);
             await Task.Delay(1000);
             await ReplyAsync(payoutAndFlavour.Item2);
-
         }
-        
+
         [Subject(Categories.EconomyGambling)]
         [Command("showSlots")]
         [Alias("showSlot")]

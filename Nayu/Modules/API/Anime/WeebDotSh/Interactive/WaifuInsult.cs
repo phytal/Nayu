@@ -18,7 +18,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
         [Cooldown(5)]
         public async Task WaifuInsultUser(IGuildUser user = null)
         {
-            string[] tags = { "" };
+            string[] tags = {""};
             Helpers.WebRequest webReq = new Helpers.WebRequest();
             RandomData result = await webReq.GetTypesAsync("waifu_insult", tags, FileType.Gif, NsfwSearch.False, false);
             string url = result.Url;

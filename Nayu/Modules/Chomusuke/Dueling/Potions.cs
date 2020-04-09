@@ -15,13 +15,12 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             var player2 = context.Guild.GetUser(config.OpponentId);
             var check = CheckForPotion(potionName, config);
             if (!check.Success)
-                return new PotionResult{Success = false, Response = check.Response};
+                return new PotionResult {Success = false, Response = check.Response};
             string response = string.Empty;
             if (chom1.PotionEffects["Strength"] <= 25 ||
                 !chom1.PotionEffects.Keys.Contains("Strength") || chom2.PotionEffects["Strength"] <= 25 ||
                 !chom2.PotionEffects.Keys.Contains("Strength"))
             {
-
                 config.Items[potionName] -= 1;
                 if (target == context.User.Id)
                 {
@@ -39,12 +38,12 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
 
                 GlobalUserAccounts.SaveAccounts(config.Id);
 
-                return new PotionResult{Success = true, Response = response};
+                return new PotionResult {Success = true, Response = response};
             }
 
             response =
                 $"**{context.User.Mention}**, you cant use a **{potionName}** because both players are already at the max strength level (25%)!";
-            return new PotionResult{Success = false, Response = response};
+            return new PotionResult {Success = false, Response = response};
         }
 
         public static PotionResult DebuffPotion(ShardedCommandContext context, Core.Entities.Chomusuke chom1,
@@ -55,7 +54,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             var player2 = context.Guild.GetUser(config.OpponentId);
             var check = CheckForPotion(potionName, config);
             if (!check.Success)
-                return new PotionResult{Success = false, Response = check.Response};
+                return new PotionResult {Success = false, Response = check.Response};
             string response = string.Empty;
             if (chom1.PotionEffects["Debuff"] <= 25 ||
                 !chom1.PotionEffects.Keys.Contains("Debuff") || chom2.PotionEffects["Debuff"] <= 25 ||
@@ -68,7 +67,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
                     chom1.PotionEffects["Debuff"] += 5;
                     response = $"**{context.User.Mention}** used a **{potionName}** on {chom1.Name}!";
                     GlobalUserAccounts.SaveAccounts(config.Id);
-                    return new PotionResult{Success = true, Response = response};
+                    return new PotionResult {Success = true, Response = response};
                 }
 
                 if (target == player2.Id)
@@ -77,13 +76,13 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
                     chom2.PotionEffects["Debuff"] += 5;
                     response = $"**{context.User.Mention}** used a **{potionName}** on {chom2.Name}!";
                     GlobalUserAccounts.SaveAccounts(player2.Id);
-                    return new PotionResult{Success = true, Response = response};
+                    return new PotionResult {Success = true, Response = response};
                 }
             }
 
             response =
                 $"**{context.User.Mention}**, you cant use a **{potionName}** because both players are already at the max debuff level (25%)!";
-            return new PotionResult{Success = false, Response = response};
+            return new PotionResult {Success = false, Response = response};
         }
 
         public static PotionResult SpeedPotion(ShardedCommandContext context, Core.Entities.Chomusuke chom1,
@@ -94,7 +93,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             var player2 = context.Guild.GetUser(config.OpponentId);
             var check = CheckForPotion(potionName, config);
             if (!check.Success)
-                return new PotionResult{Success = false, Response = check.Response};
+                return new PotionResult {Success = false, Response = check.Response};
             string response = string.Empty;
             if (!chom1.PotionEffects.Keys.Contains("Speed") || !chom2.PotionEffects.Keys.Contains("Speed"))
             {
@@ -104,7 +103,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
                     chom1.PotionEffects.Add("Speed", 0); //going to use its existence to determine true/false
                     response = $"**{context.User.Mention}** used a **{potionName}** on {chom1.Name}!";
                     GlobalUserAccounts.SaveAccounts(config.Id);
-                    return new PotionResult{Success = true, Response = response};
+                    return new PotionResult {Success = true, Response = response};
                 }
 
                 if (target == player2.Id)
@@ -112,13 +111,13 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
                     chom2.PotionEffects.Add("Speed", 0);
                     response = $"**{context.User.Mention}** used a **{potionName}** on {chom2.Name}!";
                     GlobalUserAccounts.SaveAccounts(player2.Id);
-                    return new PotionResult{Success = true, Response = response};
+                    return new PotionResult {Success = true, Response = response};
                 }
             }
 
             response =
                 $"**{context.User.Mention}**, you cant use a **{potionName}** because both players already have the effect!";
-            return new PotionResult{Success = false, Response = response};
+            return new PotionResult {Success = false, Response = response};
         }
 
         public static PotionResult EqualizerPotion(ShardedCommandContext context, Core.Entities.Chomusuke chom1,
@@ -128,7 +127,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var check = CheckForPotion(potionName, config);
             if (!check.Success)
-                return new PotionResult{Success = false, Response = check.Response};
+                return new PotionResult {Success = false, Response = check.Response};
             string response = string.Empty;
             config.Items[potionName] -= 1;
             if (target == context.User.Id)
@@ -137,26 +136,27 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
                 {
                     response =
                         $"**{context.User.Mention}**, you cant use an **{potionName}** on yourself because you don't have any active potion effects!";
-                    return new PotionResult{Success = false, Response = response};
+                    return new PotionResult {Success = false, Response = response};
                 }
 
                 chom1.PotionEffects.Clear();
                 response = $"**{context.User.Mention}** used a **{potionName}** on {chom1.Name}!";
                 GlobalUserAccounts.SaveAccounts(config.Id);
-                return new PotionResult{Success = true, Response = response};
+                return new PotionResult {Success = true, Response = response};
             }
+
             //opponent
             if (chom2.PotionEffects == null)
             {
                 response =
                     $"**{context.User.Mention}**, you cant use a **{potionName}** on your opponent because they don't have any active potion effects!";
-                return new PotionResult{Success = false, Response = response};
+                return new PotionResult {Success = false, Response = response};
             }
 
             chom2.PotionEffects.Clear();
             response = $"**{context.User.Mention}** used a **{potionName}** on {chom2.Name}!";
             GlobalUserAccounts.SaveAccounts(config.OpponentId);
-            return new PotionResult{Success = true, Response = response};
+            return new PotionResult {Success = true, Response = response};
         }
 
         /// <summary>

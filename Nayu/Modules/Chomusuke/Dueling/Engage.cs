@@ -11,7 +11,7 @@ using Nayu.Helpers;
 namespace Nayu.Modules.Chomusuke.Dueling
 {
     public class Engage : NayuModule
-    {        
+    {
         [Subject(ChomusukeCategories.Chomusuke)]
         [Command("engage"), Alias("attack", "item", "giveup")]
         [Summary("Opens the duels engagment GUI")]
@@ -56,7 +56,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             if (response == null)
             {
                 await gui.DeleteAsync();
-                await SendMessage(Context, null, 
+                await SendMessage(Context, null,
                     $"{Context.User.Mention},The interface has closed due to inactivity");
                 return;
             }
@@ -79,7 +79,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 {
                     await gui.DeleteAsync();
                     await newGui.DeleteAsync();
-                    await SendMessage(Context, null, 
+                    await SendMessage(Context, null,
                         $"{Context.User.Mention},The interface has closed due to inactivity");
                 }
 
@@ -227,7 +227,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 {
                     await gui.DeleteAsync();
                     await newGui.DeleteAsync();
-                    await SendMessage(Context, null, 
+                    await SendMessage(Context, null,
                         $"{Context.User.Mention},The interface has closed due to inactivity");
                     return;
                 }
@@ -237,7 +237,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 {
                     await gui.DeleteAsync();
                     await newGui.DeleteAsync();
-                    await SendMessage(Context, null, 
+                    await SendMessage(Context, null,
                         $":shield:  **|**  **{Context.User.Username}**, engagement cancelled.");
                     return;
                 }
@@ -341,13 +341,14 @@ namespace Nayu.Modules.Chomusuke.Dueling
             configg.WhoWaits = configg.PlaceHolder;
 
             await Helpers.ApplyEffects(context, context.User.Id, player2.Id);
-            
+
             GlobalUserAccounts.SaveAccounts(config.Id, configg.Id);
             return $"{config.WhosTurn}, your turn!";
         }
         //TODO: add more attacks and xp gain
 
-        public static async Task<Tuple<bool, string>> CheckDeath(ShardedCommandContext context, Core.Entities.Chomusuke chom1, Core.Entities.Chomusuke chom2)
+        public static async Task<Tuple<bool, string>> CheckDeath(ShardedCommandContext context,
+            Core.Entities.Chomusuke chom1, Core.Entities.Chomusuke chom2)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var player2 = context.Guild.GetUser(config.OpponentId);
@@ -365,6 +366,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 success = true;
                 await Reset(context, chom1, chom2);
             }
+
             if (chom2.Health <= 0)
             {
                 response = $"{player2.Username} died. {configg.OpponentName} wins!";
@@ -375,6 +377,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 configg.WinStreak = 0;
                 await Reset(context, chom1, chom2);
             }
+
             if (chom2.Health <= 0 && chom1.Health <= 0)
             {
                 response = "Both players died. It is a draw.";
@@ -383,12 +386,14 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 success = true;
                 await Reset(context, chom1, chom2);
             }
+
             GlobalUserAccounts.SaveAccounts(config.Id, configg.Id);
 
             return new Tuple<bool, string>(success, response);
         }
 
-        public static async Task Reset(ShardedCommandContext context, Core.Entities.Chomusuke chom1, Core.Entities.Chomusuke chom2)
+        public static async Task Reset(ShardedCommandContext context, Core.Entities.Chomusuke chom1,
+            Core.Entities.Chomusuke chom2)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var player2 = context.Guild.GetUser(config.OpponentId);
@@ -417,4 +422,3 @@ namespace Nayu.Modules.Chomusuke.Dueling
         }
     }
 }
-

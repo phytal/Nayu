@@ -18,7 +18,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh
 {
     public class owo : NayuModule
-    {        
+    {
         [Subject(Categories.Images)]
         [Command("owo")]
         [Summary("Displays an image of an anime owo gif")]
@@ -26,7 +26,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh
         [Cooldown(5)]
         public async Task owoIMG()
         {
-            string[] tags = { "" };
+            string[] tags = {""};
             Helpers.WebRequest webReq = new Helpers.WebRequest();
             RandomData result = await webReq.GetTypesAsync("owo", tags, FileType.Any, NsfwSearch.False, false);
             string url = result.Url;
@@ -41,7 +41,6 @@ namespace Nayu.Modules.API.Anime.WeebDotSh
             embed.WithFooter($"Powered by weeb.sh | ID: {id} | owo");
 
             await SendMessage(Context, embed.Build());
-
         }
     }
 }

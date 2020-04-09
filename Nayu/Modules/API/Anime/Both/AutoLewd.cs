@@ -19,7 +19,7 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class AutoLewd : NayuModule
-    {        
+    {
         [Subject(AdminCategories.NSFW)]
         [Command("autolewd")]
         [Summary("Loops images of lewd anime girls :3")]
@@ -35,6 +35,7 @@ namespace Nayu.Modules.API.Anime.Both
                 await SendMessage(Context, null, $"Please say `n!autolewd <on/off>`");
                 return;
             }
+
             if (result.Item2)
             {
                 await SendMessage(Context, null, $"Started the AutoLewd loop :3");
@@ -43,6 +44,7 @@ namespace Nayu.Modules.API.Anime.Both
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 BotAccounts.SaveAccounts();
             }
+
             if (!result.Item2)
             {
                 guildAcc.AutoLewdStatus = false;
@@ -50,10 +52,9 @@ namespace Nayu.Modules.API.Anime.Both
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 BotAccounts.SaveAccounts();
                 await SendMessage(Context, null, $"Stopped the AutoLewd loop :/");
-
             }
-            
         }
+
 //TODO: need admin
         [Subject(AdminCategories.NSFW)]
         [Command("autolewdchannel")]
@@ -65,7 +66,8 @@ namespace Nayu.Modules.API.Anime.Both
             var guildUser = Context.User as SocketGuildUser;
             if (!guildUser.GuildPermissions.Administrator)
             {
-                string description = $"{Global.ENo} **|** You Need the Administrator Permission to do that {Context.User.Username}";
+                var description =
+                    $"{Global.ENo} **|** You Need the Administrator Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -81,7 +83,7 @@ namespace Nayu.Modules.API.Anime.Both
 
     public class AutoLewdTimer
     {
-         private static Timer loopingtimer;
+        private static Timer loopingtimer;
 
         internal Task StartTimer()
         {
@@ -104,10 +106,10 @@ namespace Nayu.Modules.API.Anime.Both
             foreach (var guild in config.AutoLewdGuilds)
             {
                 Embed embed = null;
-                int rand = Global.Rng.Next(1, 3);
+                var rand = Global.Rng.Next(1, 3);
                 if (rand == 1)
                 {
-                    string nekolink = NekosLifeHelper.GetNekoLink("lewd");
+                    var nekolink = NekosLifeHelper.GetNekoLink("lewd");
 
                     embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife);
                 }
@@ -115,15 +117,16 @@ namespace Nayu.Modules.API.Anime.Both
                 if (rand == 2)
                 {
                     string[] tags = {""};
-                    WebRequest webReq = new WebRequest();
-                    RandomData result = await webReq.GetTypesAsync("neko", tags, FileType.Any, NsfwSearch.Only, false);
-                    string url = result.Url;
+                    var webReq = new WebRequest();
+                    var result = await webReq.GetTypesAsync("neko", tags, FileType.Any, NsfwSearch.Only, false);
+                    var url = result.Url;
                     //string id = result.Id;
 
-                    string description = "Randomly generated lewd neko just for you <3!";
+                    //string description = "Randomly generated lewd neko just for you <3!";
 
                     embed = ImageEmbed.GetImageEmbed(url, Source.WeebDotSh);
                 }
+
                 var guildAcc = GlobalGuildAccounts.GetGuildAccount(guild);
                 await Program._client.GetGuild(guildAcc.Id).GetTextChannel(guildAcc.AutoLewdChannel)
                     .SendMessageAsync("", embed: embed);

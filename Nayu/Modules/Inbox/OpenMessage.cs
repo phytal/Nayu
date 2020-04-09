@@ -10,7 +10,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.Inbox
 {
     public class OpenMessage : NayuModule
-    {        
+    {
         [Subject(Categories.Inbox)]
         [Command("openMessage")]
         [Summary("Open a message in your inbox through its ID")]

@@ -11,7 +11,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Overwatch
 {
     public class SetAccount : NayuModule
-    {        
+    {
         [Subject(Categories.Overwatch)]
         [Command("owaccount")]
         [Summary("Set your Overwatch username, platform and region")]
@@ -38,7 +38,7 @@ namespace Nayu.Modules.API.Overwatch
 
             await SendMessage(Context, embed.Build());
         }
-        
+
         [Subject(Categories.Overwatch)]
         [Command("owaccount")]
         [Summary("View your Overwatch information")]
@@ -49,7 +49,7 @@ namespace Nayu.Modules.API.Overwatch
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             if (config.OverwatchPlatform == null && config.OverwatchRegion == null && config.OverwatchID == null)
             {
-                await SendMessage(Context, null, 
+                await SendMessage(Context, null,
                     "**Make sure you set your account information first!**\n n!owaccount <username> <platform> <region> Ex: n!owaccount Username#1234 pc us ");
                 return;
             }

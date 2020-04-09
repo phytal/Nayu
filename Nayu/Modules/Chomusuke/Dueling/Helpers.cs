@@ -19,7 +19,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
             return false;
         }
 
-        public static AttackResult ExecuteAttack(ShardedCommandContext context, Core.Entities.Chomusuke activeChomusuke, string attack)
+        public static AttackResult ExecuteAttack(ShardedCommandContext context, Core.Entities.Chomusuke activeChomusuke,
+            string attack)
         {
             var result = new AttackResult();
             switch (attack)
@@ -46,12 +47,13 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     result = Earthquake.EarthquakeAttack(context);
                     break;
                 case "Meditate":
-                    result = Meditate.MeditateAttack(context,activeChomusuke);
+                    result = Meditate.MeditateAttack(context, activeChomusuke);
                     break;
             }
+
             return result;
         }
-        
+
         public static PotionResult ExecutePotion(ShardedCommandContext context, string potion, ulong user, ulong target)
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
@@ -74,6 +76,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     result = Potions.EqualizerPotion(context, chom1, chom2, target);
                     break;
             }
+
             return result;
         }
 
@@ -117,7 +120,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             return
                 $"**{chom1.Name}** has **{chom1.Health}** health left!\n**{chom2.Name}** has **{chom2.Health}** health left!";
         }
-        
+
         public static int GetEffectIndex(List<Effect> effectList, Effect effect)
         {
             var index = 0;
@@ -129,6 +132,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
 
             return index;
         }
+
         public static int GetNextElement(int[] strArray, int index)
         {
             if ((index > strArray.Length - 1) || (index < 0))
@@ -149,9 +153,10 @@ namespace Nayu.Modules.Chomusuke.Dueling
             return config.Items[keyName];
         }
     }
+
     public class AttackResult
     {
-        public bool Success { get; set; } 
+        public bool Success { get; set; }
         public string Response { get; set; }
         public int Damage { get; set; }
     }
@@ -161,5 +166,4 @@ namespace Nayu.Modules.Chomusuke.Dueling
         public bool Success { get; set; }
         public string Response { get; set; }
     }
-    
 }

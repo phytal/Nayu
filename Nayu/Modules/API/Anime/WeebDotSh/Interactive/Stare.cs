@@ -9,7 +9,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
 {
     public class Stare : NayuModule
-    {        
+    {
         [Subject(Categories.Interaction)]
         [Command("stare")]
         [Summary("Displays an image of an anime stare gif")]
@@ -17,7 +17,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
         [Cooldown(5)]
         public async Task StareUser(IGuildUser user = null)
         {
-            string[] tags = { "" };
+            string[] tags = {""};
             Helpers.WebRequest webReq = new Helpers.WebRequest();
             RandomData result = await webReq.GetTypesAsync("stare", tags, FileType.Gif, NsfwSearch.False, false);
             string url = result.Url;

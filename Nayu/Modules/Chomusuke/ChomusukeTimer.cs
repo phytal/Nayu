@@ -24,6 +24,7 @@ namespace Nayu.Modules.Chomusuke
             Console.WriteLine("Initialized Mission - Cripple Chomusuke");
             return Task.CompletedTask;
         }
+
         //try to get something so that all pets will experience soemthing
         public async void OnTimerTicked(object sender, ElapsedEventArgs e)
         {
@@ -50,13 +51,19 @@ namespace Nayu.Modules.Chomusuke
                     if (activeChomusuke.Waste >= 15)
                     {
                         activeChomusuke.Sick = true;
-                        await CreateMessage.CreateAndSendMessageAsync("Chomusuke Alert",$":exclamation:  | {user.Mention}, **{activeChomusuke.Name}** is sick! Treat it right with medicine with n!buy!", DateTime.Now, user);
+                        await CreateMessage.CreateAndSendMessageAsync("Chomusuke Alert",
+                            $":exclamation:  | {user.Mention}, **{activeChomusuke.Name}** is sick! Treat it right with medicine with n!buy!",
+                            DateTime.Now, user);
                     }
+
                     if ((activeChomusuke.Waste == 20) && (activeChomusuke.Hunger <= 5))
                     {
                         activeChomusuke.Trust -= 1;
-                        await CreateMessage.CreateAndSendMessageAsync("Chomusuke Alert",$":exclamation:  | {user.Mention}, **{activeChomusuke.Name}** is losing trust in you! The living conditions you provided were too low... Maybe try to pay more attention to your Chomusuke!", DateTime.Now, user);
+                        await CreateMessage.CreateAndSendMessageAsync("Chomusuke Alert",
+                            $":exclamation:  | {user.Mention}, **{activeChomusuke.Name}** is losing trust in you! The living conditions you provided were too low... Maybe try to pay more attention to your Chomusuke!",
+                            DateTime.Now, user);
                     }
+
                     if (userAcc.ActiveChomusuke == 1)
                         userAcc.Chomusuke1 = activeChomusuke;
                     if (userAcc.ActiveChomusuke == 2)
@@ -67,6 +74,7 @@ namespace Nayu.Modules.Chomusuke
                 }
                 else return;
             }
+
             Console.WriteLine("Successfully executed pet crippling effects.");
         }
     }

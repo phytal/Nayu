@@ -85,7 +85,6 @@ namespace Nayu.Modules.Admin
 
             var antiLinkIgnoredChannels = "#" + string.Join(", #", config.AntilinkIgnoredChannels.ToArray());
             embed.AddField("Other", $"Antilink: {ConvertBoolean(config.Antilink)}\n" +
-
                                     $"Autorole: {config.Autorole}\n" +
                                     $"Anti-link Ignored Channels: {antiLinkIgnoredChannels}\n" +
                                     $"Blacklist: {ConvertBoolean(config.Filter)}\n" +

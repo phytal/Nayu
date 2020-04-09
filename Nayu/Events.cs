@@ -38,7 +38,8 @@ namespace Nayu
             var dmChannel = await s.Owner.GetOrCreateDMChannelAsync();
             var embed = new EmbedBuilder();
             embed.WithTitle($"Thanks for adding me to your server, {s.Owner.Username}!");
-            embed.WithDescription("For quick information, use the `n!help` command! \nNeed quick help? Visit the my support server! https://discord.gg/z8TgwT!");
+            embed.WithDescription(
+                "For quick information, use the `n!help` command! \nNeed quick help? Visit the my support server! https://discord.gg/z8TgwT!");
             embed.WithThumbnailUrl(s.IconUrl);
             embed.WithFooter("Found an issue in a command? Report it in the server linked above!");
             embed.WithColor(Global.NayuColor);
@@ -52,13 +53,15 @@ namespace Nayu
             var guilds = client.Guilds.Count;
             var sclient = client.Shards;
             //var shard = sclient.
-            await client.SetGameAsync($"n!help | in {guilds} servers!", $"https://twitch.tv/{Config.bot.twitchStreamer}", ActivityType.Streaming);
+            await client.SetGameAsync($"n!help | in {guilds} servers!",
+                $"https://twitch.tv/{Config.bot.twitchStreamer}", ActivityType.Streaming);
         }
 
         public async Task<string> UpdateServerCount(DiscordShardedClient client)
         {
             var webclient = new HttpClient();
-            var content = new StringContent($"{{ \"server_count\": {client.Guilds.Count} }}", Encoding.UTF8, "application/json");
+            var content = new StringContent($"{{ \"server_count\": {client.Guilds.Count} }}", Encoding.UTF8,
+                "application/json");
             webclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Config.bot.dblToken);
             var resp = await webclient.PostAsync($"https://discordbots.org/api/bots/417160957010116608/stats", content);
             return resp.Content.ReadAsStringAsync().ToString();
@@ -77,12 +80,14 @@ namespace Nayu
             {
                 if (config.Antilink)
                 {
-                    if ((msg.Content.Contains("https://discord.gg") || msg.Content.Contains("https://discord.io")) && !config.AntilinkIgnoredChannels.Contains(context.Channel.Id))
+                    if ((msg.Content.Contains("https://discord.gg") || msg.Content.Contains("https://discord.io")) &&
+                        !config.AntilinkIgnoredChannels.Contains(context.Channel.Id))
                     {
                         await msg.DeleteAsync();
                         var embed = new EmbedBuilder();
                         embed.WithColor(Global.NayuColor);
-                        embed.WithDescription($":warning:  **|** {context.User.Mention}, Don't post your filthy links here! (No links)");
+                        embed.WithDescription(
+                            $":warning:  **|** {context.User.Mention}, Don't post your filthy links here! (No links)");
                         await ReplyAndDeleteAsync("", embed: embed.Build());
                     }
                 }
@@ -93,30 +98,32 @@ namespace Nayu
             }
 
             string[] reactionTexts = new string[]
-{
-        "This is a Christian Minecraft Server!",
-        "Watch your language buddy!",
-        "I think you touched the stove on accident!",
-        "You're starting to bug me..",
-        "You're under-arrest by the Good Boy Cops",
-        "Woah man, too far",
-        "Do I really have to tape your mouth shut?",
-        "Ok buddy you might get yourself into a problem..",
-        "Now I know why you have no friends",
-        "If you like to eat soap I have some right here..",
-        "Honestly I can't stand you"
-};
+            {
+                "This is a Christian Minecraft Server!",
+                "Watch your language buddy!",
+                "I think you touched the stove on accident!",
+                "You're starting to bug me..",
+                "You're under-arrest by the Good Boy Cops",
+                "Woah man, too far",
+                "Do I really have to tape your mouth shut?",
+                "Ok buddy you might get yourself into a problem..",
+                "Now I know why you have no friends",
+                "If you like to eat soap I have some right here..",
+                "Honestly I can't stand you"
+            };
             Random rand = new Random();
             List<string> bannedWords = new List<string>
-                {
-                     "fuck", "fuk", "bitch", "pussy", "nigg","asshole", "c0ck", "cock", "dick", "cunt", "cnut", "d1ck", "blowjob", "b1tch"
-                };
+            {
+                "fuck", "fuk", "bitch", "pussy", "nigg", "asshole", "c0ck", "cock", "dick", "cunt", "cnut", "d1ck",
+                "blowjob", "b1tch"
+            };
             try
             {
                 if (config.Filter)
                 {
-                    if (bannedWords.Any(msg.Content.ToLower().Contains) 
-                        || config.CustomFilter.Any(msg.Content.ToLower().Contains) && !config.NoFilterChannels.Contains(context.Channel.Id))
+                    if (bannedWords.Any(msg.Content.ToLower().Contains)
+                        || config.CustomFilter.Any(msg.Content.ToLower().Contains) &&
+                        !config.NoFilterChannels.Contains(context.Channel.Id))
                     {
                         int randomIndex = rand.Next(reactionTexts.Length);
                         string text = reactionTexts[randomIndex];

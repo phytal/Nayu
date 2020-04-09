@@ -52,7 +52,7 @@ namespace Nayu.Modules.Chomusuke
                 await PagedReplyAsync(pages);
             }
         }
-        
+
         [Subject(ChomusukeCategories.Chomusuke)]
         [Command("activeChomusuke"), Alias("aStats")]
         [Summary("Brings up the stats/info of your or someone else's Chomusuke!")]
@@ -161,7 +161,7 @@ namespace Nayu.Modules.Chomusuke
                 await SendMessage(Context, embed.Build());
             }
         }
-        
+
         [Subject(Categories.Information)]
         [Command("chomusukeHelp"), Alias("cHelp")]
         [Summary("Displays all Chomusuke commands with a description of what they do")]
@@ -170,7 +170,7 @@ namespace Nayu.Modules.Chomusuke
         public async Task ChomusukeHelp()
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
-            string[] footers = 
+            string[] footers =
             {
                 "Every 4 hours all Chomusukes will have a time modifier, -1 hunger, -1 attention, and +1 waste. Make sure to check on your Chomusuke often!",
                 "If the living conditions you provide for your Chomusuke are too low - never clean, never play, etc - it will run away! (Your room will remain the same)",
@@ -198,7 +198,7 @@ namespace Nayu.Modules.Chomusuke
             embed.WithFooter(text);
             await SendMessage(Context, embed.Build());
         }
-        
+
         [Subject(ChomusukeCategories.Chomusuke)]
         [Command("chomusukeName"), Alias("cName")]
         [Summary("Set the name of your Chomusuke!")]
@@ -262,6 +262,7 @@ namespace Nayu.Modules.Chomusuke
                     {
                         chom.Hunger = 20;
                     }
+
                     await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                     GlobalUserAccounts.SaveAccounts(Context.User.Id);
 
@@ -283,7 +284,7 @@ namespace Nayu.Modules.Chomusuke
                 }
             }
         }
-        
+
         [Subject(ChomusukeCategories.Chomusuke)]
         [Command("chomusukeClean"), Alias("cClean")]
         [Summary("Clean up your Chomusuke's waste, otherwise it'll get sick!")]
@@ -326,6 +327,7 @@ namespace Nayu.Modules.Chomusuke
                     {
                         chom.Waste = 0;
                     }
+
                     await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                     GlobalUserAccounts.SaveAccounts(Context.User.Id);
 
@@ -347,7 +349,7 @@ namespace Nayu.Modules.Chomusuke
                 }
             }
         }
-        
+
         [Subject(ChomusukeCategories.Chomusuke)]
         [Command("chomusukePlay"), Alias("cPlay")]
         [Summary("Play with your chomusuke! Your Chomusuke must have high trust at all times!")]
@@ -391,6 +393,7 @@ namespace Nayu.Modules.Chomusuke
                     {
                         chom.Trust = 20;
                     }
+
                     await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                     GlobalUserAccounts.SaveAccounts(Context.User.Id);
                     var thumbnailurl = Context.User.GetAvatarUrl();
@@ -405,12 +408,13 @@ namespace Nayu.Modules.Chomusuke
                     };
                     embed.WithColor(0, 255, 0);
                     embed.WithThumbnailUrl(YesPlayLinks[Global.Rng.Next(YesPlayLinks.Length)]);
-                    embed.WithDescription($":soccer:  **|**  **{Context.User.Username}**, {text} **(+{trustGain} trust)**");
+                    embed.WithDescription(
+                        $":soccer:  **|**  **{Context.User.Username}**, {text} **(+{trustGain} trust)**");
                     await SendMessage(Context, embed.Build());
                 }
             }
         }
-        
+
         [Subject(ChomusukeCategories.Chomusuke)]
         [Command("chomusukeTrain"), Alias("cTrain")]
         [Summary("Train your Chomusuke to earn Exp and level up!")]
@@ -472,7 +476,7 @@ namespace Nayu.Modules.Chomusuke
                 }
             }
         }
-        
+
         [Subject(ChomusukeCategories.Chomusuke)]
         [Command("chomusukeAdd")]
         [RequireOwner]
@@ -485,19 +489,19 @@ namespace Nayu.Modules.Chomusuke
             GlobalUserAccounts.SaveAccounts(Context.User.Id);
             await SendMessage(Context, null, "done now u can go die");
         }
-        
+
         string[] cleanTexts =
         {
             "you hold your nose and start cleaning up the mess.",
             $"you cleaned up {Global.EChomusuke} Chomusuke's...business!",
         };
-        
+
         string[] playTexts =
         {
             $"you entertain your {Global.EChomusuke} Chomusuke. It seems to like you!",
             $"you throw a ball and your {Global.EChomusuke} Chomusuke fetches it!",
         };
-        
+
         private readonly string[] YesPlayLinks =
         {
             "https://i.imgur.com/wFVe8Pr.gif",

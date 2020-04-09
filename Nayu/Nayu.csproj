@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Modules\Fun\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Lavalink\application.yml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -17,12 +17,12 @@ namespace Nayu.Core.Features.Economy
             var account = GlobalUserAccounts.GetUserAccount(userId);
             var difference = DateTime.UtcNow - account.LastDaily.AddDays(1);
 
-            if (difference.TotalHours < 0) return new DailyResult { Success = false, RefreshTimeSpan = difference };
+            if (difference.TotalHours < 0) return new DailyResult {Success = false, RefreshTimeSpan = difference};
 
             account.Taiyaki += Constants.DailyTaiyakiGain;
             account.LastDaily = DateTime.UtcNow;
             GlobalUserAccounts.SaveAccounts(userId);
-            return new DailyResult { Success = true };
+            return new DailyResult {Success = true};
         }
 
         public static DailyResult GetRep(SocketGuildUser user)
@@ -30,11 +30,11 @@ namespace Nayu.Core.Features.Economy
             var account = GlobalGuildUserAccounts.GetUserID(user);
             var difference = DateTime.UtcNow - account.LastRep.AddDays(1);
 
-            if (difference.TotalHours < 0) return new DailyResult { Success = false, RefreshTimeSpan = difference };
+            if (difference.TotalHours < 0) return new DailyResult {Success = false, RefreshTimeSpan = difference};
 
             account.LastRep = DateTime.UtcNow;
             GlobalGuildUserAccounts.SaveAccounts();
-            return new DailyResult { Success = true };
+            return new DailyResult {Success = true};
         }
     }
 }

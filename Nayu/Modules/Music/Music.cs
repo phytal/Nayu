@@ -25,7 +25,7 @@ namespace Nayu.Modules.Music
             _lavaNode = lavaNode;
             _musicManager = musicManager;
         }
-        
+
         [Subject(Categories.Music)]
         [Command("join")]
         [Summary("Nayu joins the current voice channel you are in")]
@@ -56,7 +56,7 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
-        
+
         [Subject(Categories.Music)]
         [Command("leave")]
         [Summary("Nayu leaves from the current voice channel you are in")]
@@ -86,7 +86,7 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
-        
+
         [Subject(Categories.Music)]
         [Command("play")]
         [Summary("Searches and plays a song from Youtube")]
@@ -117,8 +117,10 @@ namespace Nayu.Modules.Music
                 {
                     await ReplyAsync(exception.Message);
                 }
-            } ;
-            
+            }
+
+            ;
+
             var searchResponse = await _lavaNode.SearchYouTubeAsync(query);
 
             if (searchResponse.LoadStatus == LoadStatus.LoadFailed ||
@@ -176,7 +178,7 @@ namespace Nayu.Modules.Music
                 }
             }
         }
-        
+
         [Subject(Categories.Music)]
         [Command("pause")]
         [Summary("Pauses the current song")]
@@ -205,7 +207,7 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
-        
+
         [Subject(Categories.Music)]
         [Command("resume")]
         [Summary("Resumes the song that is paused")]
@@ -234,7 +236,7 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
-        
+
         [Subject(Categories.Music)]
         [Command("stop")]
         [Summary("Stops the current song")]
@@ -263,7 +265,7 @@ namespace Nayu.Modules.Music
                 throw e;
             }
         }
-        
+
         [Subject(Categories.Music)]
         [Command("skip")]
         [Summary("Skips the song that is currently playing")]
@@ -309,6 +311,7 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
+
         //TODO: fix
         [Subject(Categories.Music)]
         [Command("seek")]
@@ -338,7 +341,7 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
-        
+
         [Subject(Categories.Music)]
         [Command("volume"), Alias("vol")]
         [Summary("Changes the volume of the song per guild (100 is default)")]
@@ -350,11 +353,13 @@ namespace Nayu.Modules.Music
                 await ReplyAndDeleteAsync($"{Global.ENo} | I'm not connected to a voice channel.");
                 return;
             }
+
             if (volume >= 150 || volume <= 0)
             {
                 await ReplyAndDeleteAsync($"{Global.ENo} | Volume must be between 1 and 149.");
                 return;
             }
+
             try
             {
                 await player.UpdateVolumeAsync(volume);
@@ -365,21 +370,21 @@ namespace Nayu.Modules.Music
                 await ReplyAsync(exception.Message);
             }
         }
-        
+
         [Subject(Categories.Music)]
         [Command("nowPlaying"), Alias("Np")]
         [Summary("Shows the song that is currently playing")]
         [Remarks("Ex: n!np")]
         public async Task NowPlayingAsync()
             => await ReplyAsync("", embed: await _musicManager.NowPlayingAsync(Context));
-        
+
         [Subject(Categories.Music)]
         [Command("queue"), Alias("q")]
         [Summary("Shows the current queue")]
         [Remarks("Ex: n!queue")]
         public async Task GetQueueAsync()
             => await ReplyAsync("", embed: await _musicManager.GetQueueAsync(Context));
-        
+
         [Subject(Categories.Music)]
         [Command("lyrics")]
         [Summary("Shows the lyrics for the current song playing")]
@@ -425,6 +430,5 @@ namespace Nayu.Modules.Music
             var embed = MiscHelpers.CreateEmbed(Context, "", stringBuilder.ToString());
             await ReplyAsync("", embed: embed.Build());
         }
-        
     }
 }

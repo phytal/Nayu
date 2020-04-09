@@ -20,16 +20,18 @@ namespace Nayu.Modules
         [Summary("Grants XP/Exp to selected user")]
         [Alias("givexp", "giveexp", "addexp")]
         [RequireOwner]
-        public async Task AddXP(uint xp, IGuildUser user, [Remainder]string arg = "")
+        public async Task AddXP(uint xp, IGuildUser user, [Remainder] string arg = "")
         {
             SocketUser target = null;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
             target = mentionedUser ?? Context.User;
-            var userAccount = GlobalUserAccounts.GetUserAccount((SocketGuildUser)user);
+            var userAccount = GlobalUserAccounts.GetUserAccount((SocketGuildUser) user);
 
             userAccount.XP += xp;
             GlobalGuildUserAccounts.SaveAccounts();
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", $"✅  **|** **{xp}** xp were added to {target.Username}'s account.", EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!",
+                $"✅  **|** **{xp}** xp were added to {target.Username}'s account.",
+                EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
         }
 
@@ -38,7 +40,7 @@ namespace Nayu.Modules
         [Summary("Grants reputation points to selected user")]
         [Alias("givepoints")]
         [RequireOwner]
-        public async Task AddPoints(uint Points, SocketGuildUser user, [Remainder]string arg = "")
+        public async Task AddPoints(uint Points, SocketGuildUser user, [Remainder] string arg = "")
         {
             SocketUser target = null;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
@@ -48,10 +50,11 @@ namespace Nayu.Modules
             userAccount.Reputation += Points;
             GlobalGuildUserAccounts.SaveAccounts();
 
-            
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", $"✅  **|** **{Points}** reputation points were added to {target.Username}'s account.", EmbedHandler.EmbedMessageType.Success, false);
+
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!",
+                $"✅  **|** **{Points}** reputation points were added to {target.Username}'s account.",
+                EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
         }
     }
 }
-

@@ -30,12 +30,13 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
                 if (now < userAcc.LastMessage.AddSeconds(config.SlowModeCooldown))
                 {
                     var difference1 = now - userAcc.LastMessage;
-                    var time = new TimeSpan((long)config.SlowModeCooldown*10000000);
+                    var time = new TimeSpan((long) config.SlowModeCooldown * 10000000);
                     var difference = time - difference1;
                     var timeSpanString = string.Format("{0:%s} seconds", difference);
                     await msg.DeleteAsync();
                     var dm = await context.User.GetOrCreateDMChannelAsync();
-                    await dm.SendMessageAsync($"Slow down! You can send a message in **{timeSpanString}** in **{context.Guild.Name}**.");
+                    await dm.SendMessageAsync(
+                        $"Slow down! You can send a message in **{timeSpanString}** in **{context.Guild.Name}**.");
                 }
                 else
                 {

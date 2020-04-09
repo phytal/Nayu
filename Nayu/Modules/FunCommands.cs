@@ -19,34 +19,34 @@ namespace Nayu.Modules
         [Cooldown(5)]
         public async Task Ping()
         {
-
-            var embed = EmbedHandler.CreateEmbed(Context, "Ping", $":ping_pong:  **|** Pong! {(Context.Client).Latency}ms", EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Ping",
+                $":ping_pong:  **|** Pong! {(Context.Client).Latency}ms", EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
         }
 
-        string[] predictionsTexts = 
-            {
-                ":8ball:  **|** It is certain",
-                ":8ball:  **|** It is decidedly so",
-                ":8ball:  **|** Without a doubt",
-                ":8ball:  **|** Yes definitely",
-                ":8ball:  **|** You may rely on it",
-                ":8ball:  **|** As I see it, yes",
-                ":8ball:  **|** Most likely",
-                ":8ball:  **|** Outlook good",
-                ":8ball:  **|** Yes",
-                ":8ball:  **|** Signs point to yes",
-                ":8ball:  **|** Reply hazy try again",
-                ":8ball:  **|** Ask again later",
-                ":8ball:  **|** Better not tell you now",
-                ":8ball:  **|** Zzzzz...",
-                ":8ball:  **|** Concentrate on my oppai and ask again!",
-                ":8ball:  **|** Don't count on it",
-                ":8ball:  **|** My reply is no",
-                ":8ball:  **|** My sources say no",
-                ":8ball:  **|** Outlook not so good",
-                ":8ball:  **|** Very doubtful"
-            };
+        string[] predictionsTexts =
+        {
+            ":8ball:  **|** It is certain",
+            ":8ball:  **|** It is decidedly so",
+            ":8ball:  **|** Without a doubt",
+            ":8ball:  **|** Yes definitely",
+            ":8ball:  **|** You may rely on it",
+            ":8ball:  **|** As I see it, yes",
+            ":8ball:  **|** Most likely",
+            ":8ball:  **|** Outlook good",
+            ":8ball:  **|** Yes",
+            ":8ball:  **|** Signs point to yes",
+            ":8ball:  **|** Reply hazy try again",
+            ":8ball:  **|** Ask again later",
+            ":8ball:  **|** Better not tell you now",
+            ":8ball:  **|** Zzzzz...",
+            ":8ball:  **|** Concentrate on my oppai and ask again!",
+            ":8ball:  **|** Don't count on it",
+            ":8ball:  **|** My reply is no",
+            ":8ball:  **|** My sources say no",
+            ":8ball:  **|** Outlook not so good",
+            ":8ball:  **|** Very doubtful"
+        };
 
         [Subject(Categories.Fun)]
         [Command("8ball")]
@@ -58,7 +58,8 @@ namespace Nayu.Modules
         {
             int randomIndex = Global.Rng.Next(predictionsTexts.Length);
             string text = predictionsTexts[randomIndex];
-            var embed = EmbedHandler.CreateEmbed(Context, "8 Ball", $"{text}, {Context.User.Username}", EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "8 Ball", $"{text}, {Context.User.Username}",
+                EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
         }
 
@@ -75,7 +76,7 @@ namespace Nayu.Modules
             {
                 if (message.Contains("@everyone") || message.Contains("@here")) return;
             }
-            
+
             var embed = EmbedHandler.CreateEmbed(Context, "Echo!", message, EmbedHandler.EmbedMessageType.Success);
             await SendMessage(Context, embed);
         }
@@ -85,10 +86,11 @@ namespace Nayu.Modules
         [Summary("Sends an Let me Google that for you link with what you inputed")]
         [Remarks("n!lmgtfy <what you want to search up> Ex: n!lmgtfy how to use discord")]
         [Cooldown(5)]
-        public async Task Lmgtfy([Remainder]string link = "enter something")
+        public async Task Lmgtfy([Remainder] string link = "enter something")
         {
             link = link.Replace(' ', '+');
-            var embed = EmbedHandler.CreateEmbed(Context, "", "https://lmgtfy.com/?q=" + link, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "", "https://lmgtfy.com/?q=" + link,
+                EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
         }
 
@@ -99,10 +101,11 @@ namespace Nayu.Modules
         [Cooldown(5)]
         public async Task Lenny()
         {
-            var embed = EmbedHandler.CreateEmbed(Context, "Lenny!", "( ͡° ͜ʖ ͡°)", EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Lenny!", "( ͡° ͜ʖ ͡°)",
+                EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
         }
-        
+
         [Subject(Categories.Information)]
         [Command("prefix")]
         [Summary("Show's you the server prefix")]
@@ -122,7 +125,8 @@ namespace Nayu.Modules
                     break;
             }
 
-            var embed = EmbedHandler.CreateEmbed(Context, "Prefix", $"The prefix for this server is {prefix}.", EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Prefix", $"The prefix for this server is {prefix}.",
+                EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
         }
 
@@ -131,11 +135,12 @@ namespace Nayu.Modules
         [Summary("Rates your waifu :3")]
         [Remarks("n!ratewaifu <whoever (waifu) that you want to rate> Ex: n!ratewaifu Taiyakiman22")]
         [Cooldown(5)]
-        public async Task RateWaifu([Remainder]string input)
+        public async Task RateWaifu([Remainder] string input)
         {
             Random rnd = new Random();
             int rating = rnd.Next(101);
-            var embed = EmbedHandler.CreateEmbed(Context, "Rate Waifu", $"I'd rate {input} a **{rating} / 100**", EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Rate Waifu", $"I'd rate {input} a **{rating} / 100**",
+                EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
         }
 
@@ -146,19 +151,20 @@ namespace Nayu.Modules
         [Cooldown(5)]
         public async Task Emotify([Remainder] string args)
         {
-            string[] convertorArray = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+            string[] convertorArray = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
             args = args.ToLower();
             var convertedText = "";
             foreach (var c in args)
             {
                 if (char.IsLetter(c)) convertedText += $":regional_indicator_{c}:";
-                else if (char.IsDigit(c)) convertedText += $":{convertorArray[(int)char.GetNumericValue(c)]}:";
+                else if (char.IsDigit(c)) convertedText += $":{convertorArray[(int) char.GetNumericValue(c)]}:";
                 else if (c == '.') convertedText += " ⏺ ";
                 else if (c == '?') convertedText += "❓ ";
                 else if (c == '!') convertedText += "❗ ";
                 else convertedText += c;
                 if (char.IsWhiteSpace(c)) convertedText += "  ";
             }
+
             await ReplyAsync(convertedText);
         }
 
@@ -169,7 +175,8 @@ namespace Nayu.Modules
         [Cooldown(5)]
         public async Task Woop()
         {
-            await Context.Channel.SendFileAsync(@Path.Combine(Constants.ResourceFolder, Constants.MemeFolder, "woop.gif"));
+            await Context.Channel.SendFileAsync(@Path.Combine(Constants.ResourceFolder, Constants.MemeFolder,
+                "woop.gif"));
         }
 
         [Subject(Categories.Fun)]
@@ -187,10 +194,12 @@ namespace Nayu.Modules
                 {
                     await SendMessage(Context, null, "I choose **Rock**! :punch: It's a tie!");
                 }
+
                 if (choice == 2)
                 {
                     await SendMessage(Context, null, "I choose **Paper**! 🖐️**PAPER** wins!");
                 }
+
                 if (choice == 3)
                 {
                     await SendMessage(Context, null, "I choose **Scissors**! 🖐️**ROCK** wins!");
@@ -202,10 +211,12 @@ namespace Nayu.Modules
                 {
                     await SendMessage(Context, null, "I choose **Rock**! :punch:  **PAPER** wins!");
                 }
+
                 if (choice == 2)
                 {
                     await SendMessage(Context, null, "I choose **Paper**! 🖐️It's a tie!");
                 }
+
                 if (choice == 3)
                 {
                     await SendMessage(Context, null, "I choose **Scissors**! 🖐️**SCISSORS** wins!");
@@ -217,10 +228,12 @@ namespace Nayu.Modules
                 {
                     await SendMessage(Context, null, "I choose **Rock**! :punch: **ROCK** wins!");
                 }
+
                 if (choice == 2)
                 {
                     await SendMessage(Context, null, "I choose **Paper**! 🖐️**SCISSORS** wins!");
                 }
+
                 if (choice == 3)
                 {
                     await SendMessage(Context, null, "I choose **Scissors**! 🖐️It's a tie!");

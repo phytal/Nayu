@@ -9,7 +9,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.Inbox
 {
     public class ClearInbox : NayuModule
-    {        
+    {
         [Subject(Categories.Inbox)]
         [Command("clearInbox")]
         [Summary("Clears your entire inbox (irreversible)")]
@@ -22,7 +22,8 @@ namespace Nayu.Modules.Inbox
             if (!config.Inbox.Any())
                 throw new ArgumentException("Your inbox is already empty!");
 
-            await ReplyAsync("Are you sure you want to clear your inbox? (This cannot be reversed!)\nType `yes` or `no` to confirm your decision");
+            await ReplyAsync(
+                "Are you sure you want to clear your inbox? (This cannot be reversed!)\nType `yes` or `no` to confirm your decision");
             var response = await NextMessageAsync();
 
             if (response.Content.Equals("yes", StringComparison.CurrentCultureIgnoreCase) &&
@@ -34,7 +35,7 @@ namespace Nayu.Modules.Inbox
             }
 
             else if (response.Content.Equals("no", StringComparison.CurrentCultureIgnoreCase) &&
-                (response.Author.Equals(Context.User)))
+                     (response.Author.Equals(Context.User)))
             {
                 await ReplyAsync($"✅ **|** Successfully canceled the action.");
             }

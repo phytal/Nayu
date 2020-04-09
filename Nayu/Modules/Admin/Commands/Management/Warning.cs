@@ -48,7 +48,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             await SendMessage(Context, null,
                 $"Successfully warned **{user.Username}** for **{reason}**. **({userAccount.NumberOfWarnings} Warning{(userAccount.NumberOfWarnings == 1 ? "" : "s")})**");
         }
-        
+
         [Subject(AdminCategories.UserManagement)]
         [Command("Warnings")]
         [Summary("Shows all of a user's warnings")]
@@ -80,7 +80,7 @@ namespace Nayu.Modules.Admin.Commands.Management
 
             await SendMessage(Context, embed.Build());
         }
-        
+
         [Subject(AdminCategories.UserManagement)]
         [Command("ClearWarnings")]
         [Summary("Clears all of a user's warnings")]

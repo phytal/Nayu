@@ -13,7 +13,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Effects
             var config = GlobalUserAccounts.GetUserAccount(context.User);
             var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
 
-            var dmg = (uint)Global.Rng.Next(2, 5);
+            var dmg = (uint) Global.Rng.Next(2, 5);
 
             if (!chom.Effects.Contains(Effect.Burned)) return;
             var rng = Global.Rng.Next(1, 5);
@@ -24,6 +24,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Effects
                 await SendMessage(context, null, $"{chom.Name} stopped burning!");
                 return;
             }
+
             chom.Health -= dmg;
             GlobalUserAccounts.SaveAccounts(config.Id);
             await SendMessage(context, null, $"{chom.Name} took {dmg} from being burned!");

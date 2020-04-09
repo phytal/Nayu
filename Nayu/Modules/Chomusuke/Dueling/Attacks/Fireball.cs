@@ -19,7 +19,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             Types = new List<Enums.Type> {Enums.Type.Fire},
             Effects = new List<Effect> {Effect.Burned}
         };
-        
+
         public static AttackResult FireballAttack(ShardedCommandContext context)
         {
             var config = GlobalUserAccounts.GetUserAccount(context.User);
@@ -32,7 +32,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             var accuracy = Global.Rng.Next(1, Attack.Accuracy + 1);
             string response;
             bool success;
-            var dmg = (int)Math.Round(Attack.Damage * chom1.CP * .05);
+            var dmg = (int) Math.Round(Attack.Damage * chom1.CP * .05);
             //use if something negates this
             /*if (configg.armour == "reinforced")
             {
@@ -46,13 +46,14 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
                 var result = CheckModifiers.GetDMGModifiers(context.User, player2, dmg);
                 dmg = result.Item1;
                 var modifier = result.Item2;
-                chom2.Health -= (uint)dmg;
+                chom2.Health -= (uint) dmg;
                 chom2.Effects.Add(Effect.Burned);
 
                 GlobalUserAccounts.SaveAccounts(config.Id);
-                response = $":fire:  | **{configg.OpponentName}** used **Fireball** and did {dmg} damage (buffed by {modifier}% due to active damage modifiers)!\n\n**{config.OpponentName}** is now burning";
+                response =
+                    $":fire:  | **{configg.OpponentName}** used **Fireball** and did {dmg} damage (buffed by {modifier}% due to active damage modifiers)!\n\n**{config.OpponentName}** is now burning";
                 success = true;
-                return new AttackResult{Success = success, Response = response, Damage = dmg};
+                return new AttackResult {Success = success, Response = response, Damage = dmg};
             }
             else
             {
@@ -60,7 +61,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
                 var result = CheckModifiers.GetDMGModifiers(context.User, player2, dmg);
                 response = $":dash:  **|** **{context.User.Username}**, your attack missed!";
                 success = true;
-                return new AttackResult{Success = success, Response = response, Damage = dmg};
+                return new AttackResult {Success = success, Response = response, Damage = dmg};
             }
         }
     }

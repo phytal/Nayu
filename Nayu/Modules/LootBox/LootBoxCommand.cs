@@ -10,7 +10,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.LootBox
 {
     public class LootBoxCommand : NayuModule
-    {        
+    {
         [Subject(Categories.Lootboxes)]
         [Command("openLootBox")]
         [Alias("olb")]
@@ -82,19 +82,21 @@ namespace Nayu.Modules.LootBox
                     if (config.LootBoxLegendary > 0)
                     {
                         config.LootBoxLegendary -= 1;
-                        await OpenLootBox.OpenLegendaryBox(Context.User, (ITextChannel)Context.Channel);
+                        await OpenLootBox.OpenLegendaryBox(Context.User, (ITextChannel) Context.Channel);
                     }
                     else
                     {
-                        await SendMessage(Context, null, $"🛑  **|**  **{Context.User.Username}**, you don't have any Legendary Loot Boxes!");
+                        await SendMessage(Context, null,
+                            $"🛑  **|**  **{Context.User.Username}**, you don't have any Legendary Loot Boxes!");
                         return;
                     }
 
                     break;
             }
+
             GlobalUserAccounts.SaveAccounts(Context.User.Id);
         }
-        
+
         [Subject(Categories.Lootboxes)]
         [Command("lootBoxInventory"), Alias("lbi")]
         [Summary("View your loot box inventory")]
@@ -110,11 +112,12 @@ namespace Nayu.Modules.LootBox
             embed.AddField("Rare loot Boxes", $"**x{account.LootBoxRare}**");
             embed.AddField("Epic Loot Boxes", $"**x{account.LootBoxEpic}**");
             embed.AddField("Legendary Loot Boxes", $"**x{account.LootBoxLegendary}**");
-            embed.WithFooter("You can get Loot Boxes from increasing your Nayu Level (not server level) and winning duels!");
+            embed.WithFooter(
+                "You can get Loot Boxes from increasing your Nayu Level (not server level) and winning duels!");
 
             await SendMessage(Context, embed.Build());
         }
-        
+
         [Subject(OwnerCategories.Owner)]
         [Command("addLootBox"), Alias("alb")]
         [Summary("Adds some loot boxes to a person")]
@@ -136,7 +139,7 @@ namespace Nayu.Modules.LootBox
 
             await SendMessage(Context, null, $"Successfully added one of every loot box to {target}");
         }
-        
+
         [Subject(OwnerCategories.Owner)]
         [Command("clearLootBox"), Alias("clb")]
         [Summary("Clears a person's loot boxes")]
@@ -158,7 +161,7 @@ namespace Nayu.Modules.LootBox
 
             await SendMessage(Context, null, $"Successfully cleared {target}'s loot boxes");
         }
-        
+
         [Subject(Categories.Lootboxes)]
         [Command("giftLootBox")]
         [Alias("giftlb", "grantlb", "glb")]
@@ -187,22 +190,48 @@ namespace Nayu.Modules.LootBox
                 {
                     var embed = new EmbedBuilder();
                     embed.WithColor(Global.NayuColor);
-                    embed.WithTitle("🖐️ **|** Please say who you want to gift loot boxes to. Ex: n!gift <rarity of loot box> @user");
+                    embed.WithTitle(
+                        "🖐️ **|** Please say who you want to gift loot boxes to. Ex: n!gift <rarity of loot box> @user");
                     await SendMessage(Context, embed.Build());
                 }
                 else
                 {
-                    var receiver = GlobalUserAccounts.GetUserAccount((SocketUser)userB);
+                    var receiver = GlobalUserAccounts.GetUserAccount((SocketUser) userB);
 
-                    if (Rarity == "COMMON") { giveaccount.LootBoxCommon--; receiver.LootBoxCommon++; }
-                    if (Rarity == "UNCOMMON") { giveaccount.LootBoxUncommon--; receiver.LootBoxUncommon++; }
-                    if (Rarity == "RARE") { giveaccount.LootBoxRare--; receiver.LootBoxRare++; }
-                    if (Rarity == "EPIC") { giveaccount.LootBoxEpic--; receiver.LootBoxEpic++; }
-                    if (Rarity == "LEGENDARY") { giveaccount.LootBoxLegendary--; receiver.LootBoxLegendary++; }
+                    if (Rarity == "COMMON")
+                    {
+                        giveaccount.LootBoxCommon--;
+                        receiver.LootBoxCommon++;
+                    }
+
+                    if (Rarity == "UNCOMMON")
+                    {
+                        giveaccount.LootBoxUncommon--;
+                        receiver.LootBoxUncommon++;
+                    }
+
+                    if (Rarity == "RARE")
+                    {
+                        giveaccount.LootBoxRare--;
+                        receiver.LootBoxRare++;
+                    }
+
+                    if (Rarity == "EPIC")
+                    {
+                        giveaccount.LootBoxEpic--;
+                        receiver.LootBoxEpic++;
+                    }
+
+                    if (Rarity == "LEGENDARY")
+                    {
+                        giveaccount.LootBoxLegendary--;
+                        receiver.LootBoxLegendary++;
+                    }
 
                     GlobalUserAccounts.SaveAccounts(giveaccount.Id, receiver.Id);
 
-                    await SendMessage(Context, null, $":gift:  **|** {Context.User.Mention} has gifted {userB.Mention} a **{Rarity}** Loot box! How generous.");
+                    await SendMessage(Context, null,
+                        $":gift:  **|** {Context.User.Mention} has gifted {userB.Mention} a **{Rarity}** Loot box! How generous.");
                 }
             }
         }

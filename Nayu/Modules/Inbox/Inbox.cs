@@ -40,10 +40,10 @@ namespace Nayu.Modules.Inbox
                 await ReplyAsync($"There are not that many pages...\nPage {lastPageNumber} is the last one...");
                 return;
             }
-            
+
             var ordered = config.Inbox.OrderByDescending(msg => msg.Time).ToList();
             ulong newMessages = config.InboxIDTracker - config.InboxIDLastRead;
-            
+
             var embed = new EmbedBuilder()
                 .WithTitle($"{Context.User}'s Inbox ({newMessages} new message{(newMessages == 1 ? "" : "s")})")
                 .WithFooter($"Page {page}/{lastPageNumber} - {DateTime.Now:f}");
@@ -64,8 +64,9 @@ namespace Nayu.Modules.Inbox
                     time = $"{difference.Minutes} minute{(difference.Minutes == 1 ? "" : "s")} ago";
                 else if (difference.Seconds > 0)
                     time = $"{difference.Seconds} second{(difference.Seconds == 1 ? "" : "s")} ago";
-                string content = msg.Content.Substring(0,msg.Content.Length > 50 ? 50 : msg.Content.Length);
-                embed.AddField(readIcon + $"{msg.Title} - {time}", $"{content}{(msg.Content.Length > 50 ? "..." : "")}\n---\nID:{msg.ID}", true);
+                string content = msg.Content.Substring(0, msg.Content.Length > 50 ? 50 : msg.Content.Length);
+                embed.AddField(readIcon + $"{msg.Title} - {time}",
+                    $"{content}{(msg.Content.Length > 50 ? "..." : "")}\n---\nID:{msg.ID}", true);
             }
 
             config.InboxIDLastRead = config.InboxIDTracker;

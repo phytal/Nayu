@@ -22,8 +22,9 @@ namespace Nayu
         private readonly Events _events;
         private readonly Leveling _leveling;
         private readonly LavaNode _lavaNode;
-        
-        public DiscordEventHandler(AutoLewdTimer autoLewdTimer, DiscordShardedClient client, CommandHandler commandHandler
+
+        public DiscordEventHandler(AutoLewdTimer autoLewdTimer, DiscordShardedClient client,
+            CommandHandler commandHandler
             , ChomusukeTimer chomusukeTimer, Events events, Leveling leveling, LavaNode lavaNode)
         {
             _autoLewdTimer = autoLewdTimer;
@@ -73,9 +74,10 @@ namespace Nayu
             _client.UserUpdated += UserUpdated;
             _client.UserVoiceStateUpdated += UserVoiceStateUpdated;
         }
+
         private async Task _client_ShardReady(DiscordSocketClient arg)
         {
-            if(!_lavaNode.IsConnected)
+            if (!_lavaNode.IsConnected)
                 _lavaNode.ConnectAsync();
             _chomusukeTimer.StartTimer();
             _autoLewdTimer.StartTimer();
@@ -164,16 +166,17 @@ namespace Nayu
             _events.Unflip(message);
         }
 
-        private async Task MessageUpdated(Cacheable<IMessage, ulong> cacheMessageBefore, SocketMessage messageAfter, ISocketMessageChannel channel)
+        private async Task MessageUpdated(Cacheable<IMessage, ulong> cacheMessageBefore, SocketMessage messageAfter,
+            ISocketMessageChannel channel)
         {
-
         }
 
         private async Task ReactionsCleared(Cacheable<IUserMessage, ulong> cacheMessage, ISocketMessageChannel channel)
         {
         }
 
-        private async Task ReactionAdded(Cacheable<IUserMessage, ulong> cacheMessage, ISocketMessageChannel channel, SocketReaction reaction)
+        private async Task ReactionAdded(Cacheable<IUserMessage, ulong> cacheMessage, ISocketMessageChannel channel,
+            SocketReaction reaction)
         {
             if (reaction.User.Value.IsBot) return;
             _commandHandler.OnReactionAddedDuelRequest(cacheMessage, channel, reaction);
@@ -183,8 +186,8 @@ namespace Nayu
             SocketReaction reaction)
         {
             if (reaction.User.Value.IsBot) return;
-
         }
+
         private async Task RecipientAdded(SocketGroupUser user)
         {
         }

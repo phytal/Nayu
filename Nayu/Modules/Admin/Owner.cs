@@ -16,13 +16,12 @@ namespace Nayu.Modules.Admin
 {
     public class Owner : NayuModule
     {
-
         public void KillProgram() =>
             Kill(); // DO. NOT. USE. THIS. This is only for deliberately causing a StackOverflowException to stop the program.
 
         public void Kill() =>
             KillProgram(); // DO. NOT. USE. THIS. This is only for deliberately causing a StackOverflowException to stop the program.
-        
+
         [Subject(OwnerCategories.Owner)]
         [Command("Shutdown")]
         [Summary("Shuts down Nayu :((")]
@@ -35,7 +34,7 @@ namespace Nayu.Modules.Admin
             await client.StopAsync();
             KillProgram();
         }
-        
+
         [Subject(OwnerCategories.Owner)]
         [Command("Stream")]
         [Summary("Sets what Nayu is streaming")]
@@ -90,7 +89,7 @@ namespace Nayu.Modules.Admin
                 $"Set the bot's changeLog to ```{changeLog}```", EmbedHandler.EmbedMessageType.Success);
             await SendMessage(Context, embed);
         }
-        
+
         [Subject(OwnerCategories.Owner)]
         [Command("status")]
         [Summary("Sets Nayu's user status")]
@@ -149,7 +148,6 @@ namespace Nayu.Modules.Admin
             await ReplyAsync("", embed: embed.Build());
             await client.SetGameAsync($"n!help **|** in {guilds} servers!",
                 $"https://twitch.tv/{Config.bot.twitchStreamer}", ActivityType.Streaming);
-
         }
 
         [Subject(OwnerCategories.Owner)]
@@ -169,7 +167,7 @@ namespace Nayu.Modules.Admin
             }
             catch (Exception)
             {
-                var embed = EmbedHandler.CreateEmbed(Context,"Avatar", "Could not set the avatar!",
+                var embed = EmbedHandler.CreateEmbed(Context, "Avatar", "Could not set the avatar!",
                     EmbedHandler.EmbedMessageType.Exception);
                 await SendMessage(Context, embed);
             }
@@ -205,7 +203,7 @@ namespace Nayu.Modules.Admin
         [Subject(OwnerCategories.Owner)]
         [Command("announceToEveryone"), Remarks("Sets the bots Avatar")]
         [RequireOwner]
-        public async Task Announce([Remainder]string content)
+        public async Task Announce([Remainder] string content)
         {
             var config = GlobalUserAccounts.GetAllAccounts();
             foreach (var userAcc in config)

@@ -13,7 +13,7 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
             string response;
             bool success = false;
             var dmg = 0;
-            
+
             if (chom.Effects.Contains(Effect.Meditating))
                 response = $"{chom.Name} has already meditated! Try Again!";
             else if (chom.Effects.Contains(Effect.Blocking))
@@ -28,8 +28,8 @@ namespace Nayu.Modules.Chomusuke.Dueling.Attacks
                 GlobalUserAccounts.SaveAccounts(config.Id);
                 success = true;
             }
-            
-            return new AttackResult{Success = success, Response = response, Damage = dmg};
+
+            return new AttackResult {Success = success, Response = response, Damage = dmg};
         }
     }
 }

@@ -28,22 +28,26 @@ namespace Nayu.Modules.Admin.Commands.Fun
                     var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                     var embed = new EmbedBuilder();
                     embed.WithColor(Global.NayuColor);
-                    embed.WithDescription(argg ? "I'll maintain your anger! **(Enabled unflipping for this server)**" : "You may freely rampage at your own will. **(Disabled unflipping for this server)**");
+                    embed.WithDescription(argg
+                        ? "I'll maintain your anger! **(Enabled unflipping for this server)**"
+                        : "You may freely rampage at your own will. **(Disabled unflipping for this server)**");
                     config.Unflip = argg;
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
                     await SendMessage(Context, embed.Build());
                 }
+
                 if (!result.Item1)
                 {
-                    await SendMessage(Context, null,$"Please say `n!uf <on/off>`");
+                    await SendMessage(Context, null, $"Please say `n!uf <on/off>`");
                 }
             }
             else
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
-                embed.Title = $"{Global.ENo} **|** You Need the Administrator Permission to do that {Context.User.Username}";
+                embed.Title =
+                    $"{Global.ENo} **|** You Need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
         }

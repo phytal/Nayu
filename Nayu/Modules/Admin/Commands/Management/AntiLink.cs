@@ -11,7 +11,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.Admin.Commands.Management
 {
     public class AntiLink : NayuModule
-    {        
+    {
         [Subject(AdminCategories.Filters)]
         [Command("Antilink"), Alias("Al")]
         [Summary("Turns on or off the link filter.")]

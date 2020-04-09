@@ -9,7 +9,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh
 {
     public class Megumin : NayuModule
-    {        
+    {
         [Subject(Categories.Images)]
         [Command("megumin")]
         [Summary("Displays a Megumin image/gif")]
@@ -17,7 +17,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh
         [Cooldown(5)]
         public async Task LewdIMG()
         {
-            string[] tags = { "" };
+            string[] tags = {""};
             Helpers.WebRequest webReq = new Helpers.WebRequest();
             RandomData result = await webReq.GetTypesAsync("megumin", tags, FileType.Any, NsfwSearch.False, false);
             string url = result.Url;
@@ -32,7 +32,6 @@ namespace Nayu.Modules.API.Anime.WeebDotSh
             embed.WithFooter($"Powered by weeb.sh | ID: {id}");
 
             await SendMessage(Context, embed.Build());
-
         }
     }
 }

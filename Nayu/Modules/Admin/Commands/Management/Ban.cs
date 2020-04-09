@@ -30,6 +30,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
             }
+
             try
             {
                 var guild = Context.Guild;

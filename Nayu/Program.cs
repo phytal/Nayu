@@ -1,16 +1,14 @@
-﻿
-
-      /////////////////////////////////////////
-      //    _   _                            //  
-      //   | \ | |                           //
-      //   |  \| |   __ _   _   _   _   _    // 
-      //   | . ` |  / _` | | | | | | | | |   //
-      //   | |\  | | (_| | | |_| | | |_| |   //
-      //   |_| \_|  \__,_|  \__, |  \__,_|   //
-      //                     __/ |           //
-      //                    |___/            //
-      //                                     //
-      /////////////////////////////////////////
+﻿/////////////////////////////////////////
+//    _   _                            //  
+//   | \ | |                           //
+//   |  \| |   __ _   _   _   _   _    // 
+//   | . ` |  / _` | | | | | | | | |   //
+//   | |\  | | (_| | | |_| | | |_| |   //
+//   |_| \_|  \__,_|  \__, |  \__,_|   //
+//                     __/ |           //
+//                    |___/            //
+//                                     //
+/////////////////////////////////////////
 
 
 using Discord.WebSocket;
@@ -20,6 +18,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -36,14 +35,14 @@ using Nayu.Modules.Chomusuke;
 using Nayu.Modules.Music;
 using Sentry;
 using Victoria;
-      
-      namespace Nayu
+
+namespace Nayu
 {
-    class Program
+    internal class Program
     {
         public static DiscordShardedClient _client;
         private IServiceProvider _services;
-        private readonly int[] _shardIds = { 0 };
+        private readonly int[] _shardIds = {0};
 
         private static void Main()
         {
@@ -52,7 +51,7 @@ using Victoria;
             var botLaunchers = new List<Task>
             {
                 Task.Run(() => { LaunchLavalink(); }), // Lavalink launcher
-                Task.Run(() => { LaunchBotSetup(); })  // Bot launcher
+                Task.Run(() => { LaunchBotSetup(); }) // Bot launcher
             };
 
             // Run all required tasks
@@ -62,11 +61,11 @@ using Victoria;
         private async Task StartAsync()
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("\n _|_|_|      _|_|_|  _|    _|  _|    _|\n"+  
-                              " _|    _|  _|    _|  _|    _|  _|    _|\n"+  
-                              " _|    _|  _|    _|  _|    _|  _|    _|\n"+  
-                              " _|    _|    _|_|_|    _|_|_|    _|_|_|\n"+
-                              "                           _|         \n"+
+            Console.WriteLine("\n _|_|_|      _|_|_|  _|    _|  _|    _|\n" +
+                              " _|    _|  _|    _|  _|    _|  _|    _|\n" +
+                              " _|    _|  _|    _|  _|    _|  _|    _|\n" +
+                              " _|    _|    _|_|_|    _|_|_|    _|_|_|\n" +
+                              "                           _|         \n" +
                               "                         _|_|   \n");
             if (string.IsNullOrEmpty(Config.bot.token)) return;
             _client = new DiscordShardedClient(_shardIds, new DiscordSocketConfig
@@ -85,19 +84,20 @@ using Victoria;
             {
                 await _client.LoginAsync(TokenType.Bot, Config.bot.token);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return;
             }
 
             await _client.StartAsync();
 
-            await _client.SetGameAsync(Config.bot.botGameToSet, $"https://twitch.tv/{Config.bot.twitchStreamer}", ActivityType.Streaming);
+            await _client.SetGameAsync(Config.bot.botGameToSet, $"https://twitch.tv/{Config.bot.twitchStreamer}",
+                ActivityType.Streaming);
             await _client.SetStatusAsync(UserStatus.Online);
 
             await Task.Delay(-1);
         }
-        
+
         private IServiceProvider ConfigureServices()
         {
             return new ServiceCollection()
@@ -116,16 +116,39 @@ using Victoria;
                 .AddSingleton<Logger>()
                 .BuildServiceProvider();
         }
-        
+
         private static void LaunchBotSetup()
-            => new Program().StartAsync().GetAwaiter().GetResult();
-        
+        {
+            new Program().StartAsync().GetAwaiter().GetResult();
+        }
+
         private static void LaunchLavalink()
         {
-            var directory =  Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())))) + @"/Lavalink";
-            Console.WriteLine(directory);
-            //var psi = new ProcessStartInfo("/bin/bash", $"-c {directory}/lava.sh");
-            var psi = new ProcessStartInfo("/bin/bash", $"java -jar {directory.Substring(1)}/Lavalink.jar");
+            var psi = new ProcessStartInfo();
+            var directory = string.Empty;
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                directory =
+                    Path.GetDirectoryName(
+                        Path.GetDirectoryName(
+                            Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())))) +
+                    @"/Lavalink";
+                psi = new ProcessStartInfo("/bin/bash", $"-c {directory}/lava.sh");
+                //var psi = new ProcessStartInfo("/bin/bash", $"java -jar {directory.Substring(1)}/Lavalink.jar");
+            }
+
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                directory =
+                    Path.GetDirectoryName(
+                        Path.GetDirectoryName(
+                            Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())))) +
+                    @"\Lavalink";
+                Console.WriteLine(directory);
+                psi = new ProcessStartInfo("cmd.exe", $"/c java -jar {directory}" + @"\Lavalink.jar");
+            }
+
             psi.WorkingDirectory = directory;
             psi.CreateNoWindow = true;
             psi.UseShellExecute = false;
@@ -134,4 +157,3 @@ using Victoria;
         }
     }
 }
-

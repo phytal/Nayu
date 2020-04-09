@@ -13,7 +13,7 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Neko : NayuModule
-    {        
+    {
         [Subject(Categories.Images)]
         [Command("neko")]
         [Summary("Displays an random neko :3")]

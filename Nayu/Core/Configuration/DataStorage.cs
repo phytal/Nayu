@@ -49,6 +49,7 @@ namespace Nayu.Core.Configuration
                 File.WriteAllText(filePath, "");
                 return "";
             }
+
             return File.ReadAllText(filePath);
         }
     }

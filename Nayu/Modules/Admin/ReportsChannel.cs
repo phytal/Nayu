@@ -52,7 +52,8 @@ namespace Nayu.Modules.Admin
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
-                embed.WithTitle("🖐️ **|** You must mention a user and provide a reason. Ex: n!report @Username <reason>");
+                embed.WithTitle(
+                    "🖐️ **|** You must mention a user and provide a reason. Ex: n!report @Username <reason>");
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
             else
@@ -65,15 +66,17 @@ namespace Nayu.Modules.Admin
                         sendMessages: PermValue.Deny,
                         addReactions: PermValue.Deny,
                         viewChannel: PermValue.Allow
-                        );
+                    );
                     var channell = await Context.Guild.CreateTextChannelAsync("reports");
                     await channell.AddPermissionOverwriteAsync(role, perms);
                 }
+
                 var channel = chnl as SocketTextChannel;
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
                 embed.Title = $"{Context.User}'s report of {user.Username}";
-                embed.Description = $"**Username: **{user.Username}\n**Reported by: **{Context.User.Mention}\n**Reason: **{reason}";
+                embed.Description =
+                    $"**Username: **{user.Username}\n**Reported by: **{Context.User.Mention}\n**Reason: **{reason}";
                 await SendMessage(Context, embed.Build());
                 await ReplyAsync("✅  **|** *Your report has been furthered to staff.*");
             }
@@ -92,10 +95,10 @@ namespace Nayu.Modules.Admin
                     sendMessages: PermValue.Deny,
                     addReactions: PermValue.Deny,
                     viewChannel: PermValue.Allow
-                    );
+                );
                 var channel = await Context.Guild.CreateTextChannelAsync("Reports");
                 await channel.AddPermissionOverwriteAsync(role, perms);
             }
         }
-    }   
+    }
 }

@@ -45,7 +45,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             var choms = ActiveChomusuke.GetActiveChomusuke(attacker.Id, defender.Id);
             var chom1 = choms.Item1;
             var chom2 = choms.Item2;
-            
+
             int finaldmg2 = 0, finaldmg1 = 0;
             if (chom1.PotionEffects.ContainsKey("Speed"))
             {
@@ -59,9 +59,10 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 finaldmg1 = dmg * (3 / 4); //blocked dmg
                 finaldmg2 = dmg * (1 / 4); //taken dmg
                 chom2.Effects.Remove(Effect.Blocking);
-                
+
                 return new Tuple<bool, int, int>(true, finaldmg1, finaldmg2);
             }
+
             GlobalUserAccounts.SaveAccounts(config.Id);
             return new Tuple<bool, int, int>(false, 0, 0); // use for values
         }
@@ -79,12 +80,14 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 ActiveChomusuke.ConvertActiveVariable(attacker.Id, config.OpponentId, chom1, chom2);
                 return new Tuple<bool, int>(true, 0);
             }
+
             if (chom2.Effects.Contains(Effect.Deflecting))
             {
                 finaldmg = dmg / 2; //damage taken and deflected
                 chom2.Effects.Remove(Effect.Deflecting);
                 return new Tuple<bool, int>(true, finaldmg);
-            } 
+            }
+
             GlobalUserAccounts.SaveAccounts(config.Id);
             return new Tuple<bool, int>(false, 0);
         }

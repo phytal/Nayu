@@ -13,7 +13,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Overwatch
 {
     public class UserStats : NayuModule
-    {        
+    {
         [Subject(Categories.Overwatch)]
         [Command("owstats")]
         [Summary("Get a Overwatch user's statistics.")]
@@ -296,11 +296,11 @@ namespace Nayu.Modules.API.Overwatch
             }
             catch
             {
-                await SendMessage(Context, null, 
+                await SendMessage(Context, null,
                     "Oops! Are you sure that your Overwatch career profile is set to public and you typed in your username correctly?\n**n!ows <Your Battle.net username and id> <platform (pc/xbl/psn)> <region> Ex: n!owstats Phytal-1427 pc us**\nNote that you must have completed your placement matches in competetive for this to show up, otherwise use n!owsqp");
             }
         }
-        
+
         [Subject(Categories.Overwatch)]
         [Command("owstatsqp")]
         [Summary("Get a Overwatch user's Quickplay statistics.")]
@@ -466,11 +466,11 @@ namespace Nayu.Modules.API.Overwatch
             }
             catch
             {
-                await SendMessage(Context, null, 
+                await SendMessage(Context, null,
                     "Oops! Are you sure that your Overwatch career profile is set to public and you typed in your username correctly?\n**n!owstatsqp <Your Battle.net username and id> <platform (pc/xbl/psn)> <region> Ex: n!owsqp Phytal-1427 pc us**");
             }
         }
-        
+
         [Subject(Categories.Overwatch)]
         [Command("owstatscomp")]
         [Summary("Get a Overwatch user's Competitive statistics.")]
@@ -637,7 +637,7 @@ namespace Nayu.Modules.API.Overwatch
             }
             catch
             {
-                await SendMessage(Context, null, 
+                await SendMessage(Context, null,
                     "Oops! Are you sure that your Overwatch career profile is set to public and you typed in your username correctly?\n**n!owsc <Your Battle.net username and id> <platform (pc/xbl/psn)> <region> Ex: n!owstatscomp Phytal-1427 pc us**");
             }
         }

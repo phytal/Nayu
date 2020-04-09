@@ -13,7 +13,7 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Pat : NayuModule
-    {        
+    {
         [Subject(Categories.Interaction)]
         [Command("pat")]
         [Summary("Pat someone! :3")]

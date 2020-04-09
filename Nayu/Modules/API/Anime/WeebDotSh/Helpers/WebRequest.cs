@@ -24,8 +24,6 @@ namespace Nayu.Modules.API.Anime.WeebDotSh.Helpers
             }
 
             return result;
-
-
         }
     }
 }

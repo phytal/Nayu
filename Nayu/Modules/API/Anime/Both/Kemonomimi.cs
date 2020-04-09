@@ -10,7 +10,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh
 {
     public class Kemonomimi : NayuModule
-    {        
+    {
         [Subject(Categories.Images)]
         [Command("kemonomimi")]
         [Summary("Displays an image of an anime kemonomimi gif")]

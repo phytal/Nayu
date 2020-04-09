@@ -13,7 +13,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API
 {
     public class Shiba : NayuModule
-    {        
+    {
         [Subject(Categories.Images)]
         [Command("shiba")]
         [Alias("shibe")]

@@ -9,8 +9,11 @@ namespace Nayu.Modules.LootBox
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
             string[] legendary = {"ChainsOfTartarus", "FreyasBlessing", "DiceOfGod", "MeadOfPoetry", "HairOfAGoddess"};
-            string[] epic = {"BlessingOfProtection", "Blessing of Strength",  "BlessingOfSwiftness", "BlessingOfWar"};
-            string[] rare = {"ConstantineMedallion", "BookOfExodus", "VolcanicRune", "FlaskOfIchor", "FlaskOfElixir", "FlaskOfMana"};
+            string[] epic = {"BlessingOfProtection", "Blessing of Strength", "BlessingOfSwiftness", "BlessingOfWar"};
+            string[] rare =
+            {
+                "ConstantineMedallion", "BookOfExodus", "VolcanicRune", "FlaskOfIchor", "FlaskOfElixir", "FlaskOfMana"
+            };
             string[] uncommon = {"FireThread", "SkyPowder", "TearsOfHera", "HornOfVeles", "BranchOfYggdrasil"};
             string[] common = {"ShardsOfImmortality", "ReviveCrystal", "SilverWood", "AGlowingRock", "PhoenixFeathers"};
             /*
@@ -25,35 +28,36 @@ namespace Nayu.Modules.LootBox
             switch (tier)
             {
                 case 'l':
-                    item =  legendary[randomIndexProvider(legendary)];
+                    item = legendary[randomIndexProvider(legendary)];
                     break;
                 case 'e':
-                    byte eRate = (byte)Global.Rng.Next(1, 15);
-                    if (eRate <= 4) item =  legendary[randomIndexProvider(legendary)];
-                    else item =  epic[randomIndexProvider(epic)];
+                    byte eRate = (byte) Global.Rng.Next(1, 15);
+                    if (eRate <= 4) item = legendary[randomIndexProvider(legendary)];
+                    else item = epic[randomIndexProvider(epic)];
                     break;
                 case 'r':
-                    byte rRate = (byte)Global.Rng.Next(1, 33);
-                    if (rRate <= 4) item =  legendary[randomIndexProvider(legendary)];
-                    else if (rRate <= 14) item =  epic[randomIndexProvider(epic)];
-                    else item =  rare[randomIndexProvider(rare)];
+                    byte rRate = (byte) Global.Rng.Next(1, 33);
+                    if (rRate <= 4) item = legendary[randomIndexProvider(legendary)];
+                    else if (rRate <= 14) item = epic[randomIndexProvider(epic)];
+                    else item = rare[randomIndexProvider(rare)];
                     break;
                 case 'u':
-                    byte uRate = (byte)Global.Rng.Next(1, 63);
-                    if (uRate <= 4) item =  legendary[randomIndexProvider(legendary)];
-                    else if (uRate <= 14) item =  epic[randomIndexProvider(epic)];
-                    else if (uRate <= 32) item =  rare[randomIndexProvider(rare)];
-                    else item =  uncommon[randomIndexProvider(uncommon)];
+                    byte uRate = (byte) Global.Rng.Next(1, 63);
+                    if (uRate <= 4) item = legendary[randomIndexProvider(legendary)];
+                    else if (uRate <= 14) item = epic[randomIndexProvider(epic)];
+                    else if (uRate <= 32) item = rare[randomIndexProvider(rare)];
+                    else item = uncommon[randomIndexProvider(uncommon)];
                     break;
                 case 'c':
-                    byte cRate = (byte)Global.Rng.Next(1, 101);
-                    if (cRate <= 4) item =  legendary[randomIndexProvider(legendary)];
-                    else if (cRate <= 14) item =  epic[randomIndexProvider(epic)];
-                    else if (cRate <= 32) item =  rare[randomIndexProvider(rare)];
-                    else if (cRate <= 62) item =  uncommon[randomIndexProvider(uncommon)];
-                    else item =  common[randomIndexProvider(common)];
+                    byte cRate = (byte) Global.Rng.Next(1, 101);
+                    if (cRate <= 4) item = legendary[randomIndexProvider(legendary)];
+                    else if (cRate <= 14) item = epic[randomIndexProvider(epic)];
+                    else if (cRate <= 32) item = rare[randomIndexProvider(rare)];
+                    else if (cRate <= 62) item = uncommon[randomIndexProvider(uncommon)];
+                    else item = common[randomIndexProvider(common)];
                     break;
             }
+
             if (!config.Items.ContainsKey(item)) config.Items.Add(item, 1);
             else config.Items[item] += 1;
             GlobalUserAccounts.SaveAccounts(config.Id);

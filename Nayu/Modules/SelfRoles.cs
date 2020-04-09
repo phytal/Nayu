@@ -17,7 +17,7 @@ namespace Nayu.Modules
         [Command("iAm")]
         [Summary("Gives you a self role")]
         [Remarks("n!iAm <role> Ex: n!iAm custom role")]
-        public async Task GiveYourselfRole([Remainder]string role)
+        public async Task GiveYourselfRole([Remainder] string role)
         {
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var user = Context.User as SocketGuildUser;
@@ -34,9 +34,9 @@ namespace Nayu.Modules
             {
                 if (config.SelfRoles.Contains(role))
                 {
-                        var r = Context.Guild.Roles.First(x => x.Name.ToLower() == role.ToLower());
-                        embed.WithDescription($"Gave you the **{r.Name}** role.");
-                        await (Context.User as SocketGuildUser).AddRoleAsync(r);
+                    var r = Context.Guild.Roles.First(x => x.Name.ToLower() == role.ToLower());
+                    embed.WithDescription($"Gave you the **{r.Name}** role.");
+                    await (Context.User as SocketGuildUser).AddRoleAsync(r);
                 }
                 else
                 {
@@ -51,7 +51,7 @@ namespace Nayu.Modules
         [Command("iAmNot"), Alias("iAmN")]
         [Summary("Remove a self role from you")]
         [Remarks("n!iAmNot <role> Ex: n!iAmNot custom role")]
-        public async Task TakeAwayRole([Remainder]string role)
+        public async Task TakeAwayRole([Remainder] string role)
         {
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var user = Context.User as SocketGuildUser;
@@ -103,6 +103,7 @@ namespace Nayu.Modules
                 embed.WithTitle("Roles you can self-assign: ");
                 embed.WithDescription(roles);
             }
+
             await ReplyAsync("", embed: embed.Build());
         }
     }

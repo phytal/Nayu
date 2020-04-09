@@ -32,33 +32,34 @@ namespace Nayu.Modules
         [Cooldown(30)]
         public async Task HelpMessage()
         {
-            Assembly assembly = Assembly.Load("Nayu");
+            var assembly = Assembly.Load("Nayu");
             var methods = assembly.GetTypes()
                 .SelectMany(t => t.GetMethods())
                 .Where(m => m.GetCustomAttributes(typeof(Subject), false).Length > 0)
                 .ToList();
 
-            string helpMessage = "```cs\n" +
-                                 "'Standard Command List'\n" +
-                                 "```" +
-                                 "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n ";
+            var helpMessage = "```cs\n" +
+                              "'Standard Command List'\n" +
+                              "```" +
+                              "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n ";
             var categoryNum = 1;
-            var categories = new List<Categories>((Categories[])Enum.GetValues(typeof(Categories)));
+            var categories = new List<Categories>((Categories[]) Enum.GetValues(typeof(Categories)));
             //removes the none enum
             categories.RemoveAt(0);
-            
-            foreach (Categories category in categories)
+
+            foreach (var category in categories)
             {
                 string categoryDesc = null;
                 try
                 {
-                   categoryDesc = MiscHelpers.GetAttributeOfType<DescriptionAttribute>(category).Description;
+                    categoryDesc = MiscHelpers.GetAttributeOfType<DescriptionAttribute>(category).Description;
                 }
                 catch (Exception)
                 {
                     //do nothing
                 }
-                string categoryName = categoryDesc != null ? categoryDesc : category.ToString();
+
+                var categoryName = categoryDesc != null ? categoryDesc : category.ToString();
 
 
                 helpMessage += $"\n**{categoryNum}. {categoryName} -**";
@@ -70,17 +71,17 @@ namespace Nayu.Modules
                         sub.GetChomusukeCategories() == ChomusukeCategories.None &&
                         sub.GetOwnerCategories() == OwnerCategories.None &&
                         sub.GetNSFWCategories() == NSFWCategories.None)
-                    {
                         if (sub.GetCategories() == category)
                         {
                             helpMessage += $" `{MiscHelpers.GetCommandAttribute(method).Text}`";
                             //removes the method from the list if successful to make it faster
                             methods.Remove(method);
                         }
-                    }
                 }
+
                 categoryNum++;
             }
+
             helpMessage += "\n" +
                            "```\n" +
                            "# Don't include the example brackets when using commands!\n" +
@@ -88,7 +89,8 @@ namespace Nayu.Modules
                            "# To view NSFW commands, use n!helpNsfw\n" +
                            "# To view Chomusuke commands, use n!helpChom\n" +
                            "```";
-            var embed = EmbedHandler.CreateEmbed(Context, "Help Command", helpMessage, EmbedHandler.EmbedMessageType.Info,
+            var embed = EmbedHandler.CreateEmbed(Context, "Help Command", helpMessage,
+                EmbedHandler.EmbedMessageType.Info,
                 false);
             await SendMessage(Context, embed);
         }
@@ -103,7 +105,7 @@ namespace Nayu.Modules
             var guildUser = Context.User as SocketGuildUser;
             if (!guildUser.GuildPermissions.Administrator)
             {
-                string description =
+                var description =
                     $"{Global.ENo} **|** You Need the **Administrator** Permission to do that {Context.User.Username}";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", description,
                     EmbedHandler.EmbedMessageType.Exception);
@@ -111,22 +113,22 @@ namespace Nayu.Modules
                 return;
             }
 
-            Assembly assembly = Assembly.Load("Nayu");
+            var assembly = Assembly.Load("Nayu");
             var methods = assembly.GetTypes()
                 .SelectMany(t => t.GetMethods())
                 .Where(m => m.GetCustomAttributes(typeof(Subject), false).Length > 0)
                 .ToList();
 
-            string helpMessage = "```cs\n" +
-                                 "Moderator Command List\n" +
-                                 "```" +
-                                 "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n ";
+            var helpMessage = "```cs\n" +
+                              "Moderator Command List\n" +
+                              "```" +
+                              "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n ";
             var categoryNum = 1;
             var categories = new List<AdminCategories>((AdminCategories[]) Enum.GetValues(typeof(AdminCategories)));
             //removes the none enum
             categories.RemoveAt(0);
 
-            foreach (AdminCategories category in categories)
+            foreach (var category in categories)
             {
                 string categoryDesc = null;
                 try
@@ -138,7 +140,7 @@ namespace Nayu.Modules
                     //do nothing
                 }
 
-                string categoryName = categoryDesc != null ? categoryDesc : category.ToString();
+                var categoryName = categoryDesc != null ? categoryDesc : category.ToString();
 
 
                 helpMessage += $"\n**{categoryNum}. {categoryName} -**";
@@ -150,14 +152,12 @@ namespace Nayu.Modules
                         sub.GetChomusukeCategories() == ChomusukeCategories.None &&
                         sub.GetOwnerCategories() == OwnerCategories.None &&
                         sub.GetNSFWCategories() == NSFWCategories.None)
-                    {
                         if (sub.GetAdminCategories() == category)
                         {
                             helpMessage += $" `{MiscHelpers.GetCommandAttribute(method).Text}`";
                             //removes the method from the list if successful to make it faster
                             methods.Remove(method);
                         }
-                    }
                 }
 
                 categoryNum++;
@@ -171,7 +171,8 @@ namespace Nayu.Modules
                            "# To view Chomusuke commands, use n!helpChom\n" +
                            "```";
 
-            var embed = EmbedHandler.CreateEmbed(Context, "Moderator Help Command", helpMessage, EmbedHandler.EmbedMessageType.Info,
+            var embed = EmbedHandler.CreateEmbed(Context, "Moderator Help Command", helpMessage,
+                EmbedHandler.EmbedMessageType.Info,
                 false);
             await SendMessage(Context, embed);
         }
@@ -186,30 +187,30 @@ namespace Nayu.Modules
             var channel = Context.Channel as ITextChannel;
             if (!channel.IsNsfw)
             {
-                var nsfwText = $"{Global.ENo} **|** You need to use this command in a NSFW channel, {Context.User.Username}!";
+                var nsfwText =
+                    $"{Global.ENo} **|** You need to use this command in a NSFW channel, {Context.User.Username}!";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", nsfwText,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
                 return;
-                return;
             }
-            
-            Assembly assembly = Assembly.Load("Nayu");
+
+            var assembly = Assembly.Load("Nayu");
             var methods = assembly.GetTypes()
                 .SelectMany(t => t.GetMethods())
                 .Where(m => m.GetCustomAttributes(typeof(Subject), false).Length > 0)
                 .ToList();
 
-            string helpMessage = "```cs\n" +
-                                 "NSFW Command List\n" +
-                                 "```" +
-                                 "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n ";
+            var helpMessage = "```cs\n" +
+                              "NSFW Command List\n" +
+                              "```" +
+                              "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n ";
             var categoryNum = 1;
             var categories = new List<NSFWCategories>((NSFWCategories[]) Enum.GetValues(typeof(NSFWCategories)));
             //removes the none enum
             categories.RemoveAt(0);
 
-            foreach (NSFWCategories category in categories)
+            foreach (var category in categories)
             {
                 string categoryDesc = null;
                 try
@@ -221,7 +222,7 @@ namespace Nayu.Modules
                     //do nothing
                 }
 
-                string categoryName = categoryDesc != null ? categoryDesc : category.ToString();
+                var categoryName = categoryDesc != null ? categoryDesc : category.ToString();
 
 
                 helpMessage += $"\n**{categoryNum}. {categoryName} -**";
@@ -233,14 +234,12 @@ namespace Nayu.Modules
                         sub.GetChomusukeCategories() == ChomusukeCategories.None &&
                         sub.GetOwnerCategories() == OwnerCategories.None &&
                         sub.GetAdminCategories() == AdminCategories.None)
-                    {
                         if (sub.GetNSFWCategories() == category)
                         {
                             helpMessage += $" `{MiscHelpers.GetCommandAttribute(method).Text}`";
                             //removes the method from the list if successful to make it faster
                             methods.Remove(method);
                         }
-                    }
                 }
 
                 categoryNum++;
@@ -254,35 +253,37 @@ namespace Nayu.Modules
                            "# To view Chomusuke commands, use n!helpChom\n" +
                            "```";
 
-            var embed = EmbedHandler.CreateEmbed(Context, "NSFW Help Command", helpMessage, EmbedHandler.EmbedMessageType.Info,
+            var embed = EmbedHandler.CreateEmbed(Context, "NSFW Help Command", helpMessage,
+                EmbedHandler.EmbedMessageType.Info,
                 false);
             await SendMessage(Context, embed);
         }
 
         [Subject(Categories.Information)]
-        [Command("helpChom"), Alias("helpChomusuke")]
+        [Command("helpChom")]
+        [Alias("helpChomusuke")]
         [Summary("Shows all possible Chomusuke commands for this bot")]
         [Remarks("Ex: n!helpChom")]
         [Cooldown(30)]
         public async Task ChomusukeHelpMessage()
         {
-            Assembly assembly = Assembly.Load("Nayu");
+            var assembly = Assembly.Load("Nayu");
             var methods = assembly.GetTypes()
                 .SelectMany(t => t.GetMethods())
                 .Where(m => m.GetCustomAttributes(typeof(Subject), false).Length > 0)
                 .ToList();
 
-            string helpMessage = "```cs\n" +
-                                 "'Chomusuke Command List'\n" +
-                                 "```" +
-                                 "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n ";
+            var helpMessage = "```cs\n" +
+                              "'Chomusuke Command List'\n" +
+                              "```" +
+                              "Use `n!command [command]` to get more info on a specific command. Ex: `n!command stats`  `[Prefix 'n!']` \n ";
             var categoryNum = 1;
             var categories =
                 new List<ChomusukeCategories>((ChomusukeCategories[]) Enum.GetValues(typeof(ChomusukeCategories)));
             //removes the none enum
             categories.RemoveAt(0);
 
-            foreach (ChomusukeCategories category in categories)
+            foreach (var category in categories)
             {
                 string categoryDesc = null;
                 try
@@ -294,7 +295,7 @@ namespace Nayu.Modules
                     //do nothing
                 }
 
-                string categoryName = categoryDesc != null ? categoryDesc : category.ToString();
+                var categoryName = categoryDesc != null ? categoryDesc : category.ToString();
 
 
                 helpMessage += $"\n**{categoryNum}. {categoryName} -**";
@@ -306,14 +307,12 @@ namespace Nayu.Modules
                         sub.GetCategories() == Categories.None &&
                         sub.GetOwnerCategories() == OwnerCategories.None &&
                         sub.GetNSFWCategories() == NSFWCategories.None)
-                    {
                         if (sub.GetChomusukeCategories() == category)
                         {
                             helpMessage += $" `{MiscHelpers.GetCommandAttribute(method).Text}`";
                             //removes the method from the list if successful to make it faster
                             methods.Remove(method);
                         }
-                    }
                 }
 
                 categoryNum++;
@@ -326,13 +325,15 @@ namespace Nayu.Modules
                            "# To view moderator commands, use n!helpMod\n" +
                            "# To view NSFW commands, use n!helpNsfw\n" +
                            "```";
-            var embed = EmbedHandler.CreateEmbed(Context, "Chomusuke Help Command", helpMessage, EmbedHandler.EmbedMessageType.Info,
+            var embed = EmbedHandler.CreateEmbed(Context, "Chomusuke Help Command", helpMessage,
+                EmbedHandler.EmbedMessageType.Info,
                 false);
             await SendMessage(Context, embed);
         }
 
         [Subject(Categories.Information)]
-        [Command("command"), Alias("cmd")]
+        [Command("command")]
+        [Alias("cmd")]
         [Summary("Shows what a specific command does and the usage")]
         [Remarks("n!cmd <command you want to search up> Ex: n!cmd stats")]
         [Cooldown(5)]
@@ -368,16 +369,17 @@ namespace Nayu.Modules
                 {
                     x.Name = string.Join(", ", cmd.Aliases);
                     x.Value = //$"Parameters: {string.Join(", ", cmd.Parameters.Select(p => p.Name))}\n" +
-                                $"Description: {cmd.Summary}\n" +
-                                $"Usage: {cmd.Remarks}\n" +
-                                $"Category: {cmd.Attributes[0]}";
+                        $"Description: {cmd.Summary}\n" +
+                        $"Usage: {cmd.Remarks}\n" +
+                        $"Category: {cmd.Attributes[0]}";
                     x.IsInline = false;
                 });
             }
+
             await SendMessage(Context, builder.Build());
         }
 
-        
+
         [Subject(Categories.Information)]
         [Command("info")]
         [Summary("Shows Nayu's information")]
@@ -386,7 +388,7 @@ namespace Nayu.Modules
         public async Task Info()
         {
             var config = BotAccounts.GetAccount();
-            string version = Config.bot.version;
+            var version = Config.bot.version;
             var embed = new EmbedBuilder();
             embed.WithColor(Global.NayuColor);
             embed.AddField("Creator", "Phytal#8213", true);
@@ -400,7 +402,7 @@ namespace Nayu.Modules
 
             await SendMessage(Context, embed.Build());
         }
-        
+
         [Subject(Categories.Information)]
         [Command("nayuLink")]
         [Summary("Provides Nayu's server invite link")]
@@ -409,8 +411,9 @@ namespace Nayu.Modules
         [Cooldown(5)]
         public async Task SendAsync()
         {
-            var embed = new EmbedBuilder{
-                Title = "Server Invite", 
+            var embed = new EmbedBuilder
+            {
+                Title = "Server Invite",
                 Url = "https://discord.gg/eyHg6hS",
                 Description = "^^ ~~ Here's my server! :blush:"
             };
@@ -418,13 +421,15 @@ namespace Nayu.Modules
         }
 
         [Subject(Categories.Information)]
-        [Command("dailyVote"), Alias("dv")]
+        [Command("dailyVote")]
+        [Alias("dv")]
         [Summary("Provides Nayu's daily vote link")]
         [Remarks("Ex: n!dv")]
         [Cooldown(5)]
         public async Task DailyVote()
         {
-            var embed = new EmbedBuilder{
+            var embed = new EmbedBuilder
+            {
                 Title = "Vote Link",
                 Url = "https://discordbots.org/bot/417160957010116608/vote",
                 Description = "^^ ~~ Vote for me please! I'll love you forever! :blush:"
@@ -443,9 +448,11 @@ namespace Nayu.Modules
             var embed = new EmbedBuilder
             {
                 Title = "Invite!",
-                Url = "https://discordapp.com/api/oauth2/authorize?client_id=417160957010116608&permissions=8&scope=bot",
+                Url =
+                    "https://discordapp.com/api/oauth2/authorize?client_id=417160957010116608&permissions=8&scope=bot",
                 Description = "^^ ~~ Invite me to your servers! :blush: "
             };
+            await SendMessage(Context, embed.Build());
         }
 
         [Subject(Categories.Information)]
@@ -457,24 +464,27 @@ namespace Nayu.Modules
         public async Task Patreon()
         {
             var embed = new EmbedBuilder
-                {
-                    Title = "Donate!",
-                    Url = "https://www.patreon.com/phytal",
-                    Description = "^^ ~~ Help us out! :blush:"
-                };
+            {
+                Title = "Donate!",
+                Url = "https://www.patreon.com/phytal",
+                Description = "^^ ~~ Help us out! :blush:"
+            };
             await SendMessage(Context, embed.Build());
         }
 
         [Subject(Categories.Information)]
-        [Command("changeLog"), Alias("update", "cl")]
+        [Command("changeLog")]
+        [Alias("update", "cl")]
         [Summary("Shows the latest update notes")]
         [Remarks("Ex: n!changeLog")]
         [Cooldown(5)]
         public async Task Update()
         {
-            string version = Config.bot.version;
+            var version = Config.bot.version;
             var config = BotAccounts.GetAccount();
-            var embed = EmbedHandler.CreateEmbed(Context, "Update Notes", $"**<<Last Updated on {config.LastUpdate.ToShortDateString()}>>**\n`Version {version}`\n" + config.ChangeLog,
+            var embed = EmbedHandler.CreateEmbed(Context, "Update Notes",
+                $"**<<Last Updated on {config.LastUpdate.ToShortDateString()}>>**\n`Version {version}`\n" +
+                config.ChangeLog,
                 EmbedHandler.EmbedMessageType.Success);
 
             await SendMessage(Context, embed);

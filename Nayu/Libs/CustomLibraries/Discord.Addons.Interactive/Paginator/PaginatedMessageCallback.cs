@@ -29,7 +29,7 @@ namespace Nayu.Libs.CustomLibraries.Discord.Addons.Interactive.Paginator
         private int title = 1;
 
 
-        public PaginatedMessageCallback(InteractiveService interactive, 
+        public PaginatedMessageCallback(InteractiveService interactive,
             ShardedCommandContext sourceContext,
             PaginatedMessage pager,
             ICriterion<SocketReaction> criterion = null)
@@ -76,8 +76,10 @@ namespace Nayu.Libs.CustomLibraries.Discord.Addons.Interactive.Paginator
             var emote = reaction.Emote;
 
             if (emote.Equals(options.First))
-            { title = 1;
-            page = 1; }
+            {
+                title = 1;
+                page = 1;
+            }
             else if (emote.Equals(options.Next))
             {
                 if (page >= pages)
@@ -94,21 +96,23 @@ namespace Nayu.Libs.CustomLibraries.Discord.Addons.Interactive.Paginator
             }
             else if (emote.Equals(options.Last))
                 page = pages;
+
             _ = Message.RemoveReactionAsync(reaction.Emote, reaction.User.Value);
             await RenderAsync().ConfigureAwait(false);
             return false;
         }
-        
+
         protected Embed BuildEmbed()
         {
             return new EmbedBuilder()
                 .WithAuthor(_pager.Author)
                 .WithColor(_pager.Color)
-                .WithDescription(_pager.Pages.ElementAt(page-1).ToString())
+                .WithDescription(_pager.Pages.ElementAt(page - 1).ToString())
                 .WithFooter(f => f.Text = string.Format(options.FooterFormat, page, pages))
                 .WithTitle(_pager.Title.ElementAt(title - 1).ToString())
                 .Build();
         }
+
         private async Task RenderAsync()
         {
             var embed = BuildEmbed();

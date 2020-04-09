@@ -7,7 +7,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API
 {
     public class birb : NayuModule
-    {        
+    {
         [Subject(Categories.Images)]
         [Command("birb")]
         [Alias("birdmeme")]
@@ -18,10 +18,10 @@ namespace Nayu.Modules.API
         {
             string url = @"https://random.birb.pw/tweet/random";
 
-            var request = (HttpWebRequest)WebRequest.Create(url);
+            var request = (HttpWebRequest) WebRequest.Create(url);
             request.AutomaticDecompression = DecompressionMethods.GZip;
 
-            using (var response = (HttpWebResponse)request.GetResponse())
+            using (var response = (HttpWebResponse) request.GetResponse())
             using (var stream = response.GetResponseStream())
             {
                 await Context.Channel.SendFileAsync(stream, "yeaah.jpg");

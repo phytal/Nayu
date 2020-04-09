@@ -13,7 +13,7 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Feed : NayuModule
-    {        
+    {
         [Subject(Categories.Interaction)]
         [Command("feed")]
         [Summary("Feed someone!")]

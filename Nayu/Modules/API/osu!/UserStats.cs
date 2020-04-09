@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace Nayu.Modules.API
 {
     public class UserStats : NayuModule
-    {        
+    {
         [Subject(Categories.osu)]
         [Command("osustats")]
         [Summary("Get a osu! user's statistics.")]
@@ -16,7 +16,8 @@ namespace Nayu.Modules.API
         [Cooldown(5)]
         public async Task GetOsuStats([Remainder] string user)
         {
-            var json = await Global.SendWebRequest("https://osu.ppy.sh/api/get_user?k=2ce122dfe83fb6826b3f2dfe58336006db65c138&type=string&u=" + user);
+            var json = await Global.SendWebRequest(
+                "https://osu.ppy.sh/api/get_user?k=2ce122dfe83fb6826b3f2dfe58336006db65c138&type=string&u=" + user);
 
             var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
 
@@ -41,7 +42,8 @@ namespace Nayu.Modules.API
             string c3 = dataObject[0].count300.ToString();
 
             var embed = new EmbedBuilder();
-            embed.WithThumbnailUrl("https://images.discordapp.net/avatars/421879566265614337/7035b241f838c0e1de3f0ab047352d0b.png?size=512");
+            embed.WithThumbnailUrl(
+                "https://images.discordapp.net/avatars/421879566265614337/7035b241f838c0e1de3f0ab047352d0b.png?size=512");
             embed.WithColor(Global.NayuColor);
             embed.WithTitle($":video_game:  **|** **{Username}'s osu! Profile**");
             embed.AddField("Username", Username + $" ({country})", true);
@@ -54,13 +56,14 @@ namespace Nayu.Modules.API
             embed.AddField("Play Count", playcount, true);
             embed.AddField("Accuracy", acc, true);
             embed.AddField("Country PP Rank", ppcountryrank, true);
-            embed.WithDescription($"**SS+:** {ssh} | **SS:** {ss} | **S+:** {sh} | **S:** {s} | **A:** {a} \n**300s:** {c3} | **100s:** {c1} | **50s:** {c5}" );
+            embed.WithDescription(
+                $"**SS+:** {ssh} | **SS:** {ss} | **S+:** {sh} | **S:** {s} | **A:** {a} \n**300s:** {c3} | **100s:** {c1} | **50s:** {c5}");
 
             embed.WithFooter("Powered by the osu.ppy.sh API");
 
             await SendMessage(Context, embed.Build());
         }
-        
+
         [Subject(Categories.osu)]
         [Command("maniastats")]
         [Summary("Get a osu! mania user's statistics.")]
@@ -68,7 +71,8 @@ namespace Nayu.Modules.API
         [Cooldown(5)]
         public async Task GetOsuManiaStats([Remainder] string user)
         {
-            var json = await Global.SendWebRequest("https://osu.ppy.sh/api/get_user?k=2ce122dfe83fb6826b3f2dfe58336006db65c138&type=string&m=3&u=" + user);
+            var json = await Global.SendWebRequest(
+                "https://osu.ppy.sh/api/get_user?k=2ce122dfe83fb6826b3f2dfe58336006db65c138&type=string&m=3&u=" + user);
 
             var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
 
@@ -93,7 +97,8 @@ namespace Nayu.Modules.API
             string c3 = dataObject[0].count300.ToString();
 
             var embed = new EmbedBuilder();
-            embed.WithThumbnailUrl("https://images.discordapp.net/avatars/421879566265614337/7035b241f838c0e1de3f0ab047352d0b.png?size=512");
+            embed.WithThumbnailUrl(
+                "https://images.discordapp.net/avatars/421879566265614337/7035b241f838c0e1de3f0ab047352d0b.png?size=512");
             embed.WithColor(Global.NayuColor);
             embed.WithTitle($":video_game:  **|** **{Username}'s osu! mania Profile**");
             embed.AddField("Username", Username + $" ({country})", true);
@@ -106,13 +111,14 @@ namespace Nayu.Modules.API
             embed.AddField("Play Count", playcount, true);
             embed.AddField("Accuracy", acc, true);
             embed.AddField("Country PP Rank", ppcountryrank, true);
-            embed.WithDescription($"**SS+:** {ssh} | **SS:** {ss} | **S+:** {sh} | **S:** {s} | **A:** {a} \n**300s:** {c3} | **100s:** {c1} | **50s:** {c5}");
+            embed.WithDescription(
+                $"**SS+:** {ssh} | **SS:** {ss} | **S+:** {sh} | **S:** {s} | **A:** {a} \n**300s:** {c3} | **100s:** {c1} | **50s:** {c5}");
 
             embed.WithFooter("Powered by the osu.ppy.sh API");
 
             await SendMessage(Context, embed.Build());
         }
-        
+
         [Subject(Categories.osu)]
         [Command("taikostats")]
         [Summary("Get a osu! taiko user's statistics.")]
@@ -120,7 +126,8 @@ namespace Nayu.Modules.API
         [Cooldown(5)]
         public async Task GetOsuTaikoStats([Remainder] string user)
         {
-            var json = await Global.SendWebRequest("https://osu.ppy.sh/api/get_user?k=2ce122dfe83fb6826b3f2dfe58336006db65c138&type=string&m=1&u=" + user);
+            var json = await Global.SendWebRequest(
+                "https://osu.ppy.sh/api/get_user?k=2ce122dfe83fb6826b3f2dfe58336006db65c138&type=string&m=1&u=" + user);
 
             var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
 
@@ -145,7 +152,8 @@ namespace Nayu.Modules.API
             string c3 = dataObject[0].count300.ToString();
 
             var embed = new EmbedBuilder();
-            embed.WithThumbnailUrl("https://images.discordapp.net/avatars/421879566265614337/7035b241f838c0e1de3f0ab047352d0b.png?size=512");
+            embed.WithThumbnailUrl(
+                "https://images.discordapp.net/avatars/421879566265614337/7035b241f838c0e1de3f0ab047352d0b.png?size=512");
             embed.WithColor(Global.NayuColor);
             embed.WithTitle($":video_game:  **|** **{Username}'s osu! taiko Profile**");
             embed.AddField("Username", Username + $" ({country})", true);
@@ -158,13 +166,14 @@ namespace Nayu.Modules.API
             embed.AddField("Play Count", playcount, true);
             embed.AddField("Accuracy", acc, true);
             embed.AddField("Country PP Rank", ppcountryrank, true);
-            embed.WithDescription($"**SS+:** {ssh} | **SS:** {ss} | **S+:** {sh} | **S:** {s} | **A:** {a} \n**300s:** {c3} | **100s:** {c1} | **50s:** {c5}");
+            embed.WithDescription(
+                $"**SS+:** {ssh} | **SS:** {ss} | **S+:** {sh} | **S:** {s} | **A:** {a} \n**300s:** {c3} | **100s:** {c1} | **50s:** {c5}");
 
             embed.WithFooter("Powered by the osu.ppy.sh API");
 
             await SendMessage(Context, embed.Build());
         }
-        
+
         [Subject(Categories.osu)]
         [Command("ctbstats")]
         [Summary("Get a osu! ctb user's statistics.")]
@@ -172,7 +181,8 @@ namespace Nayu.Modules.API
         [Cooldown(5)]
         public async Task GetOsuCtbStats([Remainder] string user)
         {
-            var json = await Global.SendWebRequest("https://osu.ppy.sh/api/get_user?k=2ce122dfe83fb6826b3f2dfe58336006db65c138&type=string&m=2&u=" + user);
+            var json = await Global.SendWebRequest(
+                "https://osu.ppy.sh/api/get_user?k=2ce122dfe83fb6826b3f2dfe58336006db65c138&type=string&m=2&u=" + user);
 
             var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
 
@@ -197,7 +207,8 @@ namespace Nayu.Modules.API
             string c3 = dataObject[0].count300.ToString();
 
             var embed = new EmbedBuilder();
-            embed.WithThumbnailUrl("https://images.discordapp.net/avatars/421879566265614337/7035b241f838c0e1de3f0ab047352d0b.png?size=512");
+            embed.WithThumbnailUrl(
+                "https://images.discordapp.net/avatars/421879566265614337/7035b241f838c0e1de3f0ab047352d0b.png?size=512");
             embed.WithColor(Global.NayuColor);
             embed.WithTitle($":video_game:  **|** **{Username}'s osu! ctb Profile**");
             embed.AddField("Username", Username + $" ({country})", true);
@@ -210,7 +221,8 @@ namespace Nayu.Modules.API
             embed.AddField("Play Count", playcount, true);
             embed.AddField("Accuracy", acc, true);
             embed.AddField("Country PP Rank", ppcountryrank, true);
-            embed.WithDescription($"**SS+:** {ssh} | **SS:** {ss} | **S+:** {sh} | **S:** {s} | **A:** {a} \n**300s:** {c3} | **100s:** {c1} | **50s:** {c5}");
+            embed.WithDescription(
+                $"**SS+:** {ssh} | **SS:** {ss} | **S+:** {sh} | **S:** {s} | **A:** {a} \n**300s:** {c3} | **100s:** {c1} | **50s:** {c5}");
 
             embed.WithFooter("Powered by the osu.ppy.sh API");
 
@@ -218,4 +230,3 @@ namespace Nayu.Modules.API
         }
     }
 }
-

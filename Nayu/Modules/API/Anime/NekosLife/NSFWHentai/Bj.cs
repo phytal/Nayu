@@ -9,7 +9,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
 {
     public class Bj : NayuModule
-    {        
+    {
         [Subject(NSFWCategories.Hentai)]
         [Command("blowjob")]
         [Alias("bj")]
@@ -21,7 +21,8 @@ namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
             var channel = Context.Channel as ITextChannel;
             if (!channel.IsNsfw)
             {
-                var nsfwText = $"{Global.ENo} **|** You need to use this command in a NSFW channel, {Context.User.Username}!";
+                var nsfwText =
+                    $"{Global.ENo} **|** You need to use this command in a NSFW channel, {Context.User.Username}!";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", nsfwText,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);
@@ -29,9 +30,9 @@ namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
             }
 
             string nekolink = NekosLifeHelper.GetNekoLink("bj");
-                var title = "Randomly generated hentai blowjob just for you <3!";
-                var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, title);
-                await SendMessage(Context, embed);
+            var title = "Randomly generated hentai blowjob just for you <3!";
+            var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, title);
+            await SendMessage(Context, embed);
         }
     }
 }

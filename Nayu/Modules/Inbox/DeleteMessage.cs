@@ -9,7 +9,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.Inbox
 {
     public class DeleteMessage : NayuModule
-    {        
+    {
         [Subject(Categories.Inbox)]
         [Command("deleteMessage")]
         [Summary("Delete a message in your inbox through its ID")]
@@ -20,11 +20,12 @@ namespace Nayu.Modules.Inbox
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             if (id < 1 || id > config.InboxIDTracker) throw new ArgumentException("Please enter a valid ID");
-            
-            if (!config.Inbox.Any()) throw new ArgumentException("You don't have any messages to delete! (Empty Inbox)");
+
+            if (!config.Inbox.Any())
+                throw new ArgumentException("You don't have any messages to delete! (Empty Inbox)");
 
             var validMessages = config.Inbox.Where(i => i.ID == id);
-            
+
             foreach (var msg in validMessages)
             {
                 config.Inbox.Remove(msg);

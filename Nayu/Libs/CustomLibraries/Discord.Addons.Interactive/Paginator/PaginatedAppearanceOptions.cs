@@ -13,7 +13,7 @@ namespace Nayu.Libs.CustomLibraries.Discord.Addons.Interactive.Paginator
         public IEmote Last = new Emoji("⏭");
 
         public string FooterFormat = "Page {0}/{1}";
-        
+
         public bool DisplayInformationIcon = true;
 
         public TimeSpan? Timeout = null;

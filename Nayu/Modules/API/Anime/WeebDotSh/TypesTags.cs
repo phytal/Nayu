@@ -14,6 +14,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh
     public class TypesTags : NayuModule
     {
         WeebClient weebClient = new WeebClient("Nayu", Config.bot.version);
+
         public async Task<TagsData> GetTagsAsync(bool hidden)
         {
             return await weebClient.GetTagsAsync(hidden); //hidden is always defaulted to false
@@ -34,7 +35,6 @@ namespace Nayu.Modules.API.Anime.WeebDotSh
             var tags = await GetTagsAsync(false);
             List<string> tagList = tags.Tags;
             await SendMessage(Context, null, String.Join(", ", tagList));
-
         }
 
         [Command("weebtypes")]
@@ -47,7 +47,6 @@ namespace Nayu.Modules.API.Anime.WeebDotSh
             var tags = await GetTypessAsync(false);
             List<string> tagList = tags.Types;
             await SendMessage(Context, null, String.Join(", ", tagList));
-
         }
     }
 }

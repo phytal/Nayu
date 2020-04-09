@@ -60,6 +60,7 @@ namespace Nayu.Core.LevelingSystem
             GlobalUserAccounts.SaveAccounts(config.Id);
             return Task.CompletedTask;
         }
+
         public static async Task CheckDuelLootboxes(SocketUser user)
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
@@ -75,7 +76,8 @@ namespace Nayu.Core.LevelingSystem
             if (legendary == 0)
             {
                 config.LootBoxLegendary += 1;
-                msg = $"**{user.Username}**, you have received a **LEGENDARY** lootbox for reaching {config.Wins} wins!";
+                msg =
+                    $"**{user.Username}**, you have received a **LEGENDARY** lootbox for reaching {config.Wins} wins!";
             }
             else if (epic == 0)
             {
@@ -97,18 +99,19 @@ namespace Nayu.Core.LevelingSystem
                 config.LootBoxCommon += 1;
                 msg = $"**{user.Username}**, you have received a **COMMON** lootbox for reaching {config.Wins} wins!";
             }
+
             GlobalUserAccounts.SaveAccounts(user.Id);
             await CreateMessage.CreateAndSendMessageAsync("Lootbox Reward", msg, DateTime.UtcNow, user);
         }
 
-            public static async Task CheckLootBoxRewards(SocketUser user)
+        public static async Task CheckLootBoxRewards(SocketUser user)
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
             var channel = await user.GetOrCreateDMChannelAsync();
-            int level = (int)config.LevelNumber;
+            int level = (int) config.LevelNumber;
 
             string msg;
-            
+
             int uc = level % 5;
             int rare = level % 10;
             int epic = level % 15;
@@ -138,14 +141,16 @@ namespace Nayu.Core.LevelingSystem
                 config.LootBoxCommon += 1;
                 msg = lootBoxMessage(user, "COMMON");
             }
+
             GlobalUserAccounts.SaveAccounts(user.Id);
             await CreateMessage.CreateAndSendMessageAsync("Lootbox Reward", msg, DateTime.UtcNow, user);
         }
 
-            public static string lootBoxMessage(SocketUser user, string rarity)
-            {
-                var config = GlobalUserAccounts.GetUserAccount(user);
-                return $"**{user.Username}**, you have received a **{rarity}** loot box for reaching level {config.LevelNumber}!\nUse `n!lbi` to view all of your loot boxes!";
-            }
+        public static string lootBoxMessage(SocketUser user, string rarity)
+        {
+            var config = GlobalUserAccounts.GetUserAccount(user);
+            return
+                $"**{user.Username}**, you have received a **{rarity}** loot box for reaching level {config.LevelNumber}!\nUse `n!lbi` to view all of your loot boxes!";
+        }
     }
 }

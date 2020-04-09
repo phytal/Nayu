@@ -13,7 +13,5 @@
         Holy,
         Clumsy, //attack misses more often, less xp gain, less control gain/loss
         Cute //cheaper to maintain, opponent misses attacks more
-        
-        
     }
 }

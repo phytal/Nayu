@@ -19,16 +19,18 @@ namespace Nayu.Modules
         {
             if (string.IsNullOrWhiteSpace(tagName))
             {
-                
                 var description = "You need to use this with some more input...\n" +
-                                 "Try the `n!command tag` command to get more information on how to use this command.";
-                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error!", description, EmbedHandler.EmbedMessageType.Exception, false);
+                                  "Try the `n!command tag` command to get more information on how to use this command.";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error!", description,
+                    EmbedHandler.EmbedMessageType.Exception, false);
                 await SendMessage(Context, errorEmbed);
                 return;
             }
+
             var guildAcc = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var response = TagFunctions.GetTag(tagName, guildAcc);
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success,
+                false);
             await SendMessage(Context, embed);
         }
 
@@ -41,7 +43,8 @@ namespace Nayu.Modules
             var guildAcc = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             //tagContent.Replace("@everyone", "@\u200beveryone").Replace("@here", "@\u200bhere");
             var response = TagFunctions.AddTag(tagName, tagContent, guildAcc);
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success,
+                false);
             await SendMessage(Context, embed);
         }
 
@@ -54,7 +57,8 @@ namespace Nayu.Modules
             var guildAcc = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             //tagContent.Replace("@everyone", "@\u200beveryone").Replace("@here", "@\u200bhere");
             var response = TagFunctions.UpdateTag(tagName, tagContent, guildAcc);
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success,
+                false);
             await SendMessage(Context, embed);
         }
 
@@ -66,7 +70,8 @@ namespace Nayu.Modules
         {
             var guildAcc = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var response = TagFunctions.RemoveTag(tagName, guildAcc);
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success,
+                false);
             await SendMessage(Context, embed);
         }
 
@@ -81,7 +86,7 @@ namespace Nayu.Modules
             await SendMessage(Context, emb);
         }
     }
-    
+
     public class PersonalTags : NayuModule
     {
         [Subject(Categories.PersonalTags)]
@@ -93,14 +98,17 @@ namespace Nayu.Modules
             if (string.IsNullOrWhiteSpace(tagName))
             {
                 var description = "You need to use this with some more input...\n" +
-                                 "Try the `help ptag` command to get more information on how to use this command.";
-                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error!", description, EmbedHandler.EmbedMessageType.Error, false);
+                                  "Try the `help ptag` command to get more information on how to use this command.";
+                var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error!", description,
+                    EmbedHandler.EmbedMessageType.Error, false);
                 await SendMessage(Context, errorEmbed);
                 return;
             }
+
             var userAcc = GlobalUserAccounts.GetUserAccount(Context.User.Id);
             var response = TagFunctions.GetTag(tagName, userAcc);
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success,
+                false);
             await SendMessage(Context, embed);
         }
 
@@ -113,7 +121,8 @@ namespace Nayu.Modules
             var userAcc = GlobalUserAccounts.GetUserAccount(Context.User.Id);
             tagContent.Replace("@everyone", "@\u200beveryone").Replace("@here", "@\u200bhere");
             var response = TagFunctions.AddTag(tagName, tagContent, userAcc);
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success,
+                false);
             await SendMessage(Context, embed);
         }
 
@@ -126,10 +135,11 @@ namespace Nayu.Modules
             var userAcc = GlobalUserAccounts.GetUserAccount(Context.User.Id);
             tagContent.Replace("@everyone", "@\u200beveryone").Replace("@here", "@\u200bhere");
             var response = TagFunctions.UpdateTag(tagName, tagContent, userAcc);
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success,
+                false);
             await SendMessage(Context, embed);
         }
-        
+
         [Subject(Categories.PersonalTags)]
         [Command("ptagRemove"), Summary("Removes an existing tag of yours")]
         [Remarks("n!ptagRemove <tag name> Ex: n!ptag remove door")]
@@ -138,7 +148,8 @@ namespace Nayu.Modules
         {
             var userAcc = GlobalUserAccounts.GetUserAccount(Context.User.Id);
             var response = TagFunctions.RemoveTag(tagName, userAcc);
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success,
+                false);
             await SendMessage(Context, embed);
         }
 

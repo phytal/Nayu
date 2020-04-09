@@ -8,8 +8,10 @@ namespace Nayu.Preconditions
 {
     public class Cooldown : PreconditionAttribute
     {
-        TimeSpan CooldownLength { get; set; }
-        readonly ConcurrentDictionary<CooldownInfo, DateTime> _cooldowns = new ConcurrentDictionary<CooldownInfo, DateTime>();
+        private TimeSpan CooldownLength { get; set; }
+
+        private readonly ConcurrentDictionary<CooldownInfo, DateTime> _cooldowns =
+            new ConcurrentDictionary<CooldownInfo, DateTime>();
 
         /// <summary>
         /// Sets the cooldown for a user to use this command
@@ -20,20 +22,20 @@ namespace Nayu.Preconditions
             CooldownLength = TimeSpan.FromSeconds(5);
         }
 
-        public override Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
+        public override Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command,
+            IServiceProvider services)
         {
             var key = new CooldownInfo(context.User.Id, command.GetHashCode());
             // Check if message with the same hash code is already in dictionary 
-            if (_cooldowns.TryGetValue(key, out DateTime endsAt))
+            if (_cooldowns.TryGetValue(key, out var endsAt))
             {
                 // Calculate the difference between current time and the time cooldown should end
                 var difference = endsAt.Subtract(DateTime.UtcNow);
                 var timeSpanString = string.Format("{0:%s} seconds", difference);
                 // Display message if command is on cooldown
                 if (difference.Ticks > 0)
-                {
-                    return Task.FromResult(PreconditionResult.FromError($"You can use this command in {timeSpanString}"));
-                }
+                    return Task.FromResult(
+                        PreconditionResult.FromError($"You can use this command in {timeSpanString}"));
                 // Update cooldown time
                 var time = DateTime.UtcNow.Add(CooldownLength);
                 _cooldowns.TryUpdate(key, time, endsAt);
@@ -45,6 +47,7 @@ namespace Nayu.Preconditions
 
             return Task.FromResult(PreconditionResult.FromSuccess());
         }
+
         public struct CooldownInfo
         {
             public ulong UserId { get; }

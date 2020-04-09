@@ -13,7 +13,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API
 {
     public class UrbanDictionary : NayuModule
-    {        
+    {
         [Subject(Categories.Fun)]
         [Command("define")]
         [Summary("Use Urban Dictionary to define a given word")]
@@ -22,9 +22,10 @@ namespace Nayu.Modules.API
         [Cooldown(5)]
         public async Task Define([Remainder] string link)
         {
-            if (Context.Guild.Id == 264445053596991498 && !(Context.Channel as ITextChannel).IsNsfw) //dbl server (dont kill me pls)
+            if (Context.Guild.Id == 264445053596991498 && !(Context.Channel as ITextChannel).IsNsfw
+            ) //dbl server (dont kill me pls)
                 return;
-            
+
             string json;
             using (WebClient client = new WebClient())
             {
@@ -46,7 +47,7 @@ namespace Nayu.Modules.API
             embed.WithDescription($"By *{author}*");
             embed.AddField("Definition", definition, true);
             embed.AddField("Example", example + "\n" +
-                "\n:thumbsup:" + up + " :thumbsdown:" + down, true);
+                                      "\n:thumbsup:" + up + " :thumbsdown:" + down, true);
             embed.WithFooter("Provided by the Urban Dictionary API");
             embed.WithUrl(permalink);
 

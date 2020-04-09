@@ -32,7 +32,8 @@ namespace Nayu.Modules.WelcomeAndLeave
             var response = $"Set this guild's welcome channel to #{chnl}.";
             config.WelcomeChannel = chnl.Id;
             GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success,
+                false);
             await SendMessage(Context, embed);
         }
 
@@ -65,7 +66,8 @@ namespace Nayu.Modules.WelcomeAndLeave
                 response = $"Successfully added ```\n{message}\n``` as Welcome Message!";
             }
 
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success,
+                false);
             await SendMessage(Context, embed);
         }
 
@@ -96,7 +98,8 @@ namespace Nayu.Modules.WelcomeAndLeave
                 response = $"Successfully removed message #{messageIndex} as possible Welcome Message!";
             }
 
-            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success, false);
+            var embed = EmbedHandler.CreateEmbed(Context, "Success!", response, EmbedHandler.EmbedMessageType.Success,
+                false);
             await SendMessage(Context, embed);
         }
 
@@ -122,7 +125,7 @@ namespace Nayu.Modules.WelcomeAndLeave
                 "No Welcome Messages set yet... add some if you want to greet incoming people!");
             if (welcomeMessages.Count > 0) embed.WithTitle("Possible Welcome Messages:");
             embed.WithColor(Global.NayuColor);
-            
+
             for (var i = 0; i < welcomeMessages.Count; i++)
             {
                 embed.AddField($"Message #{i + 1}:", welcomeMessages[i], true);

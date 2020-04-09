@@ -62,7 +62,9 @@ namespace Nayu.Modules.Admin.Commands.Management
                 var messagesToDelete = await Context.Channel.GetMessagesAsync(num + 1).FlattenAsync();
                 if (Context.Channel is ITextChannel channel) await channel.DeleteMessagesAsync(messagesToDelete);
                 if (num == 1) await ReplyAndDeleteAsync("✅  **|** Deleted 1 message.");
-                else await ReplyAndDeleteAsync("✅  **|** Cleared " + num + " messages.", timeout: TimeSpan.FromSeconds(5));
+                else
+                    await ReplyAndDeleteAsync("✅  **|** Cleared " + num + " messages.",
+                        timeout: TimeSpan.FromSeconds(5));
             }
             else
             {

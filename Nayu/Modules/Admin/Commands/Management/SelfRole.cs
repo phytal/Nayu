@@ -38,7 +38,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             config.SelfRoles.Add(role);
             GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
         }
-        
+
         [Subject(AdminCategories.Roles)]
         [Command("SelfRoleRem"), Alias("SRR")]
         [Summary("Removes a Self Role. Users can add a role themselves with n!Iam or n!Iamnot")]
@@ -73,7 +73,7 @@ namespace Nayu.Modules.Admin.Commands.Management
 
             await SendMessage(Context, embed.Build());
         }
-        
+
         [Subject(AdminCategories.Roles)]
         [Command("SelfRoleClear"), Alias("SRC")]
         [Summary("Clears all Self Roles. Users can add a role themselves with n!Iam or n!Iamnot")]

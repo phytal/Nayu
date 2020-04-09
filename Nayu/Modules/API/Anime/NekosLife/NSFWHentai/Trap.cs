@@ -9,7 +9,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
 {
     public class Trap : NayuModule
-    {        
+    {
         [Subject(NSFWCategories.Hentai)]
         [Command("trap")]
         [Summary("Displays a trap")]
@@ -20,7 +20,8 @@ namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
             var channel = Context.Channel as ITextChannel;
             if (!channel.IsNsfw)
             {
-                var nsfwText = $"{Global.ENo} **|** You need to use this command in a NSFW channel, {Context.User.Username}!";
+                var nsfwText =
+                    $"{Global.ENo} **|** You need to use this command in a NSFW channel, {Context.User.Username}!";
                 var errorEmbed = EmbedHandler.CreateEmbed(Context, "Error", nsfwText,
                     EmbedHandler.EmbedMessageType.Exception);
                 await ReplyAndDeleteAsync("", embed: errorEmbed);

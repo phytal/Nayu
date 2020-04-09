@@ -26,14 +26,14 @@ namespace Nayu.Modules.LootBox
 
             config.NormalCapsule += 1;
             embed.AddField("Chomusuke Item", "Normal Chomusuke Capsule (Open it with `n!openCapsule`!)");
-            int duelBool = Global.Rng.Next(1, 4);//2/3 chance
+            int duelBool = Global.Rng.Next(1, 4); //2/3 chance
             if (duelBool == 1 || duelBool == 2)
             {
                 string item = ItemProbability.DuelsItemProbabiliy(user, 'c');
                 embed.AddField("Duels Item", $"{item} (x1)");
             }
 
-            GlobalUserAccounts.SaveAccounts(config.Id); 
+            GlobalUserAccounts.SaveAccounts(config.Id);
             await channel.SendMessageAsync("", embed: embed.Build());
         }
 
@@ -76,7 +76,7 @@ namespace Nayu.Modules.LootBox
                 .WithImageUrl("https://i.imgur.com/0oB1JXq.png");
             embed.Title = "Rare Lootbox";
             embed.Description = $"**{user.Username}** opened a **RARE** Lootbox!";
-            ushort taiyakies = (ushort)Global.Rng.Next(320, 500);
+            ushort taiyakies = (ushort) Global.Rng.Next(320, 500);
             config.Taiyaki += taiyakies;
             embed.AddField("Taiyakis", taiyakies);
 
@@ -100,7 +100,7 @@ namespace Nayu.Modules.LootBox
                 .WithImageUrl("https://i.imgur.com/Mo5KG0K.png");
             embed.Title = "Epic Lootbox";
             embed.Description = $"**{user.Username}** opened an **EPIC** Lootbox!";
-            ushort taiyakies = (ushort)Global.Rng.Next(550, 750);
+            ushort taiyakies = (ushort) Global.Rng.Next(550, 750);
             config.Taiyaki += taiyakies;
             embed.AddField("Taiyakis", taiyakies);
 
@@ -138,7 +138,7 @@ namespace Nayu.Modules.LootBox
                 .WithImageUrl("https://i.imgur.com/SfibEDJ.png");
             embed.Title = "Legendary Lootbox";
             embed.Description = $"**{user.Username}** opened a **LEGENDARY** Lootbox!";
-            ushort taiyakies = (ushort)Global.Rng.Next(800, 1200);
+            ushort taiyakies = (ushort) Global.Rng.Next(800, 1200);
             config.Taiyaki += taiyakies;
             embed.AddField("Taiyakis", taiyakies);
 
@@ -155,7 +155,6 @@ namespace Nayu.Modules.LootBox
 
                 await channel.SendMessageAsync("", embed: embed.Build());
             }
-
         }
     }
 }

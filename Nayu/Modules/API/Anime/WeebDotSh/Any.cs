@@ -9,7 +9,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh
 {
     public class Any : NayuModule
-    {        
+    {
         [Subject(Categories.Images)]
         [Command("anyweeb")]
         [Summary("Displays an image of a sfw anime gif/image, provided with the type")]
@@ -36,7 +36,7 @@ namespace Nayu.Modules.API.Anime.WeebDotSh
             }
             catch
             {
-                await SendMessage(Context, null, 
+                await SendMessage(Context, null,
                     "Did you enter a valid type? \nView all types with the `n!ceebtypes` command" +
                     "\nOtherwise did you use the command correctly?\nUsage: n!anyweeb <type> Ex: n!anyweeb lick");
             }

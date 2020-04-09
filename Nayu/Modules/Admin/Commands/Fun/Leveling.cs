@@ -17,7 +17,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
         [Summary("Sets the way leveling messages are sent")]
         [Remarks("n!lvlmsg <dm/server> Ex: n!lvlmsg dm")]
         [Cooldown(5)]
-        public async Task SetLvlingMsgStatus([Remainder]string preset)
+        public async Task SetLvlingMsgStatus([Remainder] string preset)
         {
             var guser = Context.User as SocketGuildUser;
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
@@ -28,6 +28,7 @@ namespace Nayu.Modules.Admin.Commands.Fun
                     await SendMessage(Context, null, "You need to enable leveling on this server first!");
                     return;
                 }
+
                 if (preset == "dm" || preset == "server")
                 {
                     var embed = new EmbedBuilder();
@@ -47,7 +48,8 @@ namespace Nayu.Modules.Admin.Commands.Fun
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
-                embed.Title = $"{Global.ENo} **|** You Need the Administrator Permission to do that {Context.User.Username}";
+                embed.Title =
+                    $"{Global.ENo} **|** You Need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
         }
@@ -69,12 +71,15 @@ namespace Nayu.Modules.Admin.Commands.Fun
                     var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
                     var embed = new EmbedBuilder();
                     embed.WithColor(Global.NayuColor);
-                    embed.WithDescription(argg ? "Enabled leveling for this server." : "Disabled leveling for this server.");
+                    embed.WithDescription(argg
+                        ? "Enabled leveling for this server."
+                        : "Disabled leveling for this server.");
                     config.Leveling = argg;
                     GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
                     await SendMessage(Context, embed.Build());
                 }
+
                 if (!result.Item1)
                 {
                     await SendMessage(Context, null, $"Please say `n!leveling <on/off>`");
@@ -84,7 +89,8 @@ namespace Nayu.Modules.Admin.Commands.Fun
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
-                embed.Title = $"{Global.ENo} **|** You Need the Administrator Permission to do that {Context.User.Username}";
+                embed.Title =
+                    $"{Global.ENo} **|** You Need the Administrator Permission to do that {Context.User.Username}";
                 await ReplyAndDeleteAsync("", embed: embed.Build(), timeout: TimeSpan.FromSeconds(5));
             }
         }

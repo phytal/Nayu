@@ -9,15 +9,16 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API.Anime.WeebDotSh.Interactive
 {
     public class Wag : NayuModule
-    {        
+    {
         [Subject(Categories.Interaction)]
         [Command("wag")]
         [Summary("Displays an image of an anime wag gif")]
-        [Remarks("Usage: n!cag <user you want to wag (your imaginary tail) at (or can be left empty)> Ex: n!cag @Phytal")]
+        [Remarks(
+            "Usage: n!cag <user you want to wag (your imaginary tail) at (or can be left empty)> Ex: n!cag @Phytal")]
         [Cooldown(5)]
         public async Task WagUser(IGuildUser user = null)
         {
-            string[] tags = { "" };
+            string[] tags = {""};
             Helpers.WebRequest webReq = new Helpers.WebRequest();
             RandomData result = await webReq.GetTypesAsync("wag", tags, FileType.Gif, NsfwSearch.False, false);
             string url = result.Url;

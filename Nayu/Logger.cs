@@ -12,11 +12,13 @@ namespace Nayu
         internal static Task Log(LogMessage logMessage)
         {
             Console.ForegroundColor = SeverityToConsoleColor(logMessage.Severity);
-            string message = String.Concat(DateTime.Now.ToShortTimeString(), " [", logMessage.Source, "] ", logMessage.Message);
+            var message = string.Concat(DateTime.Now.ToShortTimeString(), " [", logMessage.Source, "] ",
+                logMessage.Message);
             Console.WriteLine(message);
             Console.ResetColor();
             return Task.CompletedTask;
         }
+
         /// <summary>Console logging event for music.</summary>
         public void ConsoleMusicLog(string msg)
         {
@@ -24,6 +26,7 @@ namespace Nayu
             Console.WriteLine($"\nMusic Service:" +
                               $"\nMessage: [\"{msg}\"]\n");
         }
+
         private static ConsoleColor SeverityToConsoleColor(LogSeverity severity)
         {
             switch (severity)

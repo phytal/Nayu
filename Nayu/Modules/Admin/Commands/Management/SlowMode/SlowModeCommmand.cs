@@ -11,7 +11,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.Admin.Commands.Management.SlowMode
 {
     public class Slowmode : NayuModule
-    {        
+    {
         [Subject(AdminCategories.ServerManagement)]
         [Command("SlowMode"), Alias("sm")]
         [Summary("Adds a slowmode to the entire server (usually for large servers)")]
@@ -35,7 +35,8 @@ namespace Nayu.Modules.Admin.Commands.Management.SlowMode
             config.SlowModeCooldown = length;
             GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
-            await SendMessage(Context, null, $":snail:  **|** Successfully turned on slow mode for **{length}** seconds.");
+            await SendMessage(Context, null,
+                $":snail:  **|** Successfully turned on slow mode for **{length}** seconds.");
         }
 
         [Subject(AdminCategories.ServerManagement)]

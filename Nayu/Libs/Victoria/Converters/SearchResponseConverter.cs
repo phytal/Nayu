@@ -5,16 +5,20 @@ using System.Text.Json.Serialization;
 using Victoria.Enums;
 using Victoria.Responses.Rest;
 
-namespace Victoria.Converters {
-    internal sealed class SearchResponseConverter : JsonConverter<SearchResponse> {
+namespace Victoria.Converters
+{
+    internal sealed class SearchResponseConverter : JsonConverter<SearchResponse>
+    {
         /// <inheritdoc />
         public override SearchResponse Read(ref Utf8JsonReader reader, Type typeToConvert,
-                                            JsonSerializerOptions options) {
+            JsonSerializerOptions options)
+        {
             if (reader.TokenType != JsonTokenType.StartObject)
                 throw new JsonException();
 
             var searchResponse = new SearchResponse();
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 if (reader.TokenType == JsonTokenType.EndObject)
                     break;
 
@@ -24,19 +28,24 @@ namespace Victoria.Converters {
                 var index = reader.ValueSpan[0];
                 reader.Read();
 
-                if (index == 108) {
+                if (index == 108)
+                {
                     searchResponse.LoadStatus = (LoadStatus) reader.ValueSpan[0];
                 }
-                else if (index == 112) {
+                else if (index == 112)
+                {
                     BuildPlaylistInfo(ref searchResponse, ref reader);
                 }
-                else if (index == 101) {
+                else if (index == 101)
+                {
                     BuildRestException(ref searchResponse, ref reader);
                 }
-                else if (index == 116) {
+                else if (index == 116)
+                {
                     BuildTracksList(ref searchResponse, ref reader);
                 }
-                else {
+                else
+                {
                     throw new JsonException($"Unhandled index type: {index}");
                 }
             }
@@ -44,10 +53,12 @@ namespace Victoria.Converters {
             return searchResponse;
         }
 
-        private void BuildPlaylistInfo(ref SearchResponse response, ref Utf8JsonReader reader) {
+        private void BuildPlaylistInfo(ref SearchResponse response, ref Utf8JsonReader reader)
+        {
             var playlist = new PlaylistInfo();
 
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 if (reader.TokenType == JsonTokenType.EndObject)
                     break;
 
@@ -67,9 +78,11 @@ namespace Victoria.Converters {
             response.Playlist = playlist;
         }
 
-        private void BuildRestException(ref SearchResponse response, ref Utf8JsonReader reader) {
+        private void BuildRestException(ref SearchResponse response, ref Utf8JsonReader reader)
+        {
             var exception = new RestException();
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 if (reader.TokenType == JsonTokenType.EndObject)
                     break;
 
@@ -89,10 +102,12 @@ namespace Victoria.Converters {
             response.Exception = exception;
         }
 
-        private void BuildTracksList(ref SearchResponse response, ref Utf8JsonReader reader) {
+        private void BuildTracksList(ref SearchResponse response, ref Utf8JsonReader reader)
+        {
             var set = new List<LavaTrack>();
 
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 if (reader.TokenType == JsonTokenType.EndArray)
                     break;
 
@@ -100,7 +115,8 @@ namespace Victoria.Converters {
                     continue;
 
                 var track = new LavaTrack();
-                while (reader.Read()) {
+                while (reader.Read())
+                {
                     if (reader.TokenType == JsonTokenType.EndObject)
                         break;
 
@@ -112,7 +128,8 @@ namespace Victoria.Converters {
                     if (reader.TokenType != JsonTokenType.StartObject)
                         continue;
 
-                    while (reader.Read()) {
+                    while (reader.Read())
+                    {
                         if (reader.TokenType == JsonTokenType.EndObject)
                             break;
 
@@ -143,7 +160,8 @@ namespace Victoria.Converters {
         }
 
         /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, SearchResponse value, JsonSerializerOptions options) {
+        public override void Write(Utf8JsonWriter writer, SearchResponse value, JsonSerializerOptions options)
+        {
             throw new NotImplementedException("This method can't be used for writing.'");
         }
     }

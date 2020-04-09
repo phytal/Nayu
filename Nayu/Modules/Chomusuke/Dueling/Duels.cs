@@ -18,6 +18,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
         public ulong Requester { get; set; }
         public RestUserMessage Message { get; set; }
     }
+
     public static class PendingDuelProvider
     {
         public static List<PendingDuelBase> games;
@@ -44,12 +45,13 @@ namespace Nayu.Modules.Chomusuke.Dueling
             {
                 PlayerId = userId,
                 Message = message,
-                Requester = req 
+                Requester = req
             };
 
             games.Add(game);
         }
     }
+
     public class Duel : NayuModule
     {
         [Command("duelHelp")]
@@ -59,14 +61,14 @@ namespace Nayu.Modules.Chomusuke.Dueling
         public async Task DuelHelp()
         {
             string[] footers = new string[]
-{
+            {
                 "If you want to gain health but still want to do damage, use n!absorb!",
                 "You have a maximum of 6 Med Kits you can use in battle, use them wisely!",
                 "",
-                                "If you want to deflect some damage from your opponent's next attack, use n!deflect!",
-                                "Each duel command has a cooldown of 3 seconds.",
-                                "Absorbing is powerful, but it is rare that it can hit the target."
-};
+                "If you want to deflect some damage from your opponent's next attack, use n!deflect!",
+                "Each duel command has a cooldown of 3 seconds.",
+                "Absorbing is powerful, but it is rare that it can hit the target."
+            };
             Random rand = new Random();
             int randomIndex = rand.Next(footers.Length);
             string text = footers[randomIndex];
@@ -96,29 +98,35 @@ namespace Nayu.Modules.Chomusuke.Dueling
         [Remarks("n!duel <user you want to duel> Ex: n!duel @Phytal")]
         public async Task Pvp(SocketGuildUser user)
         {
-            var config = GlobalUserAccounts.GetUserAccount((SocketGuildUser)Context.User);
+            var config = GlobalUserAccounts.GetUserAccount((SocketGuildUser) Context.User);
             var player2 = user.Guild.GetUser(user.Id);
             var configg = GlobalUserAccounts.GetUserAccount(player2);
             if (config.ActiveChomusuke == 0 || configg.ActiveChomusuke == 0)
             {
-                await ReplyAndDeleteAsync($"{Global.ENo} **|** Both players need an active chomusuke to start the duel!");
+                await ReplyAndDeleteAsync(
+                    $"{Global.ENo} **|** Both players need an active chomusuke to start the duel!");
                 return;
             }
+
             if (!config.Fighting && !configg.Fighting)
             {
                 if (PendingDuelProvider.UserIsPlaying(Context.User.Id))
                 {
-                    await ReplyAndDeleteAsync("You already sent a duel request to someone. Cancel it with `n!duelCancel` or wait until your opponent accepts your duel request.");
+                    await ReplyAndDeleteAsync(
+                        "You already sent a duel request to someone. Cancel it with `n!duelCancel` or wait until your opponent accepts your duel request.");
                     return;
                 }
-                var msg = await Context.Channel.SendMessageAsync($"{Context.User.Mention} challenges {user.Mention} to a duel! {user.Username}, do you accept? (react with the emojis)");
+
+                var msg = await Context.Channel.SendMessageAsync(
+                    $"{Context.User.Mention} challenges {user.Mention} to a duel! {user.Username}, do you accept? (react with the emojis)");
                 await msg.AddReactionAsync(new Emoji("✅"));
                 await msg.AddReactionAsync(Global.ENo);
                 PendingDuelProvider.CreateNewGame(user.Id, Context.User.Id, msg);
             }
             else
             {
-                await ReplyAsync(":expressionless:  **|** " + Context.User.Mention + ", sorry, either you or your opponent are currently fighting or you just tried to fight yourself...");
+                await ReplyAsync(":expressionless:  **|** " + Context.User.Mention +
+                                 ", sorry, either you or your opponent are currently fighting or you just tried to fight yourself...");
             }
         }
 
@@ -157,8 +165,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
 
             string[] whoStarts =
             {
-                    req.Mention,
-                    user.Mention
+                req.Mention,
+                user.Mention
             };
 
             Random rand = new Random();
@@ -178,11 +186,13 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 config.WhoWaits = req.Mention;
                 configg.WhoWaits = req.Mention;
             }
+
             GlobalUserAccounts.SaveAccounts(config.Id, configg.Id);
             var choms = ActiveChomusuke.GetActiveChomusuke(user.Id, req.Id);
             var chom1 = choms.Item1;
             var chom2 = choms.Item2;
-            await channel.SendMessageAsync($":crossed_swords:  **|** {req.Mention} challenged {user.Mention} to a duel!\n\n**{chom1.Name}** has **{chom1.Health}** health!\n**{chom2.Name}** has **{chom2.Health}** health!\n\n{text}, you go first!");
+            await channel.SendMessageAsync(
+                $":crossed_swords:  **|** {req.Mention} challenged {user.Mention} to a duel!\n\n**{chom1.Name}** has **{chom1.Health}** health!\n**{chom2.Name}** has **{chom2.Health}** health!\n\n{text}, you go first!");
         }
 
         [Command("duelsLeaderboard"), Alias("dlb")]
@@ -209,6 +219,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 await ReplyAsync($"There are not that many pages...\nPage {lastPageNumber} is the last one...");
                 return;
             }
+
             // Sort the accounts descending by Duel wins
             var ordered = accounts.OrderByDescending(acc => acc.Wins).ToList();
 
@@ -251,6 +262,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 await ReplyAsync($"There are not that many pages...\nPage {lastPageNumber} is the last one...");
                 return;
             }
+
             // Sort the accounts descending by duel wins
             var ordered = accounts.OrderByDescending(acc => acc.Wins).ToList();
 
@@ -280,11 +292,11 @@ namespace Nayu.Modules.Chomusuke.Dueling
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
             var configg = GlobalUserAccounts.GetUserAccount(config.OpponentId);
-            await ReplyAsync(":flag_white:  **|** " + Context.User.Mention + " ended the fight."); 
+            await ReplyAsync(":flag_white:  **|** " + Context.User.Mention + " ended the fight.");
             var choms = ActiveChomusuke.GetActiveChomusuke(Context.User.Id, config.OpponentId);
             var chom1 = choms.Item1;
             var chom2 = choms.Item2;
-            
+
             config.Fighting = false;
             configg.Fighting = false;
             chom1.Health = chom1.HealthCapacity;
@@ -307,4 +319,3 @@ namespace Nayu.Modules.Chomusuke.Dueling
         }
     }
 }
-

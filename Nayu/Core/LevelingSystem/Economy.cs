@@ -28,15 +28,18 @@ namespace Nayu.Core.LevelingSystem
             {
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
-                embed.WithDescription($"{Emote.Parse("<:taiyaki:599774631984889857>")}  **|** Here's **{Constants.DailyTaiyakiGain}** Taiyakis, {Context.User.Mention}! Come back tomorrow for more!");
+                embed.WithDescription(
+                    $"{Emote.Parse("<:taiyaki:599774631984889857>")}  **|** Here's **{Constants.DailyTaiyakiGain}** Taiyakis, {Context.User.Mention}! Come back tomorrow for more!");
                 await SendMessage(Context, embed.Build());
             }
             else
             {
-                var timeSpanString = string.Format("{0:%h} hours {0:%m} minutes {0:%s} seconds", result.RefreshTimeSpan);
+                var timeSpanString =
+                    string.Format("{0:%h} hours {0:%m} minutes {0:%s} seconds", result.RefreshTimeSpan);
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
-                embed.WithDescription($"{Global.ETaiyaki}  **|** **You have already claimed your free daily Taiyakis, {Context.User.Mention}.\nCome back in {timeSpanString}.**");
+                embed.WithDescription(
+                    $"{Global.ETaiyaki}  **|** **You have already claimed your free daily Taiyakis, {Context.User.Mention}.\nCome back in {timeSpanString}.**");
                 await SendMessage(Context, embed.Build());
             }
         }
@@ -47,9 +50,9 @@ namespace Nayu.Core.LevelingSystem
         [Summary("Gives a mentioned user reputation points, you can only use this once every 24 hours.")]
         [Remarks("n!rep <person you want to rep> Ex: n!rep @Phytal")]
         [Cooldown(30)]
-        public async Task GetRep([NoSelf]SocketGuildUser userB)
+        public async Task GetRep([NoSelf] SocketGuildUser userB)
         {
-            var result = Daily.GetRep((SocketGuildUser)Context.User);
+            var result = Daily.GetRep((SocketGuildUser) Context.User);
 
             if (result.Success)
             {
@@ -59,15 +62,18 @@ namespace Nayu.Core.LevelingSystem
                 GlobalGuildUserAccounts.SaveAccounts();
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
-                embed.WithDescription($":diamond_shape_with_a_dot_inside:   **|** {Context.User.Mention} gave {userB.Mention} a reputation point!");
+                embed.WithDescription(
+                    $":diamond_shape_with_a_dot_inside:   **|** {Context.User.Mention} gave {userB.Mention} a reputation point!");
                 await SendMessage(Context, embed.Build());
             }
             else
             {
-                var timeSpanString = string.Format("{0:%h} hours {0:%m} minutes {0:%s} seconds", result.RefreshTimeSpan);
+                var timeSpanString =
+                    string.Format("{0:%h} hours {0:%m} minutes {0:%s} seconds", result.RefreshTimeSpan);
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
-                embed.WithDescription($":diamond_shape_with_a_dot_inside::arrows_counterclockwise:  | **You already gave someone reputation points recently, {Context.User.Mention}.\nCome back in {timeSpanString}.**");
+                embed.WithDescription(
+                    $":diamond_shape_with_a_dot_inside::arrows_counterclockwise:  | **You already gave someone reputation points recently, {Context.User.Mention}.\nCome back in {timeSpanString}.**");
                 await SendMessage(Context, embed.Build());
             }
         }
@@ -75,7 +81,8 @@ namespace Nayu.Core.LevelingSystem
         [Subject(Categories.EconomyGambling)]
         [Command("gift")]
         [Alias("grant", "pay")]
-        [Summary("Gifts/Pays Taiyakis to a selected user (of course taken from your balance) Ex: n!gift <amount of Taiyakis> @user")]
+        [Summary(
+            "Gifts/Pays Taiyakis to a selected user (of course taken from your balance) Ex: n!gift <amount of Taiyakis> @user")]
         [Remarks("n!gift <amount> <user you want to gift to> Ex: n!gift 500 @Phytal")]
         [Cooldown(5)]
         public async Task Gift(uint taiyaki, IGuildUser userB)
@@ -85,7 +92,8 @@ namespace Nayu.Core.LevelingSystem
 
             if (giver.Taiyaki < taiyaki)
             {
-                await ReplyAsync($":angry:  **|** Stop trying to gift an amount of {config.Currency} over your account balance! ");
+                await ReplyAsync(
+                    $":angry:  **|** Stop trying to gift an amount of {config.Currency} over your account balance! ");
             }
             else
             {
@@ -93,18 +101,20 @@ namespace Nayu.Core.LevelingSystem
                 {
                     var embed = new EmbedBuilder();
                     embed.WithColor(Global.NayuColor);
-                    embed.WithTitle($"🖐️ **|** Please say who you want to gift {config.Currency} to. Ex: n!gift <amount of Taiyakis> @user");
+                    embed.WithTitle(
+                        $"🖐️ **|** Please say who you want to gift {config.Currency} to. Ex: n!gift <amount of Taiyakis> @user");
                     await SendMessage(Context, embed.Build());
                 }
                 else
                 {
-                    var recipient = GlobalUserAccounts.GetUserAccount((SocketUser)userB);
+                    var recipient = GlobalUserAccounts.GetUserAccount((SocketUser) userB);
 
                     giver.Taiyaki -= taiyaki;
                     recipient.Taiyaki += taiyaki;
                     GlobalUserAccounts.SaveAccounts(giver.Id, recipient.Id);
 
-                    await SendMessage(Context, null, $"✅  **|** {Context.User.Mention} has gifted {userB.Mention} {taiyaki} {config.Currency}(s). How generous.");
+                    await SendMessage(Context, null,
+                        $"✅  **|** {Context.User.Mention} has gifted {userB.Mention} {taiyaki} {config.Currency}(s). How generous.");
                 }
             }
         }
@@ -120,14 +130,15 @@ namespace Nayu.Core.LevelingSystem
             SocketUser target;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
             target = mentionedUser ?? Context.User;
-            var userAccount = GlobalUserAccounts.GetUserAccount((SocketUser)user);
+            var userAccount = GlobalUserAccounts.GetUserAccount((SocketUser) user);
 
             userAccount.Taiyaki += Taiyaki;
             GlobalUserAccounts.SaveAccounts(userAccount.Id);
 
             var embed = new EmbedBuilder();
             embed.WithColor(Global.NayuColor);
-            embed.WithTitle($"✅  **|** **{Taiyaki}** {config.Currency} were added to " + target.Username + "'s account.");
+            embed.WithTitle(
+                $"✅  **|** **{Taiyaki}** {config.Currency} were added to " + target.Username + "'s account.");
             await SendMessage(Context, embed.Build());
         }
 
@@ -144,6 +155,7 @@ namespace Nayu.Core.LevelingSystem
                 await ReplyAsync("Are you really trying that right now? ***REALLY?***");
                 return;
             }
+
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var guildUserIds = Context.Guild.Users.Select(user => user.Id);
             var accounts = GlobalUserAccounts.GetFilteredAccounts(acc => guildUserIds.Contains(acc.Id));
@@ -157,6 +169,7 @@ namespace Nayu.Core.LevelingSystem
                 await ReplyAsync($"There are not that many pages...\nPage {lastPageNumber} is the last one...");
                 return;
             }
+
             // Sort the accounts descending by currency
             var ordered = accounts.OrderByDescending(acc => acc.Taiyaki).ToList();
 
@@ -170,7 +183,8 @@ namespace Nayu.Core.LevelingSystem
                 var account = ordered[i - 1 + usersPerPage * page];
                 var user = Global.Client.GetUser(account.Id);
                 embB.WithColor(Global.NayuColor);
-                embB.AddField($"#{i + usersPerPage * page} {user.Username}", $"{account.Taiyaki} {config.Currency}", true);
+                embB.AddField($"#{i + usersPerPage * page} {user.Username}", $"{account.Taiyaki} {config.Currency}",
+                    true);
             }
 
             await ReplyAsync("", false, embB.Build());
@@ -182,15 +196,15 @@ namespace Nayu.Core.LevelingSystem
         [Summary("Checks the balance for your, or an mentioned account")]
         [Remarks("n!bal <person you want to check (will default to you if left empty)> Ex: n!bal @Phytal")]
         [Cooldown(5)]
-        public async Task CheckTaiyakis([Remainder]string arg = "")
+        public async Task CheckTaiyakis([Remainder] string arg = "")
         {
             SocketUser target;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
             target = mentionedUser ?? Context.User;
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var account = GlobalUserAccounts.GetUserAccount(target.Id);
-            await SendMessage(Context, null,$"{Global.ETaiyaki}  **|** {target.Mention} has **{account.Taiyaki} {config.Currency}**!");
+            await SendMessage(Context, null,
+                $"{Global.ETaiyaki}  **|** {target.Mention} has **{account.Taiyaki} {config.Currency}**!");
         }
-
     }
 }

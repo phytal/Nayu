@@ -2,17 +2,21 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Victoria.Decoder {
-    internal ref struct JavaBinaryReader {
+namespace Victoria.Decoder
+{
+    internal ref struct JavaBinaryReader
+    {
         private readonly Span<byte> _bytes;
         private int _position;
 
-        public JavaBinaryReader(Span<byte> bytes) {
+        public JavaBinaryReader(Span<byte> bytes)
+        {
             _bytes = bytes;
             _position = 0;
         }
 
-        public string ReadString() {
+        public string ReadString()
+        {
             var length = Read<short>();
             var newPosition = _position + length;
 
@@ -25,7 +29,8 @@ namespace Victoria.Decoder {
             return result;
         }
 
-        public T Read<T>() where T : struct {
+        public T Read<T>() where T : struct
+        {
             T result = default;
             var bytes = MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref result, 1));
             Read(bytes);
@@ -36,7 +41,8 @@ namespace Victoria.Decoder {
             return result;
         }
 
-        private void Read(Span<byte> destination) {
+        private void Read(Span<byte> destination)
+        {
             var newPosition = _position + destination.Length;
 
             if (newPosition > _bytes.Length)

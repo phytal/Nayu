@@ -19,13 +19,13 @@ namespace Nayu.Core.LevelingSystem
         [Alias("userstats")]
         [Remarks("n!stats <person you want to check(will default to you if left empty)> Ex: n!stats @Phytal")]
         [Cooldown(5)]
-        public async Task Stats([Remainder]string arg = "")
+        public async Task Stats([Remainder] string arg = "")
         {
             SocketUser target = null;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
             target = mentionedUser ?? Context.User;
 
-            var userAccountt = GlobalGuildUserAccounts.GetUserID((SocketGuildUser)target);
+            var userAccountt = GlobalGuildUserAccounts.GetUserID((SocketGuildUser) target);
             var userAccount = GlobalUserAccounts.GetUserAccount(target);
 
             uint Level = userAccount.LevelNumber;

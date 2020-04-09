@@ -6,7 +6,7 @@
         Burned,
         Confused,
         Stunned,
-        Frozen, 
+        Frozen,
         Binded,
         Decay,
         Restricted,

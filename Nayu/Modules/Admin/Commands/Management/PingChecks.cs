@@ -35,7 +35,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 await SendMessage(Context, null, $"Please say `n!pc <on/off>`");
                 return;
             }
-            
+
             if (result.Item1)
             {
                 bool argg = result.Item2;

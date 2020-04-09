@@ -11,7 +11,7 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.Admin.Commands.Management
 {
     public class Kick : NayuModule
-    {        
+    {
         [Subject(AdminCategories.UserManagement)]
         [Command("kick")]
         [Summary("Kicks @Username")]

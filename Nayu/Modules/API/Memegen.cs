@@ -10,31 +10,32 @@ using Nayu.Preconditions;
 namespace Nayu.Modules.API
 {
     public class Memegen : NayuModule
-    {        
+    {
         [Subject(Categories.Fun)]
         [Command("memegen")]
         [Summary("Create a meme!")]
         [Alias("memecreate")]
-        [Remarks("n!meme <top text>/<bottom text> (Note that there is no space between top and bottom text from the slash) Ex: n!meme hi/lol")]
+        [Remarks(
+            "n!meme <top text>/<bottom text> (Note that there is no space between top and bottom text from the slash) Ex: n!meme hi/lol")]
         [Cooldown(5)]
         public async Task Define([Remainder] string message)
         {
-            message= message.Replace(' ', '_');
+            message = message.Replace(' ', '_');
             var user = Context.User as SocketGuildUser;
             var aurl = (Context.User.GetAvatarUrl());
             string url = "https://memegen.link/custom/" + message + ".jpg?alt=" + aurl; //+ "?font=Verdana";
 
-            var request = (HttpWebRequest)WebRequest.Create(url);
+            var request = (HttpWebRequest) WebRequest.Create(url);
 
             request.AutomaticDecompression = DecompressionMethods.GZip;
 
-            using (var response = (HttpWebResponse)request.GetResponse())
+            using (var response = (HttpWebResponse) request.GetResponse())
             using (var stream = response.GetResponseStream())
             {
                 await Context.Channel.SendFileAsync(stream, "meme.jpg");
             }
-        }        
-        
+        }
+
         [Subject(Categories.Fun)]
         [Command("meme")]
         [Summary("Sends a meme from r/dankmemes")]

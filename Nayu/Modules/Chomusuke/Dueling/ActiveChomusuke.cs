@@ -6,7 +6,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
 {
     public class ActiveChomusuke
     {
-        public static Tuple<Core.Entities.Chomusuke, Core.Entities.Chomusuke> GetActiveChomusuke(ulong user1, ulong user2)
+        public static Tuple<Core.Entities.Chomusuke, Core.Entities.Chomusuke> GetActiveChomusuke(ulong user1,
+            ulong user2)
         {
             var config = GlobalUserAccounts.GetUserAccount(user1);
             var configg = GlobalUserAccounts.GetUserAccount(user2);
@@ -37,8 +38,10 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     activeChomusukee = configg.Chomusuke3;
                     break;
             }
+
             return new Tuple<Core.Entities.Chomusuke, Core.Entities.Chomusuke>(activeChomusuke, activeChomusukee);
         }
+
         public static Core.Entities.Chomusuke GetOneActiveChomusuke(ulong user)
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
@@ -55,6 +58,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     activeChomusuke = config.Chomusuke3;
                     break;
             }
+
             return activeChomusuke;
         }
 
@@ -123,6 +127,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.Chomusuke3 = activeChomusuke;
                     break;
             }
+
             GlobalUserAccounts.SaveAccounts(user);
             return Task.CompletedTask;
         }

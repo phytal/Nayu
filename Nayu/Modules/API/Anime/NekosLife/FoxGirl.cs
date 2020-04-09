@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace Nayu.Modules.API.Anime.NekosLife
 {
     public class FoxGirl : NayuModule
-    {        
+    {
         [Subject(Categories.Images)]
         [Command("foxgirl")]
         [Summary("Displays an random fox girl :3")]

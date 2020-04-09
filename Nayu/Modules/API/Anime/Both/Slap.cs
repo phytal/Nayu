@@ -12,7 +12,7 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Slap : NayuModule
-    {        
+    {
         [Subject(Categories.Interaction)]
         [Command("slap")]
         [Summary("Slap someone!")]

@@ -13,7 +13,7 @@ using WebRequest = Nayu.Modules.API.Anime.WeebDotSh.Helpers.WebRequest;
 namespace Nayu.Modules.API.Anime.Both
 {
     public class Cuddle : NayuModule
-    {        
+    {
         [Subject(Categories.Interaction)]
         [Command("cuddle")]
         [Summary("Displays an random cuddle picture!")]
