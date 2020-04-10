@@ -28,33 +28,33 @@ namespace Nayu.Modules.LootBox
             switch (tier)
             {
                 case 'l':
-                    item = legendary[randomIndexProvider(legendary)];
+                    item = legendary[RandomIndexProvider(legendary)];
                     break;
                 case 'e':
-                    byte eRate = (byte) Global.Rng.Next(1, 15);
-                    if (eRate <= 4) item = legendary[randomIndexProvider(legendary)];
-                    else item = epic[randomIndexProvider(epic)];
+                    var eRate = (byte) Global.Rng.Next(1, 15);
+                    if (eRate <= 4) item = legendary[RandomIndexProvider(legendary)];
+                    else item = epic[RandomIndexProvider(epic)];
                     break;
                 case 'r':
-                    byte rRate = (byte) Global.Rng.Next(1, 33);
-                    if (rRate <= 4) item = legendary[randomIndexProvider(legendary)];
-                    else if (rRate <= 14) item = epic[randomIndexProvider(epic)];
-                    else item = rare[randomIndexProvider(rare)];
+                    var rRate = (byte) Global.Rng.Next(1, 33);
+                    if (rRate <= 4) item = legendary[RandomIndexProvider(legendary)];
+                    else if (rRate <= 14) item = epic[RandomIndexProvider(epic)];
+                    else item = rare[RandomIndexProvider(rare)];
                     break;
                 case 'u':
-                    byte uRate = (byte) Global.Rng.Next(1, 63);
-                    if (uRate <= 4) item = legendary[randomIndexProvider(legendary)];
-                    else if (uRate <= 14) item = epic[randomIndexProvider(epic)];
-                    else if (uRate <= 32) item = rare[randomIndexProvider(rare)];
-                    else item = uncommon[randomIndexProvider(uncommon)];
+                    var uRate = (byte) Global.Rng.Next(1, 63);
+                    if (uRate <= 4) item = legendary[RandomIndexProvider(legendary)];
+                    else if (uRate <= 14) item = epic[RandomIndexProvider(epic)];
+                    else if (uRate <= 32) item = rare[RandomIndexProvider(rare)];
+                    else item = uncommon[RandomIndexProvider(uncommon)];
                     break;
                 case 'c':
-                    byte cRate = (byte) Global.Rng.Next(1, 101);
-                    if (cRate <= 4) item = legendary[randomIndexProvider(legendary)];
-                    else if (cRate <= 14) item = epic[randomIndexProvider(epic)];
-                    else if (cRate <= 32) item = rare[randomIndexProvider(rare)];
-                    else if (cRate <= 62) item = uncommon[randomIndexProvider(uncommon)];
-                    else item = common[randomIndexProvider(common)];
+                    var cRate = (byte) Global.Rng.Next(1, 101);
+                    if (cRate <= 4) item = legendary[RandomIndexProvider(legendary)];
+                    else if (cRate <= 14) item = epic[RandomIndexProvider(epic)];
+                    else if (cRate <= 32) item = rare[RandomIndexProvider(rare)];
+                    else if (cRate <= 62) item = uncommon[RandomIndexProvider(uncommon)];
+                    else item = common[RandomIndexProvider(common)];
                     break;
             }
 
@@ -64,7 +64,7 @@ namespace Nayu.Modules.LootBox
             return item;
         }
 
-        public static byte randomIndexProvider(string[] list)
+        public static byte RandomIndexProvider(string[] list)
         {
             byte randomIndex = (byte) Global.Rng.Next(1, list.Length + 1);
             return randomIndex;

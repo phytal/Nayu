@@ -3,6 +3,7 @@ using Discord.Commands;
 using System;
 using System.Threading.Tasks;
 using System.IO;
+using System.Text.RegularExpressions;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Core.Handlers;
 using Nayu.Preconditions;
@@ -13,7 +14,7 @@ namespace Nayu.Modules
     public class FunCommands : NayuModule
     {
         [Subject(Categories.Fun)]
-        [Command("ping")]
+        [Command("ping"), Alias("test")]
         [Summary("Ping Pong!")]
         [Remarks("Ex: n!ping")]
         [Cooldown(5)]
@@ -24,7 +25,7 @@ namespace Nayu.Modules
             await SendMessage(Context, embed);
         }
 
-        string[] predictionsTexts =
+        readonly string[] _predictionsTexts =
         {
             ":8ball:  **|** It is certain",
             ":8ball:  **|** It is decidedly so",
@@ -56,8 +57,8 @@ namespace Nayu.Modules
         [Cooldown(5)]
         public async Task EightBall([Remainder] string input)
         {
-            int randomIndex = Global.Rng.Next(predictionsTexts.Length);
-            string text = predictionsTexts[randomIndex];
+            int randomIndex = Global.Rng.Next(_predictionsTexts.Length);
+            string text = _predictionsTexts[randomIndex];
             var embed = EmbedHandler.CreateEmbed(Context, "8 Ball", $"{text}, {Context.User.Username}",
                 EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
@@ -108,7 +109,7 @@ namespace Nayu.Modules
 
         [Subject(Categories.Information)]
         [Command("prefix")]
-        [Summary("Show's you the server prefix")]
+        [Summary("Shows you the server prefix")]
         [Remarks("Ex: n!prefix")]
         [Cooldown(5)]
         public async Task GetPrefixForServer()
@@ -131,33 +132,38 @@ namespace Nayu.Modules
         }
 
         [Subject(Categories.Fun)]
-        [Command("ratewaifu")]
-        [Summary("Rates your waifu :3")]
-        [Remarks("n!ratewaifu <whoever (waifu) that you want to rate> Ex: n!ratewaifu Taiyakiman22")]
-        [Cooldown(5)]
+        [Command("rateWaifu")]
+        [Summary("Rates your waifu with a secret algorithm :o")]
+        [Remarks("n!rateWaifu <whoever (waifu) that you want to rate> Ex: n!rateWaifu Taiyakiman22")]
+        [Cooldown(3)]
         public async Task RateWaifu([Remainder] string input)
         {
-            Random rnd = new Random();
-            int rating = rnd.Next(101);
+            var vowels = Regex.Replace(input ,"[bcdfghjklmnpqrstvwxyz]", "", RegexOptions.IgnoreCase).GetHashCode();
+            var consonants = Regex.Replace(input ,"[aeiou]", "", RegexOptions.IgnoreCase).GetHashCode();
+            Console.WriteLine(consonants);
+            var secret1 = int.Parse(consonants.ToString().Substring(1, 1));
+            Console.WriteLine(secret1);
+            var secret2 = vowels.ToString().Substring(1, Math.Abs(6 - int.Parse(vowels.ToString()[secret1].ToString())));
+            var rating = Math.Round(Math.Sin(Math.Abs(Math.Cos(int.Parse(secret2))))*100);
             var embed = EmbedHandler.CreateEmbed(Context, "Rate Waifu", $"I'd rate {input} a **{rating} / 100**",
                 EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
         }
 
         [Subject(Categories.Fun)]
-        [Command("bigletter")]
+        [Command("bigLetter")]
         [Alias("emoji", "emotion", "emotify")]
-        [Remarks("n!bigletter <whatever you want to 'emotify'> Ex: n!bigletter hello how is your day")]
+        [Remarks("n!bigLetter <whatever you want to 'emotify'> Ex: n!bigLetter hello how is your day")]
         [Cooldown(5)]
         public async Task Emotify([Remainder] string args)
         {
-            string[] convertorArray = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+            string[] converterArray = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
             args = args.ToLower();
             var convertedText = "";
             foreach (var c in args)
             {
                 if (char.IsLetter(c)) convertedText += $":regional_indicator_{c}:";
-                else if (char.IsDigit(c)) convertedText += $":{convertorArray[(int) char.GetNumericValue(c)]}:";
+                else if (char.IsDigit(c)) convertedText += $":{converterArray[(int) char.GetNumericValue(c)]}:";
                 else if (c == '.') convertedText += " ⏺ ";
                 else if (c == '?') convertedText += "❓ ";
                 else if (c == '!') convertedText += "❗ ";
@@ -175,8 +181,8 @@ namespace Nayu.Modules
         [Cooldown(5)]
         public async Task Woop()
         {
-            await Context.Channel.SendFileAsync(@Path.Combine(Constants.ResourceFolder, Constants.MemeFolder,
-                "woop.gif"));
+            var embed = ImageEmbed.GetImageEmbed("https://i.imgur.com/g4tgGKS.gif", Source.None, "Woop!");
+            await SendMessage(Context, embed);
         }
 
         [Subject(Categories.Fun)]
@@ -188,60 +194,57 @@ namespace Nayu.Modules
         {
             play = play.ToLower();
             int choice = Global.Rng.Next(4); //1= rock 2= paper 3= scissors
-            if (play == "rock")
+            switch (play)
             {
-                if (choice == 1)
-                {
-                    await SendMessage(Context, null, "I choose **Rock**! :punch: It's a tie!");
-                }
+                case "rock":
+                    switch (choice)
+                    {
+                        case 1:
+                            await SendMessage(Context, null, "I choose **Rock**! :punch: It's a tie!");
+                            break;
+                        case 2:
+                            await SendMessage(Context, null, "I choose **Paper**! 🖐️**PAPER** wins!");
+                            break;
+                        case 3:
+                            await SendMessage(Context, null, "I choose **Scissors**! 🖐️**ROCK** wins!");
+                            break;
+                    }
 
-                if (choice == 2)
-                {
-                    await SendMessage(Context, null, "I choose **Paper**! 🖐️**PAPER** wins!");
-                }
+                    break;
+                case "paper":
+                    switch (choice)
+                    {
+                        case 1:
+                            await SendMessage(Context, null, "I choose **Rock**! :punch:  **PAPER** wins!");
+                            break;
+                        case 2:
+                            await SendMessage(Context, null, "I choose **Paper**! 🖐️It's a tie!");
+                            break;
+                        case 3:
+                            await SendMessage(Context, null, "I choose **Scissors**! 🖐️**SCISSORS** wins!");
+                            break;
+                    }
 
-                if (choice == 3)
-                {
-                    await SendMessage(Context, null, "I choose **Scissors**! 🖐️**ROCK** wins!");
-                }
-            }
-            else if (play == "paper")
-            {
-                if (choice == 1)
-                {
-                    await SendMessage(Context, null, "I choose **Rock**! :punch:  **PAPER** wins!");
-                }
+                    break;
+                case "scissors":
+                    switch (choice)
+                    {
+                        case 1:
+                            await SendMessage(Context, null, "I choose **Rock**! :punch: **ROCK** wins!");
+                            break;
+                        case 2:
+                            await SendMessage(Context, null, "I choose **Paper**! 🖐️**SCISSORS** wins!");
+                            break;
+                        case 3:
+                            await SendMessage(Context, null, "I choose **Scissors**! 🖐️It's a tie!");
+                            break;
+                    }
 
-                if (choice == 2)
-                {
-                    await SendMessage(Context, null, "I choose **Paper**! 🖐️It's a tie!");
-                }
-
-                if (choice == 3)
-                {
-                    await SendMessage(Context, null, "I choose **Scissors**! 🖐️**SCISSORS** wins!");
-                }
-            }
-            else if (play == "scissors")
-            {
-                if (choice == 1)
-                {
-                    await SendMessage(Context, null, "I choose **Rock**! :punch: **ROCK** wins!");
-                }
-
-                if (choice == 2)
-                {
-                    await SendMessage(Context, null, "I choose **Paper**! 🖐️**SCISSORS** wins!");
-                }
-
-                if (choice == 3)
-                {
-                    await SendMessage(Context, null, "I choose **Scissors**! 🖐️It's a tie!");
-                }
-            }
-            else
-            {
-                await SendMessage(Context, null, "Your response was invalid, use `n!rps <rock, paper, or scissors>`");
+                    break;
+                default:
+                    await SendMessage(Context, null,
+                        "Your response was invalid, use `n!rps <rock, paper, or scissors>`");
+                    break;
             }
         }
     }

@@ -33,15 +33,15 @@ namespace Nayu.Modules.Admin.Commands.Management
             var result = ConvertBool.ConvertStringToBoolean(setting);
             if (result.Item1)
             {
-                var argg = result.Item2;
+                var arg = result.Item2;
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
-                embed.WithDescription(argg
+                embed.WithDescription(arg
                     ? "✅  **|** Filter successfully turned on. Stay safe!"
                     : "✅  **|** Filter successfully turned off. Daredevil!");
                 await ReplyAsync("", embed: embed.Build());
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                config.Filter = argg;
+                config.Filter = arg;
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
             }
             else
