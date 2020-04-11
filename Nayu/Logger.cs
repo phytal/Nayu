@@ -27,6 +27,14 @@ namespace Nayu
                               $"\nMessage: [\"{msg}\"]\n");
         }
 
+        /// <summary>Console logging event for general commands.</summary>
+        public void ConsoleCommandLog(string msg, LogSeverity severity)
+        {
+            Console.ForegroundColor = SeverityToConsoleColor(severity);
+            Console.WriteLine($"\nCommand Service:" +
+                              $"\nMessage: [\"{msg}\"]\n");
+        }
+        
         private static ConsoleColor SeverityToConsoleColor(LogSeverity severity)
         {
             switch (severity)
