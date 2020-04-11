@@ -96,7 +96,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
         [Alias("Duel", "dual")]
         [Summary("Starts a duel with the specified user!")]
         [Remarks("n!duel <user you want to duel> Ex: n!duel @Phytal")]
-        public async Task Pvp(SocketGuildUser user)
+        public async Task Pvp([NoSelf] SocketGuildUser user)
         {
             var config = GlobalUserAccounts.GetUserAccount((SocketGuildUser) Context.User);
             var player2 = user.Guild.GetUser(user.Id);
