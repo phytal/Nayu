@@ -17,7 +17,7 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Summary("Kicks @Username")]
         [Remarks("n!kick <user you want to kick> Ex: n!kick @Phytal")]
         [Cooldown(5)]
-        public async Task KickAsync(IGuildUser user, string reason = "No reason provided.")
+        public async Task KickAsync([NoSelf] IGuildUser user, string reason = "No reason provided.")
         {
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var guildUser = Context.User as SocketGuildUser;

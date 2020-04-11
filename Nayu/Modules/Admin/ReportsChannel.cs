@@ -45,7 +45,7 @@ namespace Nayu.Modules.Admin
         [Summary("Reports @Username")]
         [Remarks("n!report <user> <reason> Ex: n!report @Phytal abusing")]
         [Cooldown(5)]
-        public async Task ReportAsync(SocketGuildUser user, [Remainder] string reason)
+        public async Task ReportAsync([NoSelf] SocketGuildUser user, [Remainder] string reason)
         {
             if ((user == null)
                 || (string.IsNullOrWhiteSpace(reason)))

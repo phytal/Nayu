@@ -18,7 +18,7 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Remarks("n!carn <user you want to warn> <reason> Ex: n!carn @Phytal bullied my brother")]
         [RequireBotPermission(GuildPermission.BanMembers)]
         [Cooldown(5)]
-        public async Task WarnUser(IGuildUser user, [Remainder] string reason = "No reason provided.")
+        public async Task WarnUser([NoSelf] IGuildUser user, [Remainder] string reason = "No reason provided.")
         {
             var guildUser = Context.User as SocketGuildUser;
             if (!guildUser.GuildPermissions.ManageMessages)
