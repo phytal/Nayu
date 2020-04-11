@@ -66,7 +66,7 @@ namespace Nayu.Modules.Inbox
                     time = $"{difference.Seconds} second{(difference.Seconds == 1 ? "" : "s")} ago";
                 string content = msg.Content.Substring(0, msg.Content.Length > 50 ? 50 : msg.Content.Length);
                 embed.AddField(readIcon + $"{msg.Title} - {time}",
-                    $"{content}{(msg.Content.Length > 50 ? "..." : "")}\n---\nID:{msg.ID}", true);
+                    $"{content}{(msg.Content.Length > 50 ? "..." : "")}\n---\nID:{msg.Id}", true);
             }
 
             config.InboxIDLastRead = config.InboxIDTracker;

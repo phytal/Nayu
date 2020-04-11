@@ -1,42 +1,46 @@
 ﻿using System.Collections.Concurrent;
 using System.IO;
+using MongoDB.Driver;
 using Nayu.Core.Configuration;
 using Nayu.Core.Entities;
+using Nayu.Helpers;
 
 namespace Nayu.Core.Features.GlobalAccounts
 {
     internal static class BotAccounts
     {
-        private static readonly ConcurrentDictionary<string, BotAccount> botAccounts = new ConcurrentDictionary<string, BotAccount>();
-
+        private static readonly ConcurrentDictionary<ulong, BotAccount> BotAccount = new ConcurrentDictionary<ulong, BotAccount>();
+        private static readonly ulong NayuId = 598335076689772554;
         static BotAccounts()
         {
-            var info = Directory.CreateDirectory(Constants.ResourceFolder);
-            var files = info.GetFiles("Nayu.json");
-            if (files.Length == 1)
+            MongoHelper.ConnectToMongoService();
+            MongoHelper.BotCollection = MongoHelper.Database.GetCollection<BotAccount>("Bot");
+            var filter = Builders<BotAccount>.Filter.Eq("Id", NayuId);
+            var result = MongoHelper.BotCollection.Find(filter).FirstOrDefault();
+            if (result != null)
             {
-                var bot = DataStorage.RestoreObject<BotAccount>("Nayu.json");
-                botAccounts.TryAdd("Nayu", bot);
+                var bot = DataStorage.RestoreObject(CollectionType.Bot, NayuId) as BotAccount;
+                BotAccount.TryAdd(bot.Id, bot);
             }
             else
             {
-                botAccounts = new ConcurrentDictionary<string, BotAccount>();
+                BotAccount = new ConcurrentDictionary<ulong, BotAccount>();
             }
         }
 
          internal static BotAccount GetAccount()
          {
-             return botAccounts.GetOrAdd("Nayu", (key) =>
+             return BotAccount.GetOrAdd(NayuId, (key) =>
              {
-                 var newAccount = new BotAccount { };
-                 DataStorage.StoreObject(newAccount, "Nayu.json", useIndentations: true);
+                 var newAccount = new BotAccount { Id = NayuId };
+                 DataStorage.StoreObject(newAccount, CollectionType.Bot, NayuId);
                  return newAccount;
              });
          }
 
         internal static void SaveAccounts()
         {
-            DataStorage.StoreObject(GetAccount(), "Nayu.json", useIndentations: true);
+            DataStorage.StoreObject(GetAccount(), CollectionType.Bot, NayuId);
         }
     }
 }

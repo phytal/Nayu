@@ -24,7 +24,7 @@ namespace Nayu.Modules.Inbox
 
             if (!config.Inbox.Any()) throw new ArgumentException("You don't have any messages to open! (Empty Inbox)");
 
-            var validMessages = config.Inbox.Where(i => i.ID == id);
+            var validMessages = config.Inbox.Where(i => i.Id == id);
 
             foreach (var msg in validMessages)
             {

@@ -15,7 +15,7 @@ namespace Nayu.Modules.Inbox
             createdMessage.Title = title;
             createdMessage.Content = content;
             createdMessage.Time = time;
-            createdMessage.ID = config.InboxIDTracker;
+            createdMessage.Id = config.InboxIDTracker;
             config.InboxIDTracker++;
             config.Inbox.Add(createdMessage);
             GlobalUserAccounts.SaveAccounts(user.Id);

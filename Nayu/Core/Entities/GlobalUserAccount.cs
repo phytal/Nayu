@@ -96,7 +96,7 @@ namespace Nayu.Core.Entities
         public string Content { get; set; }
         public DateTime Time { get; set; }
         public bool Read { get; set; }
-        public ulong ID { get; set; }
+        public ulong Id { get; set; }
 
         public Message(string title, string content, DateTime time, bool read, ulong id)
         {
@@ -104,7 +104,7 @@ namespace Nayu.Core.Entities
             Content = content;
             Time = time;
             Read = read;
-            ID = id;
+            Id = id;
         }
     }
 

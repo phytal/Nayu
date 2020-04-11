@@ -5,6 +5,7 @@ namespace Nayu.Core.Entities
 {
     public class BotAccount
     {
+        public ulong Id { get; set; }
         public int ShardCount
         {
             get { return Global.Client.Guilds.Count / 1500 + 1; }

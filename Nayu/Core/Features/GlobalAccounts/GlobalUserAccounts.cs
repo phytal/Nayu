@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Discord;
+using MongoDB.Driver;
 using Nayu.Core.Configuration;
 using Nayu.Core.Entities;
+using Nayu.Helpers;
 using Nayu.Modules.Chomusuke;
 using Type = Nayu.Modules.Chomusuke.Dueling.Enums.Type;
 
@@ -13,38 +15,43 @@ namespace Nayu.Core.Features.GlobalAccounts
 {
     internal static class GlobalUserAccounts
     {
-        private static readonly ConcurrentDictionary<ulong, GlobalUserAccount> userAccounts = new ConcurrentDictionary<ulong, GlobalUserAccount>();
+        private static readonly ConcurrentDictionary<ulong, GlobalUserAccount> UserAccounts = new ConcurrentDictionary<ulong, GlobalUserAccount>();
 
         static GlobalUserAccounts()
         {
-            var info = Directory.CreateDirectory(Path.Combine(Constants.ResourceFolder, Constants.UserAccountsFolder));
-            var files = info.GetFiles("*.json");
-            if (files.Length > 0)
+            MongoHelper.ConnectToMongoService();
+            MongoHelper.UserCollection = MongoHelper.Database.GetCollection<GlobalUserAccount>("Users");
+            var filter = Builders<GlobalUserAccount>.Filter.Ne("Id", "");
+            var results = MongoHelper.UserCollection.Find(filter).ToList();
+            if (results.Count > 0)
             {
-                foreach (var file in files)
+                foreach (var result in results)
                 {
-                    var user = DataStorage.RestoreObject<GlobalUserAccount>(Path.Combine(file.Directory.Name, file.Name));
-                    userAccounts.TryAdd(user.Id, user);
+                    var user = DataStorage.RestoreObject(CollectionType.User, result.Id) as GlobalUserAccount;
+                    UserAccounts.TryAdd(user.Id, user);
                 }
             }
             else
             {
-                userAccounts = new ConcurrentDictionary<ulong, GlobalUserAccount>();
+                UserAccounts = new ConcurrentDictionary<ulong, GlobalUserAccount>();
             }
+            
         }
-
+        
          internal static GlobalUserAccount GetUserAccount(ulong id)
          {
-             return userAccounts.GetOrAdd(id, (key) =>
+             return UserAccounts.GetOrAdd(id, (key) =>
              {
                  var newAccount = new GlobalUserAccount { Id = id, Title = "Adventurer", Chomusuke1 = new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, Type.None, 0, Trait.None, Trait.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, DateTime.MinValue,null, null, null), 
                      Chomusuke2 = new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, Type.None, 0, Trait.None, Trait.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, DateTime.MinValue,null, null, null), 
                      Chomusuke3 = new Chomusuke(false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, Type.None, 0, Trait.None, Trait.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, DateTime.MinValue, null, null, null)
              };
-                 DataStorage.StoreObject(newAccount, Path.Combine(Constants.UserAccountsFolder, $"{id}.json"), useIndentations: true);
+                 DataStorage.StoreObject(newAccount, CollectionType.User, id);
                  return newAccount;
              });
          }
+         
+         
 
         internal static GlobalUserAccount GetUserAccount(IUser user)
         {
@@ -53,13 +60,13 @@ namespace Nayu.Core.Features.GlobalAccounts
 
         internal static List<GlobalUserAccount> GetAllAccounts()
         {
-            return userAccounts.Values.ToList();
+            return UserAccounts.Values.ToList();
         }
 
 
         internal static List<GlobalUserAccount> GetFilteredAccounts(Func<GlobalUserAccount, bool> filter)
         {
-            return userAccounts.Values.Where(filter).ToList();
+            return UserAccounts.Values.Where(filter).ToList();
         }
         
 
@@ -68,7 +75,7 @@ namespace Nayu.Core.Features.GlobalAccounts
         /// </summary>
         internal static void SaveAllAccounts()
         {
-            foreach (var id in userAccounts.Keys)
+            foreach (var id in UserAccounts.Keys)
             {
                 SaveAccounts(id);
             }
@@ -81,7 +88,7 @@ namespace Nayu.Core.Features.GlobalAccounts
         {
             foreach (var id in ids)
             {
-                DataStorage.StoreObject(GetUserAccount(id), Path.Combine(Constants.UserAccountsFolder, $"{id}.json"), useIndentations: true);
+                DataStorage.StoreObject(GetUserAccount(id), CollectionType.User, id);
             }
         }
     }
