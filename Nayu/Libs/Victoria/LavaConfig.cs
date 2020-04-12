@@ -1,10 +1,12 @@
 using System;
 using Discord;
 
-namespace Victoria {
+namespace Victoria
+{
     /// <summary>
     /// </summary>
-    public sealed class LavaConfig {
+    public sealed class LavaConfig
+    {
         /// <summary>
         /// </summary>
         public bool EnableResume { get; set; } = false;
@@ -25,7 +27,7 @@ namespace Victoria {
         /// <summary>
         ///     Server's IP/Hostname.
         /// </summary>
-        public string Hostname { get; set; } = "127.0.0.1";
+        public string Hostname { get; set; } = "0.0.0.0";
 
         /// <summary>
         ///     Server's password/authentication.

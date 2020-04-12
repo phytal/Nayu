@@ -5,18 +5,21 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace Victoria.Resolvers {
+namespace Victoria.Resolvers
+{
     /// <summary>
     /// Lyrics resolver for fetching lyrics from Genius and OVH.
     /// </summary>
-    public readonly struct LyricsResolver {
+    public readonly struct LyricsResolver
+    {
         /// <summary>
         /// Searches Genius for lyrics and returns them as string.
         /// </summary>
         /// <param name="lavaTrack"><see cref="LavaTrack"/></param>
         /// <returns><see cref="string"/></returns>
         /// <exception cref="ArgumentNullException">Throws if LavaTrack is null.</exception>
-        public static async ValueTask<string> SearchGeniusAsync(LavaTrack lavaTrack) {
+        public static async ValueTask<string> SearchGeniusAsync(LavaTrack lavaTrack)
+        {
             if (lavaTrack == null)
                 throw new ArgumentNullException(nameof(lavaTrack));
 
@@ -28,7 +31,6 @@ namespace Victoria.Resolvers {
             //
             author = author.Replace(' ', '-');
             title = title.Replace(' ', '-');
-
             var url = $"https://genius.com/{author}-{title}-lyrics";
             var bytes = await GetBytesAsync(url)
                 .ConfigureAwait(false);
@@ -41,7 +43,8 @@ namespace Victoria.Resolvers {
         /// <param name="lavaTrack"><see cref="LavaTrack"/></param>
         /// <returns><see cref="string"/></returns>
         /// <exception cref="ArgumentNullException">Throws if LavaTrack is null.</exception>
-        public static async ValueTask<string> SearchOVHAsync(LavaTrack lavaTrack) {
+        public static async ValueTask<string> SearchOVHAsync(LavaTrack lavaTrack)
+        {
             if (lavaTrack == null)
                 throw new ArgumentNullException(nameof(lavaTrack));
 
@@ -62,7 +65,8 @@ namespace Victoria.Resolvers {
             return regex.Replace($"{result}", "\n");
         }
 
-        private static async ValueTask<byte[]> GetBytesAsync(string url) {
+        private static async ValueTask<byte[]> GetBytesAsync(string url)
+        {
             using var httpClient = new HttpClient();
             using var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
             using var responseMessage = await httpClient.SendAsync(requestMessage)
