@@ -3,26 +3,22 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace Victoria.Resolvers
-{
+namespace Victoria.Resolvers {
     /// <summary>
     /// Resolver for fetching track artwork.
     /// </summary>
-    public readonly struct ArtworkResolver
-    {
+    public readonly struct ArtworkResolver {
         /// <summary>
         /// Fetches artwork for Youtube, Twitch, SoundCloud and Vimeo.
         /// </summary>
         /// <param name="track"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public static async ValueTask<string> FetchAsync(LavaTrack track)
-        {
+        public static async ValueTask<string> FetchAsync(LavaTrack track) {
             if (track == null)
                 throw new ArgumentNullException(nameof(track));
 
-            (bool shouldSearch, string requestUrl) = track.Url.ToLower() switch
-            {
+            (bool shouldSearch, string requestUrl) = track.Url.ToLower() switch {
                 var yt when yt.Contains("youtube")
                 => (false, $"https://img.youtube.com/vi/{track.Id}/maxresdefault.jpg"),
 
@@ -38,7 +34,9 @@ namespace Victoria.Resolvers
                 _ => (false, "https://raw.githubusercontent.com/Yucked/Victoria/v5/src/Logo.png")
             };
 
-            if (!shouldSearch) return requestUrl;
+            if (!shouldSearch) {
+                return requestUrl;
+            }
 
             using var httpClient = new HttpClient();
             using var requestMessage = new HttpRequestMessage(HttpMethod.Get, requestUrl);

@@ -5,12 +5,10 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Victoria
-{
+namespace Victoria {
     /// <summary>
     /// </summary>
-    public sealed class LavaSocket : IAsyncDisposable
-    {
+    public sealed class LavaSocket : IAsyncDisposable {
         /// <summary>
         /// 
         /// </summary>
@@ -39,15 +37,13 @@ namespace Victoria
         private bool _refIsUsable;
         private readonly IDictionary<string, string> _headers;
 
-        internal LavaSocket(LavaConfig lavaConfig)
-        {
+        internal LavaSocket(LavaConfig lavaConfig) {
             _lavaConfig = lavaConfig;
             _headers = new Dictionary<string, string>(3);
         }
 
         /// <inheritdoc />
-        public async ValueTask DisposeAsync()
-        {
+        public async ValueTask DisposeAsync() {
             if (_socket.State == WebSocketState.Open)
                 await _socket.CloseAsync(WebSocketCloseStatus.Empty, "", _tokenSource.Token)
                     .ConfigureAwait(false);
@@ -60,8 +56,7 @@ namespace Victoria
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public void SetHeader(string key, string value)
-        {
+        public void SetHeader(string key, string value) {
             if (_headers.ContainsKey(key))
                 return;
 
@@ -71,8 +66,7 @@ namespace Victoria
         /// <summary>
         /// </summary>
         /// <returns></returns>
-        public async Task ConnectAsync()
-        {
+        public async Task ConnectAsync() {
             _tokenSource = new CancellationTokenSource();
 
             _socket = new ClientWebSocket();
@@ -84,12 +78,10 @@ namespace Victoria
             if (_connectionAttempts == _lavaConfig.ReconnectAttempts)
                 return;
 
-            try
-            {
+            try {
                 await _socket.ConnectAsync(url, CancellationToken.None).ContinueWith(VerifyConnectionAsync);
             }
-            catch
-            {
+            catch {
                 // IGNORE
             }
         }
@@ -100,8 +92,7 @@ namespace Victoria
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task SendAsync<T>(T value)
-        {
+        public async Task SendAsync<T>(T value) {
             if (_socket.State != WebSocketState.Open)
                 throw new InvalidOperationException("WebSocket state is invalid.");
 
@@ -113,21 +104,17 @@ namespace Victoria
         /// <summary>
         /// </summary>
         /// <returns></returns>
-        public async Task DisconnectAsync()
-        {
+        public async Task DisconnectAsync() {
             await _socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Requested.", _tokenSource.Token)
                 .ConfigureAwait(false);
         }
 
-        private async Task VerifyConnectionAsync(Task task)
-        {
-            if (task.IsCanceled || task.IsFaulted || task.Exception != null)
-            {
+        private async Task VerifyConnectionAsync(Task task) {
+            if (task.IsCanceled || task.IsFaulted || task.Exception != null) {
                 Volatile.Write(ref _refIsUsable, false);
                 await RetryConnectionAsync();
             }
-            else
-            {
+            else {
                 Volatile.Write(ref _refIsUsable, true);
                 _connectionAttempts = 0;
                 OnConnected?.Invoke();
@@ -136,8 +123,7 @@ namespace Victoria
             }
         }
 
-        private async Task RetryConnectionAsync()
-        {
+        private async Task RetryConnectionAsync() {
             _tokenSource.Cancel(false);
 
             if (_connectionAttempts > _lavaConfig.ReconnectAttempts && _lavaConfig.ReconnectAttempts != -1)
@@ -157,19 +143,15 @@ namespace Victoria
                 .ConfigureAwait(false);
         }
 
-        private async Task ReceiveAsync()
-        {
-            try
-            {
+        private async Task ReceiveAsync() {
+            try {
                 while (Volatile.Read(ref _refIsUsable) && _socket.State == WebSocketState.Open &&
-                       !_tokenSource.IsCancellationRequested)
-                {
+                       !_tokenSource.IsCancellationRequested) {
                     var buffer = new byte[_lavaConfig.BufferSize];
                     var result = await _socket.ReceiveAsync(buffer, _tokenSource.Token)
                         .ConfigureAwait(false);
 
-                    switch (result.MessageType)
-                    {
+                    switch (result.MessageType) {
                         case WebSocketMessageType.Close:
                             Volatile.Write(ref _refIsUsable, false);
                             OnDisconnected?.Invoke("Server closed the connection!");
@@ -192,8 +174,7 @@ namespace Victoria
                     }
                 }
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 OnDisconnected?.Invoke(ex.Message);
                 await ConnectAsync()
                     .ConfigureAwait(false);
