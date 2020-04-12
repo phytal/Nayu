@@ -1,58 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using System.Net;
 using Nayu.Core.Features.GlobalAccounts;
 using Nayu.Core.Handlers;
 using Nayu.Helpers;
 
 namespace Nayu.Modules
 {
-    public class XP : NayuModule
+    public class Xp : NayuModule
     {
         [Subject(OwnerCategories.Owner)]
-        [Command("addXP")]
-        [Summary("Grants XP/Exp to selected user")]
-        [Alias("givexp", "giveexp", "addexp")]
+        [Command("addXp")]
+        [Summary("Grants Xp/Exp to selected user")]
+        [Alias("giveXp", "giveExp", "addExp")]
         [RequireOwner]
-        public async Task AddXP(uint xp, IGuildUser user, [Remainder] string arg = "")
+        public async Task AddXp(uint xp, SocketGuildUser user)
         {
-            SocketUser target = null;
-            var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-            target = mentionedUser ?? Context.User;
-            var userAccount = GlobalUserAccounts.GetUserAccount((SocketGuildUser) user);
-
-            userAccount.XP += xp;
-            GlobalGuildUserAccounts.SaveAccounts();
+            var userAccount = GlobalUserAccounts.GetUserAccount(user);
+            userAccount.Xp += xp;
+            GlobalGuildUserAccounts.SaveAccounts(user);
+            
             var embed = EmbedHandler.CreateEmbed(Context, "Success!",
-                $"✅  **|** **{xp}** xp were added to {target.Username}'s account.",
+                $"✅  **|** **{xp}** xp were added to {user.Username}'s account.",
                 EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
         }
 
         [Subject(OwnerCategories.Owner)]
-        [Command("addrep")]
+        [Command("addRep")]
         [Summary("Grants reputation points to selected user")]
-        [Alias("givepoints")]
+        [Alias("givePoints")]
         [RequireOwner]
-        public async Task AddPoints(uint Points, SocketGuildUser user, [Remainder] string arg = "")
+        public async Task AddPoints(uint points, SocketGuildUser user)
         {
-            SocketUser target = null;
-            var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-            target = mentionedUser ?? Context.User;
             var userAccount = GlobalGuildUserAccounts.GetUserId(user);
-
-            userAccount.Reputation += Points;
-            GlobalGuildUserAccounts.SaveAccounts();
-
+            userAccount.Reputation += points;
+            GlobalGuildUserAccounts.SaveAccounts(user);
 
             var embed = EmbedHandler.CreateEmbed(Context, "Success!",
-                $"✅  **|** **{Points}** reputation points were added to {target.Username}'s account.",
+                $"✅  **| {points}** reputation points were added to {user.Username}'s account.",
                 EmbedHandler.EmbedMessageType.Success, false);
             await SendMessage(Context, embed);
         }

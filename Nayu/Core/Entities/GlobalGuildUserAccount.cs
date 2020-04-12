@@ -5,9 +5,9 @@ namespace Nayu.Core.Entities
 {
     public class GlobalGuildUserAccount
     {
-        public string UniqueId { get; set; }
+        public string Id { get; set; } //guildId+userId
 
-        public ulong Id { get; set; }
+        public ulong UserId { get; set; }
 
         public uint Reputation { get; set; }
 

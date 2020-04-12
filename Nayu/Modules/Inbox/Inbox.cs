@@ -42,7 +42,7 @@ namespace Nayu.Modules.Inbox
             }
 
             var ordered = config.Inbox.OrderByDescending(msg => msg.Time).ToList();
-            ulong newMessages = config.InboxIDTracker - config.InboxIDLastRead;
+            ulong newMessages = config.InboxIdTracker - config.InboxIdLastRead;
 
             var embed = new EmbedBuilder()
                 .WithTitle($"{Context.User}'s Inbox ({newMessages} new message{(newMessages == 1 ? "" : "s")})")
@@ -69,7 +69,7 @@ namespace Nayu.Modules.Inbox
                     $"{content}{(msg.Content.Length > 50 ? "..." : "")}\n---\nID:{msg.Id}", true);
             }
 
-            config.InboxIDLastRead = config.InboxIDTracker;
+            config.InboxIdLastRead = config.InboxIdTracker;
             GlobalUserAccounts.SaveAccounts(config.Id);
             await ReplyAsync("", false, embed.Build());
         }

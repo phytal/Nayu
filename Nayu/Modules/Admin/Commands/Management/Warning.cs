@@ -43,7 +43,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             var dmchannel = await user.GetOrCreateDMChannelAsync();
             userAccount.NumberOfWarnings++;
             userAccount.Warnings.Add(reason);
-            GlobalGuildUserAccounts.SaveAccounts();
+            GlobalGuildUserAccounts.SaveAccounts((SocketGuildUser) user);
 
             await SendMessage(Context, null,
                 $"Successfully warned **{user.Username}** for **{reason}**. **({userAccount.NumberOfWarnings} Warning{(userAccount.NumberOfWarnings == 1 ? "" : "s")})**");
@@ -104,9 +104,9 @@ namespace Nayu.Modules.Admin.Commands.Management
             var userAccount = GlobalGuildUserAccounts.GetUserId((SocketGuildUser) user);
             userAccount.NumberOfWarnings = 0;
             userAccount.Warnings.Clear();
-            GlobalGuildUserAccounts.SaveAccounts();
+            GlobalGuildUserAccounts.SaveAccounts((SocketGuildUser) user);
 
-            await SendMessage(Context, null, $"✅  Succesfully cleared all of **{user.Username}'s** warnings.");
+            await SendMessage(Context, null, $"✅ **|** Successfully cleared all of **{user.Username}'s** warnings.");
         }
     }
 }

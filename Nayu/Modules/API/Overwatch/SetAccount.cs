@@ -30,9 +30,9 @@ namespace Nayu.Modules.API.Overwatch
             embed.AddField("Region", region);
             embed.WithDescription($"Successfully set your default Battle.net credentials.");
 
-            config.OverwatchID = user;
-            config.OverwatchPlatform = platform;
-            config.OverwatchRegion = region;
+            config.OwId = user;
+            config.OwPlatform = platform;
+            config.OwRegion = region;
             GlobalUserAccounts.SaveAccounts(config.Id);
 
 
@@ -47,7 +47,7 @@ namespace Nayu.Modules.API.Overwatch
         public async Task GetOwAccount()
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
-            if (config.OverwatchPlatform == null && config.OverwatchRegion == null && config.OverwatchID == null)
+            if (config.OwPlatform == null && config.OwRegion == null && config.OwId == null)
             {
                 await SendMessage(Context, null,
                     "**Make sure you set your account information first!**\n n!owaccount <username> <platform> <region> Ex: n!owaccount Username#1234 pc us ");
@@ -57,9 +57,9 @@ namespace Nayu.Modules.API.Overwatch
             var embed = new EmbedBuilder();
             embed.WithColor(Global.NayuColor);
             embed.WithTitle("Here are your Overwatch credentials");
-            embed.AddField("Username", config.OverwatchID);
-            embed.AddField("Region", config.OverwatchRegion);
-            embed.AddField("Platform", config.OverwatchPlatform);
+            embed.AddField("Username", config.OwId);
+            embed.AddField("Region", config.OwRegion);
+            embed.AddField("Platform", config.OwPlatform);
 
             await SendMessage(Context, embed.Build());
         }

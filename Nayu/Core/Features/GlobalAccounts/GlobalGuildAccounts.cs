@@ -17,18 +17,16 @@ namespace Nayu.Core.Features.GlobalAccounts
             MongoHelper.ConnectToMongoService();
             MongoHelper.GuildCollection = MongoHelper.Database.GetCollection<GlobalGuildAccount>("Guilds");
             var filter = Builders<GlobalGuildAccount>.Filter.Ne("_id", "");
-            var results = MongoHelper.GuildCollection.Find(filter).ToList();
-            if (results.Count > 0)
+            var results = MongoHelper.GuildCollection.Find(filter);
+            if (results.CountDocuments() < 1)
+                GuildAccounts = new ConcurrentDictionary<ulong, GlobalGuildAccount>();
+            else
             {
-                foreach (var result in results)
+                foreach (var result in results.ToList())
                 {
                     var guild = DataStorage.RestoreObject<GlobalGuildAccount>(CollectionType.Guild, result.Id);
                     GuildAccounts.TryAdd(guild.Id, guild);
                 }
-            }
-            else
-            {
-                GuildAccounts = new ConcurrentDictionary<ulong, GlobalGuildAccount>();
             }
         }
 

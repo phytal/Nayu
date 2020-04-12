@@ -136,9 +136,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
         [Remarks("n!duelStats <target user (will be defaulted to you if left empty)> Ex: n!duelStats @Phytal")]
         public async Task DuelStats([Remainder] string user = "")
         {
-            SocketUser target = null;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-            target = mentionedUser ?? Context.User;
+            var target = mentionedUser ?? Context.User;
             var config = GlobalUserAccounts.GetUserAccount(target);
             var embed = new EmbedBuilder();
             embed.WithColor(Global.NayuColor);

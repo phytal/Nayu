@@ -19,17 +19,17 @@ namespace Nayu.Core.Features.GlobalAccounts
             MongoHelper.ConnectToMongoService();
             MongoHelper.GuildUserCollection = MongoHelper.Database.GetCollection<GlobalGuildUserAccount>("GuildUsers");
             var filter = Builders<GlobalGuildUserAccount>.Filter.Ne("_id", "");
-            var results = MongoHelper.GuildUserCollection.Find(filter).ToList();
-            if (results.Count > 0)
-            {
-                foreach (var result in results)
-                {
-                    var guildUser = DataStorage.RestoreObject<GlobalGuildUserAccount>(CollectionType.GuildUser, result.Id);
-                    GuildUserAccounts.TryAdd(guildUser.Id.ToString(), guildUser);
-                }
-            }
-            else {
+            var results = MongoHelper.GuildUserCollection.Find(filter);
+            if (results.CountDocuments() < 1)
                 GuildUserAccounts = new ConcurrentDictionary<string, GlobalGuildUserAccount>();
+            else
+            {
+                foreach (var result in results.ToList())
+                {
+                    var guildUser =
+                        DataStorage.RestoreObject<GlobalGuildUserAccount>(CollectionType.GuildUser, result.Id);
+                    GuildUserAccounts.TryAdd(guildUser.Id, guildUser);
+                }
             }
         }
 
@@ -37,7 +37,7 @@ namespace Nayu.Core.Features.GlobalAccounts
         {
             return GuildUserAccounts.GetOrAdd(id, (key) =>
             {
-                var newAccount = new GlobalGuildUserAccount { UniqueId = id , Id = nid};
+                var newAccount = new GlobalGuildUserAccount { Id = id , UserId = nid};
                 DataStorage.StoreObject(newAccount, CollectionType.GuildUser, id);
                 return newAccount;
             });
@@ -72,7 +72,7 @@ namespace Nayu.Core.Features.GlobalAccounts
         {
             foreach (var userAcc in GuildUserAccounts.Values)
             {
-                SaveAccount(userAcc.UniqueId, userAcc.Id);
+                SaveAccount(userAcc.Id, userAcc.UserId);
             }
         }
 

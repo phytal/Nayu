@@ -33,7 +33,7 @@ namespace Nayu.Core.Features.Economy
             if (difference.TotalHours < 0) return new DailyResult {Success = false, RefreshTimeSpan = difference};
 
             account.LastRep = DateTime.UtcNow;
-            GlobalGuildUserAccounts.SaveAccounts();
+            GlobalGuildUserAccounts.SaveAccounts(user);
             return new DailyResult {Success = true};
         }
     }

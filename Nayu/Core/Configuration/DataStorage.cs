@@ -26,7 +26,7 @@ namespace Nayu.Core.Configuration
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        internal static T RestoreObject<T>(CollectionType type, ulong id)
+        internal static T RestoreObject<T>(CollectionType type, object id)
         {
             return GetOrCreateFileContents(type, id) as dynamic;
         }
@@ -37,7 +37,7 @@ namespace Nayu.Core.Configuration
             return File.Exists(filePath);
         }
 
-        private static object GetOrCreateFileContents(CollectionType type, ulong id)
+        private static object GetOrCreateFileContents(CollectionType type, object id)
         {
             MongoHelper.ConnectToMongoService();
             UpdateLocalCollection(type);

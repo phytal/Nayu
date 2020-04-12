@@ -83,8 +83,8 @@ namespace Nayu.Modules.Admin
                 embed.AddField("Welcome/Leaving", "Off", true);
             }
 
-            var antiLinkIgnoredChannels = "#" + string.Join(", #", config.AntilinkIgnoredChannels.ToArray());
-            embed.AddField("Other", $"Antilink: {ConvertBoolean(config.Antilink)}\n" +
+            var antiLinkIgnoredChannels = "#" + string.Join(", #", config.AntiLinkIgnoredChannels.ToArray());
+            embed.AddField("Other", $"Anti-link: {ConvertBoolean(config.AntiLink)}\n" +
                                     $"Autorole: {config.Autorole}\n" +
                                     $"Anti-link Ignored Channels: {antiLinkIgnoredChannels}\n" +
                                     $"Blacklist: {ConvertBoolean(config.Filter)}\n" +

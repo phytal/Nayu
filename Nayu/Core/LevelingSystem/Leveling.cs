@@ -25,18 +25,17 @@ namespace Nayu.Core.LevelingSystem
             // Generate a randomized reward in the configured boundries
             uint moneyGained = (uint)Global.Rng.Next(Constants.MessagRewardMinMax.Item1, Constants.MessagRewardMinMax.Item2 + 1);
             userAccount.Taiyaki += moneyGained;
-            userAccount.TaiyakiFromMessages += moneyGained;
             userAccount.LastMessage = now;
 
-            if (now < userAccount.LastXPMessage.AddSeconds(Constants.MessageXPCooldown))
+            if (now < userAccount.LastXpMessage.AddSeconds(Constants.MessageXpCooldown))
             {
                 return;
             }
 
-            userAccount.LastXPMessage = now;
+            userAccount.LastXpMessage = now;
 
             uint oldLevel = userAccount.LevelNumber;
-            userAccount.XP += 7;
+            userAccount.Xp += 7;
             GlobalUserAccounts.SaveAccounts(userAccount.Id);
             uint newLevel = userAccount.LevelNumber;
             if (oldLevel != newLevel)

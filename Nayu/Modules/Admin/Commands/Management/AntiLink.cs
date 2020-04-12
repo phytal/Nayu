@@ -13,7 +13,7 @@ namespace Nayu.Modules.Admin.Commands.Management
     public class AntiLink : NayuModule
     {
         [Subject(AdminCategories.Filters)]
-        [Command("Antilink"), Alias("Al")]
+        [Command("Anti-link"), Alias("Al")]
         [Summary("Turns on or off the link filter.")]
         [Remarks("n!al <on/off> Ex: n!al on")]
         [Cooldown(5)]
@@ -35,13 +35,13 @@ namespace Nayu.Modules.Admin.Commands.Management
             {
                 bool setting = result.Item2;
                 var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-                config.Antilink = setting;
+                config.AntiLink = setting;
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
                 embed.WithDescription(setting
-                    ? "Enabled Antilink for this server."
-                    : "Disabled Antilink for this server.");
+                    ? "Enabled Anti-link for this server."
+                    : "Disabled Anti-link for this server.");
                 await ReplyAsync("", embed: embed.Build());
             }
 
@@ -52,8 +52,8 @@ namespace Nayu.Modules.Admin.Commands.Management
         }
 
         [Subject(AdminCategories.Filters)]
-        [Command("AntilinkIgnore"), Alias("Ali")]
-        [Summary("Sets a channel that if Antilink is turned on, it will be disabled there")]
+        [Command("Anti-linkIgnore"), Alias("Ali")]
+        [Summary("Sets a channel that if Anti-link is turned on, it will be disabled there")]
         [Remarks("n!ali <channel you want anti-link to be ignored> Ex: n!ali #links-only")]
         [Cooldown(5)]
         public async Task SetChannelToBeIgnored(string type, SocketGuildChannel chnl = null)
@@ -76,18 +76,18 @@ namespace Nayu.Modules.Admin.Commands.Management
             {
                 case "add":
                 case "Add":
-                    config.AntilinkIgnoredChannels.Add(chnl.Id);
-                    embed.WithDescription($"Added <#{chnl.Id}> to the list of ignored channels for Antilink.");
+                    config.AntiLinkIgnoredChannels.Add(chnl.Id);
+                    embed.WithDescription($"Added <#{chnl.Id}> to the list of ignored channels for Anti-link.");
                     break;
                 case "rem":
                 case "Rem":
-                    config.AntilinkIgnoredChannels.Remove(chnl.Id);
-                    embed.WithDescription($"Removed <#{chnl.Id}> from the list of ignored channels for Antilink.");
+                    config.AntiLinkIgnoredChannels.Remove(chnl.Id);
+                    embed.WithDescription($"Removed <#{chnl.Id}> from the list of ignored channels for Anti-link.");
                     break;
                 case "clear":
                 case "Clear":
-                    config.AntilinkIgnoredChannels.Clear();
-                    embed.WithDescription("List of channels to be ignored by Antilink has been cleared.");
+                    config.AntiLinkIgnoredChannels.Clear();
+                    embed.WithDescription("List of channels to be ignored by Anti-link has been cleared.");
                     break;
                 default:
                     embed.WithDescription(

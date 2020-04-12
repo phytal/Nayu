@@ -6,6 +6,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Nayu.Core.Features.Economy;
 using Nayu.Core.Features.GlobalAccounts;
+using Nayu.Core.Handlers;
 using Nayu.Modules;
 using Nayu.Preconditions;
 using Nayu.Helpers;
@@ -56,10 +57,10 @@ namespace Nayu.Core.LevelingSystem
 
             if (result.Success)
             {
-                var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-                var mentionedaccount = GlobalGuildUserAccounts.GetUserId(userB);
-                mentionedaccount.Reputation += 1;
-                GlobalGuildUserAccounts.SaveAccounts();
+                var config = GlobalGuildUserAccounts.GetUserId(userB);
+                config.Reputation += 1;
+                GlobalGuildUserAccounts.SaveAccounts(userB);
+                
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
                 embed.WithDescription(
@@ -124,35 +125,36 @@ namespace Nayu.Core.LevelingSystem
         [Summary("Grants Taiyakis to selected user")]
         [Alias("giveptaiyakis")]
         [RequireOwner]
-        public async Task AddTaiyakis(uint Taiyaki, IGuildUser user)
+        public async Task AddTaiyakis(uint taiyaki, [Remainder] string user = "")
         {
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-            SocketUser target;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-            target = mentionedUser ?? Context.User;
-            var userAccount = GlobalUserAccounts.GetUserAccount((SocketUser) user);
+            var target = mentionedUser ?? Context.User;
+            var userAccount = GlobalUserAccounts.GetUserAccount(target);
 
-            userAccount.Taiyaki += Taiyaki;
+            userAccount.Taiyaki += taiyaki;
             GlobalUserAccounts.SaveAccounts(userAccount.Id);
 
             var embed = new EmbedBuilder();
             embed.WithColor(Global.NayuColor);
             embed.WithTitle(
-                $"✅  **|** **{Taiyaki}** {config.Currency} were added to " + target.Username + "'s account.");
+                $"✅  **|** **{taiyaki}** {config.Currency} were added to " + target.Username + "'s account.");
             await SendMessage(Context, embed.Build());
         }
 
         [Subject(Categories.EconomyGambling)]
         [Command("levels")]
         [Summary("Shows a user list of the sorted by currency. Pageable to see lower ranked users.")]
-        [Alias("Top", "Top10", "richest", "rank")]
+        [Alias("top", "top10", "richest", "rank")]
         [Remarks("n!level <page number (if left empty it will default to 1)> Ex: n!levels 2")]
         [Cooldown(15)]
         public async Task ShowRichesPeople(int page = 1)
         {
             if (page < 1)
             {
-                await ReplyAsync("Are you really trying that right now? ***REALLY?***");
+                var embed = EmbedHandler.CreateEmbed(Context, "Error!", "Enter a page number greater than 0!",
+                    EmbedHandler.EmbedMessageType.Error, false);
+                await ReplyAndDeleteAsync("", embed: embed);
                 return;
             }
 
@@ -192,15 +194,14 @@ namespace Nayu.Core.LevelingSystem
 
         [Subject(Categories.EconomyGambling)]
         [Command("balance")]
-        [Alias("Cash", "Taiyaki", "bal")]
+        [Alias("cash", "taiyaki", "bal")]
         [Summary("Checks the balance for your, or an mentioned account")]
         [Remarks("n!bal <person you want to check (will default to you if left empty)> Ex: n!bal @Phytal")]
         [Cooldown(5)]
-        public async Task CheckTaiyakis([Remainder] string arg = "")
+        public async Task CheckTaiyakis([Remainder] string user = "")
         {
-            SocketUser target;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-            target = mentionedUser ?? Context.User;
+            var target = mentionedUser ?? Context.User;
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var account = GlobalUserAccounts.GetUserAccount(target.Id);
             await SendMessage(Context, null,
