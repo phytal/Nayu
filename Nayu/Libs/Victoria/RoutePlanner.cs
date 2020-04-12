@@ -5,17 +5,14 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Victoria.Responses.Rest;
 
-namespace Victoria
-{
+namespace Victoria {
     /// <summary>
     /// 
     /// </summary>
-    public sealed class RoutePlanner
-    {
+    public sealed class RoutePlanner {
         private readonly HttpClient _httpClient;
 
-        internal RoutePlanner(HttpClient httpClient)
-        {
+        internal RoutePlanner(HttpClient httpClient) {
             _httpClient = httpClient;
         }
 
@@ -24,8 +21,7 @@ namespace Victoria
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task GetStatusAsync()
-        {
+        public Task GetStatusAsync() {
             throw new NotImplementedException("Waiting on Lavalink docs to get fixed.");
         }
 
@@ -35,10 +31,8 @@ namespace Victoria
         /// <param name="address"></param>
         /// <returns></returns>
         /// <exception cref="Exception">Throws if Lavalink throws an exception.</exception>
-        public async Task FreeAddressAsync(string address)
-        {
-            var payload = JsonSerializer.SerializeToUtf8Bytes(new
-            {
+        public async Task FreeAddressAsync(string address) {
+            var payload = JsonSerializer.SerializeToUtf8Bytes(new {
                 address
             });
 
@@ -46,8 +40,7 @@ namespace Victoria
                 .PostAsync("/routeplanner/free/address", new ByteArrayContent(payload))
                 .ConfigureAwait(false);
 
-            if (responseMessage.IsSuccessStatusCode)
-            {
+            if (responseMessage.IsSuccessStatusCode) {
                 return;
             }
 
@@ -63,8 +56,7 @@ namespace Victoria
         /// </summary>
         /// <returns></returns>
         /// <exception cref="Exception">Throws if Lavalink throws an exception.</exception>
-        public async Task FreeAllAsync()
-        {
+        public async Task FreeAllAsync() {
             using var requestMessage = new HttpRequestMessage(HttpMethod.Post, "/routeplanner/free/all");
             using var responseMessage = await _httpClient.SendAsync(requestMessage)
                 .ConfigureAwait(false);

@@ -22,6 +22,7 @@ namespace Nayu.Core.LevelingSystem
         [Cooldown(60)]
         public async Task GetDaily()
         {
+            var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
             var result = Daily.GetDaily(Context.User.Id);
 
             if (result.Success)
@@ -29,7 +30,7 @@ namespace Nayu.Core.LevelingSystem
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
                 embed.WithDescription(
-                    $"{Emote.Parse("<:taiyaki:599774631984889857>")}  **|** Here's **{Constants.DailyTaiyakiGain}** Taiyakis, {Context.User.Mention}! Come back tomorrow for more!");
+                    $"{Emote.Parse("<:taiyaki:599774631984889857>")}  **|** Here's **{Constants.DailyTaiyakiGain}** {config.Currency}, {Context.User.Mention}! Come back tomorrow for more!");
                 await SendMessage(Context, embed.Build());
             }
             else
@@ -39,7 +40,7 @@ namespace Nayu.Core.LevelingSystem
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
                 embed.WithDescription(
-                    $"{Global.ETaiyaki}  **|** **You have already claimed your free daily Taiyakis, {Context.User.Mention}.\nCome back in {timeSpanString}.**");
+                    $"{Global.ETaiyaki}  **|** **You have already claimed your free daily {config.Currency}, {Context.User.Mention}.\nCome back in {timeSpanString}.**");
                 await SendMessage(Context, embed.Build());
             }
         }
@@ -56,9 +57,8 @@ namespace Nayu.Core.LevelingSystem
 
             if (result.Success)
             {
-                var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-                var mentionedaccount = GlobalGuildUserAccounts.GetUserID(userB);
-                mentionedaccount.Reputation += 1;
+                var mentionedAccount = GlobalGuildUserAccounts.GetUserID(userB);
+                mentionedAccount.Reputation += 1;
                 GlobalGuildUserAccounts.SaveAccounts();
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
@@ -102,7 +102,7 @@ namespace Nayu.Core.LevelingSystem
                     var embed = new EmbedBuilder();
                     embed.WithColor(Global.NayuColor);
                     embed.WithTitle(
-                        $"🖐️ **|** Please say who you want to gift {config.Currency} to. Ex: n!gift <amount of Taiyakis> @user");
+                        $"🖐️ **|** Please say who you want to gift {config.Currency} to. Ex: n!gift <amount of {config.Currency}s> @user");
                     await SendMessage(Context, embed.Build());
                 }
                 else

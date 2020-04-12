@@ -18,7 +18,7 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Remarks("n!carn <user you want to warn> <reason> Ex: n!carn @Phytal bullied my brother")]
         [RequireBotPermission(GuildPermission.BanMembers)]
         [Cooldown(5)]
-        public async Task WarnUser(IGuildUser user, [Remainder] string reason = "No reason provided.")
+        public async Task WarnUser([NoSelf] IGuildUser user, [Remainder] string reason = "No reason provided.")
         {
             var guildUser = Context.User as SocketGuildUser;
             if (!guildUser.GuildPermissions.ManageMessages)
@@ -40,13 +40,24 @@ namespace Nayu.Modules.Admin.Commands.Management
             }
 
             var userAccount = GlobalGuildUserAccounts.GetUserID((SocketGuildUser) user);
-            var dmchannel = await user.GetOrCreateDMChannelAsync();
+            var dmChannel = await user.GetOrCreateDMChannelAsync();
+            try
+            {
+                var dmDesc = $"You have been warned in **{Context.Guild.Name}** for:\n {reason}\nYou now have Warning{(userAccount.NumberOfWarnings == 1 ? "" : "s")}";
+                var dmEmbed = EmbedHandler.CreateEmbed(Context, "Warning", dmDesc, EmbedHandler.EmbedMessageType.Info, false);
+                await dmChannel.SendMessageAsync("", embed: dmEmbed);
+            }
+            catch (Exception)
+            {
+                //nothing should happen and it doesn't matter if anything does happen
+            }
             userAccount.NumberOfWarnings++;
             userAccount.Warnings.Add(reason);
             GlobalGuildUserAccounts.SaveAccounts();
-
-            await SendMessage(Context, null,
-                $"Successfully warned **{user.Username}** for **{reason}**. **({userAccount.NumberOfWarnings} Warning{(userAccount.NumberOfWarnings == 1 ? "" : "s")})**");
+            
+            var desc = $"Successfully warned **{user.Username}** for **{reason}**. **({userAccount.NumberOfWarnings} Warning{(userAccount.NumberOfWarnings == 1 ? "" : "s")})**";
+            var successEmbed = EmbedHandler.CreateEmbed(Context, "Warning", desc, EmbedHandler.EmbedMessageType.Success);
+            await SendMessage(Context, successEmbed);
         }
 
         [Subject(AdminCategories.UserManagement)]
