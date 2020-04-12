@@ -125,9 +125,8 @@ namespace Nayu.Modules.LootBox
         [RequireOwner]
         public async Task AddLootBox([Remainder] string arg = "")
         {
-            SocketUser target = null;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-            target = mentionedUser ?? Context.User;
+            var target = mentionedUser ?? Context.User;
 
             var account = GlobalUserAccounts.GetUserAccount(target);
             account.LootBoxCommon += 1;
@@ -147,9 +146,8 @@ namespace Nayu.Modules.LootBox
         [RequireOwner]
         public async Task ClearLootBox([Remainder] string arg = "")
         {
-            SocketUser target = null;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-            target = mentionedUser ?? Context.User;
+            var target = mentionedUser ?? Context.User;
 
             var account = GlobalUserAccounts.GetUserAccount(target);
             account.LootBoxCommon = 0;

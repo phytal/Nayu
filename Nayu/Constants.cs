@@ -13,7 +13,7 @@ namespace Nayu
         internal static readonly string InvisibleString = "\u200b";
         public const ulong DailyTaiyakiGain = 100;
         public const int MessageRewardCooldown = 30;
-        public const int MessageXPCooldown = 6;
+        public const int MessageXpCooldown = 6;
         public const int MessageRewardMinLenght = 20;
         public static readonly Color DefaultColor = new Color(230, 230, 230);
         public static readonly Tuple<int, int> MessagRewardMinMax = Tuple.Create(1, 5);

@@ -19,7 +19,7 @@ namespace Nayu.Core.Configuration
 
             if (!File.Exists(configFolder + "/" + configFile))
             {
-                bot = new BotConfig{token = Environment.GetEnvironmentVariable("Token"), wolkeToken = Environment.GetEnvironmentVariable("WolkeToken"), cmdPrefix = "n!", twitchStreamer = "phytal", version = "0.0.01", botGameToSet = "idek"};
+                bot = new BotConfig{token = Environment.GetEnvironmentVariable("Token"), wolkeToken = Environment.GetEnvironmentVariable("WolkeToken"), dblToken = Environment.GetEnvironmentVariable("DblToken"), sentryLink = Environment.GetEnvironmentVariable("SentryLink"), mongoConnection = Environment.GetEnvironmentVariable("MongoConnection"), cmdPrefix = "n!", twitchStreamer = "phytal", version = "0.0.01", botGameToSet = "n!help | Nayu"};
                 bot.token = "";
                 string json = JsonConvert.SerializeObject(bot, Formatting.Indented);
                 File.WriteAllText(configFolder + "/" + configFile, json);
@@ -42,6 +42,7 @@ namespace Nayu.Core.Configuration
         public string wolkeToken;
         public string dblToken;
         public string sentryLink;
+        public string mongoConnection;
     }
 }
 

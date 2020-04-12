@@ -97,13 +97,8 @@ namespace Nayu.Core.Handlers
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
         }
-
-        public async Task _UserJoined(SocketGuildUser user)
-        {
-            _ = UserJoined(user);
-        }
-
-        private async Task UserJoined(SocketGuildUser user)
+        
+        public async Task UserJoined(SocketGuildUser user)
         {
             var guildAcc = GlobalGuildAccounts.GetGuildAccount(user.Guild.Id);
             if (guildAcc.WelcomeChannel == 0) return;
@@ -115,12 +110,7 @@ namespace Nayu.Core.Handlers
             await channel.SendMessageAsync(messageString);
         }
 
-        public async Task _UserLeft(SocketGuildUser user)
-        {
-            _ = UserLeft(user);
-        }
-
-        private async Task UserLeft(SocketGuildUser user)
+        public async Task UserLeft(SocketGuildUser user)
         {
             var guildAcc = GlobalGuildAccounts.GetGuildAccount(user.Guild.Id);
             if (guildAcc.LeaveChannel == 0) return;

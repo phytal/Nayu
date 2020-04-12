@@ -136,9 +136,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
         [Remarks("n!duelStats <target user (will be defaulted to you if left empty)> Ex: n!duelStats @Phytal")]
         public async Task DuelStats([Remainder] string user = "")
         {
-            SocketUser target = null;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-            target = mentionedUser ?? Context.User;
+            var target = mentionedUser ?? Context.User;
             var config = GlobalUserAccounts.GetUserAccount(target);
             var embed = new EmbedBuilder();
             embed.WithColor(Global.NayuColor);
@@ -189,8 +188,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
 
             GlobalUserAccounts.SaveAccounts(config.Id, configg.Id);
             var choms = ActiveChomusuke.GetActiveChomusuke(user.Id, req.Id);
-            var chom1 = choms.Item1;
-            var chom2 = choms.Item2;
+            var chom1 = choms.ChomusukeOne;
+            var chom2 = choms.ChomusukeTwo;
             await channel.SendMessageAsync(
                 $":crossed_swords:  **|** {req.Mention} challenged {user.Mention} to a duel!\n\n**{chom1.Name}** has **{chom1.Health}** health!\n**{chom2.Name}** has **{chom2.Health}** health!\n\n{text}, you go first!");
         }
@@ -294,8 +293,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
             var configg = GlobalUserAccounts.GetUserAccount(config.OpponentId);
             await ReplyAsync(":flag_white:  **|** " + Context.User.Mention + " ended the fight.");
             var choms = ActiveChomusuke.GetActiveChomusuke(Context.User.Id, config.OpponentId);
-            var chom1 = choms.Item1;
-            var chom2 = choms.Item2;
+            var chom1 = choms.ChomusukeOne;
+            var chom2 = choms.ChomusukeTwo;
 
             config.Fighting = false;
             configg.Fighting = false;

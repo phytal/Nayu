@@ -28,9 +28,9 @@ namespace Nayu.Modules.API.Overwatch
             {
                 var config = GlobalUserAccounts.GetUserAccount(Context.User);
 
-                var username = config.OverwatchID;
-                var platform = config.OverwatchPlatform;
-                var region = config.OverwatchRegion;
+                var username = config.OwId;
+                var platform = config.OwPlatform;
+                var region = config.OwRegion;
 
                 var json = await Global.SendWebRequest(
                     $"https://ow-api.com/v1/stats/{platform}/{region}/{username}/complete");
@@ -320,9 +320,9 @@ namespace Nayu.Modules.API.Overwatch
             {
                 var config = GlobalUserAccounts.GetUserAccount(Context.User);
 
-                var username = config.OverwatchID;
-                var platform = config.OverwatchPlatform;
-                var region = config.OverwatchRegion;
+                var username = config.OwId;
+                var platform = config.OwPlatform;
+                var region = config.OwRegion;
 
                 var json = await Global.SendWebRequest(
                     $"https://ow-api.com/v1/stats/{platform}/{region}/{username}/complete");
@@ -495,9 +495,9 @@ namespace Nayu.Modules.API.Overwatch
             {
                 var config = GlobalUserAccounts.GetUserAccount(Context.User);
 
-                var username = config.OverwatchID;
-                var platform = config.OverwatchPlatform;
-                var region = config.OverwatchRegion;
+                var username = config.OwId;
+                var platform = config.OwPlatform;
+                var region = config.OwRegion;
 
                 var json = await Global.SendWebRequest(
                     $"https://ow-api.com/v1/stats/{platform}/{region}/{username}/complete");

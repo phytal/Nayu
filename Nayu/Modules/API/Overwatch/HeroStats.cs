@@ -5744,7 +5744,7 @@ namespace Nayu.Modules.API.Overwatch
                 hero = GetHero(hero);
 
                 var json = await Global.SendWebRequest(
-                    $"https://ow-api.com/v1/stats/{config.OverwatchPlatform}/{config.OverwatchRegion}/{config.OverwatchID}/heroes/{hero}");
+                    $"https://ow-api.com/v1/stats/{config.OwPlatform}/{config.OwRegion}/{config.OwId}/heroes/{hero}");
 
                 var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
 
@@ -6093,7 +6093,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -6183,7 +6183,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -6335,7 +6335,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -6413,7 +6413,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -6517,7 +6517,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -6588,7 +6588,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -6654,7 +6654,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -6712,7 +6712,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -6754,7 +6754,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -6838,7 +6838,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -6935,7 +6935,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -6990,7 +6990,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -7087,7 +7087,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -7208,7 +7208,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -7317,7 +7317,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -7402,7 +7402,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -7461,7 +7461,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -7515,7 +7515,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -7593,7 +7593,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -7690,7 +7690,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -7782,7 +7782,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -7855,7 +7855,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -7930,7 +7930,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -8008,7 +8008,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -8074,7 +8074,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -8157,7 +8157,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -8256,7 +8256,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -8298,7 +8298,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpHeroSpecific,
                             compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -8418,7 +8418,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -8511,7 +8511,7 @@ namespace Nayu.Modules.API.Overwatch
                             compAvg, compBest, compTotal, compMisc, qpAvg, qpBest, qpTotal, qpMisc, qpAssists,
                             compAssists, qpHeroSpecific, compHeroSpecific
                         },
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[]
                         {
                             "Competitive Averages", "Competitive Best", "Competitive Totals",
@@ -8546,7 +8546,7 @@ namespace Nayu.Modules.API.Overwatch
                 hero = GetHero(hero);
 
                 var json = await Global.SendWebRequest(
-                    $"https://ow-api.com/v1/stats/{config.OverwatchPlatform}/{config.OverwatchRegion}/{config.OverwatchID}/heroes/{hero}");
+                    $"https://ow-api.com/v1/stats/{config.OwPlatform}/{config.OwRegion}/{config.OwId}/heroes/{hero}");
 
                 var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
 
@@ -8719,7 +8719,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -8764,7 +8764,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -8840,7 +8840,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, qpAssists, qpHeroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -8879,7 +8879,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -8932,7 +8932,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -8968,7 +8968,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9002,7 +9002,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9032,7 +9032,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9054,7 +9054,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9099,7 +9099,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9148,7 +9148,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9176,7 +9176,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9227,7 +9227,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9289,7 +9289,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9345,7 +9345,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9389,7 +9389,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9419,7 +9419,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9447,7 +9447,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9487,7 +9487,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9537,7 +9537,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9583,7 +9583,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9621,7 +9621,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9659,7 +9659,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9699,7 +9699,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9733,7 +9733,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9777,7 +9777,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9827,7 +9827,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9850,7 +9850,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9912,7 +9912,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9960,7 +9960,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {qpAvg, qpBest, qpTotal, qpMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -9989,7 +9989,7 @@ namespace Nayu.Modules.API.Overwatch
                 hero = GetHero(hero);
 
                 var json = await Global.SendWebRequest(
-                    $"https://ow-api.com/v1/stats/{config.OverwatchPlatform}/{config.OverwatchRegion}/{config.OverwatchID}/heroes/{hero}");
+                    $"https://ow-api.com/v1/stats/{config.OwPlatform}/{config.OwRegion}/{config.OwId}/heroes/{hero}");
 
                 var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
 
@@ -10173,7 +10173,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10219,7 +10219,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10297,7 +10297,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, compAssists, compHeroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10337,7 +10337,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10391,7 +10391,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10427,7 +10427,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10461,7 +10461,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10491,7 +10491,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10513,7 +10513,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10556,7 +10556,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10606,7 +10606,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10634,7 +10634,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10741,7 +10741,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10797,7 +10797,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10841,7 +10841,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10871,7 +10871,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10899,7 +10899,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10939,7 +10939,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -10989,7 +10989,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -11036,7 +11036,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -11074,7 +11074,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -11112,7 +11112,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -11152,7 +11152,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -11186,7 +11186,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -11230,7 +11230,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -11280,7 +11280,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -11302,7 +11302,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -11364,7 +11364,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);
@@ -11412,7 +11412,7 @@ namespace Nayu.Modules.API.Overwatch
                     PaginatedMessage pages = new PaginatedMessage
                     {
                         Pages = new[] {compAvg, compBest, compTotal, compMisc, assists, heroSpecific},
-                        Content = $"{config.OverwatchID}'s Hero Stats for {hero}", Color = Color.Blue,
+                        Content = $"{config.OwId}'s Hero Stats for {hero}", Color = Color.Blue,
                         Title = new[] {"Averages", "Best", "Totals", "Miscellaneous", "Assists", "Hero Specific"}
                     };
                     await PagedReplyAsync(pages);

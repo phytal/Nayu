@@ -16,12 +16,12 @@ namespace Nayu.Core.Entities
         public string Zodiac { get; set; }
         public bool Shiny { get; set; }
         public byte Hunger { get; set; }
-        public uint XP { get; set; }
+        public uint Xp { get; set; }
         public uint LevelNumber
         {
             get
             {
-                return (uint)Math.Sqrt(XP / 200);
+                return (uint)Math.Sqrt(Xp / 200);
             }
         }
         public byte Trust { get; set; }
@@ -59,7 +59,7 @@ namespace Nayu.Core.Entities
             Zodiac = zodiac;
             Shiny = shiny;
             Hunger = hunger;
-            XP = xp;
+            Xp = xp;
             Trust = trust; //gained by feeding in time, lost by starving and not cleaning up
             Waste = waste;
             Sick = sick;
@@ -96,7 +96,7 @@ namespace Nayu.Core.Entities
         public string Content { get; set; }
         public DateTime Time { get; set; }
         public bool Read { get; set; }
-        public ulong ID { get; set; }
+        public ulong Id { get; set; }
 
         public Message(string title, string content, DateTime time, bool read, ulong id)
         {
@@ -104,7 +104,7 @@ namespace Nayu.Core.Entities
             Content = content;
             Time = time;
             Read = read;
-            ID = id;
+            Id = id;
         }
     }
 
@@ -136,24 +136,22 @@ namespace Nayu.Core.Entities
         public ushort LootBoxUncommon { get; set; }
         public ushort LootBoxEpic { get; set; }
         public ushort LootBoxLegendary { get; set; }
-        public uint XP { get; set; }
-        public DateTime LastXPMessage { get; set; } = DateTime.UtcNow;
+        public uint Xp { get; set; }
+        public DateTime LastXpMessage { get; set; } = DateTime.UtcNow;
 
         public uint LevelNumber =>
-            (uint) Math.Sqrt(XP / 50);
+            (uint) Math.Sqrt(Xp / 50);
 
         public ulong Id { get; set; }
-        public string OverwatchID { get; set; }
-        public string OverwatchRegion { get; set; }
-        public string OverwatchPlatform { get; set; }
+        public string OwId { get; set; }
+        public string OwRegion { get; set; }
+        public string OwPlatform { get; set; }
         public ulong Taiyaki { get; set; }
-        public uint TaiyakiFromMessages { get; set; }
-        public uint TaiyakiFromGambling { get; set; }
         public string Armour { get; set; }
         public string Weapon { get; set; }
         public string Blessing { get; set; }
-        public ulong InboxIDTracker { get; set; }
-        public ulong InboxIDLastRead { get; set; }
+        public ulong InboxIdTracker { get; set; }
+        public ulong InboxIdLastRead { get; set; }
         public DateTime LastDaily { get; set; } = DateTime.UtcNow.AddDays(-2);
         public DateTime LastMessage { get; set; } = DateTime.UtcNow;
         public List<Message> Inbox { get; set; } = new List<Message>();

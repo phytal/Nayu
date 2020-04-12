@@ -27,13 +27,13 @@ namespace Nayu.Core.Features.Economy
 
         public static DailyResult GetRep(SocketGuildUser user)
         {
-            var account = GlobalGuildUserAccounts.GetUserID(user);
+            var account = GlobalGuildUserAccounts.GetUserId(user);
             var difference = DateTime.UtcNow - account.LastRep.AddDays(1);
 
             if (difference.TotalHours < 0) return new DailyResult {Success = false, RefreshTimeSpan = difference};
 
             account.LastRep = DateTime.UtcNow;
-            GlobalGuildUserAccounts.SaveAccounts();
+            GlobalGuildUserAccounts.SaveAccounts(user);
             return new DailyResult {Success = true};
         }
     }

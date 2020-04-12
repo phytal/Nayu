@@ -8,7 +8,7 @@ namespace Nayu.Core.Entities
 
         public List<string> LeaveMessages { get; set; } = new List<string> { };
 
-        public List<ulong> AntilinkIgnoredChannels { get; set; } = new List<ulong> { };
+        public List<ulong> AntiLinkIgnoredChannels { get; set; } = new List<ulong> { };
 
         public List<ulong> NoFilterChannels { get; set; } = new List<ulong> { };
 
@@ -20,7 +20,7 @@ namespace Nayu.Core.Entities
 
         public bool Filter { get; set; }
 
-        public bool Antilink { get; set; }
+        public bool AntiLink { get; set; }
 
         public bool Unflip { get; set; }
 
@@ -39,11 +39,7 @@ namespace Nayu.Core.Entities
         public ulong GuildOwnerId { get; set; }
 
         public string Autorole { get; set; }
-
-        public ulong ServerLoggingChannel { get; set; }
-
-        public bool IsServerLoggingEnabled { get; set; }
-
+        
         public ulong SlowModeCooldown { get; set; }
 
         public bool IsSlowModeEnabled { get; set; }

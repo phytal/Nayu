@@ -1,38 +1,41 @@
 ﻿using System.Collections.Concurrent;
 using System.IO;
 using Discord;
+using MongoDB.Driver;
+using Nayu.Core.Configuration;
 using Nayu.Core.Entities;
+using Nayu.Helpers;
 
 namespace Nayu.Core.Features.GlobalAccounts
 {
     internal static class GlobalGuildAccounts
     {
-        private static readonly ConcurrentDictionary<ulong, GlobalGuildAccount> serverAccounts = new ConcurrentDictionary<ulong, GlobalGuildAccount>();
+        private static readonly ConcurrentDictionary<ulong, GlobalGuildAccount> GuildAccounts = new ConcurrentDictionary<ulong, GlobalGuildAccount>();
 
         static GlobalGuildAccounts()
         {
-            var info = Directory.CreateDirectory(Path.Combine(Constants.ResourceFolder, Constants.ServerAccountsFolder));
-            var files = info.GetFiles("*.json");
-            if (files.Length > 0)
-            {
-                foreach (var file in files)
-                {
-                    var server = Configuration.DataStorage.RestoreObject<GlobalGuildAccount>(Path.Combine(file.Directory.Name, file.Name));
-                    serverAccounts.TryAdd(server.Id, server);
-                }
-            }
+            MongoHelper.ConnectToMongoService();
+            MongoHelper.GuildCollection = MongoHelper.Database.GetCollection<GlobalGuildAccount>("Guilds");
+            var filter = Builders<GlobalGuildAccount>.Filter.Ne("_id", "");
+            var results = MongoHelper.GuildCollection.Find(filter);
+            if (results.CountDocuments() < 1)
+                GuildAccounts = new ConcurrentDictionary<ulong, GlobalGuildAccount>();
             else
             {
-                serverAccounts = new ConcurrentDictionary<ulong, GlobalGuildAccount>();
+                foreach (var result in results.ToList())
+                {
+                    var guild = DataStorage.RestoreObject<GlobalGuildAccount>(CollectionType.Guild, result.Id);
+                    GuildAccounts.TryAdd(guild.Id, guild);
+                }
             }
         }
-        //TODO: change all instances of currency to custom currency name
+
         internal static GlobalGuildAccount GetGuildAccount(ulong id)
         {
-            return serverAccounts.GetOrAdd(id, (key) =>
+            return GuildAccounts.GetOrAdd(id, (key) =>
             {
                 var newAccount = new GlobalGuildAccount { Id = id, LevelingMsgs = "server", Currency = "Taiyakis"};
-                Configuration.DataStorage.StoreObject(newAccount, Path.Combine(Constants.ServerAccountsFolder, $"{id}.json"), useIndentations: true);
+                DataStorage.StoreObject(newAccount, CollectionType.Guild, id);
                 return newAccount;
             });
         }
@@ -47,7 +50,7 @@ namespace Nayu.Core.Features.GlobalAccounts
         /// </summary>
         internal static void SaveAllAccounts()
         {
-            foreach (var id in serverAccounts.Keys)
+            foreach (var id in GuildAccounts.Keys)
             {
                 SaveAccounts(id);
             }
@@ -60,7 +63,7 @@ namespace Nayu.Core.Features.GlobalAccounts
         {
             foreach (var id in ids)
             {
-                Configuration.DataStorage.StoreObject(GetGuildAccount(id), Path.Combine(Constants.ServerAccountsFolder, $"{id}.json"), useIndentations: true);
+                DataStorage.StoreObject(GetGuildAccount(id), CollectionType.Guild, id);
             }
         }
     }

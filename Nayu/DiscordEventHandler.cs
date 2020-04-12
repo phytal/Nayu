@@ -218,13 +218,13 @@ namespace Nayu
 
         private async Task UserJoined(SocketGuildUser user)
         {
-            _commandHandler._UserJoined(user);
+            _commandHandler.UserJoined(user);
             _events.Autorole(user);
         }
 
         private async Task UserLeft(SocketGuildUser user)
         {
-            _commandHandler._UserLeft(user);
+            _commandHandler.UserLeft(user);
         }
 
         private async Task UserUnbanned(SocketUser user, SocketGuild guild)

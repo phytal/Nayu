@@ -4,61 +4,65 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Discord.WebSocket;
+using MongoDB.Driver;
+using Nayu.Core.Configuration;
 using Nayu.Core.Entities;
+using Nayu.Helpers;
 
 namespace Nayu.Core.Features.GlobalAccounts
 {
     internal static class GlobalGuildUserAccounts
     {
-        private static SocketGuildUser user;
-        private static readonly ConcurrentDictionary<string, GlobalGuildUserAccount> userAccounts = new ConcurrentDictionary<string, GlobalGuildUserAccount>();
+        private static readonly ConcurrentDictionary<string, GlobalGuildUserAccount> GuildUserAccounts = new ConcurrentDictionary<string, GlobalGuildUserAccount>();
         static GlobalGuildUserAccounts()
         {
-            var info = System.IO.Directory.CreateDirectory(Path.Combine(Constants.ResourceFolder, Constants.ServerUserAccountsFolder));
-            var files = info.GetFiles("*.json");
-            if (files.Length > 0)
+            MongoHelper.ConnectToMongoService();
+            MongoHelper.GuildUserCollection = MongoHelper.Database.GetCollection<GlobalGuildUserAccount>("GuildUsers");
+            var filter = Builders<GlobalGuildUserAccount>.Filter.Ne("_id", "");
+            var results = MongoHelper.GuildUserCollection.Find(filter);
+            if (results.CountDocuments() < 1)
+                GuildUserAccounts = new ConcurrentDictionary<string, GlobalGuildUserAccount>();
+            else
             {
-                foreach (var file in files)
+                foreach (var result in results.ToList())
                 {
-                    var user = Configuration.DataStorage.RestoreObject<GlobalGuildUserAccount>(Path.Combine(file.Directory.Name, file.Name));
-                    userAccounts.TryAdd(user.UniqueId, user);
+                    var guildUser =
+                        DataStorage.RestoreObject<GlobalGuildUserAccount>(CollectionType.GuildUser, result.Id);
+                    GuildUserAccounts.TryAdd(guildUser.Id, guildUser);
                 }
-            }
-            else {
-                userAccounts = new ConcurrentDictionary<string, GlobalGuildUserAccount>();
             }
         }
 
-        internal static GlobalGuildUserAccount GetUserID(string id, ulong nid)
+        private static GlobalGuildUserAccount GetUserId(string id, ulong nid)
         {
-            return userAccounts.GetOrAdd(id, (key) =>
+            return GuildUserAccounts.GetOrAdd(id, (key) =>
             {
-                var newAccount = new GlobalGuildUserAccount { UniqueId = id , Id = nid};
-                Configuration.DataStorage.StoreObject(newAccount, Path.Combine(Constants.ServerUserAccountsFolder, $"{id}.json"), useIndentations: true);
+                var newAccount = new GlobalGuildUserAccount { Id = id , UserId = nid};
+                DataStorage.StoreObject(newAccount, CollectionType.GuildUser, id);
                 return newAccount;
             });
         }
 
-        internal static GlobalGuildUserAccount GetUserID(SocketGuildUser user)
+        internal static GlobalGuildUserAccount GetUserId(SocketGuildUser user)
         {
-            return GetUserID($"{user.Guild.Id}{user.Id}", user.Id);
+            return GetUserId($"{user.Guild.Id}{user.Id}", user.Id);
         }
 
 
         internal static List<GlobalGuildUserAccount> GetAllAccounts()
         {
-            return userAccounts.Values.ToList();
+            return GuildUserAccounts.Values.ToList();
         }
 
 
         internal static List<GlobalGuildUserAccount> GetFilteredAccounts(Func<GlobalGuildUserAccount, bool> filter)
         {
-            return userAccounts.Values.Where(filter).ToList();
+            return GuildUserAccounts.Values.Where(filter).ToList();
         }
 
         internal static void SaveAccount(string uId, ulong id)
         {
-            Configuration.DataStorage.StoreObject(GetUserID(uId, id), Path.Combine(Constants.ServerUserAccountsFolder, $"{uId}.json"), useIndentations: true);
+            DataStorage.StoreObject(GetUserId(uId, id), CollectionType.GuildUser, uId);
 
         }
         /// <summary>
@@ -66,20 +70,20 @@ namespace Nayu.Core.Features.GlobalAccounts
         /// </summary>
         internal static void SaveAccounts()
         {
-            foreach (var userAcc in userAccounts.Values)
+            foreach (var userAcc in GuildUserAccounts.Values)
             {
-                SaveAccount(userAcc.UniqueId, userAcc.Id);
+                SaveAccount(userAcc.Id, userAcc.UserId);
             }
         }
 
         /// <summary>
         /// Saves one or multiple Accounts by provided Ids
         /// </summary>
-        internal static void SaveAccounts(params string[] ids)
+        internal static void SaveAccounts(params SocketGuildUser[] users)
         {
-            foreach (var id in ids)
+            foreach (var user in users)
             {
-                Configuration.DataStorage.StoreObject(GetUserID(id, user.Id), Path.Combine(Constants.ServerUserAccountsFolder, $"{id}.json"), useIndentations: true);
+                DataStorage.StoreObject(GetUserId(user), CollectionType.GuildUser, $"{user.Guild.Id}{user.Id}");
             }
         }
     }

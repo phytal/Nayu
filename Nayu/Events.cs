@@ -78,10 +78,10 @@ namespace Nayu
 
             try
             {
-                if (config.Antilink)
+                if (config.AntiLink)
                 {
                     if ((msg.Content.Contains("https://discord.gg") || msg.Content.Contains("https://discord.io")) &&
-                        !config.AntilinkIgnoredChannels.Contains(context.Channel.Id))
+                        !config.AntiLinkIgnoredChannels.Contains(context.Channel.Id))
                     {
                         await msg.DeleteAsync();
                         var embed = new EmbedBuilder();

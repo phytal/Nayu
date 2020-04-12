@@ -67,7 +67,8 @@ namespace Nayu
                               " _|    _|    _|_|_|    _|_|_|    _|_|_|\n" +
                               "                           _|         \n" +
                               "                         _|_|   \n");
-            if (string.IsNullOrEmpty(Config.bot.token)) return;
+            if (string.IsNullOrEmpty(Config.bot.token)) 
+                throw new AggregateException("Please enter a bot token in the config file.");
             _client = new DiscordShardedClient(_shardIds, new DiscordSocketConfig
             {
                 LogLevel = LogSeverity.Verbose,
@@ -86,7 +87,7 @@ namespace Nayu
             }
             catch (Exception)
             {
-                return;
+                throw new Exception("Please enter a valid token");
             }
 
             await _client.StartAsync();

@@ -968,9 +968,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
         [Remarks("Usage: n!inventory @user Ex: n!inventory @Phytal")]
         public async Task DuelsInventory([Remainder] string arg = "")
         {
-            SocketUser target = null;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-            target = mentionedUser ?? Context.User;
+            var target = mentionedUser ?? Context.User;
             var account = GlobalUserAccounts.GetUserAccount(target);
             var embed = new EmbedBuilder();
             embed.WithTitle($"{target.Username}'s Inventory");
@@ -1022,9 +1021,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
         [Remarks("Usage: n!attacks @user (or leave @user blank to see your own) Ex: n!attacks @Phytal")]
         public async Task LearnedAttacks([Remainder] string arg = "")
         {
-            SocketUser target = null;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-            target = mentionedUser ?? Context.User;
+            var target = mentionedUser ?? Context.User;
             var chom = ActiveChomusuke.GetOneActiveChomusuke(target.Id);
             var embed = new EmbedBuilder();
             embed.WithTitle($"{target.Username}'s Learned Attacks");

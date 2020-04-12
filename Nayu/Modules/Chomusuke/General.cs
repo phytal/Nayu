@@ -33,15 +33,15 @@ namespace Nayu.Modules.Chomusuke
             {
                 string sick = ConvertBool.ConvertBooleanYN(config.Chomusuke1.Sick);
                 string chomusuke1 =
-                    $"Owner: **{user.Username}**\nName: **{config.Chomusuke1.Name}**\nZodiac: **{config.Chomusuke1.Zodiac}** :{config.Chomusuke1.Zodiac.ToLower()}:\nType: **{config.Chomusuke1.Type}**\nTrait 1: **{config.Chomusuke1.Trait1}**\nTrait 2: **{config.Chomusuke1.Trait2}**\nCombat Power: **{config.Chomusuke1.CP}**\nExp: **{config.Chomusuke1.XP}**\nLevel: **{config.Chomusuke1.LevelNumber}**\n Control: **{config.Chomusuke1.Control}**\n Health: **{config.Chomusuke1.HealthCapacity}**\nShield: **{config.Chomusuke1.ShieldCapacity}**\nMana: **{config.Chomusuke1.ManaCapacity}**";
+                    $"Owner: **{user.Username}**\nName: **{config.Chomusuke1.Name}**\nZodiac: **{config.Chomusuke1.Zodiac}** :{config.Chomusuke1.Zodiac.ToLower()}:\nType: **{config.Chomusuke1.Type}**\nTrait 1: **{config.Chomusuke1.Trait1}**\nTrait 2: **{config.Chomusuke1.Trait2}**\nCombat Power: **{config.Chomusuke1.CP}**\nExp: **{config.Chomusuke1.Xp}**\nLevel: **{config.Chomusuke1.LevelNumber}**\n Control: **{config.Chomusuke1.Control}**\n Health: **{config.Chomusuke1.HealthCapacity}**\nShield: **{config.Chomusuke1.ShieldCapacity}**\nMana: **{config.Chomusuke1.ManaCapacity}**";
                 string chomusuke2 = $"{user.Username} doesn't have this many chomusukes!";
                 if (config.Chomusuke2.Have)
                     chomusuke2 =
-                        $"Owner: **{user.Username}**\nName: **{config.Chomusuke2.Name}**\nZodiac: **{config.Chomusuke2.Zodiac}** :{config.Chomusuke2.Zodiac.ToLower()}:\nType: **{config.Chomusuke2.Type}**\nTrait 1: **{config.Chomusuke2.Trait1}**\nTrait 2: **{config.Chomusuke2.Trait2}**\nCombat Power: **{config.Chomusuke2.CP}**\nExp: **{config.Chomusuke2.XP}**\nLevel: **{config.Chomusuke2.LevelNumber}**\n Control: **{config.Chomusuke2.Control}**\n Health: **{config.Chomusuke2.HealthCapacity}**\nShield: **{config.Chomusuke2.ShieldCapacity}**\nMana: **{config.Chomusuke2.ManaCapacity}**";
+                        $"Owner: **{user.Username}**\nName: **{config.Chomusuke2.Name}**\nZodiac: **{config.Chomusuke2.Zodiac}** :{config.Chomusuke2.Zodiac.ToLower()}:\nType: **{config.Chomusuke2.Type}**\nTrait 1: **{config.Chomusuke2.Trait1}**\nTrait 2: **{config.Chomusuke2.Trait2}**\nCombat Power: **{config.Chomusuke2.CP}**\nExp: **{config.Chomusuke2.Xp}**\nLevel: **{config.Chomusuke2.LevelNumber}**\n Control: **{config.Chomusuke2.Control}**\n Health: **{config.Chomusuke2.HealthCapacity}**\nShield: **{config.Chomusuke2.ShieldCapacity}**\nMana: **{config.Chomusuke2.ManaCapacity}**";
                 string chomusuke3 = $"{user.Username} doesn't have this many chomusukes!";
                 if (config.Chomusuke3.Have)
                     chomusuke3 =
-                        $"Owner: **{user.Username}**\nName: **{config.Chomusuke3.Name}**\nZodiac: **{config.Chomusuke3.Zodiac}** :{config.Chomusuke3.Zodiac.ToLower()}:\nType: **{config.Chomusuke3.Type}**\nTrait 1: **{config.Chomusuke3.Trait1}**\nTrait 2: **{config.Chomusuke3.Trait2}**\nCombat Power: **{config.Chomusuke3.CP}**\nExp: **{config.Chomusuke3.XP}**\nLevel: **{config.Chomusuke3.LevelNumber}**\n Control: **{config.Chomusuke3.Control}**\n Health: **{config.Chomusuke3.HealthCapacity}**\nShield: **{config.Chomusuke3.ShieldCapacity}**\nMana: **{config.Chomusuke3.ManaCapacity}**";
+                        $"Owner: **{user.Username}**\nName: **{config.Chomusuke3.Name}**\nZodiac: **{config.Chomusuke3.Zodiac}** :{config.Chomusuke3.Zodiac.ToLower()}:\nType: **{config.Chomusuke3.Type}**\nTrait 1: **{config.Chomusuke3.Trait1}**\nTrait 2: **{config.Chomusuke3.Trait2}**\nCombat Power: **{config.Chomusuke3.CP}**\nExp: **{config.Chomusuke3.Xp}**\nLevel: **{config.Chomusuke3.LevelNumber}**\n Control: **{config.Chomusuke3.Control}**\n Health: **{config.Chomusuke3.HealthCapacity}**\nShield: **{config.Chomusuke3.ShieldCapacity}**\nMana: **{config.Chomusuke3.ManaCapacity}**";
 
                 PaginatedMessage pages = new PaginatedMessage
                 {
@@ -94,7 +94,7 @@ namespace Nayu.Modules.Chomusuke
                         true);
                     embed.AddField("Type", config.Chomusuke1.Type, true);
                     embed.AddField("Combat Power", config.Chomusuke1.CP, true);
-                    embed.AddField("Exp", config.Chomusuke1.XP, true);
+                    embed.AddField("Exp", config.Chomusuke1.Xp, true);
                     embed.AddField("Level", config.Chomusuke1.LevelNumber, true);
                     embed.AddField("Control", config.Chomusuke1.Control, true);
                     embed.AddField("Health", config.Chomusuke1.HealthCapacity, true);
@@ -120,7 +120,7 @@ namespace Nayu.Modules.Chomusuke
                         true);
                     embed.AddField("Type", config.Chomusuke2.Type, true);
                     embed.AddField("Combat Power", config.Chomusuke2.CP, true);
-                    embed.AddField("Exp", config.Chomusuke2.XP, true);
+                    embed.AddField("Exp", config.Chomusuke2.Xp, true);
                     embed.AddField("Level", config.Chomusuke2.LevelNumber, true);
                     embed.AddField("Control", config.Chomusuke2.Control, true);
                     embed.AddField("Health", config.Chomusuke2.HealthCapacity, true);
@@ -146,7 +146,7 @@ namespace Nayu.Modules.Chomusuke
                         true);
                     embed.AddField("Type", config.Chomusuke3.Type, true);
                     embed.AddField("Combat Power", config.Chomusuke3.CP, true);
-                    embed.AddField("Exp", config.Chomusuke3.XP, true);
+                    embed.AddField("Exp", config.Chomusuke3.Xp, true);
                     embed.AddField("Level", config.Chomusuke3.LevelNumber, true);
                     embed.AddField("Control", config.Chomusuke3.Control, true);
                     embed.AddField("Health", config.Chomusuke3.HealthCapacity, true);
@@ -434,7 +434,7 @@ namespace Nayu.Modules.Chomusuke
                 if (choice == 1)
                 {
                     uint xpGain = (uint) Global.Rng.Next(20, 30);
-                    chom.XP += xpGain;
+                    chom.Xp += xpGain;
                     await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                     GlobalUserAccounts.SaveAccounts(config.Id);
                     int randomIndex = Global.Rng.Next(yesTrainTexts.Length);
