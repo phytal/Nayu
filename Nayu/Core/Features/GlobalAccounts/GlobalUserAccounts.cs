@@ -21,21 +21,18 @@ namespace Nayu.Core.Features.GlobalAccounts
         {
             MongoHelper.ConnectToMongoService();
             MongoHelper.UserCollection = MongoHelper.Database.GetCollection<GlobalUserAccount>("Users");
-            var filter = Builders<GlobalUserAccount>.Filter.Ne("Id", "");
-            var results = MongoHelper.UserCollection.Find(filter).ToList();
-            if (results.Count > 0)
+            var filter = Builders<GlobalUserAccount>.Filter.Ne("_id", "");
+            var results = MongoHelper.UserCollection.Find(filter);
+            if (results.CountDocuments() < 1)
+                UserAccounts = new ConcurrentDictionary<ulong, GlobalUserAccount>();
+            else
             {
-                foreach (var result in results)
+                foreach (var result in results.ToList())
                 {
-                    var user = DataStorage.RestoreObject(CollectionType.User, result.Id) as GlobalUserAccount;
+                    var user = DataStorage.RestoreObject<GlobalUserAccount>(CollectionType.User, result.Id);
                     UserAccounts.TryAdd(user.Id, user);
                 }
             }
-            else
-            {
-                UserAccounts = new ConcurrentDictionary<ulong, GlobalUserAccount>();
-            }
-            
         }
         
          internal static GlobalUserAccount GetUserAccount(ulong id)

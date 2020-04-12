@@ -39,7 +39,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 await ReplyAndDeleteAsync("", embed: embed);
             }
 
-            var userAccount = GlobalGuildUserAccounts.GetUserID((SocketGuildUser) user);
+            var userAccount = GlobalGuildUserAccounts.GetUserId((SocketGuildUser) user);
             var dmchannel = await user.GetOrCreateDMChannelAsync();
             userAccount.NumberOfWarnings++;
             userAccount.Warnings.Add(reason);
@@ -68,8 +68,8 @@ namespace Nayu.Modules.Admin.Commands.Management
                 return;
             }
 
-            var num = GlobalGuildUserAccounts.GetUserID((SocketGuildUser) user).NumberOfWarnings;
-            var warnings = GlobalGuildUserAccounts.GetUserID((SocketGuildUser) user).Warnings;
+            var num = GlobalGuildUserAccounts.GetUserId((SocketGuildUser) user).NumberOfWarnings;
+            var warnings = GlobalGuildUserAccounts.GetUserId((SocketGuildUser) user).Warnings;
             var embed = new EmbedBuilder();
             embed.WithTitle($"{user}'s Warnings");
             embed.WithDescription($"Total of **{num}** warnings");
@@ -101,7 +101,7 @@ namespace Nayu.Modules.Admin.Commands.Management
                 return;
             }
 
-            var userAccount = GlobalGuildUserAccounts.GetUserID((SocketGuildUser) user);
+            var userAccount = GlobalGuildUserAccounts.GetUserId((SocketGuildUser) user);
             userAccount.NumberOfWarnings = 0;
             userAccount.Warnings.Clear();
             GlobalGuildUserAccounts.SaveAccounts();

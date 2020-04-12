@@ -13,19 +13,18 @@ namespace Nayu.Core.Features.GlobalAccounts
 {
     internal static class GlobalGuildUserAccounts
     {
-        private static SocketGuildUser user;
         private static readonly ConcurrentDictionary<string, GlobalGuildUserAccount> GuildUserAccounts = new ConcurrentDictionary<string, GlobalGuildUserAccount>();
         static GlobalGuildUserAccounts()
         {
             MongoHelper.ConnectToMongoService();
             MongoHelper.GuildUserCollection = MongoHelper.Database.GetCollection<GlobalGuildUserAccount>("GuildUsers");
-            var filter = Builders<GlobalGuildUserAccount>.Filter.Ne("ID", "");
+            var filter = Builders<GlobalGuildUserAccount>.Filter.Ne("_id", "");
             var results = MongoHelper.GuildUserCollection.Find(filter).ToList();
             if (results.Count > 0)
             {
                 foreach (var result in results)
                 {
-                    var guildUser = DataStorage.RestoreObject(CollectionType.GuildUser, result.Id) as GlobalGuildUserAccount;
+                    var guildUser = DataStorage.RestoreObject<GlobalGuildUserAccount>(CollectionType.GuildUser, result.Id);
                     GuildUserAccounts.TryAdd(guildUser.Id.ToString(), guildUser);
                 }
             }
@@ -34,7 +33,7 @@ namespace Nayu.Core.Features.GlobalAccounts
             }
         }
 
-        internal static GlobalGuildUserAccount GetUserID(string id, ulong nid)
+        private static GlobalGuildUserAccount GetUserId(string id, ulong nid)
         {
             return GuildUserAccounts.GetOrAdd(id, (key) =>
             {
@@ -44,9 +43,9 @@ namespace Nayu.Core.Features.GlobalAccounts
             });
         }
 
-        internal static GlobalGuildUserAccount GetUserID(SocketGuildUser user)
+        internal static GlobalGuildUserAccount GetUserId(SocketGuildUser user)
         {
-            return GetUserID($"{user.Guild.Id}{user.Id}", user.Id);
+            return GetUserId($"{user.Guild.Id}{user.Id}", user.Id);
         }
 
 
@@ -63,7 +62,7 @@ namespace Nayu.Core.Features.GlobalAccounts
 
         internal static void SaveAccount(string uId, ulong id)
         {
-            DataStorage.StoreObject(GetUserID(uId, id), CollectionType.GuildUser, uId);
+            DataStorage.StoreObject(GetUserId(uId, id), CollectionType.GuildUser, uId);
 
         }
         /// <summary>
@@ -80,11 +79,11 @@ namespace Nayu.Core.Features.GlobalAccounts
         /// <summary>
         /// Saves one or multiple Accounts by provided Ids
         /// </summary>
-        internal static void SaveAccounts(params string[] ids)
+        internal static void SaveAccounts(params SocketGuildUser[] users)
         {
-            foreach (var id in ids)
+            foreach (var user in users)
             {
-                DataStorage.StoreObject(GetUserID(id, user.Id), CollectionType.GuildUser, id);
+                DataStorage.StoreObject(GetUserId(user), CollectionType.GuildUser, $"{user.Guild.Id}{user.Id}");
             }
         }
     }

@@ -16,13 +16,13 @@ namespace Nayu.Core.Features.GlobalAccounts
         {
             MongoHelper.ConnectToMongoService();
             MongoHelper.GuildCollection = MongoHelper.Database.GetCollection<GlobalGuildAccount>("Guilds");
-            var filter = Builders<GlobalGuildAccount>.Filter.Ne("ID", "");
+            var filter = Builders<GlobalGuildAccount>.Filter.Ne("_id", "");
             var results = MongoHelper.GuildCollection.Find(filter).ToList();
             if (results.Count > 0)
             {
                 foreach (var result in results)
                 {
-                    var guild = DataStorage.RestoreObject(CollectionType.Guild, result.Id) as GlobalGuildAccount;
+                    var guild = DataStorage.RestoreObject<GlobalGuildAccount>(CollectionType.Guild, result.Id);
                     GuildAccounts.TryAdd(guild.Id, guild);
                 }
             }

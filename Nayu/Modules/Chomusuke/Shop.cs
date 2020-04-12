@@ -21,7 +21,7 @@ namespace Nayu.Modules.Chomusuke
             var config = GlobalUserAccounts.GetUserAccount(user);
             var activeChomusuke = ActiveChomusuke.GetOneActiveChomusuke(user.Id);
             string shoptext =
-                ":department_store:  **|  Chomusuke Shop** \n ```xl\nPlease select the purchase you would like to make.\n\n[1] Capsules\n[2] Boosts\n[3] Items\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
+                "🏬  **|  Chomusuke Shop** \n ```xl\nPlease select the purchase you would like to make.\n\n[1] Capsules\n[2] Boosts\n[3] Items\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
             var shop = await Context.Channel.SendMessageAsync(shoptext);
             var response = await NextMessageAsync();
             if (response == null)
@@ -39,7 +39,7 @@ namespace Nayu.Modules.Chomusuke
                 await shop.ModifyAsync(m =>
                 {
                     m.Content =
-                        $":feet:  |  **Are you sure you want to purchase a {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke? (**900** {Emote.Parse("<:taiyaki:599774631984889857>")})**\n\nType `confirm` to continue or `cancel` to cancel.";
+                        $"🐾  |  **Are you sure you want to purchase a {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke? (**900** {Emote.Parse("<:taiyaki:599774631984889857>")})**\n\nType `confirm` to continue or `cancel` to cancel.";
                 });
                 var newresponse = await NextMessageAsync();
                 if (newresponse.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) &&
@@ -50,7 +50,7 @@ namespace Nayu.Modules.Chomusuke
                         await shop.ModifyAsync(m =>
                         {
                             m.Content =
-                                $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{900 - config.Taiyaki}** more Taiyakis!";
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{900 - config.Taiyaki}** more Taiyakis!";
                         });
                         return;
                     }
@@ -68,7 +68,7 @@ namespace Nayu.Modules.Chomusuke
                 {
                     await shop.ModifyAsync(m =>
                     {
-                        m.Content = $":feet: **|**  **{Context.User.Username}**, purchase cancelled.";
+                        m.Content = $"🐾 **|**  **{Context.User.Username}**, purchase cancelled.";
                     });
                     return;
                 }
@@ -96,7 +96,7 @@ namespace Nayu.Modules.Chomusuke
             {
                 await shop.ModifyAsync(m =>
                 {
-                    m.Content = $":feet: **|**  **{Context.User.Username}**, purchase cancelled.";
+                    m.Content = $"🐾 **|**  **{Context.User.Username}**, purchase cancelled.";
                 });
                 return;
             }
@@ -130,7 +130,7 @@ namespace Nayu.Modules.Chomusuke
                 {
                     await shop.ModifyAsync(m =>
                     {
-                        m.Content = $":feet: **|**  **{Context.User.Username}**, purchase cancelled.";
+                        m.Content = $"🐾 **|**  **{Context.User.Username}**, purchase cancelled.";
                     });
                     return;
                 }
@@ -180,7 +180,7 @@ namespace Nayu.Modules.Chomusuke
                 {
                     await shop.ModifyAsync(m =>
                     {
-                        m.Content = $":feet: **|**  **{Context.User.Username}**, purchase cancelled.";
+                        m.Content = $"🐾 **|**  **{Context.User.Username}**, purchase cancelled.";
                     });
                     return;
                 }

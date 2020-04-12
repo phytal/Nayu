@@ -15,11 +15,11 @@ namespace Nayu.Core.Features.GlobalAccounts
         {
             MongoHelper.ConnectToMongoService();
             MongoHelper.BotCollection = MongoHelper.Database.GetCollection<BotAccount>("Bot");
-            var filter = Builders<BotAccount>.Filter.Eq("Id", NayuId);
+            var filter = Builders<BotAccount>.Filter.Eq("_id", NayuId);
             var result = MongoHelper.BotCollection.Find(filter).FirstOrDefault();
             if (result != null)
             {
-                var bot = DataStorage.RestoreObject(CollectionType.Bot, NayuId) as BotAccount;
+                var bot = DataStorage.RestoreObject<BotAccount>(CollectionType.Bot, NayuId);
                 BotAccount.TryAdd(bot.Id, bot);
             }
             else

@@ -57,7 +57,7 @@ namespace Nayu.Core.LevelingSystem
             if (result.Success)
             {
                 var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-                var mentionedaccount = GlobalGuildUserAccounts.GetUserID(userB);
+                var mentionedaccount = GlobalGuildUserAccounts.GetUserId(userB);
                 mentionedaccount.Reputation += 1;
                 GlobalGuildUserAccounts.SaveAccounts();
                 var embed = new EmbedBuilder();

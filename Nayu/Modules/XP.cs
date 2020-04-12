@@ -45,7 +45,7 @@ namespace Nayu.Modules
             SocketUser target = null;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
             target = mentionedUser ?? Context.User;
-            var userAccount = GlobalGuildUserAccounts.GetUserID(user);
+            var userAccount = GlobalGuildUserAccounts.GetUserId(user);
 
             userAccount.Reputation += Points;
             GlobalGuildUserAccounts.SaveAccounts();

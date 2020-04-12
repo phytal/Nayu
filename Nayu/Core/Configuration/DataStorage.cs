@@ -26,9 +26,9 @@ namespace Nayu.Core.Configuration
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        internal static object RestoreObject(CollectionType type, ulong id)
+        internal static T RestoreObject<T>(CollectionType type, ulong id)
         {
-            return GetOrCreateFileContents(type, id);
+            return GetOrCreateFileContents(type, id) as dynamic;
         }
 
         internal static bool LocalFileExists(string file)
