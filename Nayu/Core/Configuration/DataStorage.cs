@@ -10,7 +10,7 @@ namespace Nayu.Core.Configuration
 {
     class DataStorage
     {
-        private static readonly string resourcesFolder = Constants.ResourceFolder;
+        private static readonly string ResourcesFolder = Constants.ResourceFolder;
 
         internal static void StoreObject(object obj, CollectionType type, object id)
         {
@@ -33,7 +33,7 @@ namespace Nayu.Core.Configuration
 
         internal static bool LocalFileExists(string file)
         {
-            string filePath = String.Concat(resourcesFolder, "/", file);
+            string filePath = String.Concat(ResourcesFolder, "/", file);
             return File.Exists(filePath);
         }
 
