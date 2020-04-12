@@ -21,7 +21,7 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Summary("Mutes @Username")]
         [Remarks("n!mute <user you want to mute> Ex: n!mute @Phytal")]
         [Cooldown(5)]
-        public async Task MuteAsync(SocketGuildUser user)
+        public async Task MuteAsync([NoSelf] SocketGuildUser user)
         {
             var guildUser = Context.User as SocketGuildUser;
             if (!guildUser.GuildPermissions.ManageRoles)

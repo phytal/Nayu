@@ -19,7 +19,7 @@ namespace Nayu.Modules.Admin.Commands.Management
         [Remarks("n!ban <user you want to ban> Ex: n!ban @Phytal")]
         [RequireBotPermission(GuildPermission.BanMembers)]
         [Cooldown(5)]
-        public async Task BanAsync(IGuildUser user, string reason = "No reason provided.")
+        public async Task BanAsync([NoSelf] IGuildUser user, string reason = "No reason provided.")
         {
             var guildUser = Context.User as SocketGuildUser;
             if (!guildUser.GuildPermissions.BanMembers)
