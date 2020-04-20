@@ -9,15 +9,28 @@ namespace Nayu.Modules.Chomusuke
 {
     public class ChooseChomusuke : NayuModule
     {
-        public static async Task ChooseActionAsync(SocketUser user, string action)
+        public static async Task ChooseActionAsync(SocketUser user, Actions action)
         {
             var activeChomusuke = ActiveChomusuke.GetOneActiveChomusuke(user.Id);
-            if (action == "cure")
+            switch (action)
             {
-                activeChomusuke.Sick = false;
-                activeChomusuke.Waste = 0;
-                await ActiveChomusuke.ConvertOneActiveVariable(user.Id, activeChomusuke);
+                case Actions.Megumin:
+                    //TODO: Add caretaker code
+                case Actions.Cure: 
+                    activeChomusuke.Sick = false; 
+                    activeChomusuke.Waste = 0; 
+                    await ActiveChomusuke.ConvertOneActiveVariable(user.Id, activeChomusuke);
+                    break;
             }
         }
+    }
+
+    public enum Actions
+    {
+        BuffExp,
+        Buff,
+        Cure,
+        Megumin,
+        
     }
 }

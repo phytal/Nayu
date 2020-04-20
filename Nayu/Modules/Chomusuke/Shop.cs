@@ -12,17 +12,17 @@ namespace Nayu.Modules.Chomusuke
     public class Shop : NayuModule
     {
         [Subject(ChomusukeCategories.Chomusuke)]
-        [Command("chomusukebuy"), Alias("cshop", "cbuy")]
+        [Command("chomusukeBuy"), Alias("cShop", "cBuy")]
         [Summary("Opens the Chomusuke shop menu!")]
-        [Remarks("Ex: n!c shop")]
+        [Remarks("Ex: n!cShop")]
         public async Task ChomusukeBuy()
         {
-            var user = Context.User as SocketGuildUser;
+            var user = Context.User as SocketGuildUser ?? Context.User;
             var config = GlobalUserAccounts.GetUserAccount(user);
             var activeChomusuke = ActiveChomusuke.GetOneActiveChomusuke(user.Id);
-            string shoptext =
-                ":department_store:  **|  Chomusuke Shop** \n ```xl\nPlease select the purchase you would like to make.\n\n[1] Capsules\n[2] Boosts\n[3] Items\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
-            var shop = await Context.Channel.SendMessageAsync(shoptext);
+            var shopText =
+                "🏬  **|  Chomusuke Shop** \n ```xl\nPlease select the purchase you would like to make.\n\n[1] Capsules\n[2] Boosts\n[3] Items\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
+            var shop = await Context.Channel.SendMessageAsync(shopText);
             var response = await NextMessageAsync();
             if (response == null)
             {
@@ -30,27 +30,32 @@ namespace Nayu.Modules.Chomusuke
                 {
                     m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
                 });
-                return;
             }
 
-            if (response.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) &&
-                (response.Author.Equals(Context.User)))
+            else if (response.Content.Equals("1"))
             {
                 await shop.ModifyAsync(m =>
                 {
                     m.Content =
-                        $":feet:  |  **Are you sure you want to purchase a {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke? (**900** {Emote.Parse("<:taiyaki:599774631984889857>")})**\n\nType `confirm` to continue or `cancel` to cancel.";
+                        $"🐾  |  **Are you sure you want to purchase a {Global.EChomusuke} Chomusuke? (**900** {Global.ETaiyaki})**\n\nType `confirm` to continue or `cancel` to cancel.";
                 });
-                var newresponse = await NextMessageAsync();
-                if (newresponse.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
+                var newResponse = await NextMessageAsync();
+                if (newResponse == null)
+                {
+                    await shop.ModifyAsync(m =>
+                    {
+                        m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
+                    });
+                }
+
+                else if (newResponse.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase))
                 {
                     if (config.Taiyaki < 900)
                     {
                         await shop.ModifyAsync(m =>
                         {
                             m.Content =
-                                $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{900 - config.Taiyaki}** more Taiyakis!";
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{900 - config.Taiyaki}** more Taiyakis!";
                         });
                         return;
                     }
@@ -59,90 +64,71 @@ namespace Nayu.Modules.Chomusuke
                     config.Taiyaki -= 900;
                     GlobalUserAccounts.SaveAccounts(user.Id);
                     await SendMessage(Context, null,
-                        $"You have successfully bought a {Emote.Parse("<:chomusuke:601183653657182280>")} Normal Chomusuke Capsule!");
-                    return;
+                        $"You have successfully bought a {Global.EChomusuke} Normal Chomusuke Capsule!");
                 }
 
-                if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
+                else if (newResponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase))
                 {
                     await shop.ModifyAsync(m =>
                     {
-                        m.Content = $":feet: **|**  **{Context.User.Username}**, purchase cancelled.";
+                        m.Content = $"🐾 **|**  **{Context.User.Username}**, purchase cancelled.";
                     });
-                    return;
                 }
 
-                if (response == null)
-                {
-                    await shop.ModifyAsync(m =>
-                    {
-                        m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
-                    });
-                    return;
-                }
                 else
                 {
                     await shop.ModifyAsync(m =>
                     {
                         m.Content = $"{Global.ENo} **|** That is an invalid response. Please try again.";
                     });
-                    return;
                 }
             }
 
-            if (response.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
-                (response.Author.Equals(Context.User)))
+            else if (response.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase))
             {
                 await shop.ModifyAsync(m =>
                 {
-                    m.Content = $":feet: **|**  **{Context.User.Username}**, purchase cancelled.";
+                    m.Content = $"🐾 **|**  **{Context.User.Username}**, purchase cancelled.";
                 });
-                return;
             }
 
             //TODO: add boosts
-            if (response.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) &&
-                (response.Author.Equals(Context.User)))
+            else if (response.Content.Equals("2"))
             {
                 await shop.ModifyAsync(m =>
                 {
                     m.Content =
-                        $"```xl\n[1] Medicine - cures your Chomusuke's sickness [400 {Emote.Parse("<:taiyaki:599774631984889857>")}]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
+                        $"```xl\n[1] Megumin - takes care of your Chomusuke for a week! [2000 {Global.ETaiyaki}]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
                 });
-                var newresponse = await NextMessageAsync();
-                if (newresponse.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
-                {
-                    await ChooseChomusuke.ChooseActionAsync(user, "cure");
-                    config.Taiyaki -= 400;
-                    GlobalUserAccounts.SaveAccounts(config.Id);
-                    await shop.ModifyAsync(m =>
-                    {
-                        m.Content =
-                            $":pill:  |  **{Context.User.Username}**, your {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke has been cured of it's sickness! Make sure to keep looking after it!";
-                    });
-                    return;
-                }
-
-                if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
-                {
-                    await shop.ModifyAsync(m =>
-                    {
-                        m.Content = $":feet: **|**  **{Context.User.Username}**, purchase cancelled.";
-                    });
-                    return;
-                }
-
-                if (response == null)
+                var newResponse = await NextMessageAsync();
+                if (newResponse == null)
                 {
                     await shop.ModifyAsync(m =>
                     {
                         m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
                     });
-                    return;
                 }
+
+                else if (newResponse.Content.Equals("1"))
+                {
+                    await ChooseChomusuke.ChooseActionAsync(user, Actions.Megumin);
+                    config.Taiyaki -= 2000;
+                    GlobalUserAccounts.SaveAccounts(config.Id);
+                    await shop.ModifyAsync(m =>
+                    {
+                        m.Content =
+                            $"{Global.EMegumin}  |  **{Context.User.Username}**, your {Global.EChomusuke} is now under Megumin's care for a week!";
+                    });
+                }
+
+                else if (newResponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    await shop.ModifyAsync(m =>
+                    {
+                        m.Content = $"🐾 **|**  **{Context.User.Username}**, purchase cancelled.";
+                    });
+                }
+
                 else
                 {
                     await shop.ModifyAsync(m =>
@@ -152,47 +138,41 @@ namespace Nayu.Modules.Chomusuke
                 }
             }
 
-            if (response.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) &&
-                (response.Author.Equals(Context.User)))
+            else if (response.Content.Equals("3"))
             {
                 await shop.ModifyAsync(m =>
                 {
                     m.Content =
-                        $"```xl\n[1] Medicine - cures your Chomusuke's sickness [400 {Emote.Parse("<:taiyaki:599774631984889857>")}]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
+                        $"```xl\n[1] Medicine - cures your Chomusuke's sickness [400 {Global.ETaiyaki}]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
                 });
-                var newresponse = await NextMessageAsync();
-                if (newresponse.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
-                {
-                    await ChooseChomusuke.ChooseActionAsync(user, "cure");
-                    config.Taiyaki -= 400;
-                    GlobalUserAccounts.SaveAccounts(config.Id);
-                    await shop.ModifyAsync(m =>
-                    {
-                        m.Content =
-                            $":pill:  |  **{Context.User.Username}**, your {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusuke has been cured of it's sickness! Make sure to keep looking after it!";
-                    });
-                    return;
-                }
-
-                if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
-                {
-                    await shop.ModifyAsync(m =>
-                    {
-                        m.Content = $":feet: **|**  **{Context.User.Username}**, purchase cancelled.";
-                    });
-                    return;
-                }
-
-                if (response == null)
+                var newResponse = await NextMessageAsync();
+                if (newResponse == null)
                 {
                     await shop.ModifyAsync(m =>
                     {
                         m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
                     });
-                    return;
                 }
+                else if (newResponse.Content.Equals("1"))
+                {
+                    await ChooseChomusuke.ChooseActionAsync(user, Actions.Cure);
+                    config.Taiyaki -= 400;
+                    GlobalUserAccounts.SaveAccounts(config.Id);
+                    await shop.ModifyAsync(m =>
+                    {
+                        m.Content =
+                            $"💊  |  **{Context.User.Username}**, your {Global.EChomusuke} Chomusuke has been cured of it's sickness! Make sure to keep looking after it!";
+                    });
+                }
+
+                else if (newResponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    await shop.ModifyAsync(m =>
+                    {
+                        m.Content = $"🐾 **|**  **{Context.User.Username}**, purchase cancelled.";
+                    });
+                }
+
                 else
                 {
                     await shop.ModifyAsync(m =>

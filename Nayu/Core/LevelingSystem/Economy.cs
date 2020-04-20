@@ -30,7 +30,7 @@ namespace Nayu.Core.LevelingSystem
                 var embed = new EmbedBuilder();
                 embed.WithColor(Global.NayuColor);
                 embed.WithDescription(
-                    $"{Emote.Parse("<:taiyaki:599774631984889857>")}  **|** Here's **{Constants.DailyTaiyakiGain}** {config.Currency}, {Context.User.Mention}! Come back tomorrow for more!");
+                    $"{Global.ETaiyaki}  **|** Here's **{Constants.DailyTaiyakiGain}** {config.Currency}, {Context.User.Mention}! Come back tomorrow for more!");
                 await SendMessage(Context, embed.Build());
             }
             else

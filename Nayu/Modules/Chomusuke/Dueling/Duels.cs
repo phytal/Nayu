@@ -104,7 +104,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
             if (config.ActiveChomusuke == 0 || configg.ActiveChomusuke == 0)
             {
                 await ReplyAndDeleteAsync(
-                    $"{Global.ENo} **|** Both players need an active chomusuke to start the duel!");
+                    $"{Global.ENo} **|** Both players need an active Chomusuke to start the duel!");
                 return;
             }
 

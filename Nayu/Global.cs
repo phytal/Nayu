@@ -15,21 +15,19 @@ namespace Nayu
     internal static class Global
     {
         internal static DiscordShardedClient Client { get; set; }
-        internal static Random Rng { get; set; } = new Random();
-
+        internal static Random Rng { get; } = new Random();
         internal static Dictionary<ulong, string> MessagesIdToTrack { get; set; }
-
         internal static readonly Chomusuke NewChomusuke = new Chomusuke(
             false, null, null, false, 0, 0, 0, 0, false, null, null, null, null, Type.None, 0, Trait.None, Trait.None,
             0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, DateTime.MinValue, null, null, null);
 
         internal static Slot slot = new Slot();
-        internal static Color NayuColor = new Color(153, 255, 255);
-        internal static Emote ENo = Emote.Parse("<:no:665078954196992001>");
-
-        internal static Emote EChomusuke = Emote.Parse("<:chomusuke:601183653657182280>");
-        internal static Emote ETaiyaki = Emote.Parse("<:taiyaki:599774631984889857>");
+        internal static readonly Color NayuColor = new Color(153, 255, 255);
+        internal static readonly Emote ENo = Emote.Parse("<:no:665078954196992001>");
+        internal static readonly Emote EMegumin = Emote.Parse("<:megumin1:701664522251010150>");
+        internal static readonly Emote EChomusuke = Emote.Parse("<:chomusuke:601183653657182280>");
+        internal static readonly Emote ETaiyaki = Emote.Parse("<:taiyaki:599774631984889857>");
 
         public static string ReplacePlaceholderStrings(this string messageString, IGuildUser user = null)
         {

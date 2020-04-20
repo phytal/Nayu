@@ -13,10 +13,10 @@ namespace Nayu.Modules.Chomusuke
     {
         //TODO: update this
         [Subject(ChomusukeCategories.Chomusuke)]
-        [Command("opencapsule"), Alias("opencapsule")]
+        [Command("openCapsule"), Alias("openCapsule")]
         [Summary("Opens one of the Chomusuke capsules you have! Note: You must have the capsule you want to open.")]
-        [Remarks("n!opencapsule <type (normal, shiny, mythical)> Ex: n!opencapsule normal")]
-        [Cooldown(5)]
+        [Remarks("n!openCapsule <type (normal, shiny, mythical)> Ex: n!openCapsule normal")]
+        [Cooldown(3)]
         public async Task OpenChomusukeCapsule(string arg)
         {
             var config = GlobalUserAccounts.GetUserAccount(Context.User);
@@ -119,7 +119,7 @@ namespace Nayu.Modules.Chomusuke
 
                 GlobalUserAccounts.SaveAccounts(config.Id);
                 await SendMessage(Context, null,
-                    $":pill:  |  **{Context.User.Username}**, you got a **{type}-Type Chomusuke**! Would you like to name it? `yes/no` (If not, the name will remain Chomusuke)");
+                    $"💊  |  **{Context.User.Username}**, you got a **{type}-Type Chomusuke**! Would you like to name it? `yes/no` (If not, the name will remain Chomusuke)");
 
                 var responsee = await NextMessageAsync();
 
@@ -127,7 +127,7 @@ namespace Nayu.Modules.Chomusuke
                     (responsee.Author.Equals(Context.User)))
                 {
                     await SendMessage(Context, null,
-                        $"{Emote.Parse("<:chomusuke:601183653657182280>")}  |  **{Context.User.Username}**, what would you like to name it? (type the name you want to give it!)");
+                        $"{Global.EChomusuke}  |  **{Context.User.Username}**, what would you like to name it? (type the name you want to give it!)");
                     var responseee = await NextMessageAsync();
                     if (responseee.Author.Equals(Context.User))
                     {
@@ -136,7 +136,7 @@ namespace Nayu.Modules.Chomusuke
                         else if (config.Chomusuke1.Have) config.Chomusuke1.Name = responseee.Content;
                         GlobalUserAccounts.SaveAccounts(config.Id);
                         await SendMessage(Context, null,
-                            $"{Emote.Parse("<:chomusuke:601183653657182280>")}  |  **{Context.User.Username}**, successfully named your new Chomusuke to **{responseee}**! You can use the command `n!chomusuke help` for more Chomusuke commands!");
+                            $"{Global.EChomusuke}  |  **{Context.User.Username}**, successfully named your new Chomusuke to **{responseee}**! You can use the command `n!chomusuke help` for more Chomusuke commands!");
                     }
                 }
 
@@ -144,7 +144,7 @@ namespace Nayu.Modules.Chomusuke
                     (responsee.Author.Equals(Context.User)))
                 {
                     await SendMessage(Context, null,
-                        $"{Emote.Parse("<:chomusuke:601183653657182280>")}  |  **{Context.User.Username}**, your Chomusuke is, well, Chomusuke! You can change the name of it by using the command `n!chomusuke name`");
+                        $"{Global.EChomusuke}  |  **{Context.User.Username}**, your Chomusuke is, well, Chomusuke! You can change the name of it by using the command `n!chomusuke name`");
                     return;
                 }
             }
@@ -152,7 +152,7 @@ namespace Nayu.Modules.Chomusuke
             if (config.Chomusuke3.Have)
             {
                 await SendMessage(Context, null,
-                    $":warning:  |  **{Context.User.Username}**, you already own 3 {Emote.Parse("<:chomusuke:601183653657182280>")} Chomusukes! Abandon one first or just stop trying to amass Chomusukes! (Megumin won't be happy if you take all her Chomusukes)");
+                    $":warning:  |  **{Context.User.Username}**, you already own 3 {Global.EChomusuke} Chomusukes! Abandon one first or just stop trying to amass Chomusukes! (Megumin won't be happy if you take all her Chomusukes)");
             }
         }
 

@@ -34,11 +34,11 @@ namespace Nayu.Modules.Chomusuke
                 string sick = ConvertBool.ConvertBooleanYN(config.Chomusuke1.Sick);
                 string chomusuke1 =
                     $"Owner: **{user.Username}**\nName: **{config.Chomusuke1.Name}**\nZodiac: **{config.Chomusuke1.Zodiac}** :{config.Chomusuke1.Zodiac.ToLower()}:\nType: **{config.Chomusuke1.Type}**\nTrait 1: **{config.Chomusuke1.Trait1}**\nTrait 2: **{config.Chomusuke1.Trait2}**\nCombat Power: **{config.Chomusuke1.CP}**\nExp: **{config.Chomusuke1.XP}**\nLevel: **{config.Chomusuke1.LevelNumber}**\n Control: **{config.Chomusuke1.Control}**\n Health: **{config.Chomusuke1.HealthCapacity}**\nShield: **{config.Chomusuke1.ShieldCapacity}**\nMana: **{config.Chomusuke1.ManaCapacity}**";
-                string chomusuke2 = $"{user.Username} doesn't have this many chomusukes!";
+                string chomusuke2 = $"{user.Username} doesn't have this many Chomusukes!";
                 if (config.Chomusuke2.Have)
                     chomusuke2 =
                         $"Owner: **{user.Username}**\nName: **{config.Chomusuke2.Name}**\nZodiac: **{config.Chomusuke2.Zodiac}** :{config.Chomusuke2.Zodiac.ToLower()}:\nType: **{config.Chomusuke2.Type}**\nTrait 1: **{config.Chomusuke2.Trait1}**\nTrait 2: **{config.Chomusuke2.Trait2}**\nCombat Power: **{config.Chomusuke2.CP}**\nExp: **{config.Chomusuke2.XP}**\nLevel: **{config.Chomusuke2.LevelNumber}**\n Control: **{config.Chomusuke2.Control}**\n Health: **{config.Chomusuke2.HealthCapacity}**\nShield: **{config.Chomusuke2.ShieldCapacity}**\nMana: **{config.Chomusuke2.ManaCapacity}**";
-                string chomusuke3 = $"{user.Username} doesn't have this many chomusukes!";
+                string chomusuke3 = $"{user.Username} doesn't have this many Chomusukes!";
                 if (config.Chomusuke3.Have)
                     chomusuke3 =
                         $"Owner: **{user.Username}**\nName: **{config.Chomusuke3.Name}**\nZodiac: **{config.Chomusuke3.Zodiac}** :{config.Chomusuke3.Zodiac.ToLower()}:\nType: **{config.Chomusuke3.Type}**\nTrait 1: **{config.Chomusuke3.Trait1}**\nTrait 2: **{config.Chomusuke3.Trait2}**\nCombat Power: **{config.Chomusuke3.CP}**\nExp: **{config.Chomusuke3.XP}**\nLevel: **{config.Chomusuke3.LevelNumber}**\n Control: **{config.Chomusuke3.Control}**\n Health: **{config.Chomusuke3.HealthCapacity}**\nShield: **{config.Chomusuke3.ShieldCapacity}**\nMana: **{config.Chomusuke3.ManaCapacity}**";
@@ -70,11 +70,11 @@ namespace Nayu.Modules.Chomusuke
             }
             else //show their Chomusuke status
             {
-                var thumbnailurl = Context.User.GetAvatarUrl();
+                var thumbnailUrl = Context.User.GetAvatarUrl();
                 var auth = new EmbedAuthorBuilder()
                 {
                     Name = $"{user.Username}'s Active Chomusuke",
-                    IconUrl = thumbnailurl,
+                    IconUrl = thumbnailUrl,
                 };
                 var embed = new EmbedBuilder()
                 {
@@ -185,16 +185,16 @@ namespace Nayu.Modules.Chomusuke
             var embed = new EmbedBuilder();
             embed.WithTitle($"{Global.EChomusuke} Chomusuke Command List");
             embed.WithColor(Global.NayuColor);
-            embed.AddField("n!chomusuke help", "Brings up the help command", true);
-            embed.AddField("n!chomusuke shop", "Opens the Chomusuke shop menu!", true);
-            embed.AddField("n!chomusuke stats", "Brings up the stats/info of your or someone else's Chomusuke!", true);
-            embed.AddField("n!chomusuke name", "Set the name of your Chomusuke!", true);
-            embed.AddField("n!chomusuke feed",
+            embed.AddField("n!cHelp", "Brings up the help command", true);
+            embed.AddField("n!cShop", "Opens the Chomusuke shop menu!", true);
+            embed.AddField("n!cStats", "Brings up the stats/info of your or someone else's Chomusuke!", true);
+            embed.AddField("n!cName", "Set the name of your Chomusuke!", true);
+            embed.AddField("n!cFeed",
                 "Feeds your Chomusuke at the cost of Taiyakis! Otherwise it will starve!", true);
-            embed.AddField("n!chomusuke clean", "Clean up your Chomusuke's waste, Otherwise it'll get sick!", true);
-            embed.AddField("n!chomusuke play",
-                "Play with your chomusuke! Your Chomusuke must have high attention levels at all times!", true);
-            embed.AddField("n!chomusuke train", "Train your Chomusuke to earn Exp and level up!", true);
+            embed.AddField("n!cClean", "Clean up your Chomusuke's waste, Otherwise it'll get sick!", true);
+            embed.AddField("n!cPlay",
+                "Play with your Chomusuke! Your Chomusuke must have high attention levels at all times!", true);
+            embed.AddField("n!cTrain", "Train your Chomusuke to earn Exp and level up!", true);
             embed.WithFooter(text);
             await SendMessage(Context, embed.Build());
         }
@@ -213,7 +213,7 @@ namespace Nayu.Modules.Chomusuke
             else
             {
                 var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
-                chom.Name = name;
+                chom.Name = name; 
                 await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                 GlobalUserAccounts.SaveAccounts(Context.User.Id);
                 await SendMessage(Context, null,
@@ -237,11 +237,11 @@ namespace Nayu.Modules.Chomusuke
                 var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
                 if (chom.Hunger == 20)
                 {
-                    var thumbnailurl = Context.User.GetAvatarUrl();
+                    var thumbnailUrl = Context.User.GetAvatarUrl();
                     var auth = new EmbedAuthorBuilder()
                     {
                         Name = "Chiiiii..",
-                        IconUrl = thumbnailurl,
+                        IconUrl = thumbnailUrl,
                     };
                     var embed = new EmbedBuilder()
                     {
@@ -266,11 +266,11 @@ namespace Nayu.Modules.Chomusuke
                     await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                     GlobalUserAccounts.SaveAccounts(Context.User.Id);
 
-                    var thumbnailurl = Context.User.GetAvatarUrl();
+                    var thumbnailUrl = Context.User.GetAvatarUrl();
                     var auth = new EmbedAuthorBuilder()
                     {
                         Name = "Success!",
-                        IconUrl = thumbnailurl,
+                        IconUrl = thumbnailUrl,
                     };
                     var embed = new EmbedBuilder()
                     {
@@ -301,11 +301,11 @@ namespace Nayu.Modules.Chomusuke
                 var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
                 if (chom.Waste == 0)
                 {
-                    var thumbnailurl = Context.User.GetAvatarUrl();
+                    var thumbnailUrl = Context.User.GetAvatarUrl();
                     var auth = new EmbedAuthorBuilder()
                     {
                         Name = "Chiiiii..",
-                        IconUrl = thumbnailurl,
+                        IconUrl = thumbnailUrl,
                     };
                     var embed = new EmbedBuilder()
                     {
@@ -327,15 +327,15 @@ namespace Nayu.Modules.Chomusuke
                     {
                         chom.Waste = 0;
                     }
-
+                    
                     await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                     GlobalUserAccounts.SaveAccounts(Context.User.Id);
 
-                    var thumbnailurl = Context.User.GetAvatarUrl();
+                    var thumbnailUrl = Context.User.GetAvatarUrl();
                     var auth = new EmbedAuthorBuilder()
                     {
                         Name = "Success!",
-                        IconUrl = thumbnailurl,
+                        IconUrl = thumbnailUrl,
                     };
                     var embed = new EmbedBuilder()
                     {
@@ -366,11 +366,11 @@ namespace Nayu.Modules.Chomusuke
                 var chom = ActiveChomusuke.GetOneActiveChomusuke(config.Id);
                 if (chom.Trust == 20)
                 {
-                    var thumbnailurl = Context.User.GetAvatarUrl();
+                    var thumbnailUrl = Context.User.GetAvatarUrl();
                     var auth = new EmbedAuthorBuilder()
                     {
                         Name = "Chiiiii..",
-                        IconUrl = thumbnailurl,
+                        IconUrl = thumbnailUrl,
                     };
                     var embed = new EmbedBuilder()
                     {
@@ -393,14 +393,14 @@ namespace Nayu.Modules.Chomusuke
                     {
                         chom.Trust = 20;
                     }
-
+                    
                     await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                     GlobalUserAccounts.SaveAccounts(Context.User.Id);
-                    var thumbnailurl = Context.User.GetAvatarUrl();
+                    var thumbnailUrl = Context.User.GetAvatarUrl();
                     var auth = new EmbedAuthorBuilder()
                     {
                         Name = "Success!",
-                        IconUrl = thumbnailurl,
+                        IconUrl = thumbnailUrl,
                     };
                     var embed = new EmbedBuilder()
                     {
@@ -433,17 +433,17 @@ namespace Nayu.Modules.Chomusuke
 
                 if (choice == 1)
                 {
-                    uint xpGain = (uint) Global.Rng.Next(20, 30);
-                    chom.XP += xpGain;
+                    var xpGain = (uint) Global.Rng.Next(20, 30);
+                    chom.XP += xpGain; 
                     await ActiveChomusuke.ConvertOneActiveVariable(config.Id, chom);
                     GlobalUserAccounts.SaveAccounts(config.Id);
-                    int randomIndex = Global.Rng.Next(yesTrainTexts.Length);
-                    string text = yesTrainTexts[randomIndex];
-                    var thumbnailurl = Context.User.GetAvatarUrl();
+                    var randomIndex = Global.Rng.Next(yesTrainTexts.Length);
+                    var text = yesTrainTexts[randomIndex];
+                    var thumbnailUrl = Context.User.GetAvatarUrl();
                     var auth = new EmbedAuthorBuilder()
                     {
                         Name = "Success!",
-                        IconUrl = thumbnailurl,
+                        IconUrl = thumbnailUrl,
                     };
                     var embed = new EmbedBuilder()
                     {
@@ -459,11 +459,11 @@ namespace Nayu.Modules.Chomusuke
                 {
                     int randomIndex = Global.Rng.Next(yesTrainTexts.Length);
                     string text = noTrainTexts[randomIndex];
-                    var thumbnailurl = Context.User.GetAvatarUrl();
+                    var thumbnailUrl = Context.User.GetAvatarUrl();
                     var auth = new EmbedAuthorBuilder()
                     {
                         Name = "Try again!",
-                        IconUrl = thumbnailurl,
+                        IconUrl = thumbnailUrl,
                     };
                     var embed = new EmbedBuilder()
                     {

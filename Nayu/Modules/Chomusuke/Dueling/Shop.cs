@@ -11,6 +11,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
 {
     public class Shop : NayuModule
     {
+        //TODO: make shop compatible with chomusuke
+        /*
         [Subject(ChomusukeCategories.Chomusuke)]
         [Command("duelsBuy"), Alias("duels shop", "duel buy", "duel shop")]
         [Summary("Opens the duels shop menu!")]
@@ -25,9 +27,9 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 return;
             }
 
-            string shoptext =
+            string shopText =
                 ":crossed_swords:   **|  Duels Armoury** \n ```xl\nPlease select the purchase you would like to make.\n\n[1] Potions\n[2] Runes\n[3] Materials\n[4] Items\n[5] Blessings\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
-            var shop = await Context.Channel.SendMessageAsync(shoptext);
+            var shop = await Context.Channel.SendMessageAsync(shopText);
             var response = await NextMessageAsync();
 
             if (response.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) &&
@@ -38,8 +40,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     m.Content =
                         $"```xl\n[1] Strength Potion - 5% more damage dealt [50 Taiyakis]\n[2] Speed Potion - 50% chance of canceling blocks and deflects [25 Taiyakis]\n[3] Debuff Potion - 5% more damage received [50 Taiyakis]\n[4] Equilizer Potion - Cancels all potion effects [75 Taiyakis]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.\n```";
                 });
-                var newresponse = await NextMessageAsync();
-                if (newresponse.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) &&
+                var newResponse = await NextMessageAsync();
+                if (newResponse.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) &&
                     (response.Author.Equals(Context.User)))
                 {
                     if (config.Taiyaki < 50)
@@ -47,7 +49,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         await shop.ModifyAsync(m =>
                         {
                             m.Content =
-                                $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{50 - config.Taiyaki}** more Taiyakis!";
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{50 - config.Taiyaki}** more Taiyakis!";
                         });
                         return;
                     }
@@ -61,7 +63,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     return;
                 }
 
-                if (newresponse.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) &&
+                if (newResponse.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) &&
                     (response.Author.Equals(Context.User)))
                 {
                     if (config.Taiyaki < 25)
@@ -69,7 +71,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         await shop.ModifyAsync(m =>
                         {
                             m.Content =
-                                $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{25 - config.Taiyaki}** more Taiyakis!";
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{25 - config.Taiyaki}** more Taiyakis!";
                         });
                         return;
                     }
@@ -82,7 +84,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     return;
                 }
 
-                if (newresponse.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) &&
+                if (newResponse.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) &&
                     (response.Author.Equals(Context.User)))
                 {
                     if (config.Taiyaki < 50)
@@ -90,7 +92,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         await shop.ModifyAsync(m =>
                         {
                             m.Content =
-                                $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{50 - config.Taiyaki}** more Taiyakis!";
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{50 - config.Taiyaki}** more Taiyakis!";
                         });
                         return;
                     }
@@ -104,7 +106,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     return;
                 }
 
-                if (newresponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) &&
+                if (newResponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) &&
                     (response.Author.Equals(Context.User)))
                 {
                     if (config.Taiyaki < 75)
@@ -112,7 +114,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         await shop.ModifyAsync(m =>
                         {
                             m.Content =
-                                $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{75 - config.Taiyaki}** more Taiyakis!";
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{75 - config.Taiyaki}** more Taiyakis!";
                         });
                         return;
                     }
@@ -126,7 +128,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     return;
                 }
 
-                if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
+                if (newResponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
                     (response.Author.Equals(Context.User)))
                 {
                     await shop.ModifyAsync(m =>
@@ -136,7 +138,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     return;
                 }
 
-                if (newresponse == null)
+                if (newResponse == null)
                 {
                     await shop.ModifyAsync(m =>
                     {
@@ -167,14 +169,14 @@ namespace Nayu.Modules.Chomusuke.Dueling
             if (response.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) &&
                 (response.Author.Equals(Context.User)))
             {
-                /*
+                
                                 await shop.ModifyAsync(m => { m.Content = $"```xl\n[1] Weapon Mastery - 10% more damage dealt [500 Taiyakis]\n[2] Efficient Brewing - 5% increased potion effectiveness [500 Taiyakis]\n[3] Mage Mastery - 5% more spell damage delt [500 Taiyakis]\n[4] Durable Armour - 5% less damage received [500 Taiyakis]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.\n```"; });
-                                var newresponse = await NextMessageAsync();
-                                if (newresponse.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
+                                var newResponse = await NextMessageAsync();
+                                if (newResponse.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                                 {
                                     if (config.Taiyaki < 500)
                                     {
-                                        await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!"; });
+                                        await shop.ModifyAsync(m => { m.Content = $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!"; });
                                         return;
                                     }
                                     config.bookWM = true;
@@ -183,11 +185,11 @@ namespace Nayu.Modules.Chomusuke.Dueling
                                     await SendMessage(Context, null, "You have successfully bought the book, Weapon Mastery!");
                                     return;
                                 }
-                                if (newresponse.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
+                                if (newResponse.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                                 {
                                     if (config.Taiyaki < 500)
                                     {
-                                        await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!"; });
+                                        await shop.ModifyAsync(m => { m.Content = $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!"; });
                                         return;
                                     }
                                     config.bookPE = true;
@@ -196,11 +198,11 @@ namespace Nayu.Modules.Chomusuke.Dueling
                                     await SendMessage(Context, null, "You have successfully bought the book, Efficient Brewing!");
                                     return;
                                 }
-                                if (newresponse.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
+                                if (newResponse.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                                 {
                                     if (config.Taiyaki < 500)
                                     {
-                                        await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!"; });
+                                        await shop.ModifyAsync(m => { m.Content = $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!"; });
                                         return;
                                     }
                                     config.bookSD = true;
@@ -209,11 +211,11 @@ namespace Nayu.Modules.Chomusuke.Dueling
                                     await SendMessage(Context, null, "You have successfully bought the book, Mage Mastery!");
                                     return;
                                 }
-                                if (newresponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
+                                if (newResponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                                 {
                                     if (config.Taiyaki < 500)
                                     {
-                                        await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!"; });
+                                        await shop.ModifyAsync(m => { m.Content = $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!"; });
                                         return;
                                     }
                                     config.bookDR = true;
@@ -222,11 +224,11 @@ namespace Nayu.Modules.Chomusuke.Dueling
                                     await SendMessage(Context, null, "You have successfully bought the book, Durable Armour!");
                                     return;
                                 }
-                                if (newresponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
+                                if (newResponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                                 {
                                     if (config.Taiyaki < 500)
                                     {
-                                        await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!"; });
+                                        await shop.ModifyAsync(m => { m.Content = $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!"; });
                                         return;
                                     }
                                     config.bookDR = true;
@@ -235,12 +237,12 @@ namespace Nayu.Modules.Chomusuke.Dueling
                                     await SendMessage(Context, null, "You have successfully bought the book, Blessing of Protection!");
                                     return;
                                 }
-                                if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
+                                if (newResponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
                                 {
                                     await shop.ModifyAsync(m => { m.Content = $":shield:   **|**  **{Context.User.Username}**, purchase cancelled."; });
                                     return;
                                 }
-                                if (newresponse == null)
+                                if (newResponse == null)
                                 {
                                     await shop.ModifyAsync(m => { m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity"; });
                                     return;
@@ -249,7 +251,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                                 {
                                     await shop.ModifyAsync(m => { m.Content = $"{Global.ENo}  **|** That is an invalid response. Please try again."; });
                                     return;
-                                }*/
+                                }
             }
 
             if (response.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) &&
@@ -260,25 +262,39 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     m.Content =
                         $"```xl\n[1] Bronze Sword - 5% more damage dealt [150 Taiyakis]\n[2] Steel Sword - 10% more damage dealt [300 Taiyakis]\n[3] Gold Sword - 15% more damage dealt [500 Taiyakis]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.\n```";
                 });
-                var newresponse = await NextMessageAsync();
-                if (newresponse.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
+                var newResponse = await NextMessageAsync();
+                if (newResponse == null)
+                {
+                    await shop.ModifyAsync(m =>
+                    {
+                        m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
+                    });
+                }
+                
+                else if (newResponse.Content.Equals("1"))
                 {
                     await shop.ModifyAsync(m =>
                     {
                         m.Content =
-                            $":feet:  |  **Are you sure you want to purchase a Bronze Sword? (**150** {Emote.Parse("<:taiyaki:599774631984889857>")})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current weapon!**";
+                            $"🐾  |  **Are you sure you want to purchase a Bronze Sword? (**150** {Global.ETaiyaki})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current weapon!**";
                     });
-                    var newresponsee = await NextMessageAsync();
-                    if (newresponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) &&
-                        (response.Author.Equals(Context.User)))
+                    var newResponsee = await NextMessageAsync();
+                    if (newResponsee == null)
+                    {
+                        await shop.ModifyAsync(m =>
+                        {
+                            m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
+                        });
+                    }
+                    
+                    else if (newResponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase))
                     {
                         if (config.Taiyaki < 150)
                         {
                             await shop.ModifyAsync(m =>
                             {
                                 m.Content =
-                                    $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{150 - config.Taiyaki}** more Taiyakis!";
+                                    $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{150 - config.Taiyaki}** more Taiyakis!";
                             });
                             return;
                         }
@@ -287,20 +303,9 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         config.Taiyaki -= 150;
                         GlobalUserAccounts.SaveAccounts(user.Id);
                         await SendMessage(Context, null, "You have successfully bought a Bronze Sword!");
-                        return;
                     }
 
-                    if (newresponsee == null)
-                    {
-                        await shop.ModifyAsync(m =>
-                        {
-                            m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
-                        });
-                        return;
-                    }
-
-                    if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
-                        (response.Author.Equals(Context.User)))
+                    else if (newResponsee.Content.Equals("cancel"))
                     {
                         await shop.ModifyAsync(m =>
                         {
@@ -310,16 +315,23 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     }
                 }
 
-                if (newresponse.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
+                else if (newResponse.Content.Equals("2"))
                 {
                     await shop.ModifyAsync(m =>
                     {
                         m.Content =
-                            $":feet:  |  **Are you sure you want to purchase a Steel Sword? (**300** {Emote.Parse("<:taiyaki:599774631984889857>")})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current weapon!**";
+                            $"🐾  |  **Are you sure you want to purchase a Steel Sword? (**300** {Global.ETaiyaki})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current weapon!**";
                     });
-                    var newresponsee = await NextMessageAsync();
-                    if (newresponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) &&
+                    var newResponsee = await NextMessageAsync();
+                    if (newResponsee == null)
+                    {
+                        await shop.ModifyAsync(m =>
+                        {
+                            m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
+                        });
+                    }
+                    
+                    else if (newResponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) &&
                         (response.Author.Equals(Context.User)))
                     {
                         if (config.Taiyaki < 300)
@@ -327,7 +339,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                             await shop.ModifyAsync(m =>
                             {
                                 m.Content =
-                                    $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{300 - config.Taiyaki}** more Taiyakis!";
+                                    $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{300 - config.Taiyaki}** more Taiyakis!";
                             });
                             return;
                         }
@@ -336,47 +348,42 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         config.Taiyaki -= 300;
                         GlobalUserAccounts.SaveAccounts(user.Id);
                         await SendMessage(Context, null, "You have successfully bought a Steel Sword!");
-                        return;
                     }
 
-                    if (newresponsee == null)
-                    {
-                        await shop.ModifyAsync(m =>
-                        {
-                            m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
-                        });
-                        return;
-                    }
-
-                    if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
+                    else if (newResponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
                         (response.Author.Equals(Context.User)))
                     {
                         await shop.ModifyAsync(m =>
                         {
                             m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled.";
                         });
-                        return;
                     }
                 }
 
-                if (newresponse.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
+                else if (newResponse.Content.Equals("3"))
                 {
                     await shop.ModifyAsync(m =>
                     {
                         m.Content =
-                            $":feet:  |  **Are you sure you want to purchase a Gold Sword? (**500** {Emote.Parse("<:taiyaki:599774631984889857>")})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current weapon!**";
+                            $"🐾  |  **Are you sure you want to purchase a Gold Sword? (**500** {Global.ETaiyaki})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current weapon!**";
                     });
-                    var newresponsee = await NextMessageAsync();
-                    if (newresponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) &&
-                        (response.Author.Equals(Context.User)))
+                    var newResponsee = await NextMessageAsync();
+                    if (newResponsee == null)
+                    {
+                        await shop.ModifyAsync(m =>
+                        {
+                            m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
+                        });
+                    }
+                    
+                    else if (newResponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase))
                     {
                         if (config.Taiyaki < 500)
                         {
                             await shop.ModifyAsync(m =>
                             {
                                 m.Content =
-                                    $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!";
+                                    $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!";
                             });
                             return;
                         }
@@ -385,46 +392,24 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         config.Taiyaki -= 500;
                         GlobalUserAccounts.SaveAccounts(user.Id);
                         await SendMessage(Context, null, "You have successfully bought a Gold Sword!");
-                        return;
                     }
-
-                    if (newresponsee == null)
-                    {
-                        await shop.ModifyAsync(m =>
-                        {
-                            m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
-                        });
-                        return;
-                    }
-
-                    if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
-                        (response.Author.Equals(Context.User)))
+                    
+                    else if (newResponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase))
                     {
                         await shop.ModifyAsync(m =>
                         {
                             m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled.";
                         });
-                        return;
                     }
                 }
 
-                if (newresponse == null)
-                {
-                    await shop.ModifyAsync(m =>
-                    {
-                        m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
-                    });
-                    return;
-                }
-
-                if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
+                else if (newResponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
                     (response.Author.Equals(Context.User)))
                 {
                     await shop.ModifyAsync(m =>
                     {
                         m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled.";
                     });
-                    return;
                 }
                 else
                 {
@@ -432,12 +417,10 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     {
                         m.Content = $"{Global.ENo} **|** That is an invalid response. Please try again.";
                     });
-                    return;
                 }
             }
 
-            if (response.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) &&
-                (response.Author.Equals(Context.User)))
+            else if (response.Content.Equals("4"))
             {
                 {
                     await shop.ModifyAsync(m =>
@@ -445,25 +428,39 @@ namespace Nayu.Modules.Chomusuke.Dueling
                         m.Content =
                             $"```xl\n[1] Bronze Armour - 5% less damage received [150 Taiyakis]\n[2] Steel Armour - 10% less damage received [300 Taiyakis]\n[3] Gold Armour - 15% less damage received [500 Taiyakis]\n[4] Platinum Armour - 20% less damage received [1000 Taiyakis]\n[5] Reinforced Armour - Your opponent's spells have no effect [1000 Taiyakis]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.\n```";
                     });
-                    var newresponse = await NextMessageAsync();
-                    if (newresponse.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) &&
-                        (response.Author.Equals(Context.User)))
+                    var newResponse = await NextMessageAsync();
+                    if (newResponse == null)
+                    {
+                        await shop.ModifyAsync(m =>
+                        {
+                            m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
+                        });
+                    }
+                    else if (newResponse.Content.Equals("1"))
                     {
                         await shop.ModifyAsync(m =>
                         {
                             m.Content =
-                                $":feet:  |  **Are you sure you want to purchase a Bronze Armour Set? (**150** {Emote.Parse("<:taiyaki:599774631984889857>")})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current armour set!**";
+                                $"🐾  |  **Are you sure you want to purchase a Bronze Armour Set? (**150** {Global.ETaiyaki})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current armour set!**";
                         });
-                        var newresponsee = await NextMessageAsync();
-                        if (newresponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) &&
-                            (response.Author.Equals(Context.User)))
+                        var newResponsee = await NextMessageAsync();
+                        if (newResponsee == null)
+                        {
+                            await shop.ModifyAsync(m =>
+                            {
+                                m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
+                            });
+                            return;
+                        }
+                        
+                        else if (newResponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase))
                         {
                             if (config.Taiyaki < 150)
                             {
                                 await shop.ModifyAsync(m =>
                                 {
                                     m.Content =
-                                        $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{150 - config.Taiyaki}** more Taiyakis!";
+                                        $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{150 - config.Taiyaki}** more Taiyakis!";
                                 });
                                 return;
                             }
@@ -475,44 +472,39 @@ namespace Nayu.Modules.Chomusuke.Dueling
                             return;
                         }
 
-                        if (newresponsee == null)
-                        {
-                            await shop.ModifyAsync(m =>
-                            {
-                                m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
-                            });
-                            return;
-                        }
-
-                        if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
-                            (response.Author.Equals(Context.User)))
+                        if (newResponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase))
                         {
                             await shop.ModifyAsync(m =>
                             {
                                 m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled.";
                             });
-                            return;
                         }
                     }
 
-                    if (newresponse.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) &&
-                        (response.Author.Equals(Context.User)))
+                    else if (newResponse.Content.Equals("2"))
                     {
                         await shop.ModifyAsync(m =>
                         {
                             m.Content =
-                                $":feet:  |  **Are you sure you want to purchase a Steel Armour Set? (**300** {Emote.Parse("<:taiyaki:599774631984889857>")})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current armour set!**";
+                                $"🐾  |  **Are you sure you want to purchase a Steel Armour Set? (**300** {Global.ETaiyaki})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current armour set!**";
                         });
-                        var newresponsee = await NextMessageAsync();
-                        if (newresponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) &&
-                            (response.Author.Equals(Context.User)))
+                        var newResponsee = await NextMessageAsync();
+                        if (newResponsee == null)
+                        {
+                            await shop.ModifyAsync(m =>
+                            {
+                                m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
+                            });
+                        }
+                        
+                        else if (newResponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase))
                         {
                             if (config.Taiyaki < 300)
                             {
                                 await shop.ModifyAsync(m =>
                                 {
                                     m.Content =
-                                        $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{300 - config.Taiyaki}** more Taiyakis!";
+                                        $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{300 - config.Taiyaki}** more Taiyakis!";
                                 });
                                 return;
                             }
@@ -524,44 +516,40 @@ namespace Nayu.Modules.Chomusuke.Dueling
                             return;
                         }
 
-                        if (newresponsee == null)
-                        {
-                            await shop.ModifyAsync(m =>
-                            {
-                                m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
-                            });
-                            return;
-                        }
-
-                        if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
+                        if (newResponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
                             (response.Author.Equals(Context.User)))
                         {
                             await shop.ModifyAsync(m =>
                             {
                                 m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled.";
                             });
-                            return;
                         }
                     }
 
-                    if (newresponse.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) &&
-                        (response.Author.Equals(Context.User)))
+                    else if (newResponse.Content.Equals("3"))
                     {
                         await shop.ModifyAsync(m =>
                         {
                             m.Content =
-                                $":feet:  |  **Are you sure you want to purchase a Gold Armour Set? (**500** {Emote.Parse("<:taiyaki:599774631984889857>")})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current armour set!**";
+                                $"🐾  |  **Are you sure you want to purchase a Gold Armour Set? (**500** {Global.ETaiyaki})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current armour set!**";
                         });
-                        var newresponsee = await NextMessageAsync();
-                        if (newresponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) &&
-                            (response.Author.Equals(Context.User)))
+                        var newResponsee = await NextMessageAsync();
+                        if (newResponsee == null)
+                        {
+                            await shop.ModifyAsync(m =>
+                            {
+                                m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
+                            });
+                        }
+                        
+                        else if (newResponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase))
                         {
                             if (config.Taiyaki < 500)
                             {
                                 await shop.ModifyAsync(m =>
                                 {
                                     m.Content =
-                                        $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!";
+                                        $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!";
                                 });
                                 return;
                             }
@@ -570,10 +558,27 @@ namespace Nayu.Modules.Chomusuke.Dueling
                             config.Taiyaki -= 500;
                             GlobalUserAccounts.SaveAccounts(user.Id);
                             await SendMessage(Context, null, "You have successfully bought a Gold Armour Set!");
-                            return;
                         }
+                        
+                        else if (newResponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
+                            (response.Author.Equals(Context.User)))
+                        {
+                            await shop.ModifyAsync(m =>
+                            {
+                                m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled.";
+                            });
+                        }
+                    }
 
-                        if (newresponsee == null)
+                    else if (newResponse.Content.Equals("4"))
+                    {
+                        await shop.ModifyAsync(m =>
+                        {
+                            m.Content =
+                                $"🐾  |  **Are you sure you want to purchase a Platinum Armour Set? (**1000** {Global.ETaiyaki})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current armour set!**";
+                        });
+                        var newResponsee = await NextMessageAsync();
+                        if (newResponsee == null)
                         {
                             await shop.ModifyAsync(m =>
                             {
@@ -581,36 +586,15 @@ namespace Nayu.Modules.Chomusuke.Dueling
                             });
                             return;
                         }
-
-                        if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
-                            (response.Author.Equals(Context.User)))
-                        {
-                            await shop.ModifyAsync(m =>
-                            {
-                                m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled.";
-                            });
-                            return;
-                        }
-                    }
-
-                    if (newresponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) &&
-                        (response.Author.Equals(Context.User)))
-                    {
-                        await shop.ModifyAsync(m =>
-                        {
-                            m.Content =
-                                $":feet:  |  **Are you sure you want to purchase a Platinum Armour Set? (**1000** {Emote.Parse("<:taiyaki:599774631984889857>")})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current armour set!**";
-                        });
-                        var newresponsee = await NextMessageAsync();
-                        if (newresponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) &&
-                            (response.Author.Equals(Context.User)))
+                        
+                        else if (newResponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase))
                         {
                             if (config.Taiyaki < 1000)
                             {
                                 await shop.ModifyAsync(m =>
                                 {
                                     m.Content =
-                                        $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{1000 - config.Taiyaki}** more Taiyakis!";
+                                        $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{1000 - config.Taiyaki}** more Taiyakis!";
                                 });
                                 return;
                             }
@@ -619,10 +603,27 @@ namespace Nayu.Modules.Chomusuke.Dueling
                             config.Taiyaki -= 1000;
                             GlobalUserAccounts.SaveAccounts(user.Id);
                             await SendMessage(Context, null, "You have successfully bought a Platinum Armour Set!");
-                            return;
                         }
 
-                        if (newresponsee == null)
+                        else if (newResponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
+                            (response.Author.Equals(Context.User)))
+                        {
+                            await shop.ModifyAsync(m =>
+                            {
+                                m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled.";
+                            });
+                        }
+                    }
+
+                    else if (newResponse.Content.Equals("5"))
+                    {
+                        await shop.ModifyAsync(m =>
+                        {
+                            m.Content =
+                                $"🐾  |  **Are you sure you want to purchase a Reinforced Armour Set? (**1000** {Global.ETaiyaki})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current armour set!**";
+                        });
+                        var newResponsee = await NextMessageAsync();
+                        if (newResponsee == null)
                         {
                             await shop.ModifyAsync(m =>
                             {
@@ -630,28 +631,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
                             });
                             return;
                         }
-
-                        if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
-                            (response.Author.Equals(Context.User)))
-                        {
-                            await shop.ModifyAsync(m =>
-                            {
-                                m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled.";
-                            });
-                            return;
-                        }
-                    }
-
-                    if (newresponse.Content.Equals("5", StringComparison.CurrentCultureIgnoreCase) &&
-                        (response.Author.Equals(Context.User)))
-                    {
-                        await shop.ModifyAsync(m =>
-                        {
-                            m.Content =
-                                $":feet:  |  **Are you sure you want to purchase a Reinforced Armour Set? (**1000** {Emote.Parse("<:taiyaki:599774631984889857>")})**\n\nType `confirm` to continue or `cancel` to cancel.\n\n**Warning: this will replace your current armour set!**";
-                        });
-                        var newresponsee = await NextMessageAsync();
-                        if (newresponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) &&
+                        
+                        if (newResponsee.Content.Equals("confirm", StringComparison.CurrentCultureIgnoreCase) &&
                             (response.Author.Equals(Context.User)))
                         {
                             if (config.Taiyaki < 1000)
@@ -659,7 +640,7 @@ namespace Nayu.Modules.Chomusuke.Dueling
                                 await shop.ModifyAsync(m =>
                                 {
                                     m.Content =
-                                        $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{1000 - config.Taiyaki}** more Taiyakis!";
+                                        $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{1000 - config.Taiyaki}** more Taiyakis!";
                                 });
                                 return;
                             }
@@ -668,76 +649,60 @@ namespace Nayu.Modules.Chomusuke.Dueling
                             config.Taiyaki -= 1000;
                             GlobalUserAccounts.SaveAccounts(user.Id);
                             await SendMessage(Context, null, "You have successfully bought a Reinforced Armour Set!");
-                            return;
                         }
 
-                        if (newresponsee == null)
-                        {
-                            await shop.ModifyAsync(m =>
-                            {
-                                m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
-                            });
-                            return;
-                        }
-
-                        if (newresponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
-                            (response.Author.Equals(Context.User)))
+                        else if (newResponsee.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase))
                         {
                             await shop.ModifyAsync(m =>
                             {
                                 m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled.";
                             });
-                            return;
                         }
                     }
 
-                    if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
-                        (response.Author.Equals(Context.User)))
+                    else if (newResponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase))
                     {
                         await shop.ModifyAsync(m =>
                         {
                             m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled.";
                         });
-                        return;
                     }
-
-                    if (newresponse == null)
-                    {
-                        await shop.ModifyAsync(m =>
-                        {
-                            m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
-                        });
-                        return;
-                    }
+                    
                     else
                     {
                         await shop.ModifyAsync(m =>
                         {
                             m.Content = $"{Global.ENo} **|** That is an invalid response. Please try again.";
                         });
-                        return;
                     }
                 }
             }
 
-            if (response.Content.Equals("5", StringComparison.CurrentCultureIgnoreCase) &&
-                (response.Author.Equals(Context.User)))
+            else if (response.Content.Equals("5"))
             {
                 await shop.ModifyAsync(m =>
                 {
                     m.Content =
                         $"```xl\n[1] Metallic Acid - Destorys your opponent's armour set [500 Taiyakis]\n[2] Weapon Liquifier - Destroys your opponent's weapon [500 Taiyakis]\n[3] Basic Treatment (Single Time Use) - Immune to **Metallic Acid** and **Weapon Liquifier** [600 Taiyakis]\n[4] Divine Shield (Active Throughout Duel) - Immune to **Metallic Acid**, **Weapon Liquifier**, and a **Poisonous Weapon** [800 Taiyakis]\n[5] Vile Of Poison - Make your weapon poisonous (+15% more damage) [200 Taiyakis]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.\n```";
                 });
-                var newresponse = await NextMessageAsync();
-                if (newresponse.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
+                var newResponse = await NextMessageAsync();
+                
+                if (newResponse == null)
+                {
+                    await shop.ModifyAsync(m =>
+                    {
+                        m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
+                    });
+                }
+                
+                else if (newResponse.Content.Equals("1"))
                 {
                     if (config.Taiyaki < 500)
                     {
                         await shop.ModifyAsync(m =>
                         {
                             m.Content =
-                                $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!";
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!";
                         });
                         return;
                     }
@@ -747,18 +712,16 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.Taiyaki -= 500;
                     GlobalUserAccounts.SaveAccounts(user.Id);
                     await SendMessage(Context, null, "You have successfully bought **Metallic Acid x1**!");
-                    return;
                 }
 
-                if (newresponse.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
+                else if (newResponse.Content.Equals("2"))
                 {
                     if (config.Taiyaki < 500)
                     {
                         await shop.ModifyAsync(m =>
                         {
                             m.Content =
-                                $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!";
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{500 - config.Taiyaki}** more Taiyakis!";
                         });
                         return;
                     }
@@ -768,18 +731,16 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.Taiyaki -= 500;
                     GlobalUserAccounts.SaveAccounts(user.Id);
                     await SendMessage(Context, null, "You have successfully bought **Weapon Liquifier x1**!");
-                    return;
                 }
 
-                if (newresponse.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
+                else if (newResponse.Content.Equals("3"))
                 {
                     if (config.Taiyaki < 600)
                     {
                         await shop.ModifyAsync(m =>
                         {
                             m.Content =
-                                $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{600 - config.Taiyaki}** more Taiyakis!";
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{600 - config.Taiyaki}** more Taiyakis!";
                         });
                         return;
                     }
@@ -789,18 +750,16 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.Taiyaki -= 600;
                     GlobalUserAccounts.SaveAccounts(user.Id);
                     await SendMessage(Context, null, "You have successfully bought **Basic Treatment x1**!");
-                    return;
                 }
 
-                if (newresponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
+                else if (newResponse.Content.Equals("4"))
                 {
                     if (config.Taiyaki < 800)
                     {
                         await shop.ModifyAsync(m =>
                         {
                             m.Content =
-                                $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{800 - config.Taiyaki}** more Taiyakis!";
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{800 - config.Taiyaki}** more Taiyakis!";
                         });
                         return;
                     }
@@ -810,18 +769,16 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.Taiyaki -= 800;
                     GlobalUserAccounts.SaveAccounts(user.Id);
                     await SendMessage(Context, null, "You have successfully bought **Divine Shield x1**!");
-                    return;
                 }
 
-                if (newresponse.Content.Equals("5", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
+                else if (newResponse.Content.Equals("5"))
                 {
                     if (config.Taiyaki < 200)
                     {
                         await shop.ModifyAsync(m =>
                         {
                             m.Content =
-                                $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{200 - config.Taiyaki}** more Taiyakis!";
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{200 - config.Taiyaki}** more Taiyakis!";
                         });
                         return;
                     }
@@ -831,27 +788,16 @@ namespace Nayu.Modules.Chomusuke.Dueling
                     config.Taiyaki -= 200;
                     GlobalUserAccounts.SaveAccounts(user.Id);
                     await SendMessage(Context, null, "You have successfully bought **Vile Of Poison x1**!");
-                    return;
                 }
 
-                if (newresponse == null)
-                {
-                    await shop.ModifyAsync(m =>
-                    {
-                        m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
-                    });
-                    return;
-                }
-
-                if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) &&
-                    (response.Author.Equals(Context.User)))
+                else if (newResponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase))
                 {
                     await shop.ModifyAsync(m =>
                     {
                         m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled.";
                     });
-                    return;
                 }
+                
                 else
                 {
                     await shop.ModifyAsync(m =>
@@ -862,106 +808,139 @@ namespace Nayu.Modules.Chomusuke.Dueling
                 }
             }
 
-            if (response.Content.Equals("6", StringComparison.CurrentCultureIgnoreCase) &&
-                (response.Author.Equals(Context.User)))
+            else if (response.Content.Equals("6"))
             {
-                /*
-                                await shop.ModifyAsync(m => { m.Content = $"```xl\n[1] Blessing of Protection - Grants a free **Basic Treatment** at the beginning of each duel [7500 Taiyakis]\n[2] Blessing of Swiftness - Small chance to attack twice each turn [7500 Taiyakis]\n[3] Blessing of War - 10% more damage dealt [7500 Taiyakis]\n[4] Blessing of Strength - Start off with 25 more health [7500 Taiyakis]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.\n```"; });
-                                var newresponse = await NextMessageAsync();
-                                if (newresponse.Content.Equals("1", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
-                                {
-                                    if (config.Taiyaki < 7500)
-                                    {
-                                        await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{7500 - config.Taiyaki}** more Taiyakis!"; });
-                                        return;
-                                    }
-                                    config.blessingProtection = true;
-                                    config.Taiyaki -= 7500;
-                                    GlobalUserAccounts.SaveAccounts(user.Id);
-                                    await SendMessage(Context, null, "You have successfully bought the Blessing of Protection!");
-                                    return;
-                                }
-                                if (newresponse.Content.Equals("2", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
-                                {
-                                    if (config.Taiyaki < 7500)
-                                    {
-                                        await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{77500 - config.Taiyaki}** more Taiyakis!"; });
-                                        return;
-                                    }
-                                    config.blessingSwiftness = true;
-                                    config.Taiyaki -= 7500;
-                                    GlobalUserAccounts.SaveAccounts(user.Id);
-                                    await SendMessage(Context, null, "You have successfully bought the Blessing of Swiftness!");
-                                    return;
-                                }
-                                if (newresponse.Content.Equals("3", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
-                                {
-                                    if (config.Taiyaki < 7500)
-                                    {
-                                        await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{7500 - config.Taiyaki}** more Taiyakis!"; });
-                                        return;
-                                    }
-                                    config.blessingWar = true;
-                                    config.Taiyaki -= 7500;
-                                    GlobalUserAccounts.SaveAccounts(user.Id);
-                                    await SendMessage(Context, null, "You have successfully bought the Blessing of War!");
-                                    return;
-                                }
-                                if (newresponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
-                                {
-                                    if (config.Taiyaki < 7500)
-                                    {
-                                        await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{7500 - config.Taiyaki}** more Taiyakis!"; });
-                                        return;
-                                    }
-                                    config.blessingStrength = true;
-                                    config.Taiyaki -= 7500;
-                                    GlobalUserAccounts.SaveAccounts(user.Id);
-                                    await SendMessage(Context, null, "You have successfully bought the Blessing of Strength!");
-                                    return;
-                                }
-                                if (newresponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
-                                {
-                                    if (config.Taiyaki < 7500)
-                                    {
-                                        await shop.ModifyAsync(m => { m.Content = $"**<:no:453716729525174273>  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{7500 - config.Taiyaki}** more Taiyakis!"; });
-                                        return;
-                                    }
-                                    config.bookDR = true;
-                                    config.Taiyaki -= 7500;
-                                    GlobalUserAccounts.SaveAccounts(user.Id);
-                                    await SendMessage(Context, null, "You have successfully bought the book, Blessing of Protection!");
-                                    return;
-                                }
-                                if (newresponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase) && (response.Author.Equals(Context.User)))
-                                {
-                                    await shop.ModifyAsync(m => { m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled."; });
-                                    return;
-                                }
-                                else
-                                {
-                                    await shop.ModifyAsync(m => { m.Content = $"{Global.ENo} **|** That is an invalid response. Please try again."; });
-                                    return;
-                                }*/
-            }
 
-            if (response == null)
-            {
                 await shop.ModifyAsync(m =>
                 {
-                    m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
+                    m.Content =
+                        $"```xl\n[1] Blessing of Protection - Grants a free **Basic Treatment** at the beginning of each duel [7500 Taiyakis]\n[2] Blessing of Swiftness - Small chance to attack twice each turn [7500 Taiyakis]\n[3] Blessing of War - 10% more damage dealt [7500 Taiyakis]\n[4] Blessing of Strength - Start off with 25 more health [7500 Taiyakis]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.\n```";
                 });
-                return;
+                var newResponse = await NextMessageAsync();
+                
+                if (newResponse == null)
+                {
+                    await shop.ModifyAsync(m =>
+                    {
+                        m.Content = $"{Context.User.Mention}, The interface has closed due to inactivity";
+                    });
+                }
+
+                else if (newResponse.Content.Equals("1"))
+                {
+                    if (config.Taiyaki < 7500)
+                    {
+                        await shop.ModifyAsync(m =>
+                        {
+                            m.Content =
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{7500 - config.Taiyaki}** more Taiyakis!";
+                        });
+                        return;
+                    }
+
+                    config.blessingProtection = true;
+                    config.Taiyaki -= 7500;
+                    GlobalUserAccounts.SaveAccounts(user.Id);
+                    await SendMessage(Context, null, "You have successfully bought the Blessing of Protection!");
+                }
+
+                else if (newResponse.Content.Equals("2"))
+                {
+                    if (config.Taiyaki < 7500)
+                    {
+                        await shop.ModifyAsync(m =>
+                        {
+                            m.Content =
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{77500 - config.Taiyaki}** more Taiyakis!";
+                        });
+                        return;
+                    }
+
+                    config.blessingSwiftness = true;
+                    config.Taiyaki -= 7500;
+                    GlobalUserAccounts.SaveAccounts(user.Id);
+                    await SendMessage(Context, null, "You have successfully bought the Blessing of Swiftness!");
+                }
+
+                else if (newResponse.Content.Equals("3"))
+                {
+                    if (config.Taiyaki < 7500)
+                    {
+                        await shop.ModifyAsync(m =>
+                        {
+                            m.Content =
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{7500 - config.Taiyaki}** more Taiyakis!";
+                        });
+                        return;
+                    }
+
+                    config.blessingWar = true;
+                    config.Taiyaki -= 7500;
+                    GlobalUserAccounts.SaveAccounts(user.Id);
+                    await SendMessage(Context, null, "You have successfully bought the Blessing of War!");
+                }
+
+                else if (newResponse.Content.Equals("4", StringComparison.CurrentCultureIgnoreCase) &&
+                    (response.Author.Equals(Context.User)))
+                {
+                    if (config.Taiyaki < 7500)
+                    {
+                        await shop.ModifyAsync(m =>
+                        {
+                            m.Content =
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{7500 - config.Taiyaki}** more Taiyakis!";
+                        });
+                        return;
+                    }
+
+                    config.blessingStrength = true;
+                    config.Taiyaki -= 7500;
+                    GlobalUserAccounts.SaveAccounts(user.Id);
+                    await SendMessage(Context, null, "You have successfully bought the Blessing of Strength!");
+                }
+
+                else if (newResponse.Content.Equals("4"))
+                {
+                    if (config.Taiyaki < 7500)
+                    {
+                        await shop.ModifyAsync(m =>
+                        {
+                            m.Content =
+                                $"**{Global.ENo}  |  {Context.User.Username}, you don't have enough Taiyakis for that! **You require **{7500 - config.Taiyaki}** more Taiyakis!";
+                        });
+                        return;
+                    }
+
+                    config.bookDR = true;
+                    config.Taiyaki -= 7500;
+                    GlobalUserAccounts.SaveAccounts(user.Id);
+                    await SendMessage(Context, null, "You have successfully bought the book, Blessing of Protection!");
+                }
+
+                else if (newResponse.Content.Equals("cancel", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    await shop.ModifyAsync(m =>
+                    {
+                        m.Content = $":shield:  **|**  **{Context.User.Username}**, purchase cancelled.";
+                    });
+                }
+                else
+                {
+                    await shop.ModifyAsync(m =>
+                    {
+                        m.Content = $"{Global.ENo} **|** That is an invalid response. Please try again.";
+                    });
+                }
             }
+
             else
             {
                 await shop.ModifyAsync(m =>
                 {
                     m.Content = $"{Global.ENo} **|** That is an invalid response. Please try again.";
                 });
-                return;
             }
-        }
+        }*/
 
         [Command("inventory")]
         [Summary("View your inventory for duels, or mention someone to see their inventory")]
@@ -1022,19 +1001,18 @@ namespace Nayu.Modules.Chomusuke.Dueling
         [Remarks("Usage: n!attacks @user (or leave @user blank to see your own) Ex: n!attacks @Phytal")]
         public async Task LearnedAttacks([Remainder] string arg = "")
         {
-            SocketUser target = null;
             var mentionedUser = Context.Message.MentionedUsers.FirstOrDefault();
-            target = mentionedUser ?? Context.User;
+            var target = mentionedUser ?? Context.User;
             var chom = ActiveChomusuke.GetOneActiveChomusuke(target.Id);
             var embed = new EmbedBuilder();
             embed.WithTitle($"{target.Username}'s Learned Attacks");
-            string attacklist = string.Empty;
+            var attackList = string.Empty;
             if (chom.Attacks?.Any() != true)
             {
-                chom.Attacks.Add("Slash");
-                chom.Attacks.Add("Absorb");
-                chom.Attacks.Add("Block");
-                chom.Attacks.Add("Deflect");
+                chom.Attacks?.Add("Slash");
+                chom.Attacks?.Add("Absorb");
+                chom.Attacks?.Add("Block");
+                chom.Attacks?.Add("Deflect");
                 chom.Attack1 = "Slash";
                 chom.Attack2 = "Absorb";
                 chom.Attack3 = "Block";
@@ -1044,10 +1022,10 @@ namespace Nayu.Modules.Chomusuke.Dueling
             GlobalUserAccounts.SaveAccounts(target.Id);
             foreach (var attack in chom.Attacks)
             {
-                attacklist += $"\n**{attack}**";
+                attackList += $"\n**{attack}**";
             }
 
-            embed.AddField("Learned Attacks", attacklist);
+            embed.AddField("Learned Attacks", attackList);
             embed.AddField("Current Attack 1", chom.Attack1);
             embed.AddField("Current Attack 2", chom.Attack2);
             embed.AddField("Current Attack 3", chom.Attack3);
@@ -1055,10 +1033,10 @@ namespace Nayu.Modules.Chomusuke.Dueling
             await SendMessage(Context, embed.Build());
         }
 
-        [Command("replaceattack")]
+        [Command("replaceAttack")]
         [Summary("Replace one of your learned attacks with another one for duels")]
         [Remarks(
-            "Usage: n!replaceattack <attack # (can be checked with n!attacks)> <attack you want to replace with (must have learned it)> Ex: n!replaceattack 1 Slash")]
+            "Usage: n!replaceAttack <attack # (can be checked with n!attacks)> <attack you want to replace with (must have learned it)> Ex: n!replaceattack 1 Slash")]
         public async Task ReplaceAttack(int attackNum, [Remainder] string attackName = "")
         {
             var chom = ActiveChomusuke.GetOneActiveChomusuke(Context.User.Id);

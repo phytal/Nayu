@@ -117,7 +117,7 @@ namespace Nayu.Modules.Admin.Commands.Management
             userAccount.Warnings.Clear();
             GlobalGuildUserAccounts.SaveAccounts();
 
-            await SendMessage(Context, null, $"✅  Succesfully cleared all of **{user.Username}'s** warnings.");
+            await SendMessage(Context, null, $"✅  Successfully cleared all of **{user.Username}'s** warnings.");
         }
     }
 }
