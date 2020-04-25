@@ -28,9 +28,9 @@ namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
                 return;
             }
 
-            string nekolink = NekosLifeHelper.GetNekoLink("spank");
+            string nekoLink = NekosLifeHelper.GetNekoLink("spank");
             var title = "Randomly generated spank just for you <3!";
-            var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, title);
+            var embed = ImageEmbed.GetImageEmbed(nekoLink, Source.NekosLife, title);
             await SendMessage(Context, embed);
         }
     }

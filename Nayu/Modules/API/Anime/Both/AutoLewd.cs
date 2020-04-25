@@ -21,9 +21,9 @@ namespace Nayu.Modules.API.Anime.Both
     public class AutoLewd : NayuModule
     {
         [Subject(AdminCategories.NSFW)]
-        [Command("autolewd")]
+        [Command("autoLewd")]
         [Summary("Loops images of lewd anime girls :3")]
-        [Remarks("Usage: n!autolewd <on/off> Ex: n!autolewd on")]
+        [Remarks("Usage: n!autoLewd <on/off> Ex: n!autoLewd on")]
         [Cooldown(5)]
         public async Task AutoLewdIMG(string arg)
         {
@@ -33,35 +33,33 @@ namespace Nayu.Modules.API.Anime.Both
             if (!result.Item1)
             {
                 await SendMessage(Context, null, $"Please say `n!autolewd <on/off>`");
-                return;
             }
 
-            if (result.Item2)
+            else if (result.Item2)
             {
                 await SendMessage(Context, null, $"Started the AutoLewd loop :3");
-                guildAcc.AutoLewdStatus = true;
+                guildAcc.AutoLewdStatus = Enabled;
                 botAcc.AutoLewdGuilds.Add(guildAcc.Id);
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 BotAccounts.SaveAccounts();
             }
 
-            if (!result.Item2)
+            else if (!result.Item2)
             {
-                guildAcc.AutoLewdStatus = false;
+                guildAcc.AutoLewdStatus = Disabled;
                 botAcc.AutoLewdGuilds.Remove(guildAcc.Id);
                 GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
                 BotAccounts.SaveAccounts();
                 await SendMessage(Context, null, $"Stopped the AutoLewd loop :/");
             }
         }
-
-//TODO: need admin
+        
         [Subject(AdminCategories.NSFW)]
-        [Command("autolewdchannel")]
+        [Command("autoLewdChannel"), Alias("alc")]
         [Summary("Loops images of lewd anime girls :3")]
-        [Remarks("Usage: n!autolewdchannel <channel you want images being sent to> Ex: n!autolewdchannel #nsfw")]
+        [Remarks("Usage: n!alc <channel you want images being sent to> Ex: n!alc #nsfw")]
         [Cooldown(5)]
-        public async Task LewdIMGChannel(ITextChannel channel)
+        public async Task LewdImgChannel(ITextChannel channel)
         {
             var guildUser = Context.User as SocketGuildUser;
             if (!guildUser.GuildPermissions.Administrator)
@@ -83,24 +81,24 @@ namespace Nayu.Modules.API.Anime.Both
 
     public class AutoLewdTimer
     {
-        private static Timer loopingtimer;
+        private static Timer _loopingTimer;
 
         internal Task StartTimer()
         {
-            var miliSeconds = 15000;
-            loopingtimer = new Timer()
+            const int milliSeconds = 15000;
+            _loopingTimer = new Timer()
             {
-                Interval = miliSeconds,
+                Interval = milliSeconds,
                 AutoReset = true,
                 Enabled = true
             };
-            loopingtimer.Elapsed += OnTimerTicked;
+            _loopingTimer.Elapsed += OnTimerTicked;
 
             Console.WriteLine("Started AutoLewd Loop");
             return Task.CompletedTask;
         }
 
-        public async void OnTimerTicked(object sender, ElapsedEventArgs e)
+        private async void OnTimerTicked(object sender, ElapsedEventArgs e)
         {
             var config = BotAccounts.GetAccount();
             foreach (var guild in config.AutoLewdGuilds)
@@ -109,21 +107,17 @@ namespace Nayu.Modules.API.Anime.Both
                 var rand = Global.Rng.Next(1, 3);
                 if (rand == 1)
                 {
-                    var nekolink = NekosLifeHelper.GetNekoLink("lewd");
+                    var nekoLink = NekosLifeHelper.GetNekoLink("lewd");
 
-                    embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife);
+                    embed = ImageEmbed.GetImageEmbed(nekoLink, Source.NekosLife);
                 }
 
-                if (rand == 2)
+                else if (rand == 2)
                 {
                     string[] tags = {""};
                     var webReq = new WebRequest();
                     var result = await webReq.GetTypesAsync("neko", tags, FileType.Any, NsfwSearch.Only, false);
                     var url = result.Url;
-                    //string id = result.Id;
-
-                    //string description = "Randomly generated lewd neko just for you <3!";
-
                     embed = ImageEmbed.GetImageEmbed(url, Source.WeebDotSh);
                 }
 

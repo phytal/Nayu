@@ -28,9 +28,9 @@ namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
                 return;
             }
 
-            string nekolink = NekosLifeHelper.GetNekoLink("pussy");
+            string nekoLink = NekosLifeHelper.GetNekoLink("pussy");
             var title = "Randomly generated hentai pussy just for you <3!";
-            var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, title);
+            var embed = ImageEmbed.GetImageEmbed(nekoLink, Source.NekosLife, title);
             await SendMessage(Context, embed);
         }
     }

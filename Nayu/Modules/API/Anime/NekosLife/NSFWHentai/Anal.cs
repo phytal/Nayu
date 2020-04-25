@@ -28,9 +28,9 @@ namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
                 return;
             }
 
-            var nekolink = NekosLifeHelper.GetNekoLink("anal");
+            var nekoLink = NekosLifeHelper.GetNekoLink("anal");
             var title = "Randomly generated anal hentai just for you <3!";
-            var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, title);
+            var embed = ImageEmbed.GetImageEmbed(nekoLink, Source.NekosLife, title);
             await SendMessage(Context, embed);
         }
     }

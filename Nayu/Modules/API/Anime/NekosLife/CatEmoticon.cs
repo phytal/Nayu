@@ -25,9 +25,9 @@ namespace Nayu.Modules.API.Anime.NekosLife
 
             var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
 
-            string nekolink = dataObject.cat.ToString();
+            string nekoLink = dataObject.cat.ToString();
 
-            await SendMessage(Context, null, nekolink);
+            await SendMessage(Context, null, nekoLink);
         }
     }
 }

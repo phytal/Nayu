@@ -24,12 +24,12 @@ namespace Nayu.Modules.API.Anime.Both
             int rand = Global.Rng.Next(1, 3);
             if (rand == 1)
             {
-                string nekolink = NekosLifeHelper.GetNekoLink("pat");
+                string nekoLink = NekosLifeHelper.GetNekoLink("pat");
                 string description = user == null
                     ? $"{Context.User.Mention} patted thin air... You can pat me if you would like! \n **(Include a user with your command! Example: n!pat <person you want to pat>)**"
                     : $"{Context.User.Username} patted {user.Mention}!";
 
-                var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, "Pat!", description);
+                var embed = ImageEmbed.GetImageEmbed(nekoLink, Source.NekosLife, "Pat!", description);
                 await SendMessage(Context, embed);
             }
 

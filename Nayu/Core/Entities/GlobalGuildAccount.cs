@@ -38,12 +38,8 @@ namespace Nayu.Core.Entities
 
         public ulong GuildOwnerId { get; set; }
 
-        public string Autorole { get; set; }
-
-        public ulong ServerLoggingChannel { get; set; }
-
-        public bool IsServerLoggingEnabled { get; set; }
-
+        public string AutoRole { get; set; }
+        
         public ulong SlowModeCooldown { get; set; }
 
         public bool IsSlowModeEnabled { get; set; }

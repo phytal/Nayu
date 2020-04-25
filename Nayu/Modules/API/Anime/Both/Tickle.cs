@@ -24,12 +24,12 @@ namespace Nayu.Modules.API.Anime.Both
             int rand = Global.Rng.Next(1, 3);
             if (rand == 1)
             {
-                string nekolink = NekosLifeHelper.GetNekoLink("tickle");
+                string nekoLink = NekosLifeHelper.GetNekoLink("tickle");
                 string description = user == null
                     ? $"{Context.User.Mention} tickled themselves... I'll stay out of this for now... \n **(Include a user with your command! Example: n!tickle <person you want to tickle>)**"
                     : $"{Context.User.Username} tickled {user.Mention}!";
 
-                var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, "Tickle!", description);
+                var embed = ImageEmbed.GetImageEmbed(nekoLink, Source.NekosLife, "Tickle!", description);
                 await SendMessage(Context, embed);
             }
 

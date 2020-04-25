@@ -28,9 +28,9 @@ namespace Nayu.Modules.API.Anime.NekosLife.NSFWNeko
                 return;
             }
 
-            string nekolink = NekosLifeHelper.GetNekoLink("nsfw_neko_gif");
+            string nekoLink = NekosLifeHelper.GetNekoLink("nsfw_neko_gif");
             var title = "Randomly generated nsfw neko just for you <3!";
-            var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, title);
+            var embed = ImageEmbed.GetImageEmbed(nekoLink, Source.NekosLife, title);
             await SendMessage(Context, embed);
         }
     }

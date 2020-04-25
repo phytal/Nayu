@@ -30,9 +30,9 @@ namespace Nayu.Modules.API.Anime.NekosLife.NSFWHentai
             }
 
             string[] options = {"boobs", "tits"};
-            string nekolink = NekosLifeHelper.GetNekoLink(options[Global.Rng.Next(options.Length)]);
+            string nekoLink = NekosLifeHelper.GetNekoLink(options[Global.Rng.Next(options.Length)]);
             var title = "Randomly generated hentai boobs just for you <3!";
-            var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, title);
+            var embed = ImageEmbed.GetImageEmbed(nekoLink, Source.NekosLife, title);
             await SendMessage(Context, embed);
         }
     }
