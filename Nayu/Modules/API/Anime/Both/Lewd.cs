@@ -37,10 +37,10 @@ namespace Nayu.Modules.API.Anime.Both
             int rand = Global.Rng.Next(1, 3);
             if (rand == 1)
             {
-                string nekolink = NekosLifeHelper.GetNekoLink("lewd");
+                string nekoLink = NekosLifeHelper.GetNekoLink("lewd");
                 string description = "Randomly generated lewd neko just for you <3!";
 
-                var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, description);
+                var embed = ImageEmbed.GetImageEmbed(nekoLink, Source.NekosLife, description);
                 await SendMessage(Context, embed);
             }
 

@@ -21,10 +21,10 @@ namespace Nayu.Modules.API.Anime.WeebDotSh
             int rand = Global.Rng.Next(1, 3);
             if (rand == 1)
             {
-                string nekolink = NekosLifeHelper.GetNekoLink("kemonomimi");
+                string nekoLink = NekosLifeHelper.GetNekoLink("kemonomimi");
                 string description = "Randomly generated kemonomimi just for you <3!";
 
-                var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, description);
+                var embed = ImageEmbed.GetImageEmbed(nekoLink, Source.NekosLife, description);
                 await SendMessage(Context, embed);
             }
 

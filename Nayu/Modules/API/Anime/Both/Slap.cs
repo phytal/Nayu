@@ -23,12 +23,12 @@ namespace Nayu.Modules.API.Anime.Both
             int rand = Global.Rng.Next(1, 3);
             if (rand == 1)
             {
-                string nekolink = NekosLifeHelper.GetNekoLink("slap");
+                string nekoLink = NekosLifeHelper.GetNekoLink("slap");
                 string description = user == null
                     ? $"{Context.User.Mention} slapped themselves... Don't do this to yourself! \n **(Include a user with your command! Example: n!slap <person you want to slap>)**"
                     : $"{Context.User.Username} slapped {user.Mention}!";
 
-                var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, "Slap!", description);
+                var embed = ImageEmbed.GetImageEmbed(nekoLink, Source.NekosLife, "Slap!", description);
                 await SendMessage(Context, embed);
             }
 

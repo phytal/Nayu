@@ -32,11 +32,11 @@ namespace Nayu.Modules.Admin.Commands.Management
 
             if (arg == null) await ReplyAndDeleteAsync("Please include the name of the role you want to autorole");
             var config = GlobalGuildAccounts.GetGuildAccount(Context.Guild.Id);
-            config.Autorole = arg;
+            config.AutoRole = arg;
             GlobalGuildAccounts.SaveAccounts(Context.Guild.Id);
 
             var embed = new EmbedBuilder();
-            embed.WithDescription($"Added the **{arg}** role to Autorole!");
+            embed.WithDescription($"Added the **{arg}** role to AutoRole!");
             embed.WithColor(Global.NayuColor);
             embed.WithFooter("Make sure that Nayu has a higher role than the autoroled role!");
 

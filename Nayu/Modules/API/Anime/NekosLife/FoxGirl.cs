@@ -25,11 +25,11 @@ namespace Nayu.Modules.API.Anime.NekosLife
 
             var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
 
-            string nekolink = dataObject.url.ToString();
+            string nekoLink = dataObject.url.ToString();
 
             var embed = new EmbedBuilder();
             embed.WithTitle("Randomly generated fox girl just for you <3!");
-            embed.WithImageUrl(nekolink);
+            embed.WithImageUrl(nekoLink);
             await SendMessage(Context, embed.Build());
         }
     }

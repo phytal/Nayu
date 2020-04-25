@@ -21,12 +21,12 @@ namespace Nayu
     {
         private static readonly DiscordShardedClient _client = Program._client;
 
-        public async Task Autorole(SocketGuildUser user)
+        public async Task AutoRole(SocketGuildUser user)
         {
             var config = GlobalGuildAccounts.GetGuildAccount(user.Guild.Id);
-            if (config.Autorole != null || config.Autorole != "")
+            if (config.AutoRole != null || config.AutoRole != "")
             {
-                var targetRole = user.Guild.Roles.FirstOrDefault(r => r.Name == config.Autorole);
+                var targetRole = user.Guild.Roles.FirstOrDefault(r => r.Name == config.AutoRole);
                 await user.AddRoleAsync(targetRole);
             }
         }

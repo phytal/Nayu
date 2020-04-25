@@ -24,12 +24,12 @@ namespace Nayu.Modules.API.Anime.Both
             int rand = Global.Rng.Next(1, 3);
             if (rand == 1)
             {
-                string nekolink = NekosLifeHelper.GetNekoLink("kiss");
+                string nekoLink = NekosLifeHelper.GetNekoLink("kiss");
                 string description = user == null
                     ? $"{Context.User.Mention} you can't really kiss yourself... Don't worry, how about a kiss from me?... \n **(Include a user with your command! Example: n!kiss <person you want to kiss>)**"
                     : $"❤ **|**  {Context.User.Username} kissed {user.Mention}!";
 
-                var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, "Kiss!", description);
+                var embed = ImageEmbed.GetImageEmbed(nekoLink, Source.NekosLife, "Kiss!", description);
                 await SendMessage(Context, embed);
             }
 

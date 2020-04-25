@@ -24,10 +24,10 @@ namespace Nayu.Modules.API.Anime.Both
             int rand = Global.Rng.Next(1, 3);
             if (rand == 1)
             {
-                string nekolink = NekosLifeHelper.GetNekoLink("neko");
+                string nekoLink = NekosLifeHelper.GetNekoLink("neko");
                 string description = "Randomly generated neko just for you <3!";
 
-                var embed = ImageEmbed.GetImageEmbed(nekolink, Source.NekosLife, "Neko!", description);
+                var embed = ImageEmbed.GetImageEmbed(nekoLink, Source.NekosLife, "Neko!", description);
                 await SendMessage(Context, embed);
             }
 
