@@ -98,7 +98,7 @@ namespace Nayu.Modules.Chomusuke
                 await shop.ModifyAsync(m =>
                 {
                     m.Content =
-                        $"```xl\n[1] Megumin - takes care of your Chomusuke for a week! [2000 {Global.ETaiyaki}]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
+                        $"```xl\n[1] Megumin - takes care of your Chomusuke for a week! [2000 🍥]\n\nType the respective number beside the purchase you would like to select.\nType 'cancel' to cancel your purchase.```";
                 });
                 var newResponse = await NextMessageAsync();
                 if (newResponse == null)
@@ -113,6 +113,7 @@ namespace Nayu.Modules.Chomusuke
                 {
                     await ChooseChomusuke.ChooseActionAsync(user, Actions.Megumin);
                     config.Taiyaki -= 2000;
+                    config.MeguminDay = DateTime.UtcNow;
                     GlobalUserAccounts.SaveAccounts(config.Id);
                     await shop.ModifyAsync(m =>
                     {

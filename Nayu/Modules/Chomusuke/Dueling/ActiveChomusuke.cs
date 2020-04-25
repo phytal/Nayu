@@ -46,9 +46,11 @@ namespace Nayu.Modules.Chomusuke.Dueling
         public static Chomusuke GetOneActiveChomusuke(ulong user)
         {
             var config = GlobalUserAccounts.GetUserAccount(user);
-            Chomusuke activeChomusuke = Global.NewChomusuke;
+            var activeChomusuke = Global.NewChomusuke;
             switch (config.ActiveChomusuke)
             {
+                case 0:
+                    break;
                 case 1:
                     activeChomusuke = config.Chomusuke1;
                     break;
@@ -108,10 +110,8 @@ namespace Nayu.Modules.Chomusuke.Dueling
         /// <summary>
         /// matches 1 active chomusuke with its respective number
         /// </summary>
-        /// <param name="user1"></param>
-        /// <param name="user2"></param>
+        /// <param name="user"></param>
         /// <param name="activeChomusuke"></param>
-        /// <param name="activeChomusukee"></param>
         /// <returns></returns>
         public static Task ConvertOneActiveVariable(ulong user, Chomusuke activeChomusuke)
         {

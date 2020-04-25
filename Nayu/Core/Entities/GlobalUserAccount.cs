@@ -8,7 +8,6 @@ namespace Nayu.Core.Entities
 {
 
     #region Chomusuke
-
     public class Chomusuke
     {
         public bool Have { get; set; }
@@ -110,13 +109,11 @@ namespace Nayu.Core.Entities
 
     public class GlobalUserAccount : IGlobalAccount
     {
-        public Chomusuke Chomusuke1 { get; set; } 
-
+        public Chomusuke Chomusuke1 { get; set; }
         public Chomusuke Chomusuke2 { get; set; }
-
-        public Chomusuke Chomusuke3 { get; set; } 
-
+        public Chomusuke Chomusuke3 { get; set; }
         public byte ActiveChomusuke { get; set; }
+        public DateTime MeguminDay { get; set; }
         public ushort NormalCapsule { get; set; }
         public ushort ShinyCapsule { get; set; }
         public ushort MythicalCapsule { get; set; }
@@ -138,10 +135,8 @@ namespace Nayu.Core.Entities
         public ushort LootBoxLegendary { get; set; }
         public uint XP { get; set; }
         public DateTime LastXPMessage { get; set; } = DateTime.UtcNow;
-
         public uint LevelNumber =>
             (uint) Math.Sqrt(XP / 50);
-
         public ulong Id { get; set; }
         public string OverwatchID { get; set; }
         public string OverwatchRegion { get; set; }
